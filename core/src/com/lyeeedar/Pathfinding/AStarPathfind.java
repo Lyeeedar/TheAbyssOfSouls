@@ -29,7 +29,7 @@ public class AStarPathfind
 	private final boolean canMoveDiagonal;
 	private final int actorSize;
 	private final boolean findOptimal;
-	private final EnumBitflag<Enums.SpaceSlot> travelType;
+	private final Enums.SpaceSlot travelType;
 	private final Object self;
 
 	private final int startx;
@@ -44,7 +44,7 @@ public class AStarPathfind
 
 	private BinaryHeap<Node> openList = new BinaryHeap<Node>();
 
-	public AStarPathfind( PathfindingTile[][] grid, int startx, int starty, int endx, int endy, boolean canMoveDiagonal, boolean findOptimal, int actorSize, EnumBitflag<Enums.SpaceSlot> travelType, Object self )
+	public AStarPathfind( PathfindingTile[][] grid, int startx, int starty, int endx, int endy, boolean canMoveDiagonal, boolean findOptimal, int actorSize, Enums.SpaceSlot travelType, Object self )
 	{
 		this.grid = grid;
 		this.width = grid.length;

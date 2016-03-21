@@ -14,6 +14,8 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 
 public class EquationHelper
 {
+	private static final HashMap<String, Float> emptyMap = Enums.Statistic.getEmptyMap();
+
 	public static Expression tryBuild( ExpressionBuilder expB )
 	{
 		Expression exp = null;
@@ -59,7 +61,6 @@ public class EquationHelper
 		return expB;
 	}
 
-	// ----------------------------------------------------------------------
 	public static boolean isNumber( String string )
 	{
 		if ( string == null || string.isEmpty() ) { return false; }
@@ -84,12 +85,12 @@ public class EquationHelper
 
 	public static float evaluate( String eqn )
 	{
-		return evaluate( eqn, Enums.Statistic.emptyMap, MathUtils.random );
+		return evaluate( eqn, emptyMap, MathUtils.random );
 	}
 
 	public static float evaluate( String eqn, Random ran )
 	{
-		return evaluate( eqn, Enums.Statistic.emptyMap, ran );
+		return evaluate( eqn, emptyMap, ran );
 	}
 
 	public static float evaluate( String eqn, HashMap<String, Float> variableMap )

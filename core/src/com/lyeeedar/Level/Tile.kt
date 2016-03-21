@@ -17,27 +17,22 @@ class Tile() : Point(0, 0), PathfindingTile
 {
     val neighbours: FastEnumMap<Enums.Direction, Tile> = FastEnumMap( Enums.Direction::class.java )
     val contents: FastEnumMap<Enums.SpaceSlot, Entity> = FastEnumMap( Enums.SpaceSlot::class.java )
+	val effects: com.badlogic.gdx.utils.Array<Entity> = com.badlogic.gdx.utils.Array<Entity>(false, 4)
 	lateinit var level: Level
 	var visible: Boolean = false
 	var seen: Boolean = false
 
-    override fun getInfluence(travelType: EnumBitflag<Enums.SpaceSlot>, self: Any?) = 0
+    override fun getInfluence(travelType: Enums.SpaceSlot, self: Any?) = 0
 
-    override fun getPassable(travelType: EnumBitflag<Enums.SpaceSlot>, self: Any?): Boolean
+    override fun getPassable(travelType: Enums.SpaceSlot, self: Any?): Boolean
     {
         if (contents.get(Enums.SpaceSlot.WALL) != null) { return false; }
 
-        for (slot in Enums.SpaceSlot.values())
-        {
-            if (travelType.contains(slot))
-            {
-                val obj = contents.get(slot)
-                if (obj != self)
-                {
-                    return false;
-                }
-            }
-        }
+		val obj = contents.get(travelType)
+		if (obj != self)
+		{
+			return false;
+		}
 
         return true;
     }

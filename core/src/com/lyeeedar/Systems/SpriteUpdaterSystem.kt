@@ -13,7 +13,7 @@ import com.lyeeedar.Components.SpriteComponent
  * Created by Philip on 20-Mar-16.
  */
 
-class SpriteUpdaterSystem(): IteratingSystem (Family.all(SpriteComponent::class.java).get())
+class SpriteUpdaterSystem(): IteratingSystem (Family.all(SpriteComponent::class.java).get(), 5)
 {
 	override fun processEntity(entity: Entity, deltaTime: Float)
 	{

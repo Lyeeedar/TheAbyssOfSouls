@@ -85,6 +85,11 @@ public class Enums
 			angle = (float) Math.atan2( det, dot ) * MathUtils.radiansToDegrees;
 		}
 
+		public static Direction getDirection( Point point )
+		{
+			return getDirection( point.x, point.y );
+		}
+
 		public static Direction getDirection( float[] dir )
 		{
 			int x = dir[0] < 0 ? -1 : dir[0] > 0 ? 1 : 0;
@@ -248,7 +253,7 @@ public class Enums
 	// ----------------------------------------------------------------------
 	public enum Statistic
 	{
-		HEALTH,
+		MAX_HEALTH,
 		SIGHT,
 
 		PHYSICAL_ATTACK,
@@ -266,14 +271,21 @@ public class Enums
 		public static Statistic[] ATTACK_STATS = { PHYSICAL_ATTACK, SHOCK_ATTACK, ACID_ATTACK, ICE_ATTACK, VORPAL_ATTACK };
 		public static Statistic[] DEFENSE_STATS = { PHYSICAL_DEFENSE, SHOCK_DEFENSE, ACID_DEFENSE, ICE_DEFENSE, VORPAL_DEFENSE };
 
-		public static HashMap<String, Float> emptyMap = new HashMap<String, Float>();
-
 		static
 		{
+
+		}
+
+		public static HashMap<String, Float> getEmptyMap()
+		{
+			HashMap<String, Float> emptyMap = new HashMap<String, Float>();
+
 			for ( Statistic s : Statistic.values() )
 			{
 				emptyMap.put( s.toString().toLowerCase(), 0f );
 			}
+
+			return emptyMap;
 		}
 
 		public static HashMap<String, Float> statsBlockToVariableBlock( FastEnumMap<Statistic, Float> stats )
@@ -294,11 +306,16 @@ public class Enums
 
 		public static FastEnumMap<Statistic, Float> getStatisticsBlock()
 		{
+			return getStatisticsBlock(0f);
+		}
+
+		public static FastEnumMap<Statistic, Float> getStatisticsBlock(float defaultValue)
+		{
 			FastEnumMap<Statistic, Float> stats = new FastEnumMap<Statistic, Float>( Statistic.class );
 
 			for ( Statistic stat : Statistic.values() )
 			{
-				stats.put( stat, 0f );
+				stats.put( stat, defaultValue );
 			}
 
 			return stats;

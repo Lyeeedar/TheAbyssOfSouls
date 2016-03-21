@@ -29,7 +29,7 @@ public class Pathfinder
 		this.self = self;
 	}
 
-	public Array<Point> getPath( EnumBitflag<Enums.SpaceSlot> travelType )
+	public Array<Point> getPath( Enums.SpaceSlot travelType )
 	{
 		AStarPathfind astar = new AStarPathfind( Grid, startx, starty, endx, endy, canMoveDiagonal, false, size, travelType, self );
 		Array<Point> path = astar.getPath();
@@ -57,13 +57,13 @@ public class Pathfinder
 			public boolean passable = true;
 
 			@Override
-			public boolean getPassable( EnumBitflag<Enums.SpaceSlot> travelType, Object self )
+			public boolean getPassable( Enums.SpaceSlot travelType, Object self )
 			{
 				return true;
 			}
 
 			@Override
-			public int getInfluence( EnumBitflag<Enums.SpaceSlot> travelType, Object self )
+			public int getInfluence( Enums.SpaceSlot travelType, Object self )
 			{
 				return passable ? 0 : 1000;
 			}
@@ -139,7 +139,7 @@ public class Pathfinder
 
 		private static void path( TestTile[][] grid, int startx, int starty, int endx, int endy )
 		{
-			AStarPathfind astar = new AStarPathfind( grid, startx, starty, endx, endy, false, true, 1, new EnumBitflag<Enums.SpaceSlot>(), null );
+			AStarPathfind astar = new AStarPathfind( grid, startx, starty, endx, endy, false, true, 1, Enums.SpaceSlot.ENTITY, null );
 			Array<Point> path = astar.getPath();
 
 			for ( Point step : path )

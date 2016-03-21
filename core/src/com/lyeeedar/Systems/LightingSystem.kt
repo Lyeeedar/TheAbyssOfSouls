@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.*
 import com.lyeeedar.Components.*
+import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 
@@ -18,7 +19,7 @@ import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
  * Created by Philip on 21-Mar-16.
  */
 
-class LightingSystem(): EntitySystem()
+class LightingSystem(): EntitySystem(10)
 {
 	val world: World
 	val rayHandler: RayHandler
@@ -41,7 +42,7 @@ class LightingSystem(): EntitySystem()
 		rayHandler.setBlurNum(3);
 		rayHandler.setCulling(true)
 
-		fovLight = FovLight(rayHandler, 128)
+		fovLight = FovLight(rayHandler, 256)
 		fovLight.color = Color.WHITE
 		fovLight.isStaticLight = true
 		fovLight.isSoft = false
@@ -72,6 +73,7 @@ class LightingSystem(): EntitySystem()
 		val player = GlobalData.Global.currentLevel?.player
 		val playerPos = Mappers.position.get(player);
 		val playerSprite = Mappers.sprite.get(player);
+		val playerStats = Mappers.stats.get(player)
 
 		var offsetx = GlobalData.Global.resolution[ 0 ] / 2 - playerPos.position.x * tileSize - tileSize2;
 		var offsety = GlobalData.Global.resolution[ 1 ] / 2 - playerPos.position.y * tileSize - tileSize2;
@@ -79,7 +81,7 @@ class LightingSystem(): EntitySystem()
 		var px = playerPos.position.x.toFloat() * tileSize + offsetx + tileSize2;
 		var py = playerPos.position.y.toFloat() * tileSize + offsety + tileSize2;
 		fovLight.setPosition(px, py)
-		fovLight.distance = 20f * tileSize
+		fovLight.distance = playerStats.stats.get(Enums.Statistic.SIGHT) * tileSize
 
 		if ( playerSprite.sprite.spriteAnimation is MoveAnimation )
 		{

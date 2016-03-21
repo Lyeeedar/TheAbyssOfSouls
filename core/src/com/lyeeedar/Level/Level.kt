@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Enums
 import com.lyeeedar.Util.EnumBitflag
+import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -41,7 +42,10 @@ class Level()
 		get() = if (width > 0) grid[0].size else 0
 
 	// ----------------------------------------------------------------------
-	fun getTile(x: Int, y: Int, dir: Enums.Direction) = getTile(x+dir.x, y+dir.y)
+	fun getTile(point: Point) = getTile(point.x, point.y)
+
+	// ----------------------------------------------------------------------
+	fun getTile(x: Int, y: Int, dir: Enums.Direction) = getTile(x + dir.x, y + dir.y)
 
 	// ----------------------------------------------------------------------
 	fun getTile(x: Int, y: Int): Tile?

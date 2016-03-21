@@ -8,16 +8,16 @@ import com.lyeeedar.Util.Point;
 
 public final class ShadowCastCache
 {
-	private final EnumBitflag<Enums.SpaceSlot> LightPassability;
+	private final Enums.SpaceSlot LightPassability;
 
-	public ShadowCastCache( EnumBitflag<Enums.SpaceSlot> LightPassability )
+	public ShadowCastCache( Enums.SpaceSlot LightPassability )
 	{
 		this.LightPassability = LightPassability;
 	}
 
 	public ShadowCastCache()
 	{
-		LightPassability = new EnumBitflag<Enums.SpaceSlot>( Enums.SpaceSlot.WALL );
+		LightPassability = Enums.SpaceSlot.WALL;
 	}
 
 	public ShadowCastCache copy()

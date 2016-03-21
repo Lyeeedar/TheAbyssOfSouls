@@ -12,10 +12,7 @@ import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
-import com.lyeeedar.Systems.LightingSystem
-import com.lyeeedar.Systems.RenderSystem
-import com.lyeeedar.Systems.SpriteUpdaterSystem
-import com.lyeeedar.Systems.TaskProcessorSystem
+import com.lyeeedar.Systems.*
 import com.lyeeedar.UI.ButtonKeyboardHelper
 
 /**
@@ -35,6 +32,7 @@ class GameScreen(): AbstractScreen()
 
 		lightingSystem = LightingSystem()
 		engine.addSystem(lightingSystem)
+		engine.addSystem(CleanupSystem())
 
 		val grid = Array(20, {i -> Array(20, { i -> Tile() } ) } )
 
@@ -91,14 +89,10 @@ class GameScreen(): AbstractScreen()
 		grid[10][10].contents.put(pos.slot, p)
 		p.add(pos)
 
-		val sprite = SpriteComponent(AssetManager.loadSprite("player"))
-		p.add(sprite)
-
-		val task = TaskComponent(TestAI())
-		p.add(task)
-
-		val light = LightComponent(Color(0.5f, 0.5f, 0.5f, 0f), 6f)
-		p.add(light)
+		p.add(SpriteComponent(AssetManager.loadSprite("player")))
+		p.add(TaskComponent(TestAI()))
+		p.add(LightComponent(Color(0.5f, 0.5f, 0.5f, 0f), 6f))
+		p.add(StatisticsComponent())
 
 		engine.addEntity(p)
 

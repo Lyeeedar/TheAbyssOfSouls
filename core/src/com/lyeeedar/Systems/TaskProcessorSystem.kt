@@ -14,7 +14,7 @@ import com.lyeeedar.GlobalData
  * Created by Philip on 20-Mar-16.
  */
 
-class TaskProcessorSystem(): EntitySystem()
+class TaskProcessorSystem(): EntitySystem(0)
 {
 	lateinit var entities: ImmutableArray<Entity>
 	lateinit var sprites: ImmutableArray<Entity>
@@ -82,6 +82,9 @@ class TaskProcessorSystem(): EntitySystem()
 	fun processEntity(e: Entity): Boolean
 	{
 		val task = Mappers.task.get(e)
+		val stats = Mappers.stats.get(e)
+
+		if (stats == null || stats.hp <= 0) return true
 
 		if (task.actionDelay >= 0)
 		{

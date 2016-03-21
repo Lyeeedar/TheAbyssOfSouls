@@ -23,13 +23,13 @@ import com.lyeeedar.Util.Point;
 
 public class ShadowCaster
 {
-	private final EnumBitflag<Enums.SpaceSlot> ShadowPassability = new EnumBitflag<Enums.SpaceSlot>( Enums.SpaceSlot.WALL );
+	private final Enums.SpaceSlot ShadowPassability = Enums.SpaceSlot.WALL;
 
 	private final IntSet tileLookup = new IntSet();
 
 	private final int range;
 	private final PathfindingTile[][] grid;
-	private final EnumBitflag<Enums.SpaceSlot> travelType;
+	private final Enums.SpaceSlot travelType;
 	private final Object self;
 
 	public boolean allowOutOfBounds = false;
@@ -45,7 +45,7 @@ public class ShadowCaster
 		this.self = null;
 	}
 
-	public ShadowCaster( PathfindingTile[][] grid, int range, EnumBitflag<Enums.SpaceSlot> travelType, Object self )
+	public ShadowCaster( PathfindingTile[][] grid, int range, Enums.SpaceSlot travelType, Object self )
 	{
 		this.grid = grid;
 		this.range = range;

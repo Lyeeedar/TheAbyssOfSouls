@@ -27,7 +27,7 @@ import com.lyeeedar.Util.Point
  * Created by Philip on 20-Mar-16.
  */
 
-class RenderSystem(val batch: SpriteBatch): EntitySystem()
+class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 {
 	lateinit var entities: ImmutableArray<Entity>
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap<RenderSprite>()
