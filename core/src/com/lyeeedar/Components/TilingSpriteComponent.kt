@@ -7,5 +7,12 @@ import com.lyeeedar.Sprite.TilingSprite
  * Created by Philip on 20-Mar-16.
  */
 
-class TilingSpriteComponent(val sprite: TilingSprite): Component()
-{}
+class TilingSpriteComponent: Component
+{
+	constructor(sprite: TilingSprite)
+	{
+		this.sprite = sprite
+	}
+
+	val sprite: TilingSprite
+}

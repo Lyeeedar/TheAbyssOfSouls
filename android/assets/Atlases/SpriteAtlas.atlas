@@ -6,42 +6,42 @@ filter: MipMapLinearLinear,MipMapLinearLinear
 repeat: none
 GUI/Button
   rotate: false
-  xy: 514, 86
+  xy: 158, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ButtonBorder
   rotate: false
-  xy: 158, 18
+  xy: 566, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ButtonDown
   rotate: false
-  xy: 550, 86
+  xy: 194, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Checked
   rotate: false
-  xy: 194, 18
+  xy: 602, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Cog
   rotate: false
-  xy: 586, 86
+  xy: 230, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Eye
   rotate: false
-  xy: 230, 18
+  xy: 638, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -62,42 +62,42 @@ GUI/PanelVertical
   index: -1
 GUI/PassiveTileBorder
   rotate: false
-  xy: 658, 86
+  xy: 302, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 766, 94
+  xy: 446, 42
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/QuestionMark
   rotate: false
-  xy: 302, 18
+  xy: 710, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/SeperatorHorizontal
   rotate: false
-  xy: 514, 76
+  xy: 158, 8
   size: 32, 6
   orig: 32, 6
   offset: 0, 0
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 446, 34
+  xy: 818, 86
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
   index: -1
 GUI/Sheathed
   rotate: false
-  xy: 694, 86
+  xy: 338, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -111,14 +111,14 @@ GUI/SpeechBubble
   index: -1
 GUI/SpeechBubbleArrow
   rotate: false
-  xy: 158, 6
+  xy: 566, 74
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 GUI/TextField
   rotate: false
-  xy: 338, 18
+  xy: 746, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -139,7 +139,7 @@ GUI/TileBorder
   index: -1
 GUI/TilePanel
   rotate: false
-  xy: 730, 86
+  xy: 374, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -153,35 +153,35 @@ GUI/Tooltip
   index: -1
 GUI/Unchecked
   rotate: false
-  xy: 374, 18
+  xy: 410, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Unsheathed
   rotate: false
-  xy: 410, 34
+  xy: 782, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/background
   rotate: false
-  xy: 106, 2
+  xy: 514, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 622, 86
+  xy: 266, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 266, 18
+  xy: 674, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -195,28 +195,35 @@ grass
   index: -1
 player_1
   rotate: false
-  xy: 410, 70
+  xy: 54, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 player_2
   rotate: false
-  xy: 54, 2
+  xy: 462, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 player_4
   rotate: false
-  xy: 54, 2
+  xy: 462, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 player_3
   rotate: false
-  xy: 462, 70
+  xy: 106, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+wall
+  rotate: false
+  xy: 410, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

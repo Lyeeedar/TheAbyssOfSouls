@@ -2,15 +2,17 @@ package com.lyeeedar.Screens
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.MathUtils
 import com.lyeeedar.AI.TestAI
 import com.lyeeedar.AssetManager
-import com.lyeeedar.Components.PositionComponent
-import com.lyeeedar.Components.SpriteComponent
-import com.lyeeedar.Components.TaskComponent
+import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
+import com.lyeeedar.Systems.LightingSystem
 import com.lyeeedar.Systems.RenderSystem
 import com.lyeeedar.Systems.SpriteUpdaterSystem
 import com.lyeeedar.Systems.TaskProcessorSystem
@@ -23,15 +25,42 @@ import com.lyeeedar.UI.ButtonKeyboardHelper
 class GameScreen(): AbstractScreen()
 {
 	val engine = Engine()
+	lateinit var lightingSystem: LightingSystem
 
 	override fun create()
 	{
+		engine.addSystem(TaskProcessorSystem())
+		engine.addSystem(SpriteUpdaterSystem())
+		engine.addSystem(RenderSystem(batch))
+
+		lightingSystem = LightingSystem()
+		engine.addSystem(lightingSystem)
+
 		val grid = Array(20, {i -> Array(20, { i -> Tile() } ) } )
 
 		for (x in 0..19)
 		{
 			for (y in 0..19)
 			{
+				if (x == 0 || y == 0 || x == 19 || y == 19 || MathUtils.random(5) == 0)
+				{
+					val e = Entity()
+
+					val occlude = OccluderComponent()
+					e.add(occlude)
+
+					val pos = PositionComponent()
+					pos.position = grid[x][y]
+					pos.slot = Enums.SpaceSlot.WALL
+					grid[x][y].contents.put(pos.slot, e)
+					e.add(pos)
+
+					val sprite = SpriteComponent(AssetManager.loadSprite("wall"))
+					e.add(sprite)
+
+					engine.addEntity(e)
+				}
+
 				val e = Entity()
 
 				val pos = PositionComponent()
@@ -43,7 +72,14 @@ class GameScreen(): AbstractScreen()
 				val sprite = SpriteComponent(AssetManager.loadSprite("grass"))
 				e.add(sprite)
 
+				if (MathUtils.random(50) == 0)
+				{
+					val light = LightComponent(Color.RED, 7f)
+					e.add(light)
+				}
+
 				engine.addEntity(e)
+
 			}
 		}
 
@@ -61,6 +97,9 @@ class GameScreen(): AbstractScreen()
 		val task = TaskComponent(TestAI())
 		p.add(task)
 
+		val light = LightComponent(Color(0.5f, 0.5f, 0.5f, 0f), 6f)
+		p.add(light)
+
 		engine.addEntity(p)
 
 		val level = Level()
@@ -70,14 +109,13 @@ class GameScreen(): AbstractScreen()
 
 		GlobalData.Global.currentLevel = level
 
-		engine.addSystem(TaskProcessorSystem())
-		engine.addSystem(SpriteUpdaterSystem())
-		engine.addSystem(RenderSystem(batch))
-
 		keyboardHelper = ButtonKeyboardHelper()
 	}
 
-	override fun doRender(delta: Float) {
+	override fun doRender(delta: Float)
+	{
+		lightingSystem.setCamera(camera)
+
 		engine.update(delta)
 	}
 

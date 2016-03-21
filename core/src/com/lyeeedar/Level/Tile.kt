@@ -17,8 +17,9 @@ class Tile() : Point(0, 0), PathfindingTile
 {
     val neighbours: FastEnumMap<Enums.Direction, Tile> = FastEnumMap( Enums.Direction::class.java )
     val contents: FastEnumMap<Enums.SpaceSlot, Entity> = FastEnumMap( Enums.SpaceSlot::class.java )
-	var light: Color = Color.WHITE
 	lateinit var level: Level
+	var visible: Boolean = false
+	var seen: Boolean = false
 
     override fun getInfluence(travelType: EnumBitflag<Enums.SpaceSlot>, self: Any?) = 0
 

@@ -31,7 +31,6 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem()
 {
 	lateinit var entities: ImmutableArray<Entity>
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap<RenderSprite>()
-	val temp: Color = Color()
 	val directionBitflag: EnumBitflag<Enums.Direction> = EnumBitflag<Enums.Direction>()
 
 	var screenShakeRadius: Float = 0f
@@ -88,7 +87,6 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem()
 			val pos = Mappers.position.get(entity)
 			val sprite = Mappers.sprite.get(entity)
 			val tilingSprite = Mappers.tilingSprite.get(entity)
-			val light = if (pos.position is Tile) (pos.position as Tile).light else Color.WHITE
 
 			val drawX = pos.position.x * GlobalData.Global.tileSize + offsetx;
 			val drawY = pos.position.y * GlobalData.Global.tileSize + offsety;
@@ -98,34 +96,26 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem()
 				sprite.sprite.size[0] = pos.size
 				sprite.sprite.size[1] = pos.size
 
-				queueSprite(sprite.sprite, light, drawX, drawY, offsetx, offsety, pos.slot)
+				queueSprite(sprite.sprite, drawX, drawY, offsetx, offsety, pos.slot)
 			}
 
 			if (tilingSprite != null)
 			{
 				GlobalData.Global.currentLevel?.buildTilingBitflag(directionBitflag, pos.position.x, pos.position.y, tilingSprite.sprite.checkID);
-				val sprite = tilingSprite.sprite.getSprite( directionBitflag );
+				val spriteData = tilingSprite.sprite.getSprite( directionBitflag );
 
-				sprite.size[0] = pos.size
-				sprite.size[1] = pos.size
+				spriteData.size[0] = pos.size
+				spriteData.size[1] = pos.size
 
-				queueSprite(sprite, light, drawX, drawY, offsetx, offsety, pos.slot)
+				queueSprite(spriteData, drawX, drawY, offsetx, offsety, pos.slot)
 			}
 		}
 
 		batch.begin()
 
-		val col = batch.getColor();
 		while (heap.size > 0)
 		{
 			val rs = heap.pop();
-
-			temp.set( rs.colour );
-			if ( !temp.equals( col ) )
-			{
-				batch.setColor( temp );
-				col.set( temp );
-			}
 
 			rs.sprite.render( batch, rs.x, rs.y, GlobalData.Global.tileSize, GlobalData.Global.tileSize );
 			rs.free()
@@ -135,7 +125,7 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem()
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueSprite(sprite: Sprite, colour: Color, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: Enums.SpaceSlot)
+	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: Enums.SpaceSlot)
 	{
 		var x = ix
 		var y = iy
@@ -149,23 +139,21 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem()
 
 		if ( x + GlobalData.Global.tileSize < 0 || y + GlobalData.Global.tileSize < 0 || x > GlobalData.Global.resolution[ 0 ] || y > GlobalData.Global.resolution[ 1 ] ) { return; }
 
-		val rs = RenderSprite.obtain().set( sprite, colour, x, y, offsetx, offsety, slot );
+		val rs = RenderSprite.obtain().set( sprite, x, y, offsetx, offsety, slot );
 
 		heap.add( rs, rs.comparisonVal );
 	}
 }
 
 class RenderSprite : BinaryHeap.Node(0f) {
-	val colour = Color()
 	lateinit var sprite: Sprite
 	var x: Float = 0f
 	var y: Float = 0f
 
 	var comparisonVal: Float = 0f
 
-	operator fun set(sprite: Sprite, colour: Color, x: Float, y: Float, offsetx: Float, offsety: Float, slot: Enums.SpaceSlot): RenderSprite {
+	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: Enums.SpaceSlot): RenderSprite {
 		this.sprite = sprite
-		this.colour.set(colour)
 		this.x = x
 		this.y = y
 

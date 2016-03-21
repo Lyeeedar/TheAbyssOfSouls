@@ -12,8 +12,14 @@ import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
  * Created by Philip on 20-Mar-16.
  */
 
-class TaskComponent(val ai: IAI): Component()
+class TaskComponent: Component
 {
+	constructor(ai: IAI)
+	{
+		this.ai = ai
+	}
+
+	val ai: IAI
 	val tasks: com.badlogic.gdx.utils.Array<AbstractTask> = com.badlogic.gdx.utils.Array<AbstractTask>()
 	var actionDelay: Float = 0f
 }
@@ -37,7 +43,7 @@ class TaskMove(var direction: Enums.Direction): AbstractTask()
 			val prev = (pos.position as Tile)
 			val next = prev.neighbours.get(direction)
 
-			if (next != null && next.contents.get(pos.slot) == null)
+			if (next != null && next.contents.get(pos.slot) == null && next.contents.get(Enums.SpaceSlot.WALL) == null)
 			{
 				prev.contents.remove(pos.slot)
 				pos.position = next

@@ -51,6 +51,7 @@ public class AtlasCreator
 
 		// pack default stuff
 		processSprite( "grass" );
+		processSprite( "wall" );
 		processSprite( "player" );
 
 		// pack GUI

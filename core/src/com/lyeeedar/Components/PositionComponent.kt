@@ -9,8 +9,10 @@ import com.lyeeedar.Util.Point
  * Created by Philip on 20-Mar-16.
  */
 
-class PositionComponent(): Component()
+class PositionComponent: Component
 {
+	constructor()
+
 	var position: Point = Point()
 	var slot: Enums.SpaceSlot = Enums.SpaceSlot.ENTITY
 	var size: Int = 1
