@@ -3,11 +3,16 @@ package com.lyeeedar.Components
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
+import com.lyeeedar.Level.Tile
 import kotlin.reflect.KClass
 
 /**
  * Created by Philip on 20-Mar-16.
  */
+
+fun Entity.position() = Mappers.position.get(this)
+fun Entity.tile() = Mappers.position.get(this).position as? Tile
+fun Entity.stats() = Mappers.stats.get(this)
 
 class Mappers
 {
@@ -20,5 +25,6 @@ class Mappers
 		@JvmField val light: ComponentMapper<LightComponent> = ComponentMapper.getFor(LightComponent::class.java)
 		@JvmField val occluder: ComponentMapper<OccluderComponent> = ComponentMapper.getFor(OccluderComponent::class.java)
 		@JvmField val stats: ComponentMapper<StatisticsComponent> = ComponentMapper.getFor(StatisticsComponent::class.java)
+		@JvmField val shadow: ComponentMapper<ShadowCastComponent> = ComponentMapper.getFor(ShadowCastComponent::class.java)
 	}
 }

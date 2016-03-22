@@ -26,6 +26,7 @@ class GameScreen(): AbstractScreen()
 
 	override fun create()
 	{
+		engine.addSystem(ShadowCastSystem())
 		engine.addSystem(TaskProcessorSystem())
 		engine.addSystem(SpriteUpdaterSystem())
 		engine.addSystem(RenderSystem(batch))

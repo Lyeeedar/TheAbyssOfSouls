@@ -7,9 +7,7 @@ import com.badlogic.gdx.utils.JsonValue
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.reflect.ClassReflection
-import com.lyeeedar.AI.BehaviourTree.Actions.ActionClearValue
-import com.lyeeedar.AI.BehaviourTree.Actions.ActionMoveTo
-import com.lyeeedar.AI.BehaviourTree.Actions.ActionSetValue
+import com.lyeeedar.AI.BehaviourTree.Actions.*
 import com.lyeeedar.AI.BehaviourTree.Conditionals.ConditionalCheckValue
 import com.lyeeedar.AI.BehaviourTree.Decorators.*
 import com.lyeeedar.AI.BehaviourTree.Selectors.*
@@ -72,8 +70,11 @@ abstract class AbstractTreeNode()
 
 			// Actions
 				"CLEARVALUE" -> ActionClearValue::class.java
+				"GETALLVISIBLE" -> ActionGetAllVisible::class.java
 				"MOVETO" -> ActionMoveTo::class.java
+				"PICK" -> ActionPick::class.java
 				"SETVALUE" -> ActionSetValue::class.java
+				"WAIT" -> ActionWait::class.java
 
 			// Conditionals
 				"CHECKVALUE" -> ConditionalCheckValue::class.java

@@ -254,6 +254,7 @@ public class Enums
 	public enum Statistic
 	{
 		MAX_HEALTH,
+		MAX_STAMINA,
 		SIGHT,
 
 		PHYSICAL_ATTACK,

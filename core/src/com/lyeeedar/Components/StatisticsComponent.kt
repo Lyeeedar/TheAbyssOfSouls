@@ -14,6 +14,8 @@ class StatisticsComponent: Component
 	constructor()
 
 	val stats: FastEnumMap<Enums.Statistic, Float> = Enums.Statistic.getStatisticsBlock(10f)
+	val variableMap: HashMap<String, Float> = HashMap<String, Float>()
 	val factions: HashSet<String> = HashSet<String>()
 	var hp: Float = 1f
+	var stamina: Float = 1f
 }
