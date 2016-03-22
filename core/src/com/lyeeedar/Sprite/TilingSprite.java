@@ -13,16 +13,18 @@ public class TilingSprite
 {
 	private static final int CENTER = 1 << ( Enums.Direction.CENTER.ordinal() + 1 );
 	private static final int SOUTH = 1 << ( Enums.Direction.SOUTH.ordinal() + 1 );
+	private static final int NORTH = 1 << ( Enums.Direction.NORTH.ordinal() + 1 );
 
 	public TilingSprite()
 	{
 
 	}
 
-	public TilingSprite( Sprite topSprite, Sprite frontSprite )
+	public TilingSprite( Sprite topSprite, Sprite frontSprite, Sprite overhangSprite )
 	{
 		sprites.put( CENTER, topSprite );
 		sprites.put( SOUTH, frontSprite );
+		sprites.put( NORTH, overhangSprite );
 
 		hasAllElements = true;
 	}
@@ -31,7 +33,7 @@ public class TilingSprite
 	{
 		Element spriteBase = new Element("Sprite", null);
 
-		load( name, name, texture, mask, spriteBase, null );
+		load( name, name, texture, mask, spriteBase );
 	}
 
 	public IntMap<Sprite> sprites = new IntMap<Sprite>(  );
@@ -45,8 +47,6 @@ public class TilingSprite
 
 	public boolean hasAllElements;
 
-	public Sprite overhangSprite;
-
 	public TilingSprite copy()
 	{
 		TilingSprite copy = new TilingSprite();
@@ -56,7 +56,6 @@ public class TilingSprite
 		copy.maskName = maskName;
 		copy.spriteBase = spriteBase;
 		copy.hasAllElements = hasAllElements;
-		copy.overhangSprite = overhangSprite;
 
 		for (IntMap.Entry<Sprite> pair : sprites.entries())
 		{
@@ -74,16 +73,16 @@ public class TilingSprite
 		checkName = xml.get( "CheckName", checkName );
 		thisName = xml.get( "ThisName", thisName );
 
-		Element overhangElement = xml.getChildByName( "Overhang" );
-
 		Element topElement = xml.getChildByName("Top");
 		if (topElement != null)
 		{
 			Sprite topSprite = AssetManager.loadSprite( topElement );
 			Sprite frontSprite = AssetManager.loadSprite( xml.getChildByName( "Front" ) );
+			Sprite overhangSprite = AssetManager.loadSprite( xml.getChildByName( "Overhang" ) );
 
 			sprites.put( CENTER, topSprite );
 			sprites.put( SOUTH, frontSprite );
+			sprites.put( NORTH, overhangSprite );
 
 			hasAllElements = true;
 		}
@@ -94,21 +93,16 @@ public class TilingSprite
 
 		this.additive = xml.getBoolean( "Additive", false );
 
-		load(thisName, checkName, texName, maskName, spriteElement, overhangElement);
+		load(thisName, checkName, texName, maskName, spriteElement);
 	}
 
-	public void load( String thisName, String checkName, String texName, String maskName, Element spriteElement, Element overhangElement )
+	public void load( String thisName, String checkName, String texName, String maskName, Element spriteElement )
 	{
 		this.thisID = thisName.toLowerCase().hashCode();
 		this.checkID = checkName.toLowerCase().hashCode();
 		this.texName = texName;
 		this.maskName = maskName;
 		this.spriteBase = spriteElement;
-
-		if ( overhangElement != null )
-		{
-			overhangSprite = AssetManager.loadSprite( overhangElement );
-		}
 	}
 
 	public static TilingSprite load( Element xml )

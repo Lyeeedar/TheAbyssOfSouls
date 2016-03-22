@@ -40,13 +40,13 @@ class ActionPick(): AbstractAction()
 			}
 			else
 			{
-				if (criteria.equals("RANDOM"))
+				if (criteria.equals("random") || criteria.equals("ran"))
 				{
 					var index = ran.nextInt(obj.count());
 					setData(output, obj.elementAt(index));
 					state = ExecutionState.COMPLETED;
 				}
-				else if (criteria.equals("DISTANCE"))
+				else if (criteria.equals("distance") || criteria.equals("dist"))
 				{
 					obj.sortedBy { if (it is Point) it.taxiDist(tile) else (it as? Entity)?.tile()?.taxiDist(tile) }
 
@@ -72,7 +72,7 @@ class ActionPick(): AbstractAction()
 	{
 		input = xml.getAttribute("Input")
 		output = xml.getAttribute("Output")
-		criteria = xml.getAttribute("Criteria", "Distance").toUpperCase()
+		criteria = xml.getAttribute("Criteria", "Distance").toLowerCase()
 		lowest = xml.getBooleanAttribute("Lowest", true)
 	}
 

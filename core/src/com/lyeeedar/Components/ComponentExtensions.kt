@@ -16,6 +16,7 @@ fun Entity.tile() = Mappers.position.get(this).position as? Tile
 fun Entity.stats() = Mappers.stats.get(this)
 fun Entity.event() = Mappers.event.get(this)
 fun Entity.postEvent(args:EventArgs) = this.event()?.pendingEvents?.add(args)
+fun Entity.name() = Mappers.name.get(this).name
 
 class Mappers
 {
@@ -30,5 +31,6 @@ class Mappers
 		@JvmField val stats: ComponentMapper<StatisticsComponent> = ComponentMapper.getFor(StatisticsComponent::class.java)
 		@JvmField val shadow: ComponentMapper<ShadowCastComponent> = ComponentMapper.getFor(ShadowCastComponent::class.java)
 		@JvmField val event: ComponentMapper<EventComponent> = ComponentMapper.getFor(EventComponent::class.java)
+		@JvmField val name: ComponentMapper<NameComponent> = ComponentMapper.getFor(NameComponent::class.java)
 	}
 }

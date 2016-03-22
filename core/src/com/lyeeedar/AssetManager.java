@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 import com.lyeeedar.Sound.SoundInstance;
 import com.lyeeedar.Sprite.Sprite;
 import com.lyeeedar.Sprite.SpriteAnimation.AbstractSpriteAnimation;
+import com.lyeeedar.Sprite.TilingSprite;
 
 public class AssetManager
 {
@@ -234,22 +235,7 @@ public class AssetManager
 		Color colour = new Color( Color.WHITE );
 		if ( colourElement != null )
 		{
-			colour = new Color();
-			colour.a = 1;
-
-			String rgb = colourElement.get( "RGB", null );
-			if ( rgb != null )
-			{
-				String[] cols = rgb.split( "," );
-				colour.r = Float.parseFloat( cols[ 0 ] ) / 255.0f;
-				colour.g = Float.parseFloat( cols[ 1 ] ) / 255.0f;
-				colour.b = Float.parseFloat( cols[ 2 ] ) / 255.0f;
-			}
-
-			colour.r = colourElement.getFloat( "Red", colour.r );
-			colour.g = colourElement.getFloat( "Green", colour.g );
-			colour.b = colourElement.getFloat( "Blue", colour.b );
-			colour.a = colourElement.getFloat( "Alpha", colour.a );
+			colour = loadColour(colourElement);
 		}
 
 		Element soundElement = xml.getChildByName( "Sound" );
@@ -284,22 +270,7 @@ public class AssetManager
 		Color colour = Color.WHITE;
 		if ( colourElement != null )
 		{
-			colour = new Color();
-			colour.a = 1;
-
-			String rgb = colourElement.get( "RGB", null );
-			if ( rgb != null )
-			{
-				String[] cols = rgb.split( "," );
-				colour.r = Float.parseFloat( cols[ 0 ] ) / 255.0f;
-				colour.g = Float.parseFloat( cols[ 1 ] ) / 255.0f;
-				colour.b = Float.parseFloat( cols[ 2 ] ) / 255.0f;
-			}
-
-			colour.r = colourElement.getFloat( "Red", colour.r );
-			colour.g = colourElement.getFloat( "Green", colour.g );
-			colour.b = colourElement.getFloat( "Blue", colour.b );
-			colour.a = colourElement.getFloat( "Alpha", colour.a );
+			colour = loadColour(colourElement);
 		}
 
 		Element soundElement = xml.getChildByName( "Sound" );
@@ -347,4 +318,30 @@ public class AssetManager
 		return sprite;
 	}
 
+	public static Color loadColour( Element xml )
+	{
+		Color colour = new Color();
+		colour.a = 1;
+
+		String rgb = xml.get( "RGB", null );
+		if ( rgb != null )
+		{
+			String[] cols = rgb.split( "," );
+			colour.r = Float.parseFloat( cols[ 0 ] ) / 255.0f;
+			colour.g = Float.parseFloat( cols[ 1 ] ) / 255.0f;
+			colour.b = Float.parseFloat( cols[ 2 ] ) / 255.0f;
+		}
+
+		colour.r = xml.getFloat( "Red", colour.r );
+		colour.g = xml.getFloat( "Green", colour.g );
+		colour.b = xml.getFloat( "Blue", colour.b );
+		colour.a = xml.getFloat( "Alpha", colour.a );
+
+		return colour;
+	}
+
+	public static TilingSprite loadTilingSprite( Element xml )
+	{
+		return TilingSprite.load( xml );
+	}
 }
