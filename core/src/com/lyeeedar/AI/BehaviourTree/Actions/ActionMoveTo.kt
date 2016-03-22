@@ -3,8 +3,8 @@ package com.lyeeedar.AI.BehaviourTree.Actions
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
+import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.TaskMove
 import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile

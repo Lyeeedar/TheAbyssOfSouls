@@ -3,6 +3,7 @@ package com.lyeeedar.Components
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
+import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.Level.Tile
 import kotlin.reflect.KClass
 
@@ -13,6 +14,8 @@ import kotlin.reflect.KClass
 fun Entity.position() = Mappers.position.get(this)
 fun Entity.tile() = Mappers.position.get(this).position as? Tile
 fun Entity.stats() = Mappers.stats.get(this)
+fun Entity.event() = Mappers.event.get(this)
+fun Entity.postEvent(args:EventArgs) = this.event()?.pendingEvents?.add(args)
 
 class Mappers
 {
@@ -26,5 +29,6 @@ class Mappers
 		@JvmField val occluder: ComponentMapper<OccluderComponent> = ComponentMapper.getFor(OccluderComponent::class.java)
 		@JvmField val stats: ComponentMapper<StatisticsComponent> = ComponentMapper.getFor(StatisticsComponent::class.java)
 		@JvmField val shadow: ComponentMapper<ShadowCastComponent> = ComponentMapper.getFor(ShadowCastComponent::class.java)
+		@JvmField val event: ComponentMapper<EventComponent> = ComponentMapper.getFor(EventComponent::class.java)
 	}
 }

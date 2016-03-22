@@ -13,9 +13,10 @@ class StatisticsComponent: Component
 {
 	constructor()
 
+	var name: String = ""
 	val stats: FastEnumMap<Enums.Statistic, Float> = Enums.Statistic.getStatisticsBlock(10f)
-	val variableMap: HashMap<String, Float> = HashMap<String, Float>()
-	val factions: HashSet<String> = HashSet<String>()
+	val variableMap: HashMap<String, Float> = HashMap()
+	val factions: HashSet<String> = HashSet()
 	var hp: Float = 1f
 	var stamina: Float = 1f
 }

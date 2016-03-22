@@ -3,8 +3,8 @@ package com.lyeeedar.AI.BehaviourTree.Actions
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
+import com.lyeeedar.AI.Tasks.TaskWait
 import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.TaskWait
 
 /**
  * Created by Philip on 21-Mar-16.

@@ -1,5 +1,6 @@
 package com.lyeeedar
 
+import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -33,6 +34,7 @@ class GlobalData
 	@JvmField var game: MainGame? = null
 
 	@JvmField var currentLevel: Level? = null
+	@JvmField var engine: Engine? = null
 
 	@JvmField val controls: Controls = Controls()
 	lateinit var skin: Skin

@@ -8,6 +8,8 @@ import com.badlogic.ashley.utils.ImmutableArray
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.SpriteComponent
 import com.lyeeedar.Components.TaskComponent
+import com.lyeeedar.Components.postEvent
+import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.GlobalData
 
 /**
@@ -99,6 +101,8 @@ class TaskProcessorSystem(): EntitySystem(0)
 
 				t.execute(e)
 				task.actionDelay -= t.duration;
+
+				e.postEvent(EventArgs(t.eventType, e, e, t.duration))
 			}
 		}
 

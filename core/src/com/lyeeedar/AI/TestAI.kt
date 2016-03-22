@@ -1,8 +1,8 @@
 package com.lyeeedar.AI
 
 import com.badlogic.ashley.core.Entity
+import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.TaskMove
 import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Util.Controls
