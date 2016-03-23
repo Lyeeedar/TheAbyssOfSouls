@@ -188,42 +188,42 @@ GUI/frame_1
   index: -1
 grass
   rotate: false
-  xy: 2, 2
+  xy: 462, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 player_1
   rotate: false
-  xy: 54, 2
+  xy: 2, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 player_2
   rotate: false
-  xy: 462, 70
+  xy: 410, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 player_4
   rotate: false
-  xy: 462, 70
+  xy: 410, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 player_3
   rotate: false
-  xy: 106, 2
+  xy: 54, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 410, 70
+  xy: 106, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

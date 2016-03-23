@@ -7,7 +7,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+
+import java.util.HashSet;
 
 /**
  * Light is data container for all the light parameters. When created lights
@@ -47,10 +50,14 @@ public abstract class Light implements Disposable {
 	protected Mesh lightMesh;
 	protected Mesh softShadowMesh;
 
+
+	protected Array<Mesh> extraBodyMeshes = new Array<Mesh>(  );
+
 	protected float segments[];
 	protected float[] mx;
 	protected float[] my;
 	protected float[] f;
+	protected HashSet<Body> occluders = new HashSet<Body>(  );
 	protected int m_index = 0;
 
 	/**
@@ -159,14 +166,16 @@ public abstract class Light implements Disposable {
 	 *
 	 * @see #setColor(float, float, float, float)
 	 */
-	public void setColor(Color newColor) {
+	public void setColor(Color newColor)
+	{
+		if (staticLight && !color.equals( newColor )) dirty = true;
+
 		if (newColor != null) {
 			color.set(newColor);
 		} else {
 			color.set(DefaultColor);
 		}
 		colorF = color.toFloatBits();
-		if (staticLight) dirty = true;
 	}
 
 	/**
@@ -371,21 +380,35 @@ public abstract class Light implements Disposable {
 	/** Global lights filter **/
 	static private Filter filterA = null;
 
-	final RayCastCallback ray = new RayCastCallback() {
-		@Override
-		final public float reportRayFixture(Fixture fixture, Vector2 point,
-											Vector2 normal, float fraction) {
+	final SecondHitRayCastCallback ray = new SecondHitRayCastCallback();
 
+	class SecondHitRayCastCallback implements RayCastCallback
+	{
+		int hit = 0;
+
+		@Override
+		final public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction)
+		{
 			if ((filterA != null) && !contactFilter(fixture))
+			{
 				return -1;
-			// if (fixture.isSensor())
-			// return -1;
-			mx[m_index] = point.x;
-			my[m_index] = point.y;
-			f[m_index] = fraction;
-			return fraction;
+			}
+
+			if (hit == 0)
+			{
+				hit++;
+				return 1;
+			}
+			else
+			{
+				mx[ m_index ] = point.x;
+				my[ m_index ] = point.y;
+				f[ m_index ] = fraction;
+				occluders.add( fixture.getBody() );
+				return fraction;
+			}
 		}
-	};
+	}
 
 	boolean contactFilter(Fixture fixtureB) {
 		Filter filterB = fixtureB.getFilterData();

@@ -55,7 +55,7 @@ class ActionProcessInput(): AbstractAction()
 			if ( x != 0 || y != 0 || space )
 			{
 				val tile = Mappers.position.get(entity).position
-				targetPos = Point.obtain().set( tile.x - x, tile.y - y );
+				targetPos = Point.obtain().set( tile.x + x, tile.y + y );
 			}
 		}
 

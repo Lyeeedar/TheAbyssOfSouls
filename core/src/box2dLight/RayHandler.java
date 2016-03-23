@@ -115,7 +115,7 @@ public class RayHandler implements Disposable {
 	 * @see #RayHandler(World, int, int)
 	 */
 	public RayHandler(World world) {
-		this(world, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4);
+		this(world, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	/**
@@ -327,6 +327,7 @@ public class RayHandler implements Disposable {
 
 			for (Light light : fovLightsList)
 			{
+				lightShader.setUniformf( "u_lightData", light.getPosition().x, light.getPosition().y, light.distance );
 				light.render();
 			}
 
@@ -335,6 +336,7 @@ public class RayHandler implements Disposable {
 			Gdx.gl.glBlendFunc(GL20.GL_DST_ALPHA, GL20.GL_ONE);
 
 			for (Light light : lightList) {
+				lightShader.setUniformf( "u_lightData", light.getPosition().x, light.getPosition().y, light.distance );
 				light.render();
 			}
 		}

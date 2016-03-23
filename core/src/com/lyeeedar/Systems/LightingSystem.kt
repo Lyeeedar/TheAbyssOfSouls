@@ -24,32 +24,36 @@ class LightingSystem(): EntitySystem(10)
 	val world: World
 	val rayHandler: RayHandler
 	val fovLight: FovLight
+	val debug: Box2DDebugRenderer
+	var camera: Camera? = null
 
 	lateinit var posLightEntities: ImmutableArray<Entity>
 	lateinit var posOccludeEntities: ImmutableArray<Entity>
 
-	var lastTileSize: Float = 0f
-
 	init
 	{
-		RayHandler.setGammaCorrection(true);
+		//RayHandler.setGammaCorrection(true);
 		RayHandler.useDiffuseLight(true);
 
 		world = World(Vector2(0f, 0f), true)
 
 		rayHandler = RayHandler(world)
-		rayHandler.setAmbientLight(0f, 0f, 0f, 0.5f);
-		rayHandler.setBlurNum(3);
+		rayHandler.setAmbientLight(0f, 0f, 0f, 0.0f);
+		rayHandler.setBlurNum(1);
 		rayHandler.setCulling(true)
 
 		fovLight = FovLight(rayHandler, 256)
 		fovLight.color = Color.WHITE
 		fovLight.isStaticLight = true
 		fovLight.isSoft = false
+		fovLight.setSoftnessLength(0f)
+
+		debug = Box2DDebugRenderer()
 	}
 
 	fun setCamera(camera: OrthographicCamera)
 	{
+		this.camera = camera
 		rayHandler.setCombinedMatrix(camera)
 	}
 
@@ -67,49 +71,40 @@ class LightingSystem(): EntitySystem(10)
 
 	override fun update(deltaTime: Float)
 	{
-		val tileSize = GlobalData.Global.tileSize
-		val tileSize2 = tileSize / 2f
-
 		val player = GlobalData.Global.currentLevel?.player
 		val playerPos = Mappers.position.get(player);
-		val playerSprite = Mappers.sprite.get(player);
 		val playerStats = Mappers.stats.get(player)
+		val playerOffset = player?.renderOffset()
 
-		var offsetx = GlobalData.Global.resolution[ 0 ] / 2 - playerPos.position.x * tileSize - tileSize2;
-		var offsety = GlobalData.Global.resolution[ 1 ] / 2 - playerPos.position.y * tileSize - tileSize2;
+		var px = playerPos.position.x.toFloat();
+		var py = playerPos.position.y.toFloat();
 
-		var px = playerPos.position.x.toFloat() * tileSize + offsetx + tileSize2;
-		var py = playerPos.position.y.toFloat() * tileSize + offsety + tileSize2;
-		fovLight.setPosition(px, py)
-		fovLight.distance = playerStats.stats.get(Enums.Statistic.SIGHT) * tileSize
-
-		if ( playerSprite.sprite.spriteAnimation is MoveAnimation )
+		if (playerOffset != null)
 		{
-			val offset = playerSprite.sprite.spriteAnimation.renderOffset
-
-			offsetx -= offset[0]
-			offsety -= offset[1]
+			px += playerOffset[0] / GlobalData.Global.tileSize
+			py += playerOffset[1] / GlobalData.Global.tileSize
 		}
+
+		fovLight.setPosition(px, py)
+		fovLight.distance = playerStats.stats.get(Enums.Statistic.SIGHT)
 
 		for (entity in posLightEntities)
 		{
 			val pos = Mappers.position.get(entity)
 			val light = Mappers.light.get(entity)
-			val sprite = Mappers.sprite.get(entity)
+			val offset = entity.renderOffset()
 
-			var x = pos.position.x.toFloat() * tileSize + offsetx + tileSize2
-			var y = pos.position.y.toFloat() * tileSize + offsety + tileSize2
+			var x = pos.position.x.toFloat()
+			var y = pos.position.y.toFloat()
 
-			if (sprite != null && sprite.sprite.spriteAnimation != null && sprite.sprite.spriteAnimation is MoveAnimation)
+			if (offset != null)
 			{
-				val offset = sprite.sprite.spriteAnimation.renderOffset
-
-				x += offset[0]
-				y += offset[1]
+				x += offset[0] / GlobalData.Global.tileSize
+				y += offset[1] / GlobalData.Global.tileSize
 			}
 
 			light.lightObj?.color = light.col
-			light.lightObj?.distance = light.dist * tileSize
+			light.lightObj?.distance = light.dist
 			light.lightObj?.setPosition(x, y)
 		}
 
@@ -117,45 +112,17 @@ class LightingSystem(): EntitySystem(10)
 		{
 			val pos = Mappers.position.get(entity)
 			val occlude = Mappers.occluder.get(entity)
-			val sprite = Mappers.sprite.get(entity)
 
-			var x = pos.position.x.toFloat() * tileSize + offsetx + tileSize2
-			var y = pos.position.y.toFloat() * tileSize + offsety + tileSize2
-
-			if (sprite != null && sprite.sprite.spriteAnimation != null && sprite.sprite.spriteAnimation is MoveAnimation)
-			{
-				val offset = sprite.sprite.spriteAnimation.renderOffset
-
-				x += offset[0]
-				y += offset[1]
-			}
+			var x = pos.position.x.toFloat()
+			var y = pos.position.y.toFloat()
 
 			occlude.body?.setTransform(x, y, 0f)
-
-			if (tileSize == -1f)
-			{
-				val body = occlude.body ?: continue
-
-				for (fixture in body.fixtureList.asSequence())
-				{
-					body.destroyFixture(fixture)
-				}
-
-				val def = FixtureDef()
-				val boxShape = PolygonShape()
-				boxShape.setAsBox(tileSize2, tileSize2)
-				def.shape = boxShape
-
-				body.createFixture(def);
-
-				boxShape.dispose()
-			}
 		}
-
-		lastTileSize = tileSize
 
 		world.step(deltaTime, 0, 0)
 		rayHandler.updateAndRender()
+
+		//debug.render(world, camera?.combined)
 	}
 
 	inner class LightListener(): EntityListener
@@ -174,10 +141,11 @@ class LightingSystem(): EntitySystem(10)
 		{
 			val lightData = Mappers.light.get(entity)
 
-			val light = PointLight(rayHandler, 128)
+			val light = PointLight(rayHandler, 256)
 			light.isStaticLight = true
 			light.isActive = true
 			light.isSoft = false
+			light.setSoftnessLength(0f)
 
 			light.add(rayHandler)
 
@@ -202,7 +170,7 @@ class LightingSystem(): EntitySystem(10)
 
 			val def = FixtureDef()
 			val boxShape = PolygonShape()
-			boxShape.setAsBox(16f, 16f)
+			boxShape.setAsBox(0.5f, 0.5f)
 			def.shape = boxShape
 
 			val boxBodyDef = BodyDef();

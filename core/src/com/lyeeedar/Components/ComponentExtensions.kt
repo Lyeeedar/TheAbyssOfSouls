@@ -21,6 +21,8 @@ fun Entity.stats() = Mappers.stats.get(this)
 fun Entity.event() = Mappers.event.get(this)
 fun Entity.postEvent(args:EventArgs) = this.event()?.pendingEvents?.add(args)
 fun Entity.name() = Mappers.name.get(this).name
+fun Entity.sprite() = Mappers.sprite.get(this)
+fun Entity.renderOffset() = this.sprite()?.sprite?.spriteAnimation?.renderOffset
 
 class Mappers
 {

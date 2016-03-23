@@ -29,7 +29,7 @@ class Tile() : Point(0, 0), PathfindingTile
         if (contents.get(Enums.SpaceSlot.WALL) != null) { return false; }
 
 		val obj = contents.get(travelType)
-		if (obj != self)
+		if (obj != null && obj != self)
 		{
 			return false;
 		}

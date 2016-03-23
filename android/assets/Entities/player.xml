@@ -12,7 +12,7 @@
     </Sprite>
 
     <Light>
-        <Colour><RGB>255,255,255</RGB></Colour>
+        <Colour><RGB>255,255,255</RGB><Alpha>0.3</Alpha></Colour>
         <Distance>5</Distance>
     </Light>
 

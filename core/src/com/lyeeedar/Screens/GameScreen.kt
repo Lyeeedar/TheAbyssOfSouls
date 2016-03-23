@@ -101,6 +101,19 @@ class GameScreen(): AbstractScreen()
 
 	override fun doRender(delta: Float)
 	{
+		val tile = GlobalData.Global.currentLevel?.player?.tile() ?: return
+
+		camera.position.set(tile.x.toFloat(), tile.y.toFloat(), 0f)
+
+		val offset = GlobalData.Global.currentLevel?.player?.renderOffset()
+		if (offset != null)
+		{
+			camera.position.add(offset[0] / GlobalData.Global.tileSize, offset[1] / GlobalData.Global.tileSize, 0f);
+		}
+
+		camera.zoom = 1f / GlobalData.Global.tileSize
+		camera.update()
+
 		lightingSystem.setCamera(camera)
 
 		engine.update(delta)
