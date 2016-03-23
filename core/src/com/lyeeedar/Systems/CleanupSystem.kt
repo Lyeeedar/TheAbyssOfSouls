@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
+import com.lyeeedar.Components.EffectComponent
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.StatisticsComponent
 import com.lyeeedar.Level.Tile
@@ -12,7 +13,7 @@ import com.lyeeedar.Level.Tile
  * Created by Philip on 21-Mar-16.
  */
 
-class CleanupSystem(): IteratingSystem(Family.all(StatisticsComponent::class.java).get(), 20)
+class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.java, EffectComponent::class.java).get(), 20)
 {
 	lateinit var eng: Engine
 
@@ -27,8 +28,7 @@ class CleanupSystem(): IteratingSystem(Family.all(StatisticsComponent::class.jav
 	override fun processEntity(entity: Entity?, deltaTime: Float)
 	{
 		val stats = Mappers.stats.get(entity)
-
-		if (stats.hp < 0)
+		if (stats != null && stats.hp < 0)
 		{
 			// only cleanup if tile has no effects
 			val sprite = Mappers.sprite.get(entity)
@@ -45,6 +45,23 @@ class CleanupSystem(): IteratingSystem(Family.all(StatisticsComponent::class.jav
 			}
 
 			eng.removeEntity(entity)
+		}
+
+		val effect = Mappers.effect.get(entity)
+		if (effect != null && effect.completed)
+		{
+			val event = Mappers.event.get(entity)
+			if (event == null || event.pendingEvents.size == 0)
+			{
+				val pos = Mappers.position.get(entity)
+				if (pos?.position is Tile)
+				{
+					val tile = (pos.position as Tile)
+					tile.effects.removeValue(entity, true)
+				}
+
+				eng.removeEntity(entity)
+			}
 		}
 	}
 

@@ -10,6 +10,14 @@ import com.lyeeedar.Sprite.SpriteAnimation.AbstractSpriteAnimation;
 
 public final class Sprite
 {
+	public enum AnimationStage
+	{
+		INVALID,
+		START,
+		MIDDLE,
+		END
+	}
+
 	public enum AnimationMode
 	{
 		NONE, TEXTURE, SHRINK, SINE
@@ -37,8 +45,8 @@ public final class Sprite
 	public Array<TextureRegion> textures;
 
 	public AbstractSpriteAnimation spriteAnimation;
-	public SpriteAction spriteAction;
 
+	public AnimationStage animationStage = AnimationStage.INVALID;
 	public AnimationState animationState;
 
 	public SoundInstance sound;
@@ -71,6 +79,11 @@ public final class Sprite
 		return spriteAnimation != null ? spriteAnimation.duration - spriteAnimation.time : animationDelay * (textures.size - animationState.texIndex);
 	}
 
+	public AnimationStage getAnimationStage()
+	{
+		return animationStage;
+	}
+
 	public boolean update( float delta )
 	{
 		if ( renderDelay > 0 )
@@ -88,12 +101,7 @@ public final class Sprite
 		boolean looped = false;
 		if (repeatAccumulator <= 0)
 		{
-			if (spriteAction != null && spriteAction.firePoint == SpriteAction.FirePoint.Start)
-			{
-				spriteAction.evaluate();
-				spriteAction = null;
-			}
-
+			if (animationStage == AnimationStage.INVALID) animationStage = AnimationStage.START;
 			animationAccumulator += delta;
 
 			while ( animationAccumulator >= animationDelay )
@@ -102,10 +110,9 @@ public final class Sprite
 
 				if ( animationState.mode == AnimationMode.TEXTURE )
 				{
-					if (spriteAction != null && spriteAnimation == null && animationState.texIndex == textures.size/2 && spriteAction.firePoint == SpriteAction.FirePoint.Middle)
+					if (spriteAnimation == null && animationState.texIndex == textures.size/2)
 					{
-						spriteAction.evaluate();
-						spriteAction = null;
+						animationStage = AnimationStage.MIDDLE;
 					}
 
 					animationState.texIndex++;
@@ -135,14 +142,14 @@ public final class Sprite
 
 		if ( spriteAnimation != null )
 		{
+			if (animationStage == AnimationStage.INVALID) animationStage = AnimationStage.START;
 			looped = spriteAnimation.update( delta );
 
 			if (spriteAnimation.time >= spriteAnimation.duration / 2)
 			{
-				if (spriteAction != null && spriteAction.firePoint == SpriteAction.FirePoint.Middle)
+				if (spriteAnimation == null && animationState.texIndex == textures.size/2)
 				{
-					spriteAction.evaluate();
-					spriteAction = null;
+					animationStage = AnimationStage.MIDDLE;
 				}
 			}
 
@@ -154,11 +161,7 @@ public final class Sprite
 
 		if (looped)
 		{
-			if (spriteAction != null && spriteAction.firePoint == SpriteAction.FirePoint.End)
-			{
-				spriteAction.evaluate();
-				spriteAction = null;
-			}
+			animationStage = AnimationStage.END;
 		}
 
 		return looped;

@@ -11,10 +11,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.BinaryHeap
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
-import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.PositionComponent
-import com.lyeeedar.Components.SpriteComponent
-import com.lyeeedar.Components.TilingSpriteComponent
+import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
@@ -40,7 +37,7 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 
 	override fun addedToEngine(engine: Engine?)
 	{
-		entities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java).one(SpriteComponent::class.java, TilingSpriteComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
+		entities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java).one(SpriteComponent::class.java, TilingSpriteComponent::class.java, EffectComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 	}
 
 	override fun update(deltaTime: Float)
@@ -87,6 +84,7 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 			val pos = Mappers.position.get(entity)
 			val sprite = Mappers.sprite.get(entity)
 			val tilingSprite = Mappers.tilingSprite.get(entity)
+			val effect = Mappers.effect.get(entity)
 
 			val drawX = pos.position.x * GlobalData.Global.tileSize + offsetx;
 			val drawY = pos.position.y * GlobalData.Global.tileSize + offsety;
@@ -108,6 +106,14 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 				spriteData.size[1] = pos.size
 
 				queueSprite(spriteData, drawX, drawY, offsetx, offsety, pos.slot)
+			}
+
+			if (effect != null)
+			{
+				effect.sprite.size[0] = pos.size
+				effect.sprite.size[1] = pos.size
+
+				queueSprite(effect.sprite, drawX, drawY, offsetx, offsety, pos.slot)
 			}
 		}
 
@@ -132,7 +138,7 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 
 		if ( sprite.spriteAnimation != null )
 		{
-			val offset = sprite.spriteAnimation.getRenderOffset();
+			val offset = sprite.spriteAnimation.renderOffset;
 			x += offset[ 0 ];
 			y += offset[ 1 ];
 		}

@@ -12,6 +12,7 @@ import com.lyeeedar.Util.Point
 class PositionComponent: Component
 {
 	constructor()
+	constructor(point: Point) { this.position = point }
 
 	var position: Point = Point()
 	var slot: Enums.SpaceSlot = Enums.SpaceSlot.ENTITY

@@ -1,6 +1,7 @@
 package com.lyeeedar.Components
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Events.EventActionGroup
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.Util.FastEnumMap
@@ -26,15 +27,16 @@ class EventComponent: Component
 		ATTACK,
 		WAIT,
 
-		DEAL_DAMAGE,
-		RECEIVE_DAMAGE,
+		DEALDAMAGE,
+		RECEIVEDAMAGE,
 		HEAL,
 
 		SPAWN,
 		DEATH,
 
 		ACTIVATE,
-		NONE
+		NONE,
+		ALL
 	}
 
 	val handlers: FastEnumMap<EventType, com.badlogic.gdx.utils.Array<EventActionGroup>> = FastEnumMap(EventType::class.java)
@@ -43,5 +45,28 @@ class EventComponent: Component
 	fun registerHandler(type: EventType, handler:EventActionGroup)
 	{
 		handlers.get(type).add(handler)
+		if (type != EventType.ALL) handlers.get(EventType.ALL).add(handler)
+	}
+
+	fun parse(xml: XmlReader.Element)
+	{
+		for (i in 0..xml.childCount-1)
+		{
+			val typeBlock = xml.getChild(i)
+			val blockName = typeBlock.name.toUpperCase()
+
+			if (!blockName.startsWith("ON")) throw RuntimeException("Invalid event type: $blockName")
+
+			val type = EventType.valueOf(blockName.substring(2))
+
+			for (g in 0..typeBlock.childCount-1)
+			{
+				val groupEl = typeBlock.getChild(g)
+				val group = EventActionGroup()
+				group.parse(groupEl)
+
+				registerHandler(type, group)
+			}
+		}
 	}
 }
