@@ -13,6 +13,11 @@ import com.lyeeedar.Util.Controls
 
 class TestAI(): IAI
 {
+	override fun setData(key: String, value: Any?)
+	{
+
+	}
+
 	override fun update(e: Entity)
 	{
 		val task = Mappers.task.get(e)

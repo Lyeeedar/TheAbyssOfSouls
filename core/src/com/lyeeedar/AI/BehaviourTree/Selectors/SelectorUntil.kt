@@ -18,7 +18,7 @@ class SelectorUntil(): AbstractSelector()
 		state = ExecutionState.FAILED;
 
 		var i = 0;
-		while (i++ < nodes.size)
+		while (i < nodes.size)
 		{
 			val temp = nodes.get(i).evaluate(entity);
 			if (temp == until)
@@ -26,11 +26,13 @@ class SelectorUntil(): AbstractSelector()
 				state = ExecutionState.COMPLETED;
 				break;
 			}
+			i++
 		}
 		i++;
-		while (i++ < nodes.size)
+		while (i < nodes.size)
 		{
 			nodes.get(i).cancel();
+			i++
 		}
 
 		return state;

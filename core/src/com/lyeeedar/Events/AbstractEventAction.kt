@@ -29,7 +29,7 @@ abstract class AbstractEventAction(val group: EventActionGroup)
 				"SETTILINGSPRITE", "CLEARTILINGSPRITE" -> EventActionSetTilingSprite::class.java
 				"SETLIGHT", "CLEARLIGHT" -> EventActionSetLight::class.java
 				"REMOVE" -> EventActionRemove::class.java
-				"EFFECT" -> EventActionEffect::class.java
+				//"EFFECT" -> EventActionEffect::class.java - not done yet
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid event type: $name")

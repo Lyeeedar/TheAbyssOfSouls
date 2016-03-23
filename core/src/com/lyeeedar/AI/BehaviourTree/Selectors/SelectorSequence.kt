@@ -19,7 +19,7 @@ class SelectorSequence(): AbstractSelector()
 	{
 		state = ExecutionState.COMPLETED;
 
-		while (i++ < nodes.size)
+		while (i < nodes.size)
 		{
 			val temp = nodes.get(i).evaluate(entity);
 			if (temp != ExecutionState.COMPLETED)
@@ -27,14 +27,16 @@ class SelectorSequence(): AbstractSelector()
 				state = temp;
 				break;
 			}
+			i++
 		}
 
 		if (state != ExecutionState.RUNNING)
 		{
 			i = 0;
-			while (i++ < nodes.size)
+			while (i < nodes.size)
 			{
 				nodes.get(i).cancel();
+				i++
 			}
 			i = 0;
 		}

@@ -82,18 +82,10 @@ class GameScreen(): AbstractScreen()
 			}
 		}
 
-		val p = Entity()
-
-		val pos = PositionComponent()
+		val p = EntityLoader.load("player")
+		val pos = Mappers.position.get(p)
 		pos.position = grid[10][10]
-		pos.slot = Enums.SpaceSlot.ENTITY
-		grid[10][10].contents.put(pos.slot, p)
-		p.add(pos)
-
-		p.add(SpriteComponent(AssetManager.loadSprite("player")))
-		p.add(TaskComponent(TestAI()))
-		p.add(LightComponent(Color(0.5f, 0.5f, 0.5f, 0f), 6f))
-		p.add(StatisticsComponent())
+		p.tile()?.contents?.put(pos.slot, p)
 
 		engine.addEntity(p)
 

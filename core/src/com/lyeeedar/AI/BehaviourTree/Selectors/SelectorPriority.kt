@@ -15,7 +15,7 @@ class SelectorPriority(): AbstractSelector()
 		state = ExecutionState.FAILED;
 
 		var i = 0;
-		while (i++ < nodes.size)
+		while (i < nodes.size)
 		{
 			val temp = nodes.get(i).evaluate(entity);
 			if (temp != ExecutionState.FAILED)
@@ -23,12 +23,15 @@ class SelectorPriority(): AbstractSelector()
 				state = temp;
 				break;
 			}
+
+			i++
 		}
 
 		i++;
-		while (i++ < nodes.size)
+		while (i < nodes.size)
 		{
 			nodes.get(i).cancel();
+			i++
 		}
 
 		return state;

@@ -83,7 +83,8 @@ abstract class AbstractScreen() : Screen, InputProcessor
     }
 
     // ----------------------------------------------------------------------
-    override fun render(delta: Float) {
+    override fun render(delta: Float)
+	{
         stage.act();
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
@@ -92,6 +93,17 @@ abstract class AbstractScreen() : Screen, InputProcessor
         doRender(delta)
 
         stage.draw();
+
+		if (!GlobalData.Global.release)
+		{
+			debugAccumulator += delta
+			if (debugAccumulator >= 0f)
+			{
+				debugAccumulator = -0.5f
+
+				System.out.println("FPS: " + (1f / frametime))
+			}
+		}
 
         // limit fps
         sleep();
@@ -167,8 +179,9 @@ abstract class AbstractScreen() : Screen, InputProcessor
 
     // ----------------------------------------------------------------------
     fun sleep() {
+		diff = System.currentTimeMillis() - start;
         if ( GlobalData.Global.fps > 0 ) {
-            diff = System.currentTimeMillis() - start;
+
             var targetDelay = 1000 / GlobalData.Global.fps
             if ( diff < targetDelay ) {
                 try {
@@ -176,8 +189,17 @@ abstract class AbstractScreen() : Screen, InputProcessor
                 } catch (e: InterruptedException) {
                 }
             }
-            start = System.currentTimeMillis();
         }
+		start = System.currentTimeMillis();
+
+		if (frametime == -1f)
+		{
+			frametime = 1f / diff
+		}
+		else
+		{
+			frametime = (frametime + 1f/diff) / 2f
+		}
     }
 
     //endregion
@@ -196,6 +218,9 @@ abstract class AbstractScreen() : Screen, InputProcessor
 
     var diff: Long = 0
     var start: Long = System.currentTimeMillis()
+	var frametime: Float = -1f
+
+	var debugAccumulator: Float = 0f
 
     //endregion
     //############################################################################

@@ -1,0 +1,31 @@
+<Entity>
+    <Name>player</Name>
+
+    <AI>player</AI>
+
+    <Slot>Entity</Slot>
+    <Size>1</Size>
+
+    <Sprite>
+        <Name>player</Name>
+        <DrawActualSize>true</DrawActualSize>
+    </Sprite>
+
+    <Light>
+        <Colour><RGB>255,255,255</RGB></Colour>
+        <Distance>5</Distance>
+    </Light>
+
+    <Occludes>false</Occludes>
+
+    <Statistics>
+        <Max_Health>100</Max_Health>
+        <Max_Stamina>100</Max_Stamina>
+        <Sight>10</Sight>
+        <Physical_Attack>2</Physical_Attack>
+        <Physical_Defense>1</Physical_Defense>
+    </Statistics>
+
+    <Factions>player,npc</Factions>
+
+</Entity>

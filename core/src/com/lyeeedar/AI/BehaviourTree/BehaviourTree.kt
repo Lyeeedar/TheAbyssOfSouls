@@ -3,27 +3,28 @@ package com.lyeeedar.AI.BehaviourTree
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.AI.IAI
 
 /**
  * Created by Philip on 21-Mar-16.
  */
 
-class BehaviourTree()
+class BehaviourTree(): IAI
 {
 	lateinit var root: AbstractNodeContainer
 
-	fun setData(key: String, value: Any?) = root.setData(key, value)
+	override fun setData(key: String, value: Any?) { root.setData(key, value) }
 
-	fun update(entity: Entity)
+	override fun update(e: Entity)
 	{
-		root.evaluate(entity)
+		root.evaluate(e)
 	}
 
 	companion object
 	{
 		fun load(path: String): BehaviourTree
 		{
-			val root = AbstractTreeNode.load(path)
+			val root = AbstractTreeNode.load(path, true)
 			val tree = BehaviourTree()
 			tree.root = root as AbstractNodeContainer
 

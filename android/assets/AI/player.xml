@@ -1,0 +1,9 @@
+<Any Reset="true">
+    <ProcessInput></ProcessInput>
+    <Priority>
+        <Until State="Running">
+            <MoveTo Key="Pos"></MoveTo>
+            <ClearValue Key="Pos"></ClearValue>
+        </Until>
+    </Priority>
+</Any>

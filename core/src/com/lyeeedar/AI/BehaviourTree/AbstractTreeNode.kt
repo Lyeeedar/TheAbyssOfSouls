@@ -30,12 +30,13 @@ abstract class AbstractTreeNode()
 	//----------------------------------------------------------------------
 	companion object
 	{
-		fun load(path: String): AbstractTreeNode
+		fun load(path: String, root: Boolean = false): AbstractTreeNode
 		{
 			val reader = XmlReader();
-			val xml = reader.parse(Gdx.files.internal("AI/$path"));
+			val xml = reader.parse(Gdx.files.internal("AI/$path.xml"));
 
 			val node = AbstractTreeNode.get(xml.name.toUpperCase())
+			if (root) node.data = ObjectMap()
 
 			node.parse(xml)
 
@@ -73,6 +74,7 @@ abstract class AbstractTreeNode()
 				"GETALLVISIBLE" -> ActionGetAllVisible::class.java
 				"MOVETO" -> ActionMoveTo::class.java
 				"PICK" -> ActionPick::class.java
+				"PROCESSINPUT" -> ActionProcessInput::class.java
 				"SETVALUE" -> ActionSetValue::class.java
 				"WAIT" -> ActionWait::class.java
 
