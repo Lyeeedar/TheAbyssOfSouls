@@ -2,9 +2,11 @@ package com.lyeeedar.Level
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
+import com.lyeeedar.Components.LightComponent
 import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Pathfinding.PathfindingTile
+import com.lyeeedar.Systems.LightDataWrapper
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.Point
@@ -21,6 +23,7 @@ class Tile() : Point(0, 0), PathfindingTile
 	lateinit var level: Level
 	var visible: Boolean = false
 	var seen: Boolean = false
+	val lights: com.badlogic.gdx.utils.Array<LightDataWrapper> = com.badlogic.gdx.utils.Array<LightDataWrapper>()
 
     override fun getInfluence(travelType: Enums.SpaceSlot, self: Any?) = 0
 

@@ -2,6 +2,7 @@ package com.lyeeedar.Util
 
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
+import com.lyeeedar.Enums
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -46,6 +47,7 @@ open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0)
 
 	//operator fun times(other: Int) = obtain().set(x * other, y * other)
 
+	operator fun plus(other: Enums.Direction) = obtain().set(x + other.x, y + other.y)
 	operator fun plus(other: Point) = obtain().set(x + other.x, y + other.y)
 	operator fun minus(other: Point) = obtain().set(x - other.x, y - other.y)
 	operator fun times(other: Point) = obtain().set(x * other.x, y * other.y)

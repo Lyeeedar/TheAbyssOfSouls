@@ -48,6 +48,9 @@ class Level()
 	fun getTile(x: Int, y: Int, dir: Enums.Direction) = getTile(x + dir.x, y + dir.y)
 
 	// ----------------------------------------------------------------------
+	fun getTile(point: Point, dir: Enums.Direction) = getTile(point.x + dir.x, point.y + dir.y)
+
+	// ----------------------------------------------------------------------
 	fun getTile(x: Int, y: Int): Tile?
 	{
 		if (x < 0 || x >= width || y < 0 || y >= height)

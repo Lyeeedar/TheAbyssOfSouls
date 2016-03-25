@@ -71,10 +71,10 @@ class GameScreen(): AbstractScreen()
 				val sprite = SpriteComponent(AssetManager.loadSprite("grass"))
 				e.add(sprite)
 
-				if (MathUtils.random(50) == 0)
+				if (MathUtils.random(100) == 0)
 				{
 					val light = LightComponent(Color.RED, 7f)
-					e.add(light)
+					//e.add(light)
 				}
 
 				engine.addEntity(e)
@@ -101,21 +101,6 @@ class GameScreen(): AbstractScreen()
 
 	override fun doRender(delta: Float)
 	{
-		val tile = GlobalData.Global.currentLevel?.player?.tile() ?: return
-
-		camera.position.set(tile.x.toFloat(), tile.y.toFloat(), 0f)
-
-		val offset = GlobalData.Global.currentLevel?.player?.renderOffset()
-		if (offset != null)
-		{
-			camera.position.add(offset[0] / GlobalData.Global.tileSize, offset[1] / GlobalData.Global.tileSize, 0f);
-		}
-
-		camera.zoom = 1f / GlobalData.Global.tileSize
-		camera.update()
-
-		lightingSystem.setCamera(camera)
-
 		engine.update(delta)
 	}
 
