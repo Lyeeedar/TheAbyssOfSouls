@@ -97,7 +97,7 @@ private val cornerMap: Map<Enums.Direction, IntArray> = mapOf(
 		Enums.Direction.SOUTHEAST to intArrayOf(1),
 		Enums.Direction.SOUTH to intArrayOf(1, 2),
 		Enums.Direction.SOUTHWEST to intArrayOf(2),
-		Enums.Direction.WEST to intArrayOf(2, 3),
+		Enums.Direction.WEST to intArrayOf( 2, 3),
 		Enums.Direction.NORTHWEST to intArrayOf(3)
 )
 

@@ -158,9 +158,9 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 			}
 
 			shader.setUniformi("u_lightNum", i)
-			//shader.setUniform4fv("u_lightCol", colArray, 0, MAX_LIGHTS)
+			shader.setUniform4fv("u_lightCol", colArray, 0, MAX_LIGHTS)
 			shader.setUniform1fv("u_lightSmoothing", smoothArray, 0, MAX_LIGHTS*4)
-			//shader.setUniform3fv("u_lightData", dataArray, 0, MAX_LIGHTS)
+			shader.setUniform3fv("u_lightData", dataArray, 0, MAX_LIGHTS)
 
 			rs.sprite.render( batch, rs.x, rs.y, GlobalData.Global.tileSize, GlobalData.Global.tileSize );
 			batch.flush()
@@ -280,20 +280,24 @@ attribute vec2 $texAtt;
 attribute float a_corner;
 
 uniform mat4 u_projTrans;
-uniform float u_lightSmoothing[$smoothingCount];
 uniform int u_lightNum;
 
-varying float v_smoothing[$MAX_LIGHTS];
+const vec2 coords[4] =
+{
+	vec2(0.0, 0.0),
+	vec2(0.0, 1.0),
+	vec2(1.0, 1.0),
+	vec2(1.0, 0.0)
+};
+
+varying vec2 v_coord;
 varying vec4 v_color;
 varying vec2 v_texCoords;
 varying vec2 v_pos;
 
 void main()
 {
-	for (int i = 0; i < u_lightNum; i++)
-	{
-		v_smoothing[i] = u_lightSmoothing[i*4 + (int)a_corner];
-	}
+	v_coord = coords[(int)round(a_corner)];
 
 	v_color = $colAtt;
 	v_color.a = v_color.a * (255.0/254.0);
@@ -312,7 +316,7 @@ precision mediump float;
 #define LOWP
 #endif
 
-varying float v_smoothing[$MAX_LIGHTS];
+varying vec2 v_coord;
 varying LOWP vec4 v_color;
 varying vec2 v_texCoords;
 varying vec2 v_pos;
@@ -321,7 +325,15 @@ uniform sampler2D u_texture;
 uniform vec4 u_ambient;
 uniform vec4 u_lightCol[$MAX_LIGHTS];
 uniform vec3 u_lightData[$MAX_LIGHTS];
+uniform float u_lightSmoothing[$smoothingCount];
 uniform int u_lightNum;
+
+vec4 biLerp(float a, float b, float c, float d, float s, float t)
+{
+  float x = mix(a, b, t);
+  float y = mix(c, d, t);
+  return mix(x, y, s);
+}
 
 void main()
 {
@@ -332,7 +344,9 @@ void main()
 		float dst = length(v_pos - u_lightData[i].xy);
 		float alpha = 1.0 - dst / u_lightData[i].z;
 
-		light.rgb += v_smoothing[i]; //u_lightCol[i].rgb * alpha * u_lightCol[i].a * round(v_smoothing[i]);
+		float smooth = biLerp(u_lightSmoothing[i*4+0], u_lightSmoothing[i*4+3], u_lightSmoothing[i*4+1], u_lightSmoothing[i*4+2], v_coord.y, v_coord.x);
+
+		light.rgb += u_lightCol[i].rgb * alpha * u_lightCol[i].a * round(smooth);
 	}
 
 	gl_FragColor = v_color * texture2D(u_texture, v_texCoords) * vec4(light, 1.0);
