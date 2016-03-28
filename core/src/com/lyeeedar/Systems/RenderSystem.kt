@@ -33,6 +33,7 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 	val colArray: FloatArray = FloatArray(4 * MAX_LIGHTS)
 	val dataArray: FloatArray = FloatArray(3 * MAX_LIGHTS)
 	val smoothArray: FloatArray = FloatArray(4 * MAX_LIGHTS)
+	val smoothFactorArray: FloatArray = FloatArray(4 * MAX_LIGHTS)
 	lateinit var entities: ImmutableArray<Entity>
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap<RenderSprite>()
 	val directionBitflag: EnumBitflag<Enums.Direction> = EnumBitflag<Enums.Direction>()
@@ -41,6 +42,14 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 	var screenShakeAccumulator: Float = 0f
 	var screenShakeSpeed: Float = 0f
 	var screenShakeAngle: Float = 0f
+
+	val cornerMap: Array<IntArray> = arrayOf(
+			intArrayOf(0, 1, 3, 1, 3),
+			intArrayOf(2, 1, 3, 1, 2),
+
+			intArrayOf(1, 0, 2, 2, 2),
+			intArrayOf(3, 2, 0, 2, 3)
+	);
 
 	override fun addedToEngine(engine: Engine?)
 	{
@@ -149,6 +158,38 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 				dataArray[i*3 + 1] = light.light.y + offsety
 				dataArray[i*3 + 2] = light.light.dist * GlobalData.Global.tileSize
 
+				var cornerDiff = false;
+
+				smoothFactorArray[i*4 + 0] = 0f;
+				smoothFactorArray[i*4 + 1] = 0f;
+				smoothFactorArray[i*4 + 2] = 0f;
+
+				for (offsets in cornerMap)
+				{
+					val c = offsets[0]
+					val c1 = offsets[1]
+					val c2 = offsets[2]
+					val index = offsets[3]
+					val value = offsets[4]
+
+					val cv = light.corners[c]
+					val c1v = light.corners[c1]
+					val c2v = light.corners[c2]
+
+					if (c1v == c2v && cv != c1v)
+					{
+						cornerDiff = true
+						smoothFactorArray[i*4 + index] = value.toFloat();
+
+						break
+					}
+				}
+
+				if (!cornerDiff)
+				{
+					smoothFactorArray[i*4 + 0] = 1f;
+				}
+
 				smoothArray[i*4 + 0] = light.corners[0]
 				smoothArray[i*4 + 1] = light.corners[1]
 				smoothArray[i*4 + 2] = light.corners[2]
@@ -160,6 +201,7 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 			shader.setUniformi("u_lightNum", i)
 			shader.setUniform4fv("u_lightCol", colArray, 0, MAX_LIGHTS)
 			shader.setUniform1fv("u_lightSmoothing", smoothArray, 0, MAX_LIGHTS*4)
+			shader.setUniform1fv("u_lightSmoothingInterpolationFactors", smoothFactorArray, 0, MAX_LIGHTS*4)
 			shader.setUniform3fv("u_lightData", dataArray, 0, MAX_LIGHTS)
 
 			rs.sprite.render( batch, rs.x, rs.y, GlobalData.Global.tileSize, GlobalData.Global.tileSize );
@@ -316,6 +358,9 @@ precision mediump float;
 #define LOWP
 #endif
 
+const vec2 B1 = vec2(1.0, 1.0);
+const vec2 B2 = vec2(1.0, -1.0);
+
 varying vec2 v_coord;
 varying LOWP vec4 v_color;
 varying vec2 v_texCoords;
@@ -326,13 +371,32 @@ uniform vec4 u_ambient;
 uniform vec4 u_lightCol[$MAX_LIGHTS];
 uniform vec3 u_lightData[$MAX_LIGHTS];
 uniform float u_lightSmoothing[$smoothingCount];
+uniform float u_lightSmoothingInterpolationFactors[$smoothingCount];
 uniform int u_lightNum;
 
-vec4 biLerp(float a, float b, float c, float d, float s, float t)
+float biLerp(float a, float b, float c, float d, float s, float t)
 {
   float x = mix(a, b, t);
   float y = mix(c, d, t);
   return mix(x, y, s);
+}
+
+float rescale(float val, float min, float max)
+{
+	return clamp( (val - min) / (max - min), 0.0, 1.0 );
+}
+
+float diagLerp(float v1, float v2, vec2 basis, float scl)
+{
+	float a = dot(v_coord, basis) / dot(basis, basis);
+
+	if (scl == 3) a *= 2.0;
+	else if (scl == 2)
+	{
+		a -= 0.5;
+	}
+
+	return mix(v1, v2, clamp(a, 0.0, 1.0) );
 }
 
 void main()
@@ -344,9 +408,15 @@ void main()
 		float dst = length(v_pos - u_lightData[i].xy);
 		float alpha = 1.0 - dst / u_lightData[i].z;
 
-		float smooth = biLerp(u_lightSmoothing[i*4+0], u_lightSmoothing[i*4+3], u_lightSmoothing[i*4+1], u_lightSmoothing[i*4+2], v_coord.y, v_coord.x);
+		float biLerpSmooth = biLerp(u_lightSmoothing[i*4+0], u_lightSmoothing[i*4+3], u_lightSmoothing[i*4+1], u_lightSmoothing[i*4+2], v_coord.y, v_coord.x);
+		float diag1Smooth = diagLerp(u_lightSmoothing[i*4+0], u_lightSmoothing[i*4+2], B1, u_lightSmoothingInterpolationFactors[i*4+1]);
+		float diag2Smooth = diagLerp(u_lightSmoothing[i*4+1], u_lightSmoothing[i*4+3], B2, u_lightSmoothingInterpolationFactors[i*4+2]);
 
-		light.rgb += u_lightCol[i].rgb * alpha * u_lightCol[i].a * round(smooth);
+		float smooth = biLerpSmooth * u_lightSmoothingInterpolationFactors[i*4+0] +
+						diag1Smooth * clamp(u_lightSmoothingInterpolationFactors[i*4+1], 0.0, 1.0) +
+						diag2Smooth * clamp(u_lightSmoothingInterpolationFactors[i*4+2], 0.0, 1.0);
+
+		light.rgb += u_lightCol[i].rgb * alpha * u_lightCol[i].a * smooth;
 	}
 
 	gl_FragColor = v_color * texture2D(u_texture, v_texCoords) * vec4(light, 1.0);
