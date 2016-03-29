@@ -47,7 +47,7 @@ class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
 			intArrayOf(0, 1, 3, 1, 3),
 			intArrayOf(2, 1, 3, 1, 2),
 
-			intArrayOf(1, 0, 2, 2, 2),
+			intArrayOf(1, 0, 2, 2, 4),
 			intArrayOf(3, 2, 0, 2, 3)
 	);
 
@@ -393,7 +393,13 @@ float diagLerp(float v1, float v2, vec2 basis, float scl)
 	if (scl == 3) a *= 2.0;
 	else if (scl == 2)
 	{
-		a -= 0.5;
+		a *= 2.0;
+		a -= 1.0;
+	}
+	else if (scl == 4)
+	{
+		a *= 2.0;
+		a += 1.0;
 	}
 
 	return mix(v1, v2, clamp(a, 0.0, 1.0) );

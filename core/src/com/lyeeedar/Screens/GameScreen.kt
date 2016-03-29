@@ -74,7 +74,7 @@ class GameScreen(): AbstractScreen()
 				if (MathUtils.random(100) == 0)
 				{
 					val light = LightComponent(Color.RED, 7f)
-					//e.add(light)
+					e.add(light)
 				}
 
 				engine.addEntity(e)
