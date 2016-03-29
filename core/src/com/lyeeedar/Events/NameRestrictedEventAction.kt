@@ -18,7 +18,7 @@ abstract class NameRestrictedEventAction(group: EventActionGroup, family: Family
 		{
 			"" -> entity
 			"this", "self" -> args.receiver
-			"sender" -> args.sender
+			"sender" -> args.sender ?: return
 			else -> if (entity.name() == entityName) entity else return
 		}
 

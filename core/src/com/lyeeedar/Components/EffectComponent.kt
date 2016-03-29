@@ -16,6 +16,12 @@ class EffectComponent: Component
 		this.sprite = sprite
 	}
 
+	constructor(sprite: Sprite, stage: Sprite.AnimationStage, args: EventArgs)
+	{
+		this.sprite = sprite
+		this.eventMap.put(stage, args)
+	}
+
 	val sprite: Sprite
 	val eventMap: FastEnumMap<Sprite.AnimationStage, EventArgs>	= FastEnumMap(Sprite.AnimationStage::class.java)
 	var completed: Boolean = false

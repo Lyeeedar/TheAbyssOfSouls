@@ -1,0 +1,22 @@
+<Any>
+    <ClearValue Key="Enemy"></ClearValue>
+
+    <GetAllVisible Type="Tiles" Key="Tiles"></GetAllVisible>
+    <GetAllVisible Type="Enemies" Key="Enemies"></GetAllVisible>
+    <GetAllVisible Type="Allies" Key="Allies"></GetAllVisible>
+    <Pick Input="Enemies" Output="Enemy"></Pick>
+    <ConvertTo Input="Enemy" Output="EnemyPos" Type="Position"></ConvertTo>
+
+    <Priority>
+        <Import Path="useAbility.xml"></Import>
+		<Import Path="attackClosest.xml"></Import>
+		<Random>
+			<Wait></Wait>
+            <Wait></Wait>
+            <Wait></Wait>
+			<Import Path="wander.xml"></Import>
+		</Random>
+    </Priority>
+
+    <Exclaim TilesKey="Tiles"></Exclaim>
+</Any>

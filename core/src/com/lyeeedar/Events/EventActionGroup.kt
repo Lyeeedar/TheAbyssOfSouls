@@ -1,5 +1,6 @@
 package com.lyeeedar.Events
 
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.tile
 

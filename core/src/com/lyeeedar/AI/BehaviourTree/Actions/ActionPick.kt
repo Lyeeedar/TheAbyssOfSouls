@@ -6,6 +6,7 @@ import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.stats
 import com.lyeeedar.Components.tile
+import com.lyeeedar.GlobalData
 import com.lyeeedar.Util.Point
 import java.util.*
 
@@ -24,6 +25,7 @@ class ActionPick(): AbstractAction()
 
 	override fun evaluate(entity: Entity): ExecutionState
 	{
+		state = ExecutionState.FAILED;
 		val tile = entity.tile() ?: return ExecutionState.FAILED
 
 		var obj = getData(input, null);
@@ -53,6 +55,18 @@ class ActionPick(): AbstractAction()
 					val item = if (lowest) obj.first() else obj.last()
 					setData(output, item);
 					state = ExecutionState.COMPLETED;
+				}
+				else if (criteria.equals("player"))
+				{
+					for (e in obj)
+					{
+						if (e === GlobalData.Global.currentLevel?.player)
+						{
+							setData(output, e);
+							state = ExecutionState.COMPLETED;
+							break;
+						}
+					}
 				}
 				else
 				{

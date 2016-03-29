@@ -28,7 +28,8 @@ abstract class AbstractEventAction(val group: EventActionGroup)
 				"SETSPRITE", "CLEARSPRITE" -> EventActionSetSprite::class.java
 				"SETTILINGSPRITE", "CLEARTILINGSPRITE" -> EventActionSetTilingSprite::class.java
 				"SETLIGHT", "CLEARLIGHT" -> EventActionSetLight::class.java
-				"REMOVE" -> EventActionRemove::class.java
+				"REMOVE", "KILL" -> EventActionRemove::class.java
+				"DAMAGE" -> EventActionDamage::class.java
 				//"EFFECT" -> EventActionEffect::class.java - not done yet
 
 			// ARGH everything broke

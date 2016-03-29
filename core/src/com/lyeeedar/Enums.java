@@ -16,6 +16,14 @@ import java.util.HashMap;
 public class Enums
 {
 	// ----------------------------------------------------------------------
+	public enum EquipmentSlot
+	{
+		WEAPON,
+		ARMOUR,
+		TRINKET
+	}
+
+	// ----------------------------------------------------------------------
 	public enum Direction
 	{
 		CENTER( 0, 0, "C" ),

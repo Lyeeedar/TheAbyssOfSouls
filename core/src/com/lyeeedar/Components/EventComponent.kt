@@ -27,9 +27,8 @@ class EventComponent: Component
 		ATTACK,
 		WAIT,
 
-		DEALDAMAGE,
-		RECEIVEDAMAGE,
-		HEAL,
+		DAMAGED,
+		HEALED,
 
 		SPAWN,
 		DEATH,

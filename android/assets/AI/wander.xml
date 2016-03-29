@@ -1,0 +1,15 @@
+<DataScope>
+	<Any>
+		<Sequence>
+			<Invert>
+				<CheckValue Key="Pos"></CheckValue>
+			</Invert>
+			<Pick Criteria="rnd" Input="Tiles" Output="Tile"></Pick>
+			<ConvertTo Input="Tile" Output="Pos" Type="Position"></ConvertTo>
+		</Sequence>
+		<Sequence>
+			<MoveTo Key="Pos"></MoveTo>
+			<ClearValue Key="Pos"></ClearValue>
+		</Sequence>
+	</Any>
+</DataScope>
