@@ -330,25 +330,33 @@ public class Enums
 			return stats;
 		}
 
+		public static FastEnumMap<Statistic, Float> load( XmlReader.Element xml )
+		{
+			return load(xml, new FastEnumMap<Statistic, Float>( Statistic.class ));
+		}
+
 		public static FastEnumMap<Statistic, Float> load( XmlReader.Element xml, FastEnumMap<Statistic, Float> values )
 		{
-			for ( int i = 0; i < xml.getChildCount(); i++ )
+			if (xml != null)
 			{
+				for ( int i = 0; i < xml.getChildCount(); i++ )
+				{
 
-				XmlReader.Element el = xml.getChild( i );
+					XmlReader.Element el = xml.getChild( i );
 
-				Statistic stat = Statistic.valueOf( el.getName().toUpperCase() );
-				String eqn = el.getText().toLowerCase();
+					Statistic stat = Statistic.valueOf( el.getName().toUpperCase() );
+					String eqn = el.getText().toLowerCase();
 
-				float newVal = values.get( stat );
+					float newVal = values.get( stat );
 
-				HashMap<String, Float> variableMap = new HashMap<String, Float>();
-				variableMap.put( "value", newVal );
-				variableMap.put( "val", newVal );
+					HashMap<String, Float> variableMap = new HashMap<String, Float>();
+					variableMap.put( "value", newVal );
+					variableMap.put( "val", newVal );
 
-				newVal = EquationHelper.evaluate( eqn, variableMap );
+					newVal = EquationHelper.evaluate( eqn, variableMap );
 
-				values.put( stat, newVal );
+					values.put( stat, newVal );
+				}
 			}
 
 			return values;

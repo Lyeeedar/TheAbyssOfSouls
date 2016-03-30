@@ -42,18 +42,18 @@ class ActionPick(): AbstractAction()
 			}
 			else
 			{
-				if (criteria.equals("random") || criteria.equals("ran"))
+				if (criteria.equals("random") || criteria.equals("ran") || criteria.equals("rnd"))
 				{
 					var index = ran.nextInt(obj.count());
-					setData(output, obj.elementAt(index));
+					parent.setData(output, obj.elementAt(index));
 					state = ExecutionState.COMPLETED;
 				}
-				else if (criteria.equals("distance") || criteria.equals("dist"))
+				else if (criteria.equals("distance") || criteria.equals("dist") || criteria.equals("dst"))
 				{
 					obj.sortedBy { if (it is Point) it.taxiDist(tile) else (it as? Entity)?.tile()?.taxiDist(tile) }
 
 					val item = if (lowest) obj.first() else obj.last()
-					setData(output, item);
+					parent.setData(output, item);
 					state = ExecutionState.COMPLETED;
 				}
 				else if (criteria.equals("player"))
@@ -62,7 +62,7 @@ class ActionPick(): AbstractAction()
 					{
 						if (e === GlobalData.Global.currentLevel?.player)
 						{
-							setData(output, e);
+							parent.setData(output, e);
 							state = ExecutionState.COMPLETED;
 							break;
 						}
@@ -73,7 +73,7 @@ class ActionPick(): AbstractAction()
 					obj.sortedBy { (it as? Entity)?.stats()?.variableMap?.get(criteria) }
 
 					val item = if (lowest) obj.first() else obj.last()
-					setData(output, item);
+					parent.setData(output, item);
 					state = ExecutionState.COMPLETED;
 				}
 			}

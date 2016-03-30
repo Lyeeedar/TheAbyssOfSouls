@@ -4,8 +4,7 @@
 			<Invert>
 				<CheckValue Key="Pos"></CheckValue>
 			</Invert>
-			<Pick Criteria="rnd" Input="Tiles" Output="Tile"></Pick>
-			<ConvertTo Input="Tile" Output="Pos" Type="Position"></ConvertTo>
+			<Pick Criteria="rnd" Input="Tiles" Output="Pos"></Pick>
 		</Sequence>
 		<Sequence>
 			<MoveTo Key="Pos"></MoveTo>

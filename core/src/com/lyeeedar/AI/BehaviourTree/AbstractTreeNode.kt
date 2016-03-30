@@ -72,6 +72,7 @@ abstract class AbstractTreeNode()
 			// Actions
 				"ATTACK" -> ActionAttack::class.java
 				"CLEARVALUE" -> ActionClearValue::class.java
+				"CONVERTTO" -> ActionConvertTo::class.java
 				"GETALLVISIBLE" -> ActionGetAllVisible::class.java
 				"MOVETO" -> ActionMoveTo::class.java
 				"PICK" -> ActionPick::class.java

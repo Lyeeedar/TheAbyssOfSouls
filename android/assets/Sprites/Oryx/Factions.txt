@@ -1,0 +1,40 @@
+Toad
+Bug
+Spider
+Widowmaker
+Rat
+Snake
+Wolf
+Bat
+Falcon
+Butterfly
+Worm
+
+Orc
+Troll
+Dwarf
+Bandit
+Minotaur
+Barbarian
+Knight
+Lizardman
+Halfing
+
+Wraith
+Skelton
+Zombie
+Vampire
+Mummy
+
+Beholder
+Elemental Spirit
+Elemental Hulk
+ELemental thing
+Pixie
+Demon
+Seraphim
+Wisp
+Dragon
+Mage
+Slime
+mimic

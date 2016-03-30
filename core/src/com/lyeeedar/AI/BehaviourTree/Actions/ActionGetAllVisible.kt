@@ -57,7 +57,7 @@ class ActionGetAllVisible(): AbstractAction()
 				}
 			}
 
-			setData( key, temp );
+			parent.setData( key, temp );
 			state = if(temp.size > 0) ExecutionState.COMPLETED else ExecutionState.FAILED;
 		}
 		else if (type == Type.ENEMIES)
@@ -76,12 +76,12 @@ class ActionGetAllVisible(): AbstractAction()
 				}
 			}
 
-			setData( key, temp );
+			parent.setData( key, temp );
 			state = if(temp.size > 0) ExecutionState.COMPLETED else ExecutionState.FAILED;
 		}
 		else
 		{
-			setData( key, points );
+			parent.setData( key, points );
 			state = if(points.size > 0) ExecutionState.COMPLETED else ExecutionState.FAILED;
 		}
 

@@ -26,6 +26,19 @@
         <Physical_Defense>1</Physical_Defense>
     </Statistics>
 
-    <Factions>player,npc</Factions>
+    <Factions>player</Factions>
+
+    <Inventory>
+        <Equipment>
+            <Weapon>
+                <Name>Sword</Name>
+                <HitSprite>
+                    <Name>EffectSprites/Slash/Slash</Name>
+                    <UpdateRate>0.1</UpdateRate>
+                </HitSprite>
+                <Slot>Weapon</Slot>
+            </Weapon>
+        </Equipment>
+    </Inventory>
 
 </Entity>

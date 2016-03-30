@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskAttack
 import com.lyeeedar.Components.Mappers
+import com.lyeeedar.Components.getEquip
 import com.lyeeedar.Components.stats
 import com.lyeeedar.Enums
 import com.lyeeedar.Level.Tile
@@ -25,15 +26,16 @@ class ActionAttack(): AbstractAction()
 		val taskData = Mappers.task.get(entity)
 		val tile = posData.position as? Tile
 		val stats = entity.stats()
+		val wep = entity.getEquip(Enums.EquipmentSlot.WEAPON)
 
 		state = ExecutionState.FAILED;
 		// doesnt have all the needed data, fail
-		if ( target == null || posData == null || tile == null || taskData == null || stats == null )
+		if ( target == null || posData == null || tile == null || taskData == null || stats == null || wep == null || target.taxiDist(tile) > 1 )
 		{
 			return state;
 		}
 
-		val targetTile = tile.level?.getTile(target) ?: return state
+		val targetTile = tile.level.getTile(target) ?: return state
 
 		var canAttack = false
 		for (e in targetTile.contents)

@@ -1,0 +1,37 @@
+<Entity>
+    <Name>enemy</Name>
+
+    <AI>basicMonster</AI>
+
+    <Slot>Entity</Slot>
+    <Size>1</Size>
+
+    <Sprite>
+        <Name>Oryx/uf_split/uf_heroes/zombie_a</Name>
+        <DrawActualSize>true</DrawActualSize>
+    </Sprite>
+
+    <Statistics>
+        <Max_Health>20</Max_Health>
+        <Max_Stamina>100</Max_Stamina>
+        <Sight>5</Sight>
+        <Physical_Attack>2</Physical_Attack>
+        <Physical_Defense>1</Physical_Defense>
+    </Statistics>
+
+    <Factions>enemy</Factions>
+
+    <Inventory>
+        <Equipment>
+            <Weapon>
+                <Name>Sword</Name>
+                <HitSprite>
+                    <Name>EffectSprites/Slash/Slash</Name>
+                    <UpdateRate>0.1</UpdateRate>
+                </HitSprite>
+                <Slot>Weapon</Slot>
+            </Weapon>
+        </Equipment>
+    </Inventory>
+
+</Entity>

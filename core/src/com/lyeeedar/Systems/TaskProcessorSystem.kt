@@ -104,6 +104,10 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 
 				e.postEvent(EventArgs(t.eventType, e, e, t.duration))
 			}
+			else
+			{
+				task.actionDelay -= 1.0f
+			}
 		}
 
 		return task.actionDelay < 0

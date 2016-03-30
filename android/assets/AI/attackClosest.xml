@@ -2,11 +2,10 @@
 	<Any>
 		<Priority>
 		    <Attack Key="EnemyPos"></Attack>
-		    <Until State="Running">		    
-				<MoveToAttack Key="EnemyPos"></MoveToAttack>
+		    <Until State="Running">
 				<MoveTo Key="EnemyPos"></MoveTo>
 				<ClearValue Key="EnemyPos"></ClearValue>
 			</Until>
-		</Priority>	
+		</Priority>
 	</Any>
 </DataScope>

@@ -61,7 +61,7 @@ class ActionProcessInput(): AbstractAction()
 
 		if (targetPos != null)
 		{
-			setData( "Pos", targetPos );
+			parent.setData( "Pos", targetPos );
 		}
 
 		state = if (targetPos != null) ExecutionState.COMPLETED else ExecutionState.FAILED

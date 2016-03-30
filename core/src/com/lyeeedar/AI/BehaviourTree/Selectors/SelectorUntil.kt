@@ -41,7 +41,7 @@ class SelectorUntil(): AbstractSelector()
 	//----------------------------------------------------------------------
 	override fun cancel()
 	{
-		for (i in 0..nodes.size)
+		for (i in 0..nodes.size-1)
 		{
 			nodes.get(i).cancel();
 		}

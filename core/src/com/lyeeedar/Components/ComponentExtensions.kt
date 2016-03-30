@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AssetManager
 import com.lyeeedar.Enums
 import com.lyeeedar.Events.EventArgs
+import com.lyeeedar.Items.Item
 import com.lyeeedar.Level.Tile
 import kotlin.reflect.KClass
 
@@ -112,6 +113,35 @@ class EntityLoader()
 				val events = entity.event() ?: EventComponent()
 				entity.add(events)
 				events.parse(eventsEl)
+			}
+
+			val inventory = xml.getChildByName("Inventory")
+			if (inventory != null)
+			{
+				val inv = InventoryComponent()
+
+				val equipment = inventory.getChildByName("Equipment")
+				if (equipment != null)
+				{
+					for (i in 0..equipment.childCount-1)
+					{
+						val el = equipment.getChild(i)
+						val item = Item.load(el)
+
+						inv.equipment.put(item.slot, item)
+					}
+				}
+
+				for (i in 0..inventory.childCount-1)
+				{
+					val el = inventory.getChild(i)
+
+					if (el == equipment) continue
+
+					inv.items.add(Item.load(el))
+				}
+
+				entity.add(inv)
 			}
 
 			return entity

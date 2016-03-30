@@ -4,44 +4,79 @@ size: 1024,128
 format: RGBA8888
 filter: MipMapLinearLinear,MipMapLinearLinear
 repeat: none
+EffectSprites/Slash/Slash_0
+  rotate: false
+  xy: 618, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/Slash/Slash_1
+  rotate: false
+  xy: 262, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/Slash/Slash_2
+  rotate: false
+  xy: 654, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/Slash/Slash_3
+  rotate: false
+  xy: 298, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/Slash/Slash_4
+  rotate: false
+  xy: 690, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 GUI/Button
   rotate: false
-  xy: 158, 18
+  xy: 334, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ButtonBorder
   rotate: false
-  xy: 566, 86
+  xy: 726, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ButtonDown
   rotate: false
-  xy: 194, 18
+  xy: 370, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Checked
   rotate: false
-  xy: 602, 86
+  xy: 762, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Cog
   rotate: false
-  xy: 230, 18
+  xy: 798, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Eye
   rotate: false
-  xy: 638, 86
+  xy: 834, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -62,42 +97,42 @@ GUI/PanelVertical
   index: -1
 GUI/PassiveTileBorder
   rotate: false
-  xy: 302, 18
+  xy: 942, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 446, 42
+  xy: 590, 42
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/QuestionMark
   rotate: false
-  xy: 710, 86
+  xy: 978, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/SeperatorHorizontal
   rotate: false
-  xy: 158, 8
+  xy: 618, 76
   size: 32, 6
   orig: 32, 6
   offset: 0, 0
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 818, 86
+  xy: 1014, 86
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
   index: -1
 GUI/Sheathed
   rotate: false
-  xy: 338, 18
+  xy: 410, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -111,14 +146,14 @@ GUI/SpeechBubble
   index: -1
 GUI/SpeechBubbleArrow
   rotate: false
-  xy: 566, 74
+  xy: 262, 6
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 GUI/TextField
   rotate: false
-  xy: 746, 86
+  xy: 446, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -139,7 +174,7 @@ GUI/TileBorder
   index: -1
 GUI/TilePanel
   rotate: false
-  xy: 374, 18
+  xy: 482, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -153,77 +188,105 @@ GUI/Tooltip
   index: -1
 GUI/Unchecked
   rotate: false
-  xy: 410, 34
+  xy: 518, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Unsheathed
   rotate: false
-  xy: 782, 86
+  xy: 554, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/background
   rotate: false
-  xy: 514, 70
+  xy: 210, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 266, 18
+  xy: 870, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 674, 86
+  xy: 906, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-grass
-  rotate: false
-  xy: 462, 70
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
-player_1
+Oryx/uf_split/uf_heroes/zombie_a_1
   rotate: false
   xy: 2, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-player_2
+Oryx/uf_split/uf_heroes/zombie_a_2
   rotate: false
   xy: 410, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-player_4
+Oryx/uf_split/uf_heroes/zombie_a_4
   rotate: false
   xy: 410, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-player_3
+Oryx/uf_split/uf_heroes/zombie_a_3
   rotate: false
   xy: 54, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-wall
+grass
+  rotate: false
+  xy: 158, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+player_1
+  rotate: false
+  xy: 462, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+player_2
   rotate: false
   xy: 106, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+player_4
+  rotate: false
+  xy: 106, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+player_3
+  rotate: false
+  xy: 514, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+wall
+  rotate: false
+  xy: 566, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

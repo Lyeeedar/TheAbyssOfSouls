@@ -8,15 +8,13 @@
     <ConvertTo Input="Enemy" Output="EnemyPos" Type="Position"></ConvertTo>
 
     <Priority>
-        <Import Path="useAbility.xml"></Import>
-		<Import Path="attackClosest.xml"></Import>
+		<Import Path="attackClosest"></Import>
 		<Random>
 			<Wait></Wait>
             <Wait></Wait>
             <Wait></Wait>
-			<Import Path="wander.xml"></Import>
+			<Import Path="wander"></Import>
 		</Random>
     </Priority>
 
-    <Exclaim TilesKey="Tiles"></Exclaim>
 </Any>

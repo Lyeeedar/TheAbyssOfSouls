@@ -79,6 +79,15 @@ class GameScreen(): AbstractScreen()
 
 				engine.addEntity(e)
 
+				if (MathUtils.random(30) == 0)
+				{
+					val p = EntityLoader.load("enemy")
+					val pos = Mappers.position.get(p)
+					pos.position = grid[x][y]
+					p.tile()?.contents?.put(pos.slot, p)
+
+					engine.addEntity(p)
+				}
 			}
 		}
 

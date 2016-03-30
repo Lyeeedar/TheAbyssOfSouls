@@ -28,7 +28,7 @@ class ActionConvertTo(): AbstractAction()
 
 		if (out != null)
 		{
-			setData(output, out)
+			parent.setData(output, out)
 			state = ExecutionState.COMPLETED
 		}
 		else

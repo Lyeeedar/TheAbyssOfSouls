@@ -25,7 +25,7 @@ class TaskAttack(var direction: Enums.Direction): AbstractTask(EventComponent.Ev
 
 		val weapon: Item = e.getEquip(Enums.EquipmentSlot.WEAPON)
 
-		val sprite = weapon.hitSprite.copy()
+		val sprite = weapon.hitSprite?.copy() ?: return
 
 		val effect = Entity()
 		effect.add(EffectComponent(sprite, Sprite.AnimationStage.END, EventArgs(EventComponent.EventType.ALL, null, e, 0f)))
