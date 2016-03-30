@@ -332,7 +332,13 @@ public class Enums
 
 		public static FastEnumMap<Statistic, Float> load( XmlReader.Element xml )
 		{
-			return load(xml, new FastEnumMap<Statistic, Float>( Statistic.class ));
+			FastEnumMap<Statistic, Float> map = new FastEnumMap<Statistic, Float>( Statistic.class );
+			for (Statistic stat : Statistic.values())
+			{
+				map.put( stat, 0f );
+			}
+
+			return load(xml, map);
 		}
 
 		public static FastEnumMap<Statistic, Float> load( XmlReader.Element xml, FastEnumMap<Statistic, Float> values )

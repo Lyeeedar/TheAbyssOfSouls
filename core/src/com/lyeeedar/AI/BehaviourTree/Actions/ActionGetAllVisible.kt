@@ -8,6 +8,7 @@ import com.lyeeedar.Components.ShadowCastComponent
 import com.lyeeedar.Enums
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.isAllies
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -46,11 +47,12 @@ class ActionGetAllVisible(): AbstractAction()
 			var temp = com.badlogic.gdx.utils.Array<Entity>()
 			for (point in points)
 			{
-				for (e in tile.contents)
+				val etile = tile.level.getTile(point) ?: continue
+				for (e in etile.contents)
 				{
 					val estats = Mappers.stats.get(e) ?: continue
 
-					if (estats.factions.intersect(stats.factions).size > 0)
+					if (e != entity && estats.factions.isAllies(stats.factions))
 					{
 						temp.add(e)
 					}
@@ -58,18 +60,19 @@ class ActionGetAllVisible(): AbstractAction()
 			}
 
 			parent.setData( key, temp );
-			state = if(temp.size > 0) ExecutionState.COMPLETED else ExecutionState.FAILED;
+			state = if (temp.size > 0) ExecutionState.COMPLETED else ExecutionState.FAILED;
 		}
 		else if (type == Type.ENEMIES)
 		{
 			var temp = com.badlogic.gdx.utils.Array<Entity>()
 			for (point in points)
 			{
-				for (e in tile.contents)
+				val etile = tile.level.getTile(point) ?: continue
+				for (e in etile.contents)
 				{
 					val estats = Mappers.stats.get(e) ?: continue
 
-					if (estats.factions.intersect(stats.factions).size == 0)
+					if (e != entity && !estats.factions.isAllies(stats.factions))
 					{
 						temp.add(e)
 					}

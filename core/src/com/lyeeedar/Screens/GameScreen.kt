@@ -14,6 +14,7 @@ import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Systems.*
 import com.lyeeedar.UI.ButtonKeyboardHelper
+import com.lyeeedar.Util.Colour
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -21,19 +22,13 @@ import com.lyeeedar.UI.ButtonKeyboardHelper
 
 class GameScreen(): AbstractScreen()
 {
-	val engine = Engine()
 	lateinit var lightingSystem: LightingSystem
 
 	override fun create()
 	{
-		engine.addSystem(ShadowCastSystem())
-		engine.addSystem(TaskProcessorSystem())
-		engine.addSystem(SpriteUpdaterSystem())
-		engine.addSystem(RenderSystem(batch))
-
-		lightingSystem = LightingSystem()
-		engine.addSystem(lightingSystem)
-		engine.addSystem(CleanupSystem())
+		GlobalData.Global.engine = createEngine()
+		lightingSystem = GlobalData.Global.engine?.getSystem(LightingSystem::class.java) ?: return
+		val engine = GlobalData.Global.engine ?: return
 
 		val grid = Array(20, {i -> Array(20, { i -> Tile() } ) } )
 
@@ -73,7 +68,7 @@ class GameScreen(): AbstractScreen()
 
 				if (MathUtils.random(100) == 0)
 				{
-					val light = LightComponent(Color.RED, 7f)
+					val light = LightComponent(Colour(1f, 0f, 0f, 1f), 7f)
 					e.add(light)
 				}
 
@@ -110,7 +105,7 @@ class GameScreen(): AbstractScreen()
 
 	override fun doRender(delta: Float)
 	{
-		engine.update(delta)
+		GlobalData.Global.engine?.update(delta)
 	}
 
 	// ----------------------------------------------------------------------

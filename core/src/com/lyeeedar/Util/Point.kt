@@ -1,5 +1,6 @@
 package com.lyeeedar.Util
 
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.lyeeedar.Enums
@@ -44,6 +45,9 @@ open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0)
     fun free() = Point.pool.free(this)
 
 	fun taxiDist(other: Point) = Math.max( Math.abs(other.x - x), Math.abs(other.y - y) )
+	fun dist(other: Point) = Math.abs(other.x - x) + Math.abs(other.y - y)
+	fun euclideanDist(other: Point) = Vector2.dst(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())
+	fun euclideanDist(ox: Float, oy:Float) = Vector2.dst(x.toFloat(), y.toFloat(), ox, oy)
 
 	//operator fun times(other: Int) = obtain().set(x * other, y * other)
 

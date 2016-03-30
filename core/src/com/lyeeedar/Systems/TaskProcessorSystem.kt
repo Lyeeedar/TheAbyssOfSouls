@@ -5,10 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
-import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.SpriteComponent
-import com.lyeeedar.Components.TaskComponent
-import com.lyeeedar.Components.postEvent
+import com.lyeeedar.Components.*
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.GlobalData
 
@@ -69,14 +66,15 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 			}
 		}
 
-		if (entitiesToBeProcessed.size > 0)
+		for (i in 0..entitiesToBeProcessed.size-1)
 		{
-			while (entitiesToBeProcessed.size > 0)
+			if (entitiesToBeProcessed.size > 0)
 			{
 				val entity = entitiesToBeProcessed[0]
+				entitiesToBeProcessed.removeIndex(0)
 				val finished = processEntity(entity)
 
-				if (finished) entitiesToBeProcessed.removeIndex(0)
+				if (!finished) entitiesToBeProcessed.add(entity)
 			}
 		}
 	}
@@ -87,6 +85,7 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		val stats = Mappers.stats.get(e)
 
 		if (stats == null || stats.hp <= 0) return true
+		if (e.tile()!!.effects.size > 0) return false
 
 		if (task.actionDelay >= 0)
 		{
@@ -106,7 +105,8 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 			}
 			else
 			{
-				task.actionDelay -= 1.0f
+				task.actionDelay = 0f
+				return true
 			}
 		}
 

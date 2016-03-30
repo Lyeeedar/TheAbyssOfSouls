@@ -10,6 +10,7 @@ import com.lyeeedar.Components.stats
 import com.lyeeedar.Enums
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.isAllies
 
 /**
  * Created by Philip on 30-Mar-16.
@@ -30,7 +31,7 @@ class ActionAttack(): AbstractAction()
 
 		state = ExecutionState.FAILED;
 		// doesnt have all the needed data, fail
-		if ( target == null || posData == null || tile == null || taskData == null || stats == null || wep == null || target.taxiDist(tile) > 1 )
+		if ( target == null || posData == null || tile == null || taskData == null || stats == null || wep == null || target.dist(tile) > 1 )
 		{
 			return state;
 		}
@@ -42,7 +43,7 @@ class ActionAttack(): AbstractAction()
 		{
 			val estats = e.stats() ?: continue
 
-			if (estats.factions.intersect(stats.factions).size == 0)
+			if (!estats.factions.isAllies(stats.factions))
 			{
 				canAttack = true
 				break

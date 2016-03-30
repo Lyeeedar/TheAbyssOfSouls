@@ -6,6 +6,7 @@ import com.lyeeedar.AssetManager
 import com.lyeeedar.Components.EffectComponent
 import com.lyeeedar.Components.EventComponent
 import com.lyeeedar.Components.PositionComponent
+import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.Sprite
@@ -27,7 +28,7 @@ class EventActionEffect(group: EventActionGroup): AbstractEventAction(group)
 
 		entity.add(PositionComponent(tile))
 
-		val effect = EffectComponent(AssetManager.loadSprite(spriteData))
+		val effect = EffectComponent(AssetManager.loadSprite(spriteData), Enums.Direction.CENTER)
 		effect.eventMap.put(firePoint, EventArgs(eventType, args.receiver, args.receiver, 0f))
 		entity.add(effect)
 

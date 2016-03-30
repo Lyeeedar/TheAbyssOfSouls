@@ -25,6 +25,7 @@ import com.lyeeedar.Sound.SoundInstance;
 import com.lyeeedar.Sprite.Sprite;
 import com.lyeeedar.Sprite.SpriteAnimation.AbstractSpriteAnimation;
 import com.lyeeedar.Sprite.TilingSprite;
+import com.lyeeedar.Util.Colour;
 
 public class AssetManager
 {
@@ -138,25 +139,25 @@ public class AssetManager
 
 	public static Sprite loadSprite( String name )
 	{
-		return loadSprite( name, 0.5f, Color.WHITE, Sprite.AnimationMode.TEXTURE, null, false );
+		return loadSprite( name, 0.5f, new Colour(1f), Sprite.AnimationMode.TEXTURE, null, false );
 	}
 
 	public static Sprite loadSprite( String name, boolean drawActualSize )
 	{
-		return loadSprite( name, 0.5f, Color.WHITE, Sprite.AnimationMode.TEXTURE, null, drawActualSize );
+		return loadSprite( name, 0.5f, new Colour(1f), Sprite.AnimationMode.TEXTURE, null, drawActualSize );
 	}
 
 	public static Sprite loadSprite( String name, float updateTime )
 	{
-		return loadSprite( name, updateTime, Color.WHITE, Sprite.AnimationMode.TEXTURE, null, false );
+		return loadSprite( name, updateTime, new Colour(1f), Sprite.AnimationMode.TEXTURE, null, false );
 	}
 
 	public static Sprite loadSprite( String name, float updateTime, String sound )
 	{
-		return loadSprite( name, updateTime, Color.WHITE, Sprite.AnimationMode.TEXTURE, SoundInstance.getSound( sound ), false );
+		return loadSprite( name, updateTime, new Colour(1f), Sprite.AnimationMode.TEXTURE, SoundInstance.getSound( sound ), false );
 	}
 
-	public static Sprite loadSprite( String name, float updateTime, Color colour, Sprite.AnimationMode mode, SoundInstance sound, boolean drawActualSize )
+	public static Sprite loadSprite( String name, float updateTime, Colour colour, Sprite.AnimationMode mode, SoundInstance sound, boolean drawActualSize )
 	{
 		Array<TextureRegion> textures = new Array<TextureRegion>( false, 1, TextureRegion.class );
 
@@ -232,7 +233,7 @@ public class AssetManager
 	public static Sprite loadSprite( Element xml )
 	{
 		Element colourElement = xml.getChildByName( "Colour" );
-		Color colour = new Color( Color.WHITE );
+		Colour colour = new Colour( 1f );
 		if ( colourElement != null )
 		{
 			colour = loadColour(colourElement);
@@ -267,7 +268,7 @@ public class AssetManager
 	public static Sprite loadSprite( Element xml, TextureRegion texture )
 	{
 		Element colourElement = xml.getChildByName( "Colour" );
-		Color colour = Color.WHITE;
+		Colour colour = new Colour(1f);
 		if ( colourElement != null )
 		{
 			colour = loadColour(colourElement);
@@ -318,9 +319,9 @@ public class AssetManager
 		return sprite;
 	}
 
-	public static Color loadColour( Element xml )
+	public static Colour loadColour( Element xml )
 	{
-		Color colour = new Color();
+		Colour colour = new Colour();
 		colour.a = 1;
 
 		String rgb = xml.get( "RGB", null );

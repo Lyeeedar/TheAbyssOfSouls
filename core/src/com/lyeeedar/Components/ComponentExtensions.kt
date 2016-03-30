@@ -103,7 +103,8 @@ class EntityLoader()
 				if (factions != null)
 				{
 					if (factions.getBooleanAttribute("Override", false)) stats.factions.clear()
-					stats.factions.addAll(factions.text.toLowerCase().split(","))
+					val split = factions.text.toLowerCase().split(",")
+					for (faction in split) stats.factions.add(faction)
 				}
 			}
 

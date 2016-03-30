@@ -6,11 +6,12 @@ import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.lyeeedar.GlobalData
+import com.lyeeedar.Systems.render
 import com.lyeeedar.UI.ButtonKeyboardHelper
 import com.lyeeedar.Util.Point
 
@@ -44,7 +45,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
         camera.setToOrtho(false, GlobalData.Global.resolution[0], GlobalData.Global.resolution[1]);
         camera.update();
 
-        batch.projectionMatrix = camera.combined;
+		GlobalData.Global.engine?.render()?.batchHDRColour?.projectionMatrix = camera.combined
         stage.viewport.camera = camera;
         stage.viewport.worldWidth = GlobalData.Global.resolution[0];
         stage.viewport.worldHeight = GlobalData.Global.resolution[1];
@@ -74,7 +75,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
         camera.setToOrtho(false, GlobalData.Global.resolution[0], GlobalData.Global.resolution[1]);
         camera.update();
 
-        batch.projectionMatrix = camera.combined;
+		GlobalData.Global.engine?.render()?.batchHDRColour?.projectionMatrix = camera.combined
         stage.viewport.camera = camera;
         stage.viewport.worldWidth = GlobalData.Global.resolution[0];
         stage.viewport.worldHeight = GlobalData.Global.resolution[1];
@@ -160,7 +161,6 @@ abstract class AbstractScreen() : Screen, InputProcessor
     // ----------------------------------------------------------------------
     fun baseCreate() {
         stage = Stage(ScreenViewport());
-        batch = SpriteBatch();
 
         mainTable = Table();
         mainTable.setFillParent(true);
@@ -209,7 +209,6 @@ abstract class AbstractScreen() : Screen, InputProcessor
     var created: Boolean = false
 
     lateinit var camera: OrthographicCamera
-    lateinit var batch: SpriteBatch
     lateinit var stage: Stage
     lateinit var mainTable: Table
 

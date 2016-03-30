@@ -3,6 +3,7 @@ package com.lyeeedar.AI.BehaviourTree.Actions
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
+import com.lyeeedar.AI.Tasks.TaskWait
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.tile
 import com.lyeeedar.GlobalData
@@ -61,7 +62,15 @@ class ActionProcessInput(): AbstractAction()
 
 		if (targetPos != null)
 		{
-			parent.setData( "Pos", targetPos );
+			if (targetPos == entity.tile())
+			{
+				Mappers.task.get(entity).tasks.add(TaskWait())
+				parent.setData( "Pos", null );
+			}
+			else
+			{
+				parent.setData( "Pos", targetPos );
+			}
 		}
 
 		state = if (targetPos != null) ExecutionState.COMPLETED else ExecutionState.FAILED

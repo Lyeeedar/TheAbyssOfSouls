@@ -3,6 +3,7 @@ package com.lyeeedar.Components
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.Color
 import com.lyeeedar.Pathfinding.ShadowCastCache
+import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.Point
 
 /**
@@ -11,13 +12,13 @@ import com.lyeeedar.Util.Point
 
 class LightComponent: Component
 {
-	constructor(col: Color, dist: Float)
+	constructor(col: Colour, dist: Float)
 	{
 		this.col = col
 		this.dist = dist
 	}
 
-	val col: Color
+	val col: Colour
 	val dist: Float
 
 	var x: Float = 0f

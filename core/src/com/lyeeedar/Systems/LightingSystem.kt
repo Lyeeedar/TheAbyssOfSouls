@@ -2,10 +2,12 @@ package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.*
 import com.badlogic.ashley.utils.ImmutableArray
+import com.badlogic.gdx.math.Vector2
 import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
+import com.lyeeedar.Util.Colour
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -14,6 +16,7 @@ import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 {
 	lateinit var posLightEntities: ImmutableArray<Entity>
+	val temp: Colour = Colour()
 
 	override fun addedToEngine(engine: Engine?)
 	{
@@ -29,7 +32,7 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 		{
 			for (y in 0..level.height-1)
 			{
-				level.getTile(x, y)?.lights?.clear()
+				level.getTile(x, y)?.light?.set(0f, 0f, 0f, 0f)
 			}
 		}
 
@@ -39,76 +42,31 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 			val light = Mappers.light.get(entity)
 			val offset = entity.renderOffset()
 
-			var x = pos.position.x.toFloat() * GlobalData.Global.tileSize + GlobalData.Global.tileSize / 2f
-			var y = pos.position.y.toFloat() * GlobalData.Global.tileSize + GlobalData.Global.tileSize / 2f
+			var x = pos.position.x.toFloat()
+			var y = pos.position.y.toFloat()
 
 			if (offset != null)
 			{
-				x += offset[0]
-				y += offset[1]
+				x += offset[0] / GlobalData.Global.tileSize
+				y += offset[1] / GlobalData.Global.tileSize
 			}
-
-			light.x = x
-			light.y = y
 
 			val shadowCast = light.cache.currentShadowCast
 			for (point in shadowCast)
 			{
-				for (dir in Enums.Direction.values())
-				{
-					val tile = level.getTile(point, dir) ?: continue
+				val tile = level.getTile(point) ?: continue
+				val dst = point.euclideanDist(x, y)
 
-					var lightData: LightDataWrapper? = null
-					for (ld in tile.lights)
-					{
-						if (ld.light == light)
-						{
-							lightData = ld
-						}
-					}
+				val alpha = 1f - dst / light.dist
 
-					if (lightData == null)
-					{
-						lightData = LightDataWrapper(light, FloatArray(4))
-						tile.lights.add(lightData)
-					}
+				temp.set(light.col)
+				temp *= alpha
+				temp *= temp.a
+				temp.a = 1f
 
-					val corners = cornerMap[dir] ?: continue
-					for (corner in corners)
-					{
-						lightData.corners[corner] = 1f
-					}
-				}
+				tile.light += temp
+				tile.light.a = 1f
 			}
 		}
-	}
-}
-
-// 0 : bottom left
-// 1 : top left
-// 2 : top right
-// 3 : bottom right
-
-private val cornerMap: Map<Enums.Direction, IntArray> = mapOf(
-		Enums.Direction.CENTER to intArrayOf(0, 1, 2, 3),
-		Enums.Direction.NORTH to intArrayOf(0, 3),
-		Enums.Direction.NORTHEAST to intArrayOf(0),
-		Enums.Direction.EAST to intArrayOf(0, 1),
-		Enums.Direction.SOUTHEAST to intArrayOf(1),
-		Enums.Direction.SOUTH to intArrayOf(1, 2),
-		Enums.Direction.SOUTHWEST to intArrayOf(2),
-		Enums.Direction.WEST to intArrayOf( 2, 3),
-		Enums.Direction.NORTHWEST to intArrayOf(3)
-)
-
-class LightDataWrapper
-{
-	val light: LightComponent
-	val corners: FloatArray
-
-	constructor(light: LightComponent, corners: FloatArray)
-	{
-		this.light = light
-		this.corners = corners
 	}
 }

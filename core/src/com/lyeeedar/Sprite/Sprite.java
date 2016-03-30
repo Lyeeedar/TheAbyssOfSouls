@@ -2,11 +2,13 @@ package com.lyeeedar.Sprite;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.lyeeedar.GlobalData;
 import com.lyeeedar.Sound.SoundInstance;
 import com.lyeeedar.Sprite.SpriteAnimation.AbstractSpriteAnimation;
+import com.lyeeedar.Util.Colour;
 
 public final class Sprite
 {
@@ -25,9 +27,9 @@ public final class Sprite
 
 	public String fileName;
 
-	private static final Color tempColour = new Color();
+	private static final Colour tempColour = new Colour();
 
-	public Color colour = new Color( Color.WHITE );
+	public Colour colour = new Colour( 1f );
 
 	public float renderDelay = -1;
 	public boolean showBeforeRender = false;
@@ -55,7 +57,7 @@ public final class Sprite
 
 	public float[] baseScale = { 1, 1 };
 
-	public Sprite( String fileName, float animationDelay, Array<TextureRegion> textures, Color colour, AnimationMode mode, SoundInstance sound, boolean drawActualSize )
+	public Sprite( String fileName, float animationDelay, Array<TextureRegion> textures, Colour colour, AnimationMode mode, SoundInstance sound, boolean drawActualSize )
 	{
 		this.fileName = fileName;
 		this.textures = textures;
@@ -167,7 +169,7 @@ public final class Sprite
 		return looped;
 	}
 
-	public void render( Batch batch, float x, float y, float width, float height )
+	public void render( HDRColourSpriteBatch batch, float x, float y, float width, float height )
 	{
 		float scaleX = baseScale[0];
 		float scaleY = baseScale[1];
@@ -185,20 +187,19 @@ public final class Sprite
 		render( batch, x, y, width, height, scaleX, scaleY, animationState );
 	}
 
-	public void render( Batch batch, float x, float y, float width, float height, float scaleX, float scaleY, AnimationState animationState )
+	public void render( HDRColourSpriteBatch batch, float x, float y, float width, float height, float scaleX, float scaleY, AnimationState animationState )
 	{
-		Color oldCol = null;
+		Colour oldCol = null;
 		if ( colour.a == 0 )
 		{
 			return;
 		}
-		else if ( colour.r != 1 || colour.g != 1 || colour.b != 1 || colour.a != 1 )
-		{
-			oldCol = batch.getColor();
 
-			Color col = tempColour.set( oldCol ).mul( colour );
-			batch.setColor( col );
-		}
+		oldCol = batch.getColour();
+
+		Colour col = tempColour.set( oldCol );
+		col.timesAssign( colour );
+		batch.setColor( col );
 
 		drawTexture( batch, textures.items[animationState.texIndex], x, y, width, height, scaleX, scaleY, animationState );
 
@@ -208,7 +209,7 @@ public final class Sprite
 		}
 	}
 
-	private void drawTexture( Batch batch, TextureRegion texture, float x, float y, float width, float height, float scaleX, float scaleY, AnimationState animationState )
+	private void drawTexture( HDRColourSpriteBatch batch, TextureRegion texture, float x, float y, float width, float height, float scaleX, float scaleY, AnimationState animationState )
 	{
 		if ( renderDelay > 0 && !showBeforeRender ) { return; }
 

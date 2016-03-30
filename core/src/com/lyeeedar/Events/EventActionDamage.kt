@@ -37,8 +37,10 @@ class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Fa
 			val atkStat = Enums.Statistic.ATTACK_STATS[i]
 			val defStat = Enums.Statistic.DEFENSE_STATS[i]
 
-			val atk = damMap.get(atkStat)
-			val def = stats.stats.get(defStat)
+			val atk = damMap.get(atkStat) ?: 0f
+			if (atk == 0f) continue
+
+			val def = stats.stats.get(defStat) ?: 0f
 
 			val dam = Math.max(0f, atk - def)
 

@@ -2,6 +2,7 @@ package com.lyeeedar.UI;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
@@ -170,7 +171,7 @@ public abstract class TilePanel extends Widget
 
 		if ( dataHeight > viewHeight )
 		{
-			tileBackground.render( batch, xOffset + tileSize + 5, top - height, 10, height );
+			tileBackground.render( (HDRColourSpriteBatch)batch, xOffset + tileSize + 5, top - height, 10, height );
 		}
 
 		int x = 0;
@@ -183,7 +184,7 @@ public abstract class TilePanel extends Widget
 			{
 				if ( tileBackground != null )
 				{
-					tileBackground.render( batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
+					tileBackground.render( (HDRColourSpriteBatch)batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
 				}
 			}
 		}
@@ -211,7 +212,7 @@ public abstract class TilePanel extends Widget
 			batch.setColor( itemColour );
 			if ( tileBackground != null )
 			{
-				tileBackground.render( batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
+				tileBackground.render( (HDRColourSpriteBatch)batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
 			}
 			onDrawItemBackground( item, batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
 
@@ -219,14 +220,14 @@ public abstract class TilePanel extends Widget
 			Sprite sprite = getSpriteForData( item );
 			if ( sprite != null )
 			{
-				sprite.render( batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
+				sprite.render( (HDRColourSpriteBatch)batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
 			}
 			onDrawItem( item, batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
 
 			batch.setColor( itemColour );
 			if ( tileBorder != null && item != null )
 			{
-				tileBorder.render( batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
+				tileBorder.render( (HDRColourSpriteBatch)batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
 			}
 			onDrawItemForeground( item, batch, x * ( tileSize + padding ) + xOffset, top - y * ( tileSize + padding ), tileSize, tileSize );
 
