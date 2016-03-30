@@ -16,7 +16,7 @@ import com.lyeeedar.GlobalData
  * Created by Philip on 20-Mar-16.
  */
 
-class TaskProcessorSystem(): EntitySystem(0)
+class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem::class))
 {
 	lateinit var entities: ImmutableArray<Entity>
 	lateinit var sprites: ImmutableArray<Entity>

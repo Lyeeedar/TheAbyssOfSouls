@@ -12,7 +12,7 @@ import com.lyeeedar.Level.Tile
  * Created by Philip on 21-Mar-16.
  */
 
-class ShadowCastSystem(): IteratingSystem(Family.all(PositionComponent::class.java).one(ShadowCastComponent::class.java, LightComponent::class.java).get())
+class ShadowCastSystem(): IteratingSystem(Family.all(PositionComponent::class.java).one(ShadowCastComponent::class.java, LightComponent::class.java).get(), systemList.indexOf(ShadowCastSystem::class))
 {
 	override fun processEntity(entity: Entity?, deltaTime: Float)
 	{

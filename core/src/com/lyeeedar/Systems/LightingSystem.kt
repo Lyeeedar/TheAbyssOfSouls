@@ -11,7 +11,7 @@ import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
  * Created by Philip on 21-Mar-16.
  */
 
-class LightingSystem(): EntitySystem(10)
+class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 {
 	lateinit var posLightEntities: ImmutableArray<Entity>
 

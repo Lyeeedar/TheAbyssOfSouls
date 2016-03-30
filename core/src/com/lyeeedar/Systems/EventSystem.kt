@@ -11,7 +11,7 @@ import com.lyeeedar.Events.EventArgs
  * Created by Philip on 22-Mar-16.
  */
 
-class EventSystem(): IteratingSystem(Family.all(EventComponent::class.java).get(), 2)
+class EventSystem(): IteratingSystem(Family.all(EventComponent::class.java).get(), systemList.indexOf(EventSystem::class))
 {
 	override fun processEntity(entity: Entity?, deltaTime: Float)
 	{

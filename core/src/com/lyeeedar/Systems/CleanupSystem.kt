@@ -13,7 +13,7 @@ import com.lyeeedar.Level.Tile
  * Created by Philip on 21-Mar-16.
  */
 
-class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.java, EffectComponent::class.java).get(), 20)
+class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.java, EffectComponent::class.java).get(), systemList.indexOf(CleanupSystem::class))
 {
 	lateinit var eng: Engine
 

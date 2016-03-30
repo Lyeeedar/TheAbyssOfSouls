@@ -11,7 +11,7 @@ import com.lyeeedar.Components.postEvent
  * Created by Philip on 22-Mar-16.
  */
 
-class EffectSystem(): IteratingSystem(Family.all(EffectComponent::class.java).get(), 5)
+class EffectSystem(): IteratingSystem(Family.all(EffectComponent::class.java).get(), systemList.indexOf(EffectSystem::class))
 {
 	override fun processEntity(entity: Entity?, deltaTime: Float)
 	{

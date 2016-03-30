@@ -27,7 +27,7 @@ import com.lyeeedar.Util.Point
 
 val MAX_LIGHTS: Int = 20
 
-class RenderSystem(val batch: SpriteBatch): EntitySystem(6)
+class RenderSystem(val batch: SpriteBatch): EntitySystem(systemList.indexOf(RenderSystem::class))
 {
 	val shader: ShaderProgram = createLightShader()
 	val colArray: FloatArray = FloatArray(4 * MAX_LIGHTS)

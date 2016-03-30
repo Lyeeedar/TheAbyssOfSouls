@@ -23,6 +23,7 @@ fun Entity.postEvent(args:EventArgs) = this.event()?.pendingEvents?.add(args)
 fun Entity.name() = Mappers.name.get(this).name
 fun Entity.sprite() = Mappers.sprite.get(this)
 fun Entity.renderOffset() = this.sprite()?.sprite?.spriteAnimation?.renderOffset
+fun Entity.getEquip(slot: Enums.EquipmentSlot) = Mappers.inventory.get(this).equipment.get(slot)
 
 class Mappers
 {
@@ -39,6 +40,7 @@ class Mappers
 		@JvmField val event: ComponentMapper<EventComponent> = ComponentMapper.getFor(EventComponent::class.java)
 		@JvmField val name: ComponentMapper<NameComponent> = ComponentMapper.getFor(NameComponent::class.java)
 		@JvmField val effect: ComponentMapper<EffectComponent> = ComponentMapper.getFor(EffectComponent::class.java)
+		@JvmField val inventory: ComponentMapper<InventoryComponent> = ComponentMapper.getFor(InventoryComponent::class.java)
 	}
 }
 

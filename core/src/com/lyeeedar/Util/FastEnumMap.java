@@ -104,12 +104,7 @@ public final class FastEnumMap<T extends Enum<T>, V> implements Iterable<V>
 
 	public Iterator<V> iterator()
 	{
-		if (iterator == null)
-		{
-			iterator = new FastEnumMapIterator();
-		}
-
-		return iterator.reset(this);
+		return new FastEnumMapIterator(this);
 	}
 
 	private FastEnumMapIterator iterator;
@@ -119,6 +114,11 @@ public final class FastEnumMap<T extends Enum<T>, V> implements Iterable<V>
 		int i = 0;
 		int prev = 0;
 		FastEnumMap obj;
+
+		public FastEnumMapIterator(FastEnumMap obj)
+		{
+			reset( obj );
+		}
 
 		public FastEnumMapIterator reset(FastEnumMap obj)
 		{
@@ -144,23 +144,15 @@ public final class FastEnumMap<T extends Enum<T>, V> implements Iterable<V>
 		@Override
 		public boolean hasNext()
 		{
-			if (size == 0) return false;
+			if (size == 0 || i >= items.length) return false;
 
-			for (int ii = i; ii < items.length; ii++)
-			{
-				if (items[ii] != null)
-				{
-					return true;
-				}
-			}
-
-			return false;
+			return items[i] != null;
 		}
 
 		@Override
 		public V next()
 		{
-			prev = i;
+			prev = i++;
 
 			for (;i < items.length; i++)
 			{

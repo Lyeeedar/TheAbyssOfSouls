@@ -70,6 +70,7 @@ abstract class AbstractTreeNode()
 				"SETSTATE" -> DecoratorSetState::class.java
 
 			// Actions
+				"ATTACK" -> ActionAttack::class.java
 				"CLEARVALUE" -> ActionClearValue::class.java
 				"GETALLVISIBLE" -> ActionGetAllVisible::class.java
 				"MOVETO" -> ActionMoveTo::class.java

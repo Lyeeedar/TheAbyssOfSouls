@@ -2,10 +2,7 @@ package com.lyeeedar.AI.Tasks
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.scenes.scene2d.actions.EventAction
-import com.lyeeedar.Components.EffectComponent
-import com.lyeeedar.Components.EventComponent
-import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.tile
+import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
 import com.lyeeedar.Events.EventActionDamage
 import com.lyeeedar.Events.EventActionGroup
@@ -26,7 +23,7 @@ class TaskAttack(var direction: Enums.Direction): AbstractTask(EventComponent.Ev
 
 		val next = tile.neighbours.get(direction)
 
-		val weapon: Item
+		val weapon: Item = e.getEquip(Enums.EquipmentSlot.WEAPON)
 
 		val sprite = weapon.hitSprite.copy()
 
@@ -39,6 +36,9 @@ class TaskAttack(var direction: Enums.Direction): AbstractTask(EventComponent.Ev
 		event.registerHandler(EventComponent.EventType.ALL, group)
 		effect.add(event)
 
-		GlobalData.Global.engine.addEntity(effect)
+		effect.add(PositionComponent(next))
+		next.effects.add(effect)
+
+		GlobalData.Global.engine?.addEntity(effect)
 	}
 }

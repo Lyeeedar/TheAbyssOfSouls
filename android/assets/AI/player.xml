@@ -1,6 +1,7 @@
 <Any Reset="true">
     <ProcessInput></ProcessInput>
     <Priority>
+        <Attack Key="Pos"></Attack>
         <Until State="Running">
             <MoveTo Key="Pos"></MoveTo>
             <ClearValue Key="Pos"></ClearValue>
