@@ -2,6 +2,7 @@ package com.lyeeedar;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectFloatMap;
 import com.badlogic.gdx.utils.XmlReader;
 import com.exp4j.Helpers.EquationHelper;
 import com.lyeeedar.Util.EnumBitflag;
@@ -264,6 +265,7 @@ public class Enums
 		MAX_HEALTH,
 		MAX_STAMINA,
 		SIGHT,
+		MORALE,
 
 		PHYSICAL_ATTACK,
 		SHOCK_ATTACK,
@@ -285,9 +287,9 @@ public class Enums
 
 		}
 
-		public static HashMap<String, Float> getEmptyMap()
+		public static ObjectFloatMap<String> getEmptyMap()
 		{
-			HashMap<String, Float> emptyMap = new HashMap<String, Float>();
+			ObjectFloatMap<String> emptyMap = new ObjectFloatMap<String>();
 
 			for ( Statistic s : Statistic.values() )
 			{
@@ -297,9 +299,9 @@ public class Enums
 			return emptyMap;
 		}
 
-		public static HashMap<String, Float> statsBlockToVariableBlock( FastEnumMap<Statistic, Float> stats )
+		public static ObjectFloatMap<String> statsBlockToVariableBlock( FastEnumMap<Statistic, Float> stats )
 		{
-			HashMap<String, Float> variableMap = new HashMap<String, Float>();
+			ObjectFloatMap<String> variableMap = new ObjectFloatMap<String>();
 
 			for ( Statistic key : Statistic.values() )
 			{
@@ -355,7 +357,7 @@ public class Enums
 
 					float newVal = values.get( stat );
 
-					HashMap<String, Float> variableMap = new HashMap<String, Float>();
+					ObjectFloatMap<String> variableMap = new ObjectFloatMap<String>();
 					variableMap.put( "value", newVal );
 					variableMap.put( "val", newVal );
 

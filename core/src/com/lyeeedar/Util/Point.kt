@@ -66,6 +66,13 @@ open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0)
 	operator fun timesAssign(other: Point) { x *= other.x; y *= other.y }
 	operator fun divAssign(other: Point) { x /= other.x; y /= other.y }
 
+	override fun equals(other: Any?): Boolean
+	{
+		if (other == null || other !is Point) return false
+
+		return other.x == x && other.y == y
+	}
+
     override fun reset()
     {
         if (!obtained) throw RuntimeException()

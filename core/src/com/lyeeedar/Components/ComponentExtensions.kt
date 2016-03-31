@@ -42,6 +42,7 @@ class Mappers
 		@JvmField val name: ComponentMapper<NameComponent> = ComponentMapper.getFor(NameComponent::class.java)
 		@JvmField val effect: ComponentMapper<EffectComponent> = ComponentMapper.getFor(EffectComponent::class.java)
 		@JvmField val inventory: ComponentMapper<InventoryComponent> = ComponentMapper.getFor(InventoryComponent::class.java)
+		@JvmField val telegraphed: ComponentMapper<TelegraphedAttackComponent> = ComponentMapper.getFor(TelegraphedAttackComponent::class.java)
 	}
 }
 
@@ -98,6 +99,7 @@ class EntityLoader()
 					Enums.Statistic.load(statistics, stats.stats)
 					stats.hp = stats.stats.get(Enums.Statistic.MAX_HEALTH)
 					stats.stamina = stats.stats.get(Enums.Statistic.MAX_STAMINA)
+					stats.morale = stats.stats.get(Enums.Statistic.MORALE)
 				}
 
 				if (factions != null)

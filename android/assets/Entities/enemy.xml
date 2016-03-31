@@ -15,6 +15,7 @@
         <Max_Health>20</Max_Health>
         <Max_Stamina>100</Max_Stamina>
         <Sight>5</Sight>
+        <Morale>90</Morale>
         <Physical_Attack>2</Physical_Attack>
         <Physical_Defense>1</Physical_Defense>
     </Statistics>

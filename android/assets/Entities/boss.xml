@@ -1,0 +1,51 @@
+<Boss>
+
+    <Attacks>
+
+        <Attack>
+            <Name>Stab</Name>
+
+            <Grid>
+                <Row>.....</Row>
+                <Row>..#..</Row>
+                <Row>..#..</Row>
+                <Row>..@..</Row>
+                <Row>.....</Row>
+            </Grid>
+
+            <ReadySprite>
+                <Name>EffectSprites/Thrust/Thrust_2</Name>
+            </ReadySprite>
+
+            <HitSprite>
+                <Name>EffectSprites/Thrust/Thrust</Name>
+            </HitSprite>
+
+            <Effects>
+                <Damage>
+                    <Physical>100</Physical>
+                    <Elemental>0</Elemental>
+                </Damage>
+                <Knockback>
+                    <Distance>1</Distance>
+                </Knockback>
+            </Effects>
+
+        </Attack>
+
+    </Attacks>
+
+    <Combos>
+
+        <Combo>
+            <Name>Stab</Name>
+            <Attacks>
+                <Stab></Stab>
+                <Stab CanEnd="true" CanTurn="true"></Stab>
+                <Stab CanEnd="true" CanTurn="true"></Stab>
+            </Attacks>
+        </Combo>
+
+    </Combos>
+
+</Boss>

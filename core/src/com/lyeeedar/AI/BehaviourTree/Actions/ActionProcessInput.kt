@@ -62,7 +62,8 @@ class ActionProcessInput(): AbstractAction()
 
 		if (targetPos != null)
 		{
-			if (targetPos == entity.tile())
+			val tile = entity.tile() ?: return state
+			if (targetPos == tile)
 			{
 				Mappers.task.get(entity).tasks.add(TaskWait())
 				parent.setData( "Pos", null );

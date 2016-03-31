@@ -106,8 +106,17 @@ class ActionMoveTo(): AbstractAction()
 
 	override fun parse( xml: XmlReader.Element)
 	{
-		dst = Integer.parseInt( xml.getAttribute( "Distance", "0" ) );
-		towards = xml.getAttribute( "Towards", "true" ).toBoolean();
+		if (xml.name.equals("MoveTo"))
+		{
+			dst = Integer.parseInt( xml.getAttribute( "Distance", "0" ) );
+			towards = true;
+
+		}
+		else
+		{
+			dst = Integer.parseInt( xml.getAttribute( "Distance", "500" ) );
+			towards = false;
+		}
 		key = xml.getAttribute( "Key" );
 	}
 }

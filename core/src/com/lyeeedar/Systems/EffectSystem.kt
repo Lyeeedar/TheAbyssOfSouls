@@ -27,6 +27,7 @@ class EffectSystem(): IteratingSystem(Family.all(EffectComponent::class.java).ge
 		if (event != null)
 		{
 			entity?.postEvent(event)
+			effect.eventMap.remove(effect.sprite.animationStage)
 		}
 	}
 }

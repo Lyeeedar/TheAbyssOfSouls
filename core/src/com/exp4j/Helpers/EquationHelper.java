@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.ObjectFloatMap;
+import com.badlogic.gdx.utils.ObjectIntMap;
 import com.exp4j.Functions.ChanceFunction;
 import com.exp4j.Functions.MathUtilFunctions;
 import com.exp4j.Functions.RandomFunction;
@@ -14,7 +16,7 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 
 public class EquationHelper
 {
-	private static final HashMap<String, Float> emptyMap = Enums.Statistic.getEmptyMap();
+	private static final ObjectFloatMap<String> emptyMap = Enums.Statistic.getEmptyMap();
 
 	public static Expression tryBuild( ExpressionBuilder expB )
 	{
@@ -29,19 +31,19 @@ public class EquationHelper
 		return exp;
 	}
 
-	public static void setVariableNames( ExpressionBuilder expB, HashMap<String, Float> variableMap, String prefix )
+	public static void setVariableNames( ExpressionBuilder expB, ObjectFloatMap<String> variableMap, String prefix )
 	{
-		for ( String key : variableMap.keySet() )
+		for ( String key : variableMap.keys() )
 		{
 			expB.variable( prefix + key );
 		}
 	}
 
-	public static void setVariableValues( Expression exp, HashMap<String, Float> variableMap, String prefix )
+	public static void setVariableValues( Expression exp, ObjectFloatMap<String> variableMap, String prefix )
 	{
-		for ( String key : variableMap.keySet() )
+		for ( String key : variableMap.keys() )
 		{
-			exp.setVariable( prefix + key, variableMap.get( key ) );
+			exp.setVariable( prefix + key, variableMap.get( key, 0f ) );
 		}
 	}
 
@@ -93,12 +95,12 @@ public class EquationHelper
 		return evaluate( eqn, emptyMap, ran );
 	}
 
-	public static float evaluate( String eqn, HashMap<String, Float> variableMap )
+	public static float evaluate( String eqn, ObjectFloatMap<String> variableMap )
 	{
 		return evaluate( eqn, variableMap, MathUtils.random );
 	}
 
-	public static float evaluate( String eqn, HashMap<String, Float> variableMap, Random ran )
+	public static float evaluate( String eqn, ObjectFloatMap<String> variableMap, Random ran )
 	{
 		if ( isNumber( eqn ) )
 		{

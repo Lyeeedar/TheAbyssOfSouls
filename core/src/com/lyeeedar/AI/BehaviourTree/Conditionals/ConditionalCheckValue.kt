@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.EquationHelper
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
+import com.lyeeedar.Components.stats
 import com.lyeeedar.Enums
 import java.util.*
 
@@ -56,7 +57,8 @@ class ConditionalCheckValue(): AbstractConditional()
 			}
 		}
 
-		val variableMap = Enums.Statistic.getEmptyMap();
+		val stats = entity.stats()
+		val variableMap = stats.variableMap;
 		if (k != null)
 		{
 			variableMap.put( k.toLowerCase(), keyVal );

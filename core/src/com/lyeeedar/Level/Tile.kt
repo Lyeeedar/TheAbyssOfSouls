@@ -3,6 +3,7 @@ package com.lyeeedar.Level
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.lyeeedar.Components.LightComponent
+import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Pathfinding.PathfindingTile
@@ -46,5 +47,19 @@ class Tile() : Point(0, 0), PathfindingTile
 		val newPos = floatArrayOf(x * GlobalData.Global.tileSize, y * GlobalData.Global.tileSize)
 
 		return floatArrayOf(oldPos[0]-newPos[0], oldPos[1]-newPos[1])
+	}
+
+	fun hasTriggerEffects(): Boolean
+	{
+		for (e in effects)
+		{
+			val effect = Mappers.effect.get(e)
+			if (effect.eventMap.size > 0)
+			{
+				return true
+			}
+		}
+
+		return false
 	}
 }

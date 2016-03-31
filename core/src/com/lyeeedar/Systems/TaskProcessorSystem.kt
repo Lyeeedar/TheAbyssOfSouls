@@ -21,7 +21,7 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 
 	override fun addedToEngine(engine: Engine?)
 	{
-		entities = engine?.getEntitiesFor(Family.all(TaskComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
+		entities = engine?.getEntitiesFor(Family.all(TaskComponent::class.java, StatisticsComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 		sprites = engine?.getEntitiesFor(Family.all(SpriteComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 	}
 
@@ -84,8 +84,8 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		val task = Mappers.task.get(e)
 		val stats = Mappers.stats.get(e)
 
-		if (stats == null || stats.hp <= 0) return true
-		if (e.tile()!!.effects.size > 0) return false
+		if (stats.hp <= 0) return true
+		if (e.tile()?.hasTriggerEffects() ?: true) return false
 
 		if (task.actionDelay >= 0)
 		{

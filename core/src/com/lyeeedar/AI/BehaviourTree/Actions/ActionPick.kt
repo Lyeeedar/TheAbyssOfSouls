@@ -70,7 +70,7 @@ class ActionPick(): AbstractAction()
 				}
 				else
 				{
-					obj.sortedBy { (it as? Entity)?.stats()?.variableMap?.get(criteria) }
+					obj.sortedBy { (it as? Entity)?.stats()?.variableMap?.get(criteria, 0f) }
 
 					val item = if (lowest) obj.first() else obj.last()
 					parent.setData(output, item);
