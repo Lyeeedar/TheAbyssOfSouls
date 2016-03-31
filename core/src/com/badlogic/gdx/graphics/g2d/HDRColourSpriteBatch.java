@@ -432,7 +432,7 @@ public class HDRColourSpriteBatch implements Batch {
 
 		renderCalls++;
 		totalRenderCalls++;
-		int spritesInBatch = idx / 20;
+		int spritesInBatch = idx / (4 * 8);
 		if (spritesInBatch > maxSpritesInBatch) maxSpritesInBatch = spritesInBatch;
 		int count = spritesInBatch * 6;
 

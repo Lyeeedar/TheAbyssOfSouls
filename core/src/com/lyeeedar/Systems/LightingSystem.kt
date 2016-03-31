@@ -55,9 +55,10 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 			for (point in shadowCast)
 			{
 				val tile = level.getTile(point) ?: continue
-				val dst = point.euclideanDist(x, y)
+				val dst2 = point.euclideanDist2(x, y)
 
-				val alpha = 1f - dst / light.dist
+				var alpha = 1f - dst2 / ( light.dist * light.dist )
+				if (alpha < 0) alpha = 0f
 
 				temp.set(light.col)
 				temp *= alpha
