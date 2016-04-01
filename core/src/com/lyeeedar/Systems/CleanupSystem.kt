@@ -57,7 +57,14 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 				if (pos?.position is Tile)
 				{
 					val tile = (pos.position as Tile)
-					tile.effects.removeValue(entity, true)
+
+					for (x in pos.min.x..pos.max.x)
+					{
+						for (y in pos.min.y..pos.max.y)
+						{
+							tile.level.getTile(x, y)?.effects?.removeValue(entity, true)
+						}
+					}
 				}
 
 				eng.removeEntity(entity)

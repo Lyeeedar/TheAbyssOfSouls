@@ -3,6 +3,7 @@ package com.lyeeedar.Events
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.tile
+import com.lyeeedar.Level.Tile
 
 /**
  * Created by Philip on 22-Mar-16.
@@ -18,22 +19,13 @@ class EventActionGroup()
 
 	val actions: com.badlogic.gdx.utils.Array<AbstractEventAction> = com.badlogic.gdx.utils.Array()
 
-	fun handle(args: EventArgs)
+	fun handle(args: EventArgs, tile: Tile)
 	{
 		if (!enabled) return
 
-		val ctile = args.receiver.tile() ?: return
-		for (x in -aoe..aoe)
+		for (action in actions)
 		{
-			for (y in -aoe..aoe)
-			{
-				val tile = ctile.level.getTile(ctile.x + x, ctile.y + y) ?: continue
-
-				for (action in actions)
-				{
-					action.handle(args, tile)
-				}
-			}
+			action.handle(args, tile)
 		}
 	}
 

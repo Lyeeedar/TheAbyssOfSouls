@@ -23,12 +23,27 @@ class TelegraphedAttackComponent: Component
 	var currentIndex: Int = 0
 	var currentDir: Enums.Direction = Enums.Direction.CENTER
 	var readyEntity: Entity? = null
+	var currentTarget: Point? = null
+
+	val currentComboStep: ComboStep
+		get()
+		{
+			return currentCombo!!.steps[currentIndex]
+		}
+
+	val currentAttack: Attack
+		get()
+		{
+			val name = currentComboStep.attack
+			return attacks[name]
+		}
 }
 
 class Attack()
 {
 	lateinit var name: String
 	val hitPoints: com.badlogic.gdx.utils.Array<Point> = com.badlogic.gdx.utils.Array()
+	lateinit var hitType: String
 	lateinit var readySprite: Sprite
 	lateinit var hitSprite: Sprite
 	lateinit var effectData: XmlReader.Element

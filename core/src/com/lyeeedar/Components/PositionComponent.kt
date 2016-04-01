@@ -14,7 +14,11 @@ class PositionComponent: Component
 	constructor()
 	constructor(point: Point) { this.position = point }
 
-	var position: Point = Point()
+	var position: Point = Point() // bottom left pos
+	var min: Point
+		set(value) { position = value }
+		get() { return position }
+	var max: Point = Point()
 	var slot: Enums.SpaceSlot = Enums.SpaceSlot.ENTITY
 	var size: Int = 1
 

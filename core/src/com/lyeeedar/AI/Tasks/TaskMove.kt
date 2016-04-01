@@ -21,13 +21,44 @@ class TaskMove(var direction: Enums.Direction): AbstractTask(EventComponent.Even
 		if (pos.position is Tile)
 		{
 			val prev = (pos.position as Tile)
-			val next = prev.neighbours.get(direction)
 
-			if (next != null && next.contents.get(pos.slot) == null && next.contents.get(Enums.SpaceSlot.WALL) == null)
+			// check valid
+			var isValidMove = true
+			outer@ for (x in 0..pos.size-1)
 			{
-				prev.contents.remove(pos.slot)
+				for (y in 0..pos.size-1)
+				{
+					val tile = prev.level.getTile(prev, x+direction.x, y+direction.y)
+					if (tile == null || tile.contents.get(pos.slot) != null || tile.contents.get(Enums.SpaceSlot.WALL) != null)
+					{
+						isValidMove = false
+						break@outer
+					}
+				}
+			}
+
+			if (isValidMove)
+			{
+				for (x in 0..pos.size-1)
+				{
+					for (y in 0..pos.size-1)
+					{
+						val tile = prev.level.getTile(prev, x, y)
+						tile?.contents?.remove(pos.slot)
+					}
+				}
+
+				val next = prev.level.getTile(prev, direction) ?: return
 				pos.position = next
-				next.contents.put(pos.slot, e)
+
+				for (x in 0..pos.size-1)
+				{
+					for (y in 0..pos.size-1)
+					{
+						val tile = next.level.getTile(next, x, y)
+						tile?.contents?.put(pos.slot, e)
+					}
+				}
 
 				sprite.sprite.spriteAnimation = MoveAnimation(0.15f, next.getPosDiff(prev), MoveAnimation.MoveEquation.LINEAR)
 			}

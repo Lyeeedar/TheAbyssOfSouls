@@ -6,6 +6,7 @@ import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.position
 import com.lyeeedar.Components.tile
+import com.lyeeedar.GlobalData
 
 /**
  * Created by Philip on 31-Mar-16.
@@ -16,24 +17,38 @@ class ActionTelegraphedAttack(): AbstractAction()
 
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		val atk = Mappers.telegraphed.get(entity)
+		val atkData = Mappers.telegraphed.get(entity)
 		val pos = entity.position()
-		val tile = entity.tile()
 
-		if (atk.currentCombo != null)
+		if (atkData.currentCombo != null)
 		{
-			if (atk.readyEntity == null)
+			if (atkData.readyEntity == null)
 			{
 				// advance combo
 			}
 			else
 			{
 				// do actual attack
+				GlobalData.Global.engine?.removeEntity(atkData.readyEntity)
+				val combo = atkData.currentComboStep
+				val atk = atkData.currentAttack
+
+				// move forward if able
+				if (combo.canMove)
+				{
+					// try to move forward
+				}
+
+				// actually do the attack
+				if (atk.hitType.equals("all"))
+				{
+
+				}
 			}
 		}
 		else
 		{
-			// find all valid combos
+			// find all valid combos + starttile + direction
 
 			// weight and pick random
 
