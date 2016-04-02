@@ -115,8 +115,8 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 			if (effect != null)
 			{
-				effect.sprite.size[0] = pos.max.x - pos.min.x
-				effect.sprite.size[1] = pos.max.y - pos.min.y
+				effect.sprite.size[0] = pos.max.x - pos.min.x + 1
+				effect.sprite.size[1] = pos.max.y - pos.min.y + 1
 				effect.sprite.rotation = effect.direction.angle
 
 				queueSprite(effect.sprite, drawX, drawY, offsetx, offsety, Enums.SpaceSlot.AIR, tile)

@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
+import com.lyeeedar.AI.Tasks.TaskDoAttack
+import com.lyeeedar.AI.Tasks.TaskPrepareAttack
 import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
 import com.lyeeedar.Events.EventArgs
@@ -30,7 +32,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 	{
 		state = ExecutionState.FAILED
 
-		val atkData = Mappers.telegraphed.get(entity)
+		val atkData = Mappers.telegraphed.get(entity) ?: return state
 		entity.tile() ?: return state
 		entity.stats() ?: return state
 
@@ -88,8 +90,9 @@ class ActionTelegraphedAttack(): AbstractAction()
 
 		val rdy = Entity()
 		rdy.add(SpriteComponent(atkData.currentAttack.readySprite.copy()))
-		rdy.add(PositionComponent(entityTile))
-		GlobalData.Global.engine?.addEntity(rdy)
+
+		val task = Mappers.task.get(entity)
+		task.tasks.add(TaskPrepareAttack(entityTile, rdy))
 
 		atkData.readyEntity = rdy
 	}
@@ -101,9 +104,9 @@ class ActionTelegraphedAttack(): AbstractAction()
 		// find all valid combos + direction
 		val valid = com.badlogic.gdx.utils.Array<ValidData>()
 
-		for (dir in Enums.Direction.values())
+		for (dir in Enums.Direction.CardinalValues)
 		{
-			val srcTiles = getSrcTiles(entity, dir)
+			val srcTiles = entity.getEdgeTiles(dir)
 
 			for (combo in atkData.combos)
 			{
@@ -143,16 +146,15 @@ class ActionTelegraphedAttack(): AbstractAction()
 	fun advanceCombo(entity: Entity)
 	{
 		val atkData = Mappers.telegraphed.get(entity)
-		val entityTile = entity.tile() ?: return
 
 		if (atkData.readyEntity != null)
 		{
-			GlobalData.Global.engine?.removeEntity(atkData.readyEntity)
+			//GlobalData.Global.engine?.removeEntity(atkData.readyEntity)
+			atkData.readyEntity = null
 		}
 
 		// do actual attack
 		val combo = atkData.currentComboStep
-		val atk = atkData.currentAttack
 
 		// move forward if able
 		if (combo.canMove)
@@ -160,58 +162,8 @@ class ActionTelegraphedAttack(): AbstractAction()
 			// try to move forward
 		}
 
-		// actually do the attack
-		if (atk.hitType.equals("all"))
-		{
-			val srcTiles = getSrcTiles(entity, atkData.currentDir)
-
-			// find min and max tile
-			var min: Tile? = null
-			var max: Tile? = null
-			val mat = Matrix3()
-			mat.setToRotation( atkData.currentDir.angle )
-			val vec = Vector3()
-
-			for (tile in srcTiles)
-			{
-				for (point in atk.hitPoints)
-				{
-					vec.set( point.x.toFloat(), point.y.toFloat(), 0f );
-					vec.mul( mat );
-
-					val dx = Math.round( vec.x ).toInt();
-					val dy = Math.round( vec.y ).toInt();
-
-					val t = entityTile.level.getTile(tile, dx, dy) ?: continue
-					if (t.x <= min?.x ?: Int.MAX_VALUE && t.y <= min?.y ?: Int.MAX_VALUE)
-					{
-						min = t
-					}
-					if (t.x >= max?.x ?: -Int.MAX_VALUE && t.y >= max?.y ?: -Int.MAX_VALUE)
-					{
-						max = t
-					}
-				}
-			}
-
-			val effectEntity = Entity()
-			val effect = EffectComponent(atk.hitSprite.copy(), atkData.currentDir)
-			effect.eventMap.put(Sprite.AnimationStage.MIDDLE, EventArgs(EventComponent.EventType.ALL, entity, effectEntity, 0f))
-			effectEntity.add(effect)
-
-			val position = PositionComponent()
-			position.min = min!!
-			position.position = min
-			position.max = max!!
-			position.slot = Enums.SpaceSlot.AIR
-			effectEntity.add(position)
-
-			val event = EventComponent()
-			event.parse(atk.effectData)
-			effectEntity.add(event)
-
-			GlobalData.Global.engine?.addEntity(effectEntity)
-		}
+		val task = Mappers.task.get(entity)
+		task.tasks.add(TaskDoAttack(atkData.currentAttack, atkData.currentDir))
 
 		//Queue next attack if possible else end
 		val comboData = atkData.currentCombo ?: throw RuntimeException("Somehow combo got set to null whilst processing")
@@ -222,7 +174,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 			val catk = atkData.currentAttack
 
 			val valid = com.badlogic.gdx.utils.Array<Enums.Direction>()
-			if (isValidAttack(catk, atkData.currentDir, getSrcTiles(entity, atkData.currentDir), entity))
+			if (isValidAttack(catk, atkData.currentDir, entity.getEdgeTiles(atkData.currentDir), entity))
 			{
 				for (i in 0..3)
 				{
@@ -232,13 +184,13 @@ class ActionTelegraphedAttack(): AbstractAction()
 			if (cstep.canTurn)
 			{
 				val cw = atkData.currentDir.clockwise.clockwise
-				if (isValidAttack(catk, cw, getSrcTiles(entity, cw), entity))
+				if (isValidAttack(catk, cw, entity.getEdgeTiles(cw), entity))
 				{
 					valid.add(cw)
 				}
 
 				val ccw = atkData.currentDir.anticlockwise.anticlockwise
-				if (isValidAttack(catk, ccw, getSrcTiles(entity, ccw), entity))
+				if (isValidAttack(catk, ccw, entity.getEdgeTiles(ccw), entity))
 				{
 					valid.add(ccw)
 				}
@@ -272,60 +224,6 @@ class ActionTelegraphedAttack(): AbstractAction()
 			atkData.currentTarget = null
 			state = ExecutionState.COMPLETED
 		}
-	}
-
-	fun getSrcTiles(entity: Entity, dir: Enums.Direction): com.badlogic.gdx.utils.Array<Tile>
-	{
-		val pos = entity.position()
-		val tile = entity.tile() ?: throw RuntimeException("argh tile is null")
-
-		var xstep = 0;
-		var ystep = 0;
-
-		var sx = 0;
-		var sy = 0;
-
-		if ( dir == Enums.Direction.NORTH )
-		{
-			sx = 0;
-			sy = pos.size - 1;
-
-			xstep = 1;
-			ystep = 0;
-		}
-		else if ( dir == Enums.Direction.SOUTH )
-		{
-			sx = 0;
-			sy = 0;
-
-			xstep = 1;
-			ystep = 0;
-		}
-		else if ( dir == Enums.Direction.EAST )
-		{
-			sx = pos.size - 1;
-			sy = 0;
-
-			xstep = 0;
-			ystep = 1;
-		}
-		else if ( dir == Enums.Direction.WEST )
-		{
-			sx = 0;
-			sy = 0;
-
-			xstep = 0;
-			ystep = 1;
-		}
-
-		val tiles = com.badlogic.gdx.utils.Array<Tile>()
-		for (i in 0..pos.size-1)
-		{
-			val t = tile.level.getTile(tile, sx + xstep * i, sy + ystep * i);
-			tiles.add(t)
-		}
-
-		return tiles
 	}
 
 	override fun parse(xml: XmlReader.Element)

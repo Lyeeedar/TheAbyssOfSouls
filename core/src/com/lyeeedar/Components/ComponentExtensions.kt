@@ -118,6 +118,14 @@ class EntityLoader()
 				events.parse(eventsEl)
 			}
 
+			val telegraphedEl = xml.getChildByName("TelegraphedAttacks")
+			if (telegraphedEl != null)
+			{
+				val telegraph = TelegraphedAttackComponent()
+				telegraph.parse(telegraphedEl)
+				entity.add(telegraph)
+			}
+
 			val inventory = xml.getChildByName("Inventory")
 			if (inventory != null)
 			{
@@ -150,4 +158,59 @@ class EntityLoader()
 			return entity
 		}
 	}
+}
+
+
+fun Entity.getEdgeTiles(dir: Enums.Direction): com.badlogic.gdx.utils.Array<Tile>
+{
+	val pos = this.position()
+	val tile = this.tile() ?: throw RuntimeException("argh tile is null")
+
+	var xstep = 0;
+	var ystep = 0;
+
+	var sx = 0;
+	var sy = 0;
+
+	if ( dir == Enums.Direction.NORTH )
+	{
+		sx = 0;
+		sy = pos.size - 1;
+
+		xstep = 1;
+		ystep = 0;
+	}
+	else if ( dir == Enums.Direction.SOUTH )
+	{
+		sx = 0;
+		sy = 0;
+
+		xstep = 1;
+		ystep = 0;
+	}
+	else if ( dir == Enums.Direction.EAST )
+	{
+		sx = pos.size - 1;
+		sy = 0;
+
+		xstep = 0;
+		ystep = 1;
+	}
+	else if ( dir == Enums.Direction.WEST )
+	{
+		sx = 0;
+		sy = 0;
+
+		xstep = 0;
+		ystep = 1;
+	}
+
+	val tiles = com.badlogic.gdx.utils.Array<Tile>()
+	for (i in 0..pos.size-1)
+	{
+		val t = tile.level.getTile(tile, sx + xstep * i, sy + ystep * i) ?: continue
+		tiles.add(t)
+	}
+
+	return tiles
 }

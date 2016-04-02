@@ -29,7 +29,7 @@ class TaskMove(var direction: Enums.Direction): AbstractTask(EventComponent.Even
 				for (y in 0..pos.size-1)
 				{
 					val tile = prev.level.getTile(prev, x+direction.x, y+direction.y)
-					if (tile == null || tile.contents.get(pos.slot) != null || tile.contents.get(Enums.SpaceSlot.WALL) != null)
+					if (tile == null || (tile.contents.get(pos.slot) != null && tile.contents.get(pos.slot) != e) || tile.contents.get(Enums.SpaceSlot.WALL) != null)
 					{
 						isValidMove = false
 						break@outer

@@ -1,51 +1,93 @@
 <Boss>
 
-    <Attacks>
+    <TelegraphedAttacks>
+        <Attacks>
 
-        <Attack>
-            <Name>Stab</Name>
+            <Attack>
+                <Name>Stab</Name>
 
-            <Grid>
-                <Row>.....</Row>
-                <Row>..#..</Row>
-                <Row>..#..</Row>
-                <Row>..@..</Row>
-                <Row>.....</Row>
-            </Grid>
+                <HitPattern>
+                    <Row>.....</Row>
+                    <Row>..#..</Row>
+                    <Row>..#..</Row>
+                    <Row>..@..</Row>
+                    <Row>.....</Row>
+                </HitPattern>
 
-            <ReadySprite>
-                <Name>EffectSprites/Thrust/Thrust_2</Name>
-            </ReadySprite>
+                <HitType>All</HitType>
 
-            <HitSprite>
-                <Name>EffectSprites/Thrust/Thrust</Name>
-            </HitSprite>
+                <ReadySprite>
+                    <Name>EffectSprites/Thrust/Thrust_2</Name>
+                </ReadySprite>
 
-            <Effects>
-                <Damage>
-                    <Physical>100</Physical>
-                    <Elemental>0</Elemental>
-                </Damage>
-                <Knockback>
-                    <Distance>1</Distance>
-                </Knockback>
-            </Effects>
+                <HitSprite>
+                    <Name>EffectSprites/Thrust/Thrust</Name>
+                    <UpdateRate>0.1</UpdateRate>
+                </HitSprite>
 
-        </Attack>
+                <Effects>
+                    <OnAll>
+                        <Group Name="">
+                            <Damage>
+                                <Physical_Attack>100</Physical_Attack>
+                            </Damage>
+                        </Group>
+                    </OnAll>
+                </Effects>
 
-    </Attacks>
+            </Attack>
 
-    <Combos>
+        </Attacks>
 
-        <Combo>
-            <Name>Stab</Name>
-            <Attacks>
+        <Combos>
+
+            <Combo Name="TripleStab" Weight="1">
                 <Stab></Stab>
-                <Stab CanEnd="true" CanTurn="true"></Stab>
-                <Stab CanEnd="true" CanTurn="true"></Stab>
-            </Attacks>
-        </Combo>
+                <Stab CanEnd="true" CanTurn="true" CanMove="true"></Stab>
+                <Stab CanEnd="true" CanTurn="true" CanMove="true"></Stab>
+            </Combo>
 
-    </Combos>
+        </Combos>
+    </TelegraphedAttacks>
+
+    <Name>enemy</Name>
+
+    <AI>bossMonster</AI>
+
+    <Slot>Entity</Slot>
+    <Size>2</Size>
+
+    <Sprite>
+        <Name>Oryx/uf_split/uf_heroes/zombie_a</Name>
+        <DrawActualSize>true</DrawActualSize>
+    </Sprite>
+
+    <Statistics>
+        <Max_Health>20</Max_Health>
+        <Max_Stamina>100</Max_Stamina>
+        <Sight>5</Sight>
+        <Morale>90</Morale>
+        <Physical_Attack>2</Physical_Attack>
+        <Physical_Defense>1</Physical_Defense>
+    </Statistics>
+
+    <Factions>enemy</Factions>
+
+    <Inventory>
+        <Equipment>
+            <Weapon>
+                <Name>Sword</Name>
+                <HitSprite>
+                    <Name>EffectSprites/Slash/Slash</Name>
+                    <UpdateRate>0.1</UpdateRate>
+                </HitSprite>
+                <Slot>Weapon</Slot>
+                <Statistics>
+                    <Physical_Attack>2</Physical_Attack>
+                </Statistics>
+            </Weapon>
+        </Equipment>
+    </Inventory>
 
 </Boss>
+

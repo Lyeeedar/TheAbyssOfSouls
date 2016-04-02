@@ -72,6 +72,9 @@ public class Enums
 			Direction.SOUTH.isCardinal = true;
 			Direction.EAST.isCardinal = true;
 			Direction.WEST.isCardinal = true;
+
+			Direction.Values = Direction.values();
+			Direction.CardinalValues = new Direction[]{NORTH, EAST, SOUTH, WEST};
 		}
 
 		public final String identifier;
@@ -81,6 +84,8 @@ public class Enums
 		private Direction clockwise;
 		private Direction anticlockwise;
 		private boolean isCardinal = false;
+		public static Direction[] CardinalValues;
+		public static Direction[] Values;
 
 		Direction( int x, int y, String identifier )
 		{
@@ -119,7 +124,7 @@ public class Enums
 
 			Direction d = Direction.CENTER;
 
-			for ( Direction dir : Direction.values() )
+			for ( Direction dir : Direction.Values )
 			{
 				if ( dir.x == dx && dir.y == dy )
 				{

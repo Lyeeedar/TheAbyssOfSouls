@@ -41,7 +41,13 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 
 				if (tile.effects.size != 0) return
 
-				tile.contents.remove(pos.slot)
+				for (x in 0..pos.size-1)
+				{
+					for (y in 0..pos.size-1)
+					{
+						tile.level.getTile(tile, x, y)?.contents?.remove(pos.slot)
+					}
+				}
 			}
 
 			eng.removeEntity(entity)

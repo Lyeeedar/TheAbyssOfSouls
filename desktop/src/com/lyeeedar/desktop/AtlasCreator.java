@@ -408,7 +408,7 @@ public class AtlasCreator
 	public static void buildTilingMasksArray()
 	{
 		HashSet<Enums.Direction> directions = new HashSet<Enums.Direction>( );
-		for ( Enums.Direction dir : Enums.Direction.values() ) { directions.add( dir ); }
+		for ( Enums.Direction dir : Enums.Direction.Values ) { directions.add( dir ); }
 
 		Set<Set<Enums.Direction>> powerSet = powerSet( directions );
 

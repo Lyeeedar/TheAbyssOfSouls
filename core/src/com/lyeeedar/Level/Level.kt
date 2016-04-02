@@ -25,7 +25,7 @@ class Level()
 					grid[x][y].x = x
 					grid[x][y].y = y
 
-					for (dir in Enums.Direction.values())
+					for (dir in Enums.Direction.Values)
 					{
 						grid[x][y].neighbours.put( dir, getTile(x, y, dir) )
 					}
@@ -71,7 +71,7 @@ class Level()
 	{
 		// Build bitflag of surrounding tiles
 		bitflag.clear();
-		for (dir in Enums.Direction.values())
+		for (dir in Enums.Direction.Values)
 		{
 			val tile = getTile( x, y, dir );
 

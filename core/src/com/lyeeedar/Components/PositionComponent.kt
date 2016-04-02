@@ -21,5 +21,4 @@ class PositionComponent: Component
 	var max: Point = Point()
 	var slot: Enums.SpaceSlot = Enums.SpaceSlot.ENTITY
 	var size: Int = 1
-
 }

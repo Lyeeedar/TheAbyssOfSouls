@@ -38,7 +38,9 @@ class TaskAttack(var direction: Enums.Direction): AbstractTask(EventComponent.Ev
 		event.registerHandler(EventComponent.EventType.ALL, group)
 		effect.add(event)
 
-		effect.add(PositionComponent(next))
+		val pos = PositionComponent(next)
+		pos.max = next
+		effect.add(pos)
 		next.effects.add(effect)
 
 		GlobalData.Global.engine?.addEntity(effect)
