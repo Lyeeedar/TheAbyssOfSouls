@@ -25,6 +25,7 @@ class TelegraphedAttackComponent: Component
 	var currentDir: Enums.Direction = Enums.Direction.CENTER
 	var readyEntity: Entity? = null
 	var currentTarget: Point? = null
+	var currentSource: Point? = null
 
 	val currentComboStep: ComboStep
 		get()
@@ -94,7 +95,7 @@ class Attack()
 
 			for (x in 0..hitGrid[ y ].size-1)
 			{
-				if (hitGrid[ y ][ x ] == 'x')
+				if (hitGrid[ y ][ x ] == '@')
 				{
 					centralPoint.x = x;
 					centralPoint.y = y;

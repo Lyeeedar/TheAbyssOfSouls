@@ -9,13 +9,16 @@ import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 02-Apr-16.
  */
 
-class TaskDoAttack(val atk: Attack, val dir: Enums.Direction): AbstractTask(EventComponent.EventType.NONE)
+class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTile: Point): AbstractTask(EventComponent.EventType.NONE)
 {
+	var comboAttack: TaskPrepareAttack? = null
+
 	override fun execute(e: Entity)
 	{
 		val entityTile = e.tile() ?: return
@@ -23,8 +26,6 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction): AbstractTask(Even
 		// actually do the attack
 		if (atk.hitType.equals("all"))
 		{
-			val srcTiles = e.getEdgeTiles(dir)
-
 			// find min and max tile
 			var min: Tile? = null
 			var max: Tile? = null
@@ -32,25 +33,22 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction): AbstractTask(Even
 			mat.setToRotation( dir.angle )
 			val vec = Vector3()
 
-			for (tile in srcTiles)
+			for (point in atk.hitPoints)
 			{
-				for (point in atk.hitPoints)
+				vec.set( point.x.toFloat(), point.y.toFloat(), 0f );
+				vec.mul( mat );
+
+				val dx = Math.round( vec.x ).toInt();
+				val dy = Math.round( vec.y ).toInt();
+
+				val t = entityTile.level.getTile(srcTile, dx, dy) ?: continue
+				if (t.x <= min?.x ?: Int.MAX_VALUE && t.y <= min?.y ?: Int.MAX_VALUE)
 				{
-					vec.set( point.x.toFloat(), point.y.toFloat(), 0f );
-					vec.mul( mat );
-
-					val dx = Math.round( vec.x ).toInt();
-					val dy = Math.round( vec.y ).toInt();
-
-					val t = entityTile.level.getTile(tile, dx, dy) ?: continue
-					if (t.x <= min?.x ?: Int.MAX_VALUE && t.y <= min?.y ?: Int.MAX_VALUE)
-					{
-						min = t
-					}
-					if (t.x >= max?.x ?: -Int.MAX_VALUE && t.y >= max?.y ?: -Int.MAX_VALUE)
-					{
-						max = t
-					}
+					min = t
+				}
+				if (t.x >= max?.x ?: -Int.MAX_VALUE && t.y >= max?.y ?: -Int.MAX_VALUE)
+				{
+					max = t
 				}
 			}
 
@@ -72,6 +70,8 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction): AbstractTask(Even
 
 			GlobalData.Global.engine?.addEntity(effectEntity)
 		}
+
+		comboAttack?.execute(e)
 	}
 
 }

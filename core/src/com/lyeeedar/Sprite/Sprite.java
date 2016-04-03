@@ -233,11 +233,11 @@ public final class Sprite
 
 		if ( animationState.mode == AnimationMode.SHRINK && animationState.isShrunk )
 		{
-			height *= 0.9f;
+			height *= 0.85f;
 		}
 		else if ( animationState.mode == AnimationMode.SINE )
 		{
-			y += ( height / 20 ) * animationState.sinOffset;
+			y += ( height / 15f ) * animationState.sinOffset;
 		}
 
 		// Check if not onscreen
