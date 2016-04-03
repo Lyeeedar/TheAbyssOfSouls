@@ -2,7 +2,6 @@ package com.lyeeedar.AI.BehaviourTree.Actions
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Matrix3
-import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
@@ -10,15 +9,9 @@ import com.lyeeedar.AI.Tasks.TaskDoAttack
 import com.lyeeedar.AI.Tasks.TaskPrepareAttack
 import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
-import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.GlobalData
-import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.isAllies
-import java.util.*
-import com.lyeeedar.Util.ran
 
 /**
  * Created by Philip on 31-Mar-16.
@@ -27,6 +20,16 @@ import com.lyeeedar.Util.ran
 class ActionTelegraphedAttack(): AbstractAction()
 {
 	data class ValidData(val combo: Combo, val direction: Enums.Direction, val srcTile: Tile)
+	var readyEntity: Entity? = null
+		set(value)
+		{
+			if (field != null)
+			{
+				GlobalData.Global.engine?.removeEntity(field)
+			}
+
+			field = value
+		}
 
 	override fun evaluate(entity: Entity): ExecutionState
 	{
@@ -99,18 +102,14 @@ class ActionTelegraphedAttack(): AbstractAction()
 			task.tasks.add(prepareAtk)
 		}
 
-		atkData.readyEntity = rdy
+		readyEntity = rdy
 	}
 
 	fun beginCombo(entity: Entity)
 	{
 		val atkData = Mappers.telegraphed.get(entity)
 
-		if (atkData.readyEntity != null)
-		{
-			GlobalData.Global.engine?.removeEntity(atkData.readyEntity)
-			atkData.readyEntity = null
-		}
+		readyEntity = null
 
 		// find all valid combos + direction
 		val valid = com.badlogic.gdx.utils.Array<ValidData>()
@@ -162,11 +161,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 	{
 		val atkData = Mappers.telegraphed.get(entity)
 
-		if (atkData.readyEntity != null)
-		{
-			GlobalData.Global.engine?.removeEntity(atkData.readyEntity)
-			atkData.readyEntity = null
-		}
+		readyEntity = null
 
 		// do actual attack
 		val combo = atkData.currentComboStep
@@ -257,6 +252,6 @@ class ActionTelegraphedAttack(): AbstractAction()
 
 	override fun cancel()
 	{
-
+		readyEntity = null
 	}
 }

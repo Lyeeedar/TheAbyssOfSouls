@@ -23,7 +23,6 @@ class TelegraphedAttackComponent: Component
 	var currentCombo: Combo? = null
 	var currentIndex: Int = 0
 	var currentDir: Enums.Direction = Enums.Direction.CENTER
-	var readyEntity: Entity? = null
 	var currentTarget: Point? = null
 	var currentSource: Point? = null
 

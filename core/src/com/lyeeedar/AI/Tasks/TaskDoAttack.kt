@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Vector3
 import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
+import com.lyeeedar.Events.EventActionDamage
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
@@ -22,6 +23,7 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTile: Point
 	override fun execute(e: Entity)
 	{
 		val entityTile = e.tile() ?: return
+		val stats = e.stats() ?: return
 
 		// actually do the attack
 		if (atk.hitType.equals("all"))
@@ -66,6 +68,25 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTile: Point
 
 			val event = EventComponent()
 			event.parse(atk.effectData)
+			for (group in event.handlers.get(EventComponent.EventType.ALL))
+			{
+				for (action in group.actions)
+				{
+					if (action is EventActionDamage)
+					{
+						for (stat in Enums.Statistic.ATTACK_STATS)
+						{
+							val baseAtk = stats.stats.get(stat)
+							val sclAtk = action.damMap.get(stat)
+
+							val sclVal = sclAtk / 100f
+							val newAtk = baseAtk * sclVal
+
+							action.damMap.put(stat, newAtk)
+						}
+					}
+				}
+			}
 			effectEntity.add(event)
 
 			GlobalData.Global.engine?.addEntity(effectEntity)

@@ -15,7 +15,7 @@
         </Sequence>
         <Sequence>
             <TelegraphedAttack></TelegraphedAttack>
-            <Wait></Wait>
+            <Wait Count="2+rnd(2)"></Wait>
         </Sequence>
 		<MoveTo Key="EnemyPos"></MoveTo>
 		<Random>

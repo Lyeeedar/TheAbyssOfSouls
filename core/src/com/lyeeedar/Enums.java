@@ -286,6 +286,7 @@ public class Enums
 
 		public static Statistic[] ATTACK_STATS = { PHYSICAL_ATTACK, SHOCK_ATTACK, ACID_ATTACK, ICE_ATTACK, VORPAL_ATTACK };
 		public static Statistic[] DEFENSE_STATS = { PHYSICAL_DEFENSE, SHOCK_DEFENSE, ACID_DEFENSE, ICE_DEFENSE, VORPAL_DEFENSE };
+		public static Statistic[] Values = Statistic.values();
 
 		static
 		{
