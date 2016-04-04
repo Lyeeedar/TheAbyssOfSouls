@@ -69,6 +69,7 @@ class Attack()
 	lateinit var name: String
 	val hitPoints: com.badlogic.gdx.utils.Array<Point> = com.badlogic.gdx.utils.Array()
 	lateinit var hitType: String
+	lateinit var readyType: String
 	lateinit var readySprite: Sprite
 	lateinit var hitSprite: Sprite
 	lateinit var effectData: XmlReader.Element
@@ -76,7 +77,8 @@ class Attack()
 	fun parse(xml: XmlReader.Element)
 	{
 		name = xml.get("Name").toLowerCase()
-		hitType = xml.get("HitType", "all").toLowerCase();
+		hitType = xml.get("HitType", "all").toLowerCase()
+		readyType = xml.get("ReadyType", "closest").toLowerCase()
 		readySprite = AssetManager.loadSprite(xml.getChildByName("ReadySprite"))
 		hitSprite = AssetManager.loadSprite(xml.getChildByName("HitSprite"))
 		effectData = xml.getChildByName("Effects")

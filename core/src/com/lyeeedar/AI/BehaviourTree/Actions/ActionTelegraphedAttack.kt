@@ -11,6 +11,7 @@ import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.isAllies
 
 /**
@@ -90,8 +91,15 @@ class ActionTelegraphedAttack(): AbstractAction()
 		val rdy = Entity()
 		rdy.add(SpriteComponent(atkData.currentAttack.readySprite.copy()))
 
+		var srcTile: Point? = when (atkData.currentAttack.readyType)
+		{
+			"closest" -> (atkData.currentSource!! + atkData.currentDir)
+			"target" -> atkData.currentTarget
+			else -> atkData.currentSource!!
+		}
+
 		val task = Mappers.task.get(entity)
-		val prepareAtk = TaskPrepareAttack(atkData.currentSource!!, rdy)
+		val prepareAtk = TaskPrepareAttack(srcTile!!, rdy)
 
 		if (task.tasks.size > 0 && task.tasks.last() is TaskDoAttack)
 		{

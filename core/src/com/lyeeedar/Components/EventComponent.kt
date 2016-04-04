@@ -14,7 +14,7 @@ class EventComponent: Component
 {
 	constructor()
 	{
-		for (type in EventType.values())
+		for (type in EventType.Values)
 		{
 			handlers.put(type, com.badlogic.gdx.utils.Array<EventActionGroup>())
 		}
@@ -35,7 +35,12 @@ class EventComponent: Component
 
 		ACTIVATE,
 		NONE,
-		ALL
+		ALL;
+
+		companion object
+		{
+			val Values: Array<EventType> = EventType.values()
+		}
 	}
 
 	val handlers: FastEnumMap<EventType, com.badlogic.gdx.utils.Array<EventActionGroup>> = FastEnumMap(EventType::class.java)

@@ -16,8 +16,10 @@
 
                 <HitType>All</HitType>
 
+                <ReadyType>Closest</ReadyType>
+
                 <ReadySprite>
-                    <Name>EffectSprites/Thrust/Thrust_2</Name>
+                    <Name>EffectSprites/Thrust/Thrust_1</Name>
                 </ReadySprite>
 
                 <HitSprite>

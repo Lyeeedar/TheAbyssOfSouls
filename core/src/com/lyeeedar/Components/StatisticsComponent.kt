@@ -31,7 +31,10 @@ class StatisticsComponent: Component
 			val diff = value - field
 			field = value
 			morale += (diff / stats.get(Enums.Statistic.MAX_HEALTH)) * 100f
+
+			damTally += diff
 		}
+	var damTally: Float = 0f
 
 	var stamina: Float = 1f
 	var morale: Float = 100f

@@ -27,6 +27,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.utils.NumberUtils;
 import com.lyeeedar.Util.Colour;
 
 /** Draws batched quads using indices.
@@ -56,6 +57,7 @@ public class HDRColourSpriteBatch implements Batch {
 	private boolean ownsShader;
 
 	private Colour colour = new Colour( 1f);
+	private final Color tempcolor = new Color(  );
 
 	/** Number of render calls since the last {@link #begin()}. **/
 	public int renderCalls = 0;
@@ -193,7 +195,10 @@ public class HDRColourSpriteBatch implements Batch {
 	@Override
 	public void setColor( Color tint )
 	{
-
+		colour.r = tint.r;
+		colour.g = tint.g;
+		colour.b = tint.b;
+		colour.a = tint.a;
 	}
 
 	public void setColor (Colour tint) {
@@ -208,13 +213,17 @@ public class HDRColourSpriteBatch implements Batch {
 	@Override
 	public void setColor( float color )
 	{
-
+		int intBits = NumberUtils.floatToIntColor( color );
+		colour.r = (intBits & 0xff) / 255f;
+		colour.g = ((intBits >>> 8) & 0xff) / 255f;
+		colour.b = ((intBits >>> 16) & 0xff) / 255f;
+		colour.a = ((intBits >>> 24) & 0xff) / 255f;
 	}
 
 	@Override
 	public Color getColor()
 	{
-		return null;
+		return tempcolor.set( colour.r, colour.g, colour.b, colour.a );
 	}
 
 	public Colour getColour()
@@ -231,55 +240,481 @@ public class HDRColourSpriteBatch implements Batch {
 	@Override
 	public void draw( Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX, float scaleY, float rotation, int srcX, int srcY, int srcWidth, int srcHeight, boolean flipX, boolean flipY )
 	{
+		if (!drawing) throw new IllegalStateException("SpriteBatch.begin must be called before draw.");
 
+		float[] vertices = this.vertices;
+
+		if (texture != lastTexture)
+			switchTexture(texture);
+		else if (idx == vertices.length) //
+			flush();
+
+		// bottom left and top right corner points relative to origin
+		final float worldOriginX = x + originX;
+		final float worldOriginY = y + originY;
+		float fx = -originX;
+		float fy = -originY;
+		float fx2 = width - originX;
+		float fy2 = height - originY;
+
+		// scale
+		if (scaleX != 1 || scaleY != 1) {
+			fx *= scaleX;
+			fy *= scaleY;
+			fx2 *= scaleX;
+			fy2 *= scaleY;
+		}
+
+		// construct corner points, start from top left and go counter clockwise
+		final float p1x = fx;
+		final float p1y = fy;
+		final float p2x = fx;
+		final float p2y = fy2;
+		final float p3x = fx2;
+		final float p3y = fy2;
+		final float p4x = fx2;
+		final float p4y = fy;
+
+		float x1;
+		float y1;
+		float x2;
+		float y2;
+		float x3;
+		float y3;
+		float x4;
+		float y4;
+
+		// rotate
+		if (rotation != 0) {
+			final float cos = MathUtils.cosDeg(rotation);
+			final float sin = MathUtils.sinDeg(rotation);
+
+			x1 = cos * p1x - sin * p1y;
+			y1 = sin * p1x + cos * p1y;
+
+			x2 = cos * p2x - sin * p2y;
+			y2 = sin * p2x + cos * p2y;
+
+			x3 = cos * p3x - sin * p3y;
+			y3 = sin * p3x + cos * p3y;
+
+			x4 = x1 + (x3 - x2);
+			y4 = y3 - (y2 - y1);
+		} else {
+			x1 = p1x;
+			y1 = p1y;
+
+			x2 = p2x;
+			y2 = p2y;
+
+			x3 = p3x;
+			y3 = p3y;
+
+			x4 = p4x;
+			y4 = p4y;
+		}
+
+		x1 += worldOriginX;
+		y1 += worldOriginY;
+		x2 += worldOriginX;
+		y2 += worldOriginY;
+		x3 += worldOriginX;
+		y3 += worldOriginY;
+		x4 += worldOriginX;
+		y4 += worldOriginY;
+
+		float u = srcX * invTexWidth;
+		float v = (srcY + srcHeight) * invTexHeight;
+		float u2 = (srcX + srcWidth) * invTexWidth;
+		float v2 = srcY * invTexHeight;
+
+		if (flipX) {
+			float tmp = u;
+			u = u2;
+			u2 = tmp;
+		}
+
+		if (flipY) {
+			float tmp = v;
+			v = v2;
+			v2 = tmp;
+		}
+
+		int idx = this.idx;
+		vertices[idx++] = x1;
+		vertices[idx++] = y1;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v;
+
+		vertices[idx++] = x2;
+		vertices[idx++] = y2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = x3;
+		vertices[idx++] = y3;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = x4;
+		vertices[idx++] = y4;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v;
+		this.idx = idx;
 	}
 
 	@Override
 	public void draw( Texture texture, float x, float y, float width, float height, int srcX, int srcY, int srcWidth, int srcHeight, boolean flipX, boolean flipY )
 	{
+		if (!drawing) throw new IllegalStateException("SpriteBatch.begin must be called before draw.");
 
+		float[] vertices = this.vertices;
+
+		if (texture != lastTexture)
+			switchTexture(texture);
+		else if (idx == vertices.length) //
+			flush();
+
+		float u = srcX * invTexWidth;
+		float v = (srcY + srcHeight) * invTexHeight;
+		float u2 = (srcX + srcWidth) * invTexWidth;
+		float v2 = srcY * invTexHeight;
+		final float fx2 = x + width;
+		final float fy2 = y + height;
+
+		if (flipX) {
+			float tmp = u;
+			u = u2;
+			u2 = tmp;
+		}
+
+		if (flipY) {
+			float tmp = v;
+			v = v2;
+			v2 = tmp;
+		}
+
+		int idx = this.idx;
+		vertices[idx++] = x;
+		vertices[idx++] = y;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v;
+
+		vertices[idx++] = x;
+		vertices[idx++] = fy2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = fx2;
+		vertices[idx++] = fy2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = fx2;
+		vertices[idx++] = y;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v;
+		this.idx = idx;
 	}
 
 	@Override
 	public void draw( Texture texture, float x, float y, int srcX, int srcY, int srcWidth, int srcHeight )
 	{
+		float[] vertices = this.vertices;
 
+		if (texture != lastTexture)
+			switchTexture(texture);
+		else if (idx == vertices.length) //
+			flush();
+
+		final float u = srcX * invTexWidth;
+		final float v = (srcY + srcHeight) * invTexHeight;
+		final float u2 = (srcX + srcWidth) * invTexWidth;
+		final float v2 = srcY * invTexHeight;
+		final float fx2 = x + srcWidth;
+		final float fy2 = y + srcHeight;
+
+		int idx = this.idx;
+		vertices[idx++] = x;
+		vertices[idx++] = y;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v;
+
+		vertices[idx++] = x;
+		vertices[idx++] = fy2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = fx2;
+		vertices[idx++] = fy2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = fx2;
+		vertices[idx++] = y;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v;
+		this.idx = idx;
 	}
 
 	@Override
 	public void draw( Texture texture, float x, float y, float width, float height, float u, float v, float u2, float v2 )
 	{
+		float[] vertices = this.vertices;
 
+		if (texture != lastTexture)
+			switchTexture(texture);
+		else if (idx == vertices.length) //
+			flush();
+
+		final float fx2 = x + width;
+		final float fy2 = y + height;
+
+		int idx = this.idx;
+		vertices[idx++] = x;
+		vertices[idx++] = y;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v;
+
+		vertices[idx++] = x;
+		vertices[idx++] = fy2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = fx2;
+		vertices[idx++] = fy2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = fx2;
+		vertices[idx++] = y;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v;
+		this.idx = idx;
 	}
 
 	@Override
 	public void draw( Texture texture, float x, float y )
 	{
-
+		draw(texture, x, y, texture.getWidth(), texture.getHeight());
 	}
 
 	@Override
 	public void draw( Texture texture, float x, float y, float width, float height )
 	{
+		if (!drawing) throw new IllegalStateException("SpriteBatch.begin must be called before draw.");
 
+		float[] vertices = this.vertices;
+
+		if (texture != lastTexture)
+			switchTexture(texture);
+		else if (idx == vertices.length) //
+			flush();
+
+		final float fx2 = x + width;
+		final float fy2 = y + height;
+		final float u = 0;
+		final float v = 1;
+		final float u2 = 1;
+		final float v2 = 0;
+
+		int idx = this.idx;
+		vertices[idx++] = x;
+		vertices[idx++] = y;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v;
+
+		vertices[idx++] = x;
+		vertices[idx++] = fy2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = fx2;
+		vertices[idx++] = fy2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = fx2;
+		vertices[idx++] = y;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v;
+		this.idx = idx;
 	}
 
 	@Override
 	public void draw( Texture texture, float[] spriteVertices, int offset, int count )
 	{
+		if (!drawing) throw new IllegalStateException("SpriteBatch.begin must be called before draw.");
 
+		int verticesLength = vertices.length;
+		int remainingVertices = verticesLength;
+		if (texture != lastTexture)
+			switchTexture(texture);
+		else {
+			remainingVertices -= idx;
+			if (remainingVertices == 0) {
+				flush();
+				remainingVertices = verticesLength;
+			}
+		}
+		int copyCount = Math.min(remainingVertices, count);
+
+		System.arraycopy(spriteVertices, offset, vertices, idx, copyCount);
+		idx += copyCount;
+		count -= copyCount;
+		while (count > 0) {
+			offset += copyCount;
+			flush();
+			copyCount = Math.min(verticesLength, count);
+			System.arraycopy(spriteVertices, offset, vertices, 0, copyCount);
+			idx += copyCount;
+			count -= copyCount;
+		}
 	}
 
 	@Override
 	public void draw( TextureRegion region, float x, float y )
 	{
-
+		draw(region, x, y, region.getRegionWidth(), region.getRegionHeight());
 	}
 
 	@Override
 	public void draw( TextureRegion region, float x, float y, float width, float height )
 	{
+		if (!drawing) throw new IllegalStateException("SpriteBatch.begin must be called before draw.");
 
+		float[] vertices = this.vertices;
+
+		Texture texture = region.texture;
+		if (texture != lastTexture) {
+			switchTexture(texture);
+		} else if (idx == vertices.length) //
+			flush();
+
+		final float fx2 = x + width;
+		final float fy2 = y + height;
+		final float u = region.u;
+		final float v = region.v2;
+		final float u2 = region.u2;
+		final float v2 = region.v;
+
+		int idx = this.idx;
+		vertices[idx++] = x;
+		vertices[idx++] = y;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v;
+
+		vertices[idx++] = x;
+		vertices[idx++] = fy2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = fx2;
+		vertices[idx++] = fy2;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v2;
+
+		vertices[idx++] = fx2;
+		vertices[idx++] = y;
+		vertices[idx++] = colour.r;
+		vertices[idx++] = colour.g;
+		vertices[idx++] = colour.b;
+		vertices[idx++] = colour.a;
+		vertices[idx++] = u2;
+		vertices[idx++] = v;
+		this.idx = idx;
 	}
 
 	@Override

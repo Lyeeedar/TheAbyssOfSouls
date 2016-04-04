@@ -72,9 +72,6 @@ public class Enums
 			Direction.SOUTH.isCardinal = true;
 			Direction.EAST.isCardinal = true;
 			Direction.WEST.isCardinal = true;
-
-			Direction.Values = Direction.values();
-			Direction.CardinalValues = new Direction[]{NORTH, EAST, SOUTH, WEST};
 		}
 
 		public final String identifier;
@@ -84,8 +81,8 @@ public class Enums
 		private Direction clockwise;
 		private Direction anticlockwise;
 		private boolean isCardinal = false;
-		public static Direction[] CardinalValues;
-		public static Direction[] Values;
+		public static final Direction[] CardinalValues = {NORTH, EAST, SOUTH, WEST};
+		public static final Direction[] Values = Direction.values();
 
 		Direction( int x, int y, String identifier )
 		{
@@ -261,7 +258,9 @@ public class Enums
 		FLOOR,
 		WALL,
 		ENTITY,
-		AIR
+		AIR;
+
+		public static final SpaceSlot[] Values = SpaceSlot.values();
 	}
 
 	// ----------------------------------------------------------------------
@@ -284,9 +283,9 @@ public class Enums
 		ICE_DEFENSE,
 		VORPAL_DEFENSE;
 
-		public static Statistic[] ATTACK_STATS = { PHYSICAL_ATTACK, SHOCK_ATTACK, ACID_ATTACK, ICE_ATTACK, VORPAL_ATTACK };
-		public static Statistic[] DEFENSE_STATS = { PHYSICAL_DEFENSE, SHOCK_DEFENSE, ACID_DEFENSE, ICE_DEFENSE, VORPAL_DEFENSE };
-		public static Statistic[] Values = Statistic.values();
+		public static final Statistic[] ATTACK_STATS = { PHYSICAL_ATTACK, SHOCK_ATTACK, ACID_ATTACK, ICE_ATTACK, VORPAL_ATTACK };
+		public static final Statistic[] DEFENSE_STATS = { PHYSICAL_DEFENSE, SHOCK_DEFENSE, ACID_DEFENSE, ICE_DEFENSE, VORPAL_DEFENSE };
+		public static final Statistic[] Values = Statistic.values();
 
 		static
 		{
@@ -297,7 +296,7 @@ public class Enums
 		{
 			ObjectFloatMap<String> emptyMap = new ObjectFloatMap<String>();
 
-			for ( Statistic s : Statistic.values() )
+			for ( Statistic s : Statistic.Values )
 			{
 				emptyMap.put( s.toString().toLowerCase(), 0f );
 			}
@@ -309,7 +308,7 @@ public class Enums
 		{
 			ObjectFloatMap<String> variableMap = new ObjectFloatMap<String>();
 
-			for ( Statistic key : Statistic.values() )
+			for ( Statistic key : Statistic.Values )
 			{
 				Float val = stats.get( key );
 				if ( val != null )
@@ -330,7 +329,7 @@ public class Enums
 		{
 			FastEnumMap<Statistic, Float> stats = new FastEnumMap<Statistic, Float>( Statistic.class );
 
-			for ( Statistic stat : Statistic.values() )
+			for ( Statistic stat : Statistic.Values )
 			{
 				stats.put( stat, defaultValue );
 			}
@@ -341,7 +340,7 @@ public class Enums
 		public static FastEnumMap<Statistic, Float> load( XmlReader.Element xml )
 		{
 			FastEnumMap<Statistic, Float> map = new FastEnumMap<Statistic, Float>( Statistic.class );
-			for (Statistic stat : Statistic.values())
+			for (Statistic stat : Statistic.Values)
 			{
 				map.put( stat, 0f );
 			}
@@ -379,7 +378,7 @@ public class Enums
 		public static FastEnumMap<Statistic, Float> copy( FastEnumMap<Statistic, Float> map )
 		{
 			FastEnumMap<Statistic, Float> newMap = new FastEnumMap<Statistic, Float>( Statistic.class );
-			for ( Statistic e : Statistic.values() )
+			for ( Statistic e : Statistic.Values )
 			{
 				newMap.put( e, map.get( e ) );
 			}

@@ -19,7 +19,7 @@ class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Fa
 {
 	constructor(group: EventActionGroup, stats: FastEnumMap<Enums.Statistic, Float>) : this(group)
 	{
-		for (stat in Enums.Statistic.values())
+		for (stat in Enums.Statistic.ATTACK_STATS)
 		{
 			damMap.put(stat, stats.get(stat))
 		}

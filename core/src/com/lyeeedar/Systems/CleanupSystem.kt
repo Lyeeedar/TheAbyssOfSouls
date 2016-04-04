@@ -34,6 +34,9 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 			val sprite = Mappers.sprite.get(entity)
 			if (sprite?.sprite?.spriteAnimation != null) return
 
+			val tasks = Mappers.task.get(entity)
+			tasks.ai.cancel()
+
 			val pos = Mappers.position.get(entity)
 			if (pos?.position is Tile)
 			{

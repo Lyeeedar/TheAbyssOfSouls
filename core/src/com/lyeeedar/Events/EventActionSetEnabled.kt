@@ -31,7 +31,7 @@ class EventActionSetEnabled(group: EventActionGroup): NameRestrictedEventAction(
 	override fun handleEntity(args: EventArgs, entity: Entity)
 	{
 		val event = Mappers.event.get(entity)
-		for (type in EventComponent.EventType.values())
+		for (type in EventComponent.EventType.Values)
 		{
 			for (e in event.handlers.get(type))
 			{

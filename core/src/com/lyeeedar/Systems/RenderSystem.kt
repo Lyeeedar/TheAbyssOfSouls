@@ -6,12 +6,14 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.BinaryHeap
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
+import com.lyeeedar.AssetManager
 import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
@@ -21,6 +23,7 @@ import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.abs
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -29,7 +32,9 @@ import com.lyeeedar.Util.Point
 class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 {
 	val batchHDRColour: HDRColourSpriteBatch = HDRColourSpriteBatch()
+	val damFont: BitmapFont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 10)
 	lateinit var entities: ImmutableArray<Entity>
+	lateinit var hpEntities: ImmutableArray<Entity>
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap<RenderSprite>()
 	val directionBitflag: EnumBitflag<Enums.Direction> = EnumBitflag<Enums.Direction>()
 
@@ -41,6 +46,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 	override fun addedToEngine(engine: Engine?)
 	{
 		entities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java).one(SpriteComponent::class.java, TilingSpriteComponent::class.java, EffectComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
+		hpEntities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java, StatisticsComponent::class.java).get()) ?: throw RuntimeException("It broked")
 	}
 
 	override fun update(deltaTime: Float)
@@ -143,6 +149,19 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 			rs.free()
 		}
 
+		for (entity in hpEntities)
+		{
+			val pos = entity.position()
+			val stats = entity.stats()
+
+			val txt = stats.damTally.abs().toInt().toString()
+
+			val drawX = pos.position.x * GlobalData.Global.tileSize + offsetx;
+			val drawY = (pos.position.y+1) * GlobalData.Global.tileSize + offsety;
+
+			damFont.draw(batchHDRColour, txt, drawX, drawY)
+		}
+
 		batchHDRColour.end()
 	}
 
@@ -200,7 +219,7 @@ class RenderSprite : BinaryHeap.Node(0f) {
 		val pool: Pool<RenderSprite> = Pools.get( RenderSprite::class.java, Int.MAX_VALUE )
 		fun obtain() = RenderSprite.pool.obtain()
 
-		val X_BLOCK_SIZE = Enums.SpaceSlot.values().size
+		val X_BLOCK_SIZE = Enums.SpaceSlot.Values.size
 		var Y_BLOCK_SIZE = 0f
 		var MAX_Y_BLOCK_SIZE = 0f
 		var MAX_X_BLOCK_SIZE = 0f

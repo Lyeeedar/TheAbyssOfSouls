@@ -20,6 +20,11 @@ class BehaviourTree(): IAI
 		root.evaluate(e)
 	}
 
+	override fun cancel()
+	{
+		root.cancel()
+	}
+
 	companion object
 	{
 		fun load(path: String): BehaviourTree
