@@ -95,6 +95,8 @@ class ActionTelegraphedAttack(): AbstractAction()
 		{
 			"closest" -> (atkData.currentSource!! + atkData.currentDir)
 			"target" -> atkData.currentTarget
+			"left" -> atkData.currentSource!! + atkData.currentDir.anticlockwise
+			"right" -> atkData.currentSource!! + atkData.currentDir.clockwise
 			else -> atkData.currentSource!!
 		}
 

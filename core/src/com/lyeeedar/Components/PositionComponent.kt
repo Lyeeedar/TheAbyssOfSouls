@@ -12,7 +12,7 @@ import com.lyeeedar.Util.Point
 class PositionComponent: Component
 {
 	constructor()
-	constructor(point: Point) { this.position = point }
+	constructor(point: Point) { this.position = point; this.max = point }
 
 	var position: Point = Point() // bottom left pos
 	var min: Point

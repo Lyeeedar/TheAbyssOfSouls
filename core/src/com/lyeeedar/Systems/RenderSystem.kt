@@ -32,7 +32,7 @@ import com.lyeeedar.Util.abs
 class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 {
 	val batchHDRColour: HDRColourSpriteBatch = HDRColourSpriteBatch()
-	val damFont: BitmapFont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 10)
+	val damFont: BitmapFont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 20)
 	lateinit var entities: ImmutableArray<Entity>
 	lateinit var hpEntities: ImmutableArray<Entity>
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap<RenderSprite>()

@@ -53,6 +53,7 @@ public class AtlasCreator
 		processSprite( "grass" );
 		processSprite( "wall" );
 		processSprite( "player" );
+		processSprite( "EffectSprites/Hit/Hit" );
 
 		// pack GUI
 		File guiDir = new File( "Sprites/GUI" );

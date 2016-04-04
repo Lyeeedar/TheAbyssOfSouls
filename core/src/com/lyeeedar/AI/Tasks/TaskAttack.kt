@@ -30,7 +30,7 @@ class TaskAttack(var direction: Enums.Direction): AbstractTask(EventComponent.Ev
 		val sprite = weapon.hitSprite?.copy() ?: return
 
 		val effect = Entity()
-		effect.add(EffectComponent(sprite, direction, Sprite.AnimationStage.END, EventArgs(EventComponent.EventType.ALL, null, effect, 0f)))
+		effect.add(EffectComponent(sprite, direction, Sprite.AnimationStage.MIDDLE, EventArgs(EventComponent.EventType.ALL, null, effect, 0f)))
 
 		val event = EventComponent()
 		val group = EventActionGroup()

@@ -27,8 +27,9 @@ class EventActionEffect(group: EventActionGroup): AbstractEventAction(group)
 		val entity = Entity()
 
 		entity.add(PositionComponent(tile))
+		tile.effects.add(entity)
 
-		val effect = EffectComponent(AssetManager.loadSprite(spriteData), Enums.Direction.CENTER)
+		val effect = EffectComponent(AssetManager.loadSprite(spriteData))
 		effect.eventMap.put(firePoint, EventArgs(eventType, args.receiver, args.receiver, 0f))
 		entity.add(effect)
 

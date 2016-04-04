@@ -12,6 +12,12 @@ import com.lyeeedar.Util.FastEnumMap
 
 class EffectComponent: Component
 {
+	constructor(sprite: Sprite)
+	{
+		this.sprite = sprite
+		this.direction = Enums.Direction.CENTER;
+	}
+
 	constructor(sprite: Sprite, dir: Enums.Direction)
 	{
 		this.sprite = sprite

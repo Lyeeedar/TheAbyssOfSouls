@@ -3,11 +3,10 @@ package com.lyeeedar.Events
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Components.EventComponent
-import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.StatisticsComponent
-import com.lyeeedar.Components.postEvent
+import com.lyeeedar.AssetManager
+import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
+import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.FastEnumMap
 
@@ -47,8 +46,19 @@ class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Fa
 			totalDam += dam
 		}
 
-		stats.hp -= totalDam
-		entity.postEvent(EventArgs(EventComponent.EventType.DAMAGED, null, entity, totalDam))
+		if (totalDam > 0)
+		{
+			stats.hp -= totalDam
+			entity.postEvent(EventArgs(EventComponent.EventType.DAMAGED, null, entity, totalDam))
+
+			val hitSprite = AssetManager.loadSprite("EffectSprites/Hit/Hit", 0.01f);
+			val damEntity = Entity()
+			damEntity.add(EffectComponent(hitSprite))
+			damEntity.add(PositionComponent(entity.tile()!!))
+			entity.tile()?.effects?.add(damEntity)
+
+			GlobalData.Global.engine?.addEntity(damEntity)
+		}
 	}
 
 	override fun parse(xml: XmlReader.Element)

@@ -39,6 +39,42 @@
 
             </Attack>
 
+            <Attack>
+                <Name>Swipe</Name>
+
+                <HitPattern>
+                    <Row>.....</Row>
+                    <Row>.###.</Row>
+                    <Row>.###.</Row>
+                    <Row>..@..</Row>
+                    <Row>.....</Row>
+                </HitPattern>
+
+                <HitType>All</HitType>
+
+                <ReadyType>right</ReadyType>
+
+                <ReadySprite>
+                    <Name>EffectSprites/Claw/Claw_2</Name>
+                </ReadySprite>
+
+                <HitSprite>
+                    <Name>EffectSprites/Claw/Claw</Name>
+                    <UpdateRate>0.1</UpdateRate>
+                </HitSprite>
+
+                <Effects>
+                    <OnAll>
+                        <Group Name="">
+                            <Damage>
+                                <Physical_Attack>100</Physical_Attack>
+                            </Damage>
+                        </Group>
+                    </OnAll>
+                </Effects>
+
+            </Attack>
+
         </Attacks>
 
         <Combos>
@@ -47,6 +83,12 @@
                 <Stab></Stab>
                 <Stab CanEnd="true" CanTurn="true" CanMove="true"></Stab>
                 <Stab CanEnd="true" CanTurn="true" CanMove="true"></Stab>
+            </Combo>
+
+            <Combo Name="TripleSwipe" Weight="1">
+                <Swipe></Swipe>
+                <Swipe CanEnd="true" CanTurn="true" CanMove="true"></Swipe>
+                <Swipe CanEnd="true" CanTurn="true" CanMove="true"></Swipe>
             </Combo>
 
         </Combos>

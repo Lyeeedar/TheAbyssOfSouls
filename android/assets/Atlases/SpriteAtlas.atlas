@@ -4,114 +4,163 @@ size: 1024,128
 format: RGBA8888
 filter: MipMapLinearLinear,MipMapLinearLinear
 repeat: none
+EffectSprites/Claw/Claw_1
+  rotate: false
+  xy: 866, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/Claw/Claw_2
+  rotate: false
+  xy: 902, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/Claw/Claw_3
+  rotate: false
+  xy: 938, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/Hit/Hit_1
+  rotate: false
+  xy: 210, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Hit/Hit_2
+  rotate: false
+  xy: 618, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Hit/Hit_3
+  rotate: false
+  xy: 262, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Hit/Hit_4
+  rotate: false
+  xy: 670, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 EffectSprites/Slash/Slash_0
   rotate: false
-  xy: 334, 18
+  xy: 974, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Slash/Slash_1
   rotate: false
-  xy: 726, 86
+  xy: 410, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Slash/Slash_2
   rotate: false
-  xy: 370, 18
+  xy: 446, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Slash/Slash_3
   rotate: false
-  xy: 762, 86
+  xy: 482, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Slash/Slash_4
   rotate: false
-  xy: 798, 86
+  xy: 518, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Thrust/Thrust_0
   rotate: false
-  xy: 618, 86
+  xy: 722, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Thrust/Thrust_1
   rotate: false
-  xy: 262, 18
+  xy: 366, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Thrust/Thrust_2
   rotate: false
-  xy: 654, 86
+  xy: 758, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Thrust/Thrust_3
   rotate: false
-  xy: 298, 18
+  xy: 794, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Thrust/Thrust_4
   rotate: false
-  xy: 690, 86
+  xy: 830, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Button
   rotate: false
-  xy: 834, 86
+  xy: 554, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ButtonBorder
   rotate: false
-  xy: 870, 86
+  xy: 590, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ButtonDown
   rotate: false
-  xy: 906, 86
+  xy: 626, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Checked
   rotate: false
-  xy: 942, 86
+  xy: 662, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Cog
   rotate: false
-  xy: 978, 86
+  xy: 698, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Eye
   rotate: false
-  xy: 410, 34
+  xy: 734, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -132,42 +181,42 @@ GUI/PanelVertical
   index: -1
 GUI/PassiveTileBorder
   rotate: false
-  xy: 518, 34
+  xy: 842, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 770, 58
+  xy: 806, 22
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/QuestionMark
   rotate: false
-  xy: 554, 34
+  xy: 878, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/SeperatorHorizontal
   rotate: false
-  xy: 262, 8
+  xy: 366, 8
   size: 32, 6
   orig: 32, 6
   offset: 0, 0
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 1014, 86
+  xy: 1010, 86
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
   index: -1
 GUI/Sheathed
   rotate: false
-  xy: 590, 34
+  xy: 914, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -181,14 +230,14 @@ GUI/SpeechBubble
   index: -1
 GUI/SpeechBubbleArrow
   rotate: false
-  xy: 626, 38
+  xy: 722, 74
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 GUI/TextField
   rotate: false
-  xy: 626, 50
+  xy: 950, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -209,7 +258,7 @@ GUI/TileBorder
   index: -1
 GUI/TilePanel
   rotate: false
-  xy: 662, 50
+  xy: 986, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -223,35 +272,35 @@ GUI/Tooltip
   index: -1
 GUI/Unchecked
   rotate: false
-  xy: 698, 50
+  xy: 734, 14
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Unsheathed
   rotate: false
-  xy: 734, 50
+  xy: 770, 14
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/background
   rotate: false
-  xy: 210, 2
+  xy: 314, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 446, 34
+  xy: 770, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 482, 34
+  xy: 806, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
