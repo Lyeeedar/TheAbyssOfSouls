@@ -10,6 +10,7 @@ import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
 import com.lyeeedar.Util.Point
 
 /**
@@ -24,6 +25,8 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTile: Point
 	{
 		val entityTile = e.tile() ?: return
 		val stats = e.stats() ?: return
+
+		e.sprite().sprite.spriteAnimation = BumpAnimation(0.25f, dir);
 
 		// actually do the attack
 		if (atk.hitType.equals("all"))
@@ -61,7 +64,6 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTile: Point
 
 			val position = PositionComponent()
 			position.min = min!!
-			position.position = min
 			position.max = max!!
 			position.slot = Enums.SpaceSlot.AIR
 			effectEntity.add(position)

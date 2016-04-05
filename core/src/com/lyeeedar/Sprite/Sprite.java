@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Matrix3;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.lyeeedar.GlobalData;
 import com.lyeeedar.Sound.SoundInstance;
@@ -56,6 +59,9 @@ public final class Sprite
 	public boolean drawActualSize;
 
 	public float[] baseScale = { 1, 1 };
+
+	private static final Vector3 tempVec = new Vector3(  );
+	private static final Matrix3 tempMat = new Matrix3(  );
 
 	public Sprite( String fileName, float animationDelay, Array<TextureRegion> textures, Colour colour, AnimationMode mode, SoundInstance sound, boolean drawActualSize )
 	{
@@ -179,8 +185,8 @@ public final class Sprite
 			float[] scale = spriteAnimation.getRenderScale();
 			if ( scale != null )
 			{
-				scaleX = scale[0];
-				scaleY = scale[1];
+				scaleX *= scale[0];
+				scaleY *= scale[1];
 			}
 		}
 

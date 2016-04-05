@@ -101,7 +101,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 		}
 
 		val task = Mappers.task.get(entity)
-		val prepareAtk = TaskPrepareAttack(srcTile!!, rdy)
+		val prepareAtk = TaskPrepareAttack(srcTile!!, rdy, atkData.currentDir)
 
 		if (task.tasks.size > 0 && task.tasks.last() is TaskDoAttack)
 		{
@@ -128,13 +128,14 @@ class ActionTelegraphedAttack(): AbstractAction()
 		{
 			val srcTiles = entity.getEdgeTiles(dir)
 
-			for (combo in atkData.combos)
+			combo@ for (combo in atkData.combos)
 			{
 				for (tile in srcTiles)
 				{
 					if (isValidAttack(atkData.attacks.get(combo.steps[0].attack), dir, tile, entity))
 					{
 						valid.add(ValidData(combo, dir, tile))
+						continue@combo
 					}
 				}
 			}

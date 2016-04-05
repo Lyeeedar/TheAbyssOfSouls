@@ -121,14 +121,14 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 			if (effect != null)
 			{
-				effect.sprite.baseScale[0] = pos.max.x - pos.min.x + 1f
-				effect.sprite.baseScale[1] = pos.max.y - pos.min.y + 1f
+				effect.sprite.size[0] = pos.max.x - pos.min.x + 1
+				effect.sprite.size[1] = pos.max.y - pos.min.y + 1
 
 				if (effect.direction == Enums.Direction.EAST || effect.direction == Enums.Direction.WEST)
 				{
-					val temp = effect.sprite.baseScale[0]
-					effect.sprite.baseScale[0] = effect.sprite.baseScale[1]
-					effect.sprite.baseScale[1] = temp
+					val temp = effect.sprite.size[0]
+					effect.sprite.size[0] = effect.sprite.size[1]
+					effect.sprite.size[1] = temp
 				}
 
 				effect.sprite.rotation = effect.direction.angle
