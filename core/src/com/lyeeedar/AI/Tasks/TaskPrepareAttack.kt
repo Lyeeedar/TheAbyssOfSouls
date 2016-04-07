@@ -11,13 +11,13 @@ import com.lyeeedar.Util.Point
  * Created by Philip on 31-Mar-16.
  */
 
-class TaskPrepareAttack(val point: Point, val entity: Entity, val dir: Enums.Direction): AbstractTask(EventComponent.EventType.NONE)
+class TaskPrepareAttack(val minOffset: Point, val maxOffset: Point, val entity: Entity, val dir: Enums.Direction): AbstractTask(EventComponent.EventType.NONE)
 {
 	override fun execute(e: Entity)
 	{
 		val atk = Mappers.telegraphed.get(e)
 		val etile = e.tile() ?: return
-		val tile = etile.level.getTile(point) ?: return
+		val tile = etile.level.getTile(etile, minOffset) ?: return
 
 		e.sprite().sprite.spriteAnimation = BumpAnimation(0.4f, dir.opposite);
 
@@ -26,8 +26,14 @@ class TaskPrepareAttack(val point: Point, val entity: Entity, val dir: Enums.Dir
 		{
 			entity.add(PositionComponent())
 		}
-		entity.position().position = tile
+		entity.position().min = tile
+		entity.position().max = etile + maxOffset
 		entity.sprite().sprite.rotation = atk.currentDir.angle
+
+		if (atk.currentDir == Enums.Direction.WEST || atk.currentDir == Enums.Direction.EAST)
+		{
+			entity.sprite().sprite.fixPosition = true
+		}
 
 		GlobalData.Global.engine?.addEntity(entity)
 	}

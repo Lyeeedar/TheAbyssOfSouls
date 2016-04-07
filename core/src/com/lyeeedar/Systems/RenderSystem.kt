@@ -91,19 +91,34 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 		for (entity in entities)
 		{
-			val pos = Mappers.position.get(entity)
+			val pos = Mappers.position.get(entity) ?: continue
 			val tile = entity.tile() ?: continue
 			val sprite = Mappers.sprite.get(entity)
 			val tilingSprite = Mappers.tilingSprite.get(entity)
 			val effect = Mappers.effect.get(entity)
 
-			val drawX = pos.position.x * GlobalData.Global.tileSize + offsetx;
-			val drawY = pos.position.y * GlobalData.Global.tileSize + offsety;
+			var drawX = pos.position.x * GlobalData.Global.tileSize + offsetx;
+			var drawY = pos.position.y * GlobalData.Global.tileSize + offsety;
 
 			if (sprite != null)
 			{
-				sprite.sprite.size[0] = pos.size
-				sprite.sprite.size[1] = pos.size
+				if (pos.max != pos.min)
+				{
+					sprite.sprite.size[0] = pos.max.x - pos.min.x + 1
+					sprite.sprite.size[1] = pos.max.y - pos.min.y + 1
+
+					if (sprite.sprite.fixPosition)
+					{
+						val temp = sprite.sprite.size[0]
+						sprite.sprite.size[0] = sprite.sprite.size[1]
+						sprite.sprite.size[1] = temp
+					}
+				}
+				else
+				{
+					sprite.sprite.size[0] = pos.size
+					sprite.sprite.size[1] = pos.size
+				}
 
 				queueSprite(sprite.sprite, drawX, drawY, offsetx, offsety, pos.slot, tile)
 			}
@@ -129,6 +144,8 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 					val temp = effect.sprite.size[0]
 					effect.sprite.size[0] = effect.sprite.size[1]
 					effect.sprite.size[1] = temp
+
+					effect.sprite.fixPosition = true
 				}
 
 				effect.sprite.rotation = effect.direction.angle

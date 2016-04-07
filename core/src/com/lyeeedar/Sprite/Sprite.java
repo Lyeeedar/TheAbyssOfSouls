@@ -4,14 +4,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.lyeeedar.Enums;
 import com.lyeeedar.GlobalData;
 import com.lyeeedar.Sound.SoundInstance;
 import com.lyeeedar.Sprite.SpriteAnimation.AbstractSpriteAnimation;
 import com.lyeeedar.Util.Colour;
+import com.lyeeedar.Util.Point;
 
 public final class Sprite
 {
@@ -44,8 +47,12 @@ public final class Sprite
 	public float animationAccumulator;
 
 	public float rotation;
+	public boolean fixPosition;
 
-	public int[] size = { 1, 1 };
+	public boolean flipX;
+	public boolean flipY;
+
+	public final int[] size = { 1, 1 };
 
 	public Array<TextureRegion> textures;
 
@@ -246,13 +253,107 @@ public final class Sprite
 			y += ( height / 15f ) * animationState.sinOffset;
 		}
 
+		if (rotation != 0 && fixPosition)
+		{
+			Vector3 offset = getPositionCorrectionOffsets( x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation );
+			x -= offset.x;
+			y -= offset.y;
+		}
+
 		// Check if not onscreen
 		if ( x + width < 0 || y + height < 0 || x > GlobalData.Global.resolution[0] || y > GlobalData.Global.resolution[1] )
 		{
 			return; // skip drawing
 		}
 
-		batch.draw( texture, x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation );
+		batch.draw( texture, x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation, flipX, flipY );
+	}
+
+	private static Vector3 getPositionCorrectionOffsets(float x, float y, float originX, float originY, float width, float height,
+												float scaleX, float scaleY, float rotation)
+	{
+		// bottom left and top right corner points relative to origin
+		final float worldOriginX = x + originX;
+		final float worldOriginY = y + originY;
+		float fx = -originX;
+		float fy = -originY;
+		float fx2 = width - originX;
+		float fy2 = height - originY;
+
+		// scale
+		if (scaleX != 1 || scaleY != 1) {
+			fx *= scaleX;
+			fy *= scaleY;
+			fx2 *= scaleX;
+			fy2 *= scaleY;
+		}
+
+		// construct corner points, start from top left and go counter clockwise
+		final float p1x = fx;
+		final float p1y = fy;
+		final float p2x = fx;
+		final float p2y = fy2;
+		final float p3x = fx2;
+		final float p3y = fy2;
+		final float p4x = fx2;
+		final float p4y = fy;
+
+		float x1;
+		float y1;
+		float x2;
+		float y2;
+		float x3;
+		float y3;
+		float x4;
+		float y4;
+
+		// rotate
+		if (rotation != 0) {
+			final float cos = MathUtils.cosDeg( rotation );
+			final float sin = MathUtils.sinDeg(rotation);
+
+			x1 = cos * p1x - sin * p1y;
+			y1 = sin * p1x + cos * p1y;
+
+			x2 = cos * p2x - sin * p2y;
+			y2 = sin * p2x + cos * p2y;
+
+			x3 = cos * p3x - sin * p3y;
+			y3 = sin * p3x + cos * p3y;
+
+			x4 = x1 + (x3 - x2);
+			y4 = y3 - (y2 - y1);
+		} else {
+			x1 = p1x;
+			y1 = p1y;
+
+			x2 = p2x;
+			y2 = p2y;
+
+			x3 = p3x;
+			y3 = p3y;
+
+			x4 = p4x;
+			y4 = p4y;
+		}
+
+		tempVec.set( x1, y1, 0 );
+
+		if (x2 < tempVec.x) tempVec.x = x2;
+		if (x3 < tempVec.x) tempVec.x = x3;
+		if (x4 < tempVec.x) tempVec.x = x4;
+
+		if (y2 < tempVec.y) tempVec.y = y2;
+		if (y3 < tempVec.y) tempVec.y = y3;
+		if (y4 < tempVec.y) tempVec.y = y4;
+
+		tempVec.x += worldOriginX;
+		tempVec.y += worldOriginY;
+
+		tempVec.x -= x;
+		tempVec.y -= y;
+
+		return tempVec;
 	}
 
 	public TextureRegion getCurrentTexture()
@@ -267,6 +368,9 @@ public final class Sprite
 		{
 			sprite.spriteAnimation = spriteAnimation.copy();
 		}
+
+		sprite.flipX = flipX;
+		sprite.flipY = flipY;
 
 		return sprite;
 	}

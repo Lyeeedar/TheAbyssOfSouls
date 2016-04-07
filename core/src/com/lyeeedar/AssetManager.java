@@ -256,6 +256,9 @@ public class AssetManager
 
 		sprite.repeatDelay = xml.getFloat( "RepeatDelay", 0 );
 
+		sprite.flipX = xml.getBoolean( "FlipX", false );
+		sprite.flipY = xml.getBoolean( "FlipY", false );
+
 		Element animationElement = xml.getChildByName( "Animation" );
 		if ( animationElement != null )
 		{
@@ -308,6 +311,9 @@ public class AssetManager
 									xml.getBoolean( "DrawActualSize", false ) );
 
 		sprite.repeatDelay = xml.getFloat( "RepeatDelay", 0 );
+
+		sprite.flipX = xml.getBoolean( "FlipX", false );
+		sprite.flipY = xml.getBoolean( "FlipY", false );
 
 		Element animationElement = xml.getChildByName( "Animation" );
 		if ( animationElement != null )

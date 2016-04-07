@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskDoAttack
+import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.AI.Tasks.TaskPrepareAttack
 import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
@@ -91,17 +92,62 @@ class ActionTelegraphedAttack(): AbstractAction()
 		val rdy = Entity()
 		rdy.add(SpriteComponent(atkData.currentAttack.readySprite.copy()))
 
-		var srcTile: Point? = when (atkData.currentAttack.readyType)
+		var minTile: Point = Point.MAX
+		var maxTile: Point = Point.MIN
+
+		if (atkData.currentAttack.readyType == "closest")
 		{
-			"closest" -> (atkData.currentSource!! + atkData.currentDir)
-			"target" -> atkData.currentTarget
-			"left" -> atkData.currentSource!! + atkData.currentDir.anticlockwise
-			"right" -> atkData.currentSource!! + atkData.currentDir.clockwise
-			else -> atkData.currentSource!!
+			minTile = (atkData.currentSource!! + atkData.currentDir)
+			maxTile = minTile
+		}
+		else if (atkData.currentAttack.readyType == "target")
+		{
+			minTile = atkData.currentTarget!!
+			maxTile = minTile
+		}
+		else if (atkData.currentAttack.readyType == "left")
+		{
+			minTile = atkData.currentSource!! + atkData.currentDir.anticlockwise
+			maxTile = minTile
+		}
+		else if (atkData.currentAttack.readyType == "left")
+		{
+			minTile = atkData.currentSource!! + atkData.currentDir.clockwise
+			maxTile = minTile
+		}
+		else if (atkData.currentAttack.readyType == "pattern")
+		{
+			val mat = Matrix3()
+			mat.setToRotation( atkData.currentDir.angle )
+			val vec = Vector3()
+
+			for (point in atkData.currentAttack.readyPoints)
+			{
+				vec.set(point.x.toFloat(), point.y.toFloat(), 0f);
+				vec.mul(mat);
+
+				val dx = Math.round(vec.x).toInt();
+				val dy = Math.round(vec.y).toInt();
+
+				val pos = atkData.currentSource!! + Point(dx, dy)
+
+				if (pos < minTile)
+				{
+					minTile = pos
+				}
+				if (pos > maxTile)
+				{
+					maxTile = pos
+				}
+			}
+		}
+		else
+		{
+			throw RuntimeException("Invalid Ready type '"+atkData.currentAttack.readyType+"'!")
 		}
 
 		val task = Mappers.task.get(entity)
-		val prepareAtk = TaskPrepareAttack(srcTile!!, rdy, atkData.currentDir)
+		val prepareAtk = TaskPrepareAttack(minTile - entity.tile()!!, maxTile - entity.tile()!!, rdy, atkData.currentDir)
 
 		if (task.tasks.size > 0 && task.tasks.last() is TaskDoAttack)
 		{
@@ -173,6 +219,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 		val atkData = Mappers.telegraphed.get(entity)
 
 		readyEntity = null
+		val task = Mappers.task.get(entity)
 
 		// do actual attack
 		val combo = atkData.currentComboStep
@@ -181,10 +228,13 @@ class ActionTelegraphedAttack(): AbstractAction()
 		if (combo.canMove)
 		{
 			// try to move forward
+			val move = TaskMove(atkData.currentDir)
+			move.cost = 0f
+
+			task.tasks.add(move)
 		}
 
-		val task = Mappers.task.get(entity)
-		task.tasks.add(TaskDoAttack(atkData.currentAttack, atkData.currentDir, atkData.currentSource!!))
+		task.tasks.add(TaskDoAttack(atkData.currentAttack, atkData.currentDir, atkData.currentSource!! - entity.tile()!!))
 
 		//Queue next attack if possible else end
 		val comboData = atkData.currentCombo ?: throw RuntimeException("Somehow combo got set to null whilst processing")

@@ -9,7 +9,7 @@ import com.lyeeedar.Components.EventComponent
 
 abstract class AbstractTask(val eventType: EventComponent.EventType)
 {
-	var duration: Float = 1f
+	var cost: Float = 1f
 
 	abstract fun execute(e: Entity)
 }

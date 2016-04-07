@@ -99,9 +99,9 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 				val t = task.tasks.removeIndex(0)
 
 				t.execute(e)
-				task.actionDelay -= t.duration;
+				task.actionDelay -= t.cost;
 
-				e.postEvent(EventArgs(t.eventType, e, e, t.duration))
+				e.postEvent(EventArgs(t.eventType, e, e, t.cost))
 			}
 			else
 			{

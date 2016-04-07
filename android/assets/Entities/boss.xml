@@ -40,7 +40,7 @@
             </Attack>
 
             <Attack>
-                <Name>Swipe</Name>
+                <Name>SwipeLeft</Name>
 
                 <HitPattern>
                     <Row>.....</Row>
@@ -50,17 +50,71 @@
                     <Row>.....</Row>
                 </HitPattern>
 
+                <ReadyPattern>
+                    <Row>.....</Row>
+                    <Row>...#.</Row>
+                    <Row>...#.</Row>
+                    <Row>..@..</Row>
+                    <Row>.....</Row>
+                </ReadyPattern>
+
                 <HitType>All</HitType>
 
-                <ReadyType>right</ReadyType>
+                <ReadyType>pattern</ReadyType>
 
                 <ReadySprite>
-                    <Name>EffectSprites/Claw/Claw_2</Name>
+                    <Name>EffectSprites/Claw/Claw_1</Name>
                 </ReadySprite>
 
                 <HitSprite>
                     <Name>EffectSprites/Claw/Claw</Name>
                     <UpdateRate>0.1</UpdateRate>
+                </HitSprite>
+
+                <Effects>
+                    <OnAll>
+                        <Group Name="">
+                            <Damage>
+                                <Physical_Attack>100</Physical_Attack>
+                            </Damage>
+                        </Group>
+                    </OnAll>
+                </Effects>
+
+            </Attack>
+
+            <Attack>
+                <Name>SwipeRight</Name>
+
+                <HitPattern>
+                    <Row>.....</Row>
+                    <Row>.###.</Row>
+                    <Row>.###.</Row>
+                    <Row>..@..</Row>
+                    <Row>.....</Row>
+                </HitPattern>
+
+                <ReadyPattern>
+                    <Row>.....</Row>
+                    <Row>.#...</Row>
+                    <Row>.#...</Row>
+                    <Row>..@..</Row>
+                    <Row>.....</Row>
+                </ReadyPattern>
+
+                <HitType>All</HitType>
+
+                <ReadyType>pattern</ReadyType>
+
+                <ReadySprite>
+                    <Name>EffectSprites/Claw/Claw_1</Name>
+                    <FlipX>true</FlipX>
+                </ReadySprite>
+
+                <HitSprite>
+                    <Name>EffectSprites/Claw/Claw</Name>
+                    <UpdateRate>0.1</UpdateRate>
+                    <FlipX>true</FlipX>
                 </HitSprite>
 
                 <Effects>
@@ -86,9 +140,9 @@
             </Combo>
 
             <Combo Name="TripleSwipe" Weight="1">
-                <Swipe></Swipe>
-                <Swipe CanEnd="true" CanTurn="true" CanMove="true"></Swipe>
-                <Swipe CanEnd="true" CanTurn="true" CanMove="true"></Swipe>
+                <SwipeLeft></SwipeLeft>
+                <SwipeRight CanEnd="true" CanTurn="true" CanMove="true"></SwipeRight>
+                <SwipeLeft CanEnd="true" CanTurn="true" CanMove="true"></SwipeLeft>
             </Combo>
 
         </Combos>

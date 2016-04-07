@@ -1,6 +1,7 @@
 package com.lyeeedar.Components
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
 import com.lyeeedar.Enums
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.Point
@@ -15,6 +16,11 @@ class PositionComponent: Component
 	constructor(point: Point) { this.position = point; this.max = point }
 
 	var position: Point = Point() // bottom left pos
+		set(value)
+		{
+			field = value
+			max = value
+		}
 	var min: Point
 		set(value) { position = value }
 		get() { return position }

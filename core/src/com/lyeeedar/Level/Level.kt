@@ -48,6 +48,9 @@ class Level()
 	fun getTile(point: Point, ox:Int, oy:Int) = getTile(point.x + ox, point.y + oy)
 
 	// ----------------------------------------------------------------------
+	fun getTile(point: Point, o: Point) = getTile(point.x + o.x, point.y + o.y)
+
+	// ----------------------------------------------------------------------
 	fun getTile(x: Int, y: Int, dir: Enums.Direction) = getTile(x + dir.x, y + dir.y)
 
 	// ----------------------------------------------------------------------

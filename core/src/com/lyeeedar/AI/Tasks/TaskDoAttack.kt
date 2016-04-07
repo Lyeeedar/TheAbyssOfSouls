@@ -17,7 +17,7 @@ import com.lyeeedar.Util.Point
  * Created by Philip on 02-Apr-16.
  */
 
-class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTile: Point): AbstractTask(EventComponent.EventType.NONE)
+class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTileOffset: Point): AbstractTask(EventComponent.EventType.NONE)
 {
 	var comboAttack: TaskPrepareAttack? = null
 
@@ -43,10 +43,10 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTile: Point
 				vec.set( point.x.toFloat(), point.y.toFloat(), 0f );
 				vec.mul( mat );
 
-				val dx = Math.round( vec.x ).toInt();
-				val dy = Math.round( vec.y ).toInt();
+				val dx = Math.round( vec.x ).toInt() + srcTileOffset.x;
+				val dy = Math.round( vec.y ).toInt() + srcTileOffset.y;
 
-				val t = entityTile.level.getTile(srcTile, dx, dy) ?: continue
+				val t = entityTile.level.getTile(entityTile, dx, dy) ?: continue
 				if (t.x <= min?.x ?: Int.MAX_VALUE && t.y <= min?.y ?: Int.MAX_VALUE)
 				{
 					min = t

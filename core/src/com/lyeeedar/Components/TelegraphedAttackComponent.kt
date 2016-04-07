@@ -68,6 +68,7 @@ class Attack()
 {
 	lateinit var name: String
 	val hitPoints: com.badlogic.gdx.utils.Array<Point> = com.badlogic.gdx.utils.Array()
+	val readyPoints: com.badlogic.gdx.utils.Array<Point> = com.badlogic.gdx.utils.Array()
 	lateinit var hitType: String
 	lateinit var readyType: String
 	lateinit var readySprite: Sprite
@@ -114,6 +115,34 @@ class Attack()
 					val dy = centralPoint.y - y;
 
 					hitPoints.add( Point(dx, dy) );
+				}
+			}
+		}
+
+		val readyPatternElement = xml.getChildByName("ReadyPattern")
+		if (readyPatternElement != null)
+		{
+			val readyGrid = Array(readyPatternElement.childCount, { CharArray(0) })
+
+			for (y in 0..readyPatternElement.childCount-1)
+			{
+				val lineElement = readyPatternElement.getChild(y);
+				val text = lineElement.text;
+
+				readyGrid[y] = text.toCharArray();
+			}
+
+			for (y in 0..readyGrid.size-1)
+			{
+				for (x in 0..readyGrid[0].size-1)
+				{
+					if (readyGrid[y][x] == '#')
+					{
+						val dx = x - centralPoint.x;
+						val dy = centralPoint.y - y;
+
+						readyPoints.add( Point(dx, dy) );
+					}
 				}
 			}
 		}
