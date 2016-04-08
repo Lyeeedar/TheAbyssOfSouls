@@ -21,8 +21,8 @@ class ShadowCastSystem(): IteratingSystem(Family.all(PositionComponent::class.ja
 		val shadow = Mappers.shadow.get(entity)
 		val light = Mappers.light.get(entity)
 
-		if (shadow != null && stats != null) shadow.cache.getShadowCast(tile.level.grid, tile.x, tile.y, stats.stats.get(Enums.Statistic.SIGHT).toInt(), entity)
-		if (light != null) light.cache.getShadowCast(tile.level.grid, tile.x, tile.y, Math.ceil(light.dist.toDouble()).toInt(), entity)
+		if (shadow != null && stats != null) shadow.cache.getShadowCast(tile.level.grid.array, tile.x, tile.y, stats.stats.get(Enums.Statistic.SIGHT).toInt(), entity)
+		if (light != null) light.cache.getShadowCast(tile.level.grid.array, tile.x, tile.y, Math.ceil(light.dist.toDouble()).toInt(), entity)
 	}
 
 }

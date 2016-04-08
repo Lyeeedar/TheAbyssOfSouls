@@ -20,3 +20,7 @@ fun OrderedSet<String>.isAllies(other: OrderedSet<String>): Boolean
 fun <T> Array<T>.ran(ran: Random): T = this[ran.nextInt(this.size)]
 
 fun Float.abs() = Math.abs(this)
+
+fun String.neaten() = this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase()
+
+fun array2dOfChar(sizeOuter: Int, sizeInner: Int): Array<CharArray> = Array(sizeOuter) { CharArray(sizeInner) }

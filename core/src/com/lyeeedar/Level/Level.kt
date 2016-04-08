@@ -3,6 +3,7 @@ package com.lyeeedar.Level
 import com.badlogic.ashley.core.Entity
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Enums
+import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
 
@@ -12,7 +13,7 @@ import com.lyeeedar.Util.Point
 
 class Level()
 {
-	var grid: Array<Array<Tile>> = arrayOf(arrayOf<Tile>())
+	var grid: Array2D<Tile> = Array2D()
 		set(value)
 		{
 			field = value
@@ -21,13 +22,13 @@ class Level()
 			{
 				for (y in 0..height-1)
 				{
-					grid[x][y].level = this
-					grid[x][y].x = x
-					grid[x][y].y = y
+					grid[x, y].level = this
+					grid[x, y].x = x
+					grid[x, y].y = y
 
 					for (dir in Enums.Direction.Values)
 					{
-						grid[x][y].neighbours.put( dir, getTile(x, y, dir) )
+						grid[x, y].neighbours.put( dir, getTile(x, y, dir) )
 					}
 				}
 			}
@@ -36,10 +37,10 @@ class Level()
 	lateinit var player: Entity
 
 	val width: Int
-		get() = grid.size
+		get() = grid.xSize
 
 	val height: Int
-		get() = if (width > 0) grid[0].size else 0
+		get() = grid.ySize
 
 	// ----------------------------------------------------------------------
 	fun getTile(point: Point) = getTile(point.x, point.y)
@@ -65,7 +66,7 @@ class Level()
 		}
 		else
 		{
-			return grid[x][y]
+			return grid[x, y]
 		}
 	}
 

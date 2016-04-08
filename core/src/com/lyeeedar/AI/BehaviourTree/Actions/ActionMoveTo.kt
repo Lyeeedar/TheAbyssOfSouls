@@ -42,7 +42,7 @@ class ActionMoveTo(): AbstractAction()
 			return state;
 		}
 
-		val pathFinder = Pathfinder(tile.level.grid, tile.x, tile.y, target.x, target.y, GlobalData.Global.canMoveDiagonal, posData.size, entity);
+		val pathFinder = Pathfinder(tile.level.grid.array, tile.x, tile.y, target.x, target.y, GlobalData.Global.canMoveDiagonal, posData.size, entity);
 		val path = pathFinder.getPath( posData.slot );
 
 		// if couldnt find a valid path, fail

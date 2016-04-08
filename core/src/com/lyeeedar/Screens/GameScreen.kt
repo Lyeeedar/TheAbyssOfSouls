@@ -13,6 +13,7 @@ import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Systems.*
 import com.lyeeedar.UI.ButtonKeyboardHelper
+import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Colour
 
 /**
@@ -29,7 +30,7 @@ class GameScreen(): AbstractScreen()
 		lightingSystem = GlobalData.Global.engine?.getSystem(LightingSystem::class.java) ?: return
 		val engine = GlobalData.Global.engine ?: return
 
-		val grid = Array(20, {i -> Array(20, { i -> Tile() } ) } )
+		val grid = Array2D<Tile>(20, 20) { x, y -> Tile() }
 
 		for (x in 0..19)
 		{
@@ -43,9 +44,9 @@ class GameScreen(): AbstractScreen()
 					e.add(occlude)
 
 					val pos = PositionComponent()
-					pos.position = grid[x][y]
+					pos.position = grid[x, y]
 					pos.slot = Enums.SpaceSlot.WALL
-					grid[x][y].contents.put(pos.slot, e)
+					grid[x, y].contents.put(pos.slot, e)
 					e.add(pos)
 
 					val sprite = SpriteComponent(AssetManager.loadSprite("wall"))
@@ -57,9 +58,9 @@ class GameScreen(): AbstractScreen()
 				val e = Entity()
 
 				val pos = PositionComponent()
-				pos.position = grid[x][y]
+				pos.position = grid[x, y]
 				pos.slot = Enums.SpaceSlot.FLOOR
-				grid[x][y].contents.put(pos.slot, e)
+				grid[x, y].contents.put(pos.slot, e)
 				e.add(pos)
 
 				val sprite = SpriteComponent(AssetManager.loadSprite("grass"))
@@ -77,7 +78,7 @@ class GameScreen(): AbstractScreen()
 				{
 					val p = EntityLoader.load("enemy")
 					val pos = Mappers.position.get(p)
-					pos.position = grid[x][y]
+					pos.position = grid[x, y]
 					//p.tile()?.contents?.put(pos.slot, p)
 
 					//engine.addEntity(p)
@@ -87,7 +88,7 @@ class GameScreen(): AbstractScreen()
 				{
 					val p = EntityLoader.load("boss")
 					val pos = Mappers.position.get(p)
-					pos.position = grid[x][y]
+					pos.position = grid[x, y]
 					p.tile()?.contents?.put(pos.slot, p)
 
 					engine.addEntity(p)
@@ -97,7 +98,7 @@ class GameScreen(): AbstractScreen()
 
 		val p = EntityLoader.load("player")
 		val pos = Mappers.position.get(p)
-		pos.position = grid[10][10]
+		pos.position = grid[10, 10]
 		p.tile()?.contents?.put(pos.slot, p)
 
 		engine.addEntity(p)
