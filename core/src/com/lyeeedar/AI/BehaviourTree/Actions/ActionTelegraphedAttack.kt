@@ -89,15 +89,18 @@ class ActionTelegraphedAttack(): AbstractAction()
 	{
 		val atkData = Mappers.telegraphed.get(entity)
 
+		val tile = entity.tile()!!
+
 		val rdy = Entity()
 		rdy.add(SpriteComponent(atkData.currentAttack.readySprite.copy()))
+		rdy.add(ReadyAttackComponent(entity, this))
 
 		var minTile: Point = Point.MAX
 		var maxTile: Point = Point.MIN
 
 		if (atkData.currentAttack.readyType == "closest")
 		{
-			minTile = (atkData.currentSource!! + atkData.currentDir)
+			minTile = (tile + atkData.currentOffset!! + atkData.currentDir)
 			maxTile = minTile
 		}
 		else if (atkData.currentAttack.readyType == "target")
@@ -107,12 +110,12 @@ class ActionTelegraphedAttack(): AbstractAction()
 		}
 		else if (atkData.currentAttack.readyType == "left")
 		{
-			minTile = atkData.currentSource!! + atkData.currentDir.anticlockwise
+			minTile = tile + atkData.currentOffset!! + atkData.currentDir.anticlockwise
 			maxTile = minTile
 		}
 		else if (atkData.currentAttack.readyType == "left")
 		{
-			minTile = atkData.currentSource!! + atkData.currentDir.clockwise
+			minTile = tile + atkData.currentOffset!! + atkData.currentDir.clockwise
 			maxTile = minTile
 		}
 		else if (atkData.currentAttack.readyType == "pattern")
@@ -129,7 +132,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 				val dx = Math.round(vec.x).toInt();
 				val dy = Math.round(vec.y).toInt();
 
-				val pos = atkData.currentSource!! + Point(dx, dy)
+				val pos = tile + atkData.currentOffset!! + Point(dx, dy)
 
 				if (pos < minTile)
 				{
@@ -164,6 +167,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 	fun beginCombo(entity: Entity)
 	{
 		val atkData = Mappers.telegraphed.get(entity)
+		val tile = entity.tile()!!
 
 		readyEntity = null
 
@@ -206,7 +210,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 			atkData.currentCombo = chosen.combo
 			atkData.currentIndex = 0
 			atkData.currentDir = chosen.direction
-			atkData.currentSource = chosen.srcTile
+			atkData.currentOffset = chosen.srcTile - tile
 
 			readyAttack(entity)
 
@@ -217,6 +221,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 	fun advanceCombo(entity: Entity)
 	{
 		val atkData = Mappers.telegraphed.get(entity)
+		val tile = entity.tile()!!
 
 		readyEntity = null
 		val task = Mappers.task.get(entity)
@@ -234,7 +239,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 			task.tasks.add(move)
 		}
 
-		task.tasks.add(TaskDoAttack(atkData.currentAttack, atkData.currentDir, atkData.currentSource!! - entity.tile()!!))
+		task.tasks.add(TaskDoAttack(atkData.currentAttack, atkData.currentDir, atkData.currentOffset!!))
 
 		//Queue next attack if possible else end
 		val comboData = atkData.currentCombo ?: throw RuntimeException("Somehow combo got set to null whilst processing")
@@ -263,7 +268,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 				atkData.currentDir = Enums.Direction.CENTER
 				atkData.currentIndex = 0
 				atkData.currentTarget = null
-				atkData.currentSource = null
+				atkData.currentOffset = null
 				state = ExecutionState.COMPLETED
 			}
 			else
@@ -272,7 +277,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 				{
 					val chosen = valid.random()
 					atkData.currentDir = chosen.direction
-					atkData.currentSource = chosen.srcTile
+					atkData.currentOffset = chosen.srcTile - tile
 				}
 
 				readyAttack(entity)
@@ -286,7 +291,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 			atkData.currentDir = Enums.Direction.CENTER
 			atkData.currentIndex = 0
 			atkData.currentTarget = null
-			atkData.currentSource = null
+			atkData.currentOffset = null
 			state = ExecutionState.COMPLETED
 		}
 	}

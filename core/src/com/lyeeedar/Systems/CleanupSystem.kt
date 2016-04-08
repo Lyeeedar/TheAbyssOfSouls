@@ -4,16 +4,14 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
-import com.lyeeedar.Components.EffectComponent
-import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.StatisticsComponent
+import com.lyeeedar.Components.*
 import com.lyeeedar.Level.Tile
 
 /**
  * Created by Philip on 21-Mar-16.
  */
 
-class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.java, EffectComponent::class.java).get(), systemList.indexOf(CleanupSystem::class))
+class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.java, EffectComponent::class.java, ReadyAttackComponent::class.java).get(), systemList.indexOf(CleanupSystem::class))
 {
 	lateinit var eng: Engine
 
@@ -76,6 +74,19 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 					}
 				}
 
+				eng.removeEntity(entity)
+			}
+		}
+
+		val readyAttack = Mappers.readyAttack.get(entity)
+		if (readyAttack != null)
+		{
+			if (readyAttack.action.readyEntity != entity)
+			{
+				eng.removeEntity(entity)
+			}
+			else if (readyAttack.parent.stats().hp <= 0)
+			{
 				eng.removeEntity(entity)
 			}
 		}

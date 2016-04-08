@@ -24,7 +24,7 @@ class TelegraphedAttackComponent: Component
 	var currentIndex: Int = 0
 	var currentDir: Enums.Direction = Enums.Direction.CENTER
 	var currentTarget: Point? = null
-	var currentSource: Point? = null
+	var currentOffset: Point? = null
 
 	val currentComboStep: ComboStep
 		get()

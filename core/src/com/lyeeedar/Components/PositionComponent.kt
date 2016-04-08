@@ -27,4 +27,31 @@ class PositionComponent: Component
 	var max: Point = Point()
 	var slot: Enums.SpaceSlot = Enums.SpaceSlot.ENTITY
 	var size: Int = 1
+
+	fun hasEffects() = hasEffects(position)
+
+	fun hasEffects(direction: Enums.Direction): Boolean
+	{
+		val etile = position as Tile? ?: return false
+		val tile = etile.level.getTile(etile, direction) ?: return false
+
+		return hasEffects(position)
+	}
+
+	fun hasEffects(point: Point): Boolean
+	{
+		val tile = point as Tile? ?: return false
+
+		for (x in 0..size-1)
+		{
+			for (y in 0..size-1)
+			{
+				val t = tile.level.getTile(tile, x, y) ?: continue
+
+				if (t.hasTriggerEffects()) return true
+			}
+		}
+
+		return false
+	}
 }

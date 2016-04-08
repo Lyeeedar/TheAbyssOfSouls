@@ -26,6 +26,8 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTileOffset:
 		val entityTile = e.tile() ?: return
 		val stats = e.stats() ?: return
 
+		System.out.println(srcTileOffset)
+
 		e.sprite().sprite.spriteAnimation = BumpAnimation(0.25f, dir);
 
 		// actually do the attack
@@ -59,7 +61,7 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTileOffset:
 
 			val effectEntity = Entity()
 			val effect = EffectComponent(atk.hitSprite.copy(), dir)
-			effect.eventMap.put(Sprite.AnimationStage.MIDDLE, EventArgs(EventComponent.EventType.ALL, e, effectEntity, 0f))
+			effect.eventMap.put(Sprite.AnimationStage.MIDDLE, EventArgs(EventComponent.EventType.HIT, e, effectEntity, 0f))
 			effectEntity.add(effect)
 
 			val position = PositionComponent()
@@ -70,7 +72,7 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTileOffset:
 
 			val event = EventComponent()
 			event.parse(atk.effectData)
-			for (group in event.handlers.get(EventComponent.EventType.ALL))
+			for (group in event.handlers.get(EventComponent.EventType.HIT))
 			{
 				for (action in group.actions)
 				{
@@ -92,6 +94,17 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTileOffset:
 			effectEntity.add(event)
 
 			GlobalData.Global.engine?.addEntity(effectEntity)
+
+			for (x in min.x..max.x)
+			{
+				for (y in min.y..max.y)
+				{
+					val tile = entityTile.level.getTile(x, y) ?: continue
+					tile.effects.add(effectEntity)
+				}
+			}
+
+			srcTileOffset.free()
 		}
 
 		comboAttack?.execute(e)

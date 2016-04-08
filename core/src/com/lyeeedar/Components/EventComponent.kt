@@ -33,9 +33,10 @@ class EventComponent: Component
 		SPAWN,
 		DEATH,
 
+		HIT,
+
 		ACTIVATE,
-		NONE,
-		ALL;
+		NONE;
 
 		companion object
 		{
@@ -49,7 +50,6 @@ class EventComponent: Component
 	fun registerHandler(type: EventType, handler:EventActionGroup)
 	{
 		handlers.get(type).add(handler)
-		if (type != EventType.ALL) handlers.get(EventType.ALL).add(handler)
 	}
 
 	fun parse(xml: XmlReader.Element)

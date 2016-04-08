@@ -49,6 +49,7 @@ class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Fa
 		if (totalDam > 0)
 		{
 			stats.hp -= totalDam
+			System.out.println("Dam: " + totalDam)
 			entity.postEvent(EventArgs(EventComponent.EventType.DAMAGED, null, entity, totalDam))
 
 			val hitSprite = AssetManager.loadSprite("EffectSprites/Hit/Hit", 0.01f);

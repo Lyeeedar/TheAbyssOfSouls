@@ -3,10 +3,8 @@ package com.lyeeedar.Systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
-import com.lyeeedar.Components.EventComponent
-import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.position
-import com.lyeeedar.Components.tile
+import com.lyeeedar.Components.*
+import com.lyeeedar.Events.EventActionGroup
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.Level.Tile
 
@@ -31,13 +29,18 @@ class EventSystem(): IteratingSystem(Family.all(EventComponent::class.java).get(
 
 			for (handler in eventData.handlers.get(event.type))
 			{
-				for (x in (pos.min.x-handler.aoe)..(pos.max.x+handler.aoe))
-				{
-					for (y in (pos.min.y-handler.aoe)..(pos.max.y+handler.aoe))
-					{
-						handler.handle(event, tile.level.getTile(x, y) ?: continue)
-					}
-				}
+				handle(pos, handler, event, tile)
+			}
+		}
+	}
+
+	fun handle(pos: PositionComponent, handler: EventActionGroup, event: EventArgs, tile: Tile)
+	{
+		for (x in (pos.min.x-handler.aoe)..(pos.max.x+handler.aoe))
+		{
+			for (y in (pos.min.y-handler.aoe)..(pos.max.y+handler.aoe))
+			{
+				handler.handle(event, tile.level.getTile(x, y) ?: continue)
 			}
 		}
 	}

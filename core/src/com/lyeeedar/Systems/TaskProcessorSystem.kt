@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
+import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.Components.*
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.GlobalData
@@ -85,7 +86,7 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		val stats = Mappers.stats.get(e)
 
 		if (stats.hp <= 0) return true
-		if (e.tile()?.hasTriggerEffects() ?: true) return false
+		if (e.position().hasEffects()) return false
 
 		if (task.actionDelay >= 0)
 		{
@@ -97,6 +98,10 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 			if (task.tasks.size > 0)
 			{
 				val t = task.tasks.removeIndex(0)
+
+				if (t is TaskMove && e.position().hasEffects(t.direction)) return false
+
+				System.out.println(e.name() + " : " + t.toString())
 
 				t.execute(e)
 				task.actionDelay -= t.cost;

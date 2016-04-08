@@ -28,13 +28,13 @@
                 </HitSprite>
 
                 <Effects>
-                    <OnAll>
+                    <OnHit>
                         <Group Name="">
                             <Damage>
                                 <Physical_Attack>100</Physical_Attack>
                             </Damage>
                         </Group>
-                    </OnAll>
+                    </OnHit>
                 </Effects>
 
             </Attack>
@@ -72,13 +72,13 @@
                 </HitSprite>
 
                 <Effects>
-                    <OnAll>
+                    <OnHit>
                         <Group Name="">
                             <Damage>
                                 <Physical_Attack>100</Physical_Attack>
                             </Damage>
                         </Group>
-                    </OnAll>
+                    </OnHit>
                 </Effects>
 
             </Attack>
@@ -118,13 +118,13 @@
                 </HitSprite>
 
                 <Effects>
-                    <OnAll>
+                    <OnHit>
                         <Group Name="">
                             <Damage>
                                 <Physical_Attack>100</Physical_Attack>
                             </Damage>
                         </Group>
-                    </OnAll>
+                    </OnHit>
                 </Effects>
 
             </Attack>
@@ -134,13 +134,13 @@
         <Combos>
 
             <Combo Name="TripleStab" Weight="1">
-                <Stab></Stab>
+                <Stab CanMove="true"></Stab>
                 <Stab CanEnd="true" CanTurn="true" CanMove="true"></Stab>
                 <Stab CanEnd="true" CanTurn="true" CanMove="true"></Stab>
             </Combo>
 
             <Combo Name="TripleSwipe" Weight="1">
-                <SwipeLeft></SwipeLeft>
+                <SwipeLeft CanMove="true"></SwipeLeft>
                 <SwipeRight CanEnd="true" CanTurn="true" CanMove="true"></SwipeRight>
                 <SwipeLeft CanEnd="true" CanTurn="true" CanMove="true"></SwipeLeft>
             </Combo>

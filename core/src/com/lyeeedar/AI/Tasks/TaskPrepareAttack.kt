@@ -36,5 +36,8 @@ class TaskPrepareAttack(val minOffset: Point, val maxOffset: Point, val entity: 
 		}
 
 		GlobalData.Global.engine?.addEntity(entity)
+
+		minOffset.free()
+		maxOffset.free()
 	}
 }
