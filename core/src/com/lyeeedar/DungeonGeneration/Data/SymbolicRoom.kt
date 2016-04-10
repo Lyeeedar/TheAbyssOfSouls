@@ -17,11 +17,17 @@ class SymbolicRoom()
 	val height: Int
 		get() = contents.ySize
 
+	var x: Int = 0
+	var y: Int = 0
+
 	var placement: Enums.Direction = Enums.Direction.CENTER
 
 	fun fill(ran: Random, data: SymbolicRoomData)
 	{
 		placement = data.placement
+
+		x = data.x
+		y = data.y
 
 		data.ran = ran
 		val w = data.widthVal

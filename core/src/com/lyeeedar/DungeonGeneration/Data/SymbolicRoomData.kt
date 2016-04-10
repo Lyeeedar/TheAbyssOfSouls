@@ -21,6 +21,9 @@ class SymbolicRoomData()
 	var width: String = "5"
 	var height: String = "5"
 
+	var x: Int = 0
+	var y: Int = 0
+
 	lateinit var ran: Random
 
 	val widthVal: Int by lazy {

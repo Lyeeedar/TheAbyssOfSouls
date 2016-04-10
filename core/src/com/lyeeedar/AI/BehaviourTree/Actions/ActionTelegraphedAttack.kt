@@ -250,16 +250,16 @@ class ActionTelegraphedAttack(): AbstractAction()
 			val catk = atkData.currentAttack
 
 			val valid = com.badlogic.gdx.utils.Array<ValidData>()
-			updateValid(comboData, atkData.currentDir, 3, entity, catk, valid)
+			updateValid(comboData, cstep, atkData.currentDir, 3, entity, catk, valid)
 
 			if (cstep.canTurn)
 			{
 				val cw = atkData.currentDir.clockwise.clockwise
-				updateValid(comboData, cw, 1, entity, catk, valid)
+				updateValid(comboData, cstep, cw, 1, entity, catk, valid)
 
 
 				val ccw = atkData.currentDir.anticlockwise.anticlockwise
-				updateValid(comboData, ccw, 1, entity, catk, valid)
+				updateValid(comboData, cstep, ccw, 1, entity, catk, valid)
 			}
 
 			if (valid.size == 0 && cstep.canEnd)
@@ -296,7 +296,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 		}
 	}
 
-	fun updateValid(combo: Combo, direction: Enums.Direction, count: Int, entity: Entity, attack: Attack, valid: com.badlogic.gdx.utils.Array<ValidData>)
+	fun updateValid(combo: Combo, comboStep: ComboStep, direction: Enums.Direction, count: Int, entity: Entity, attack: Attack, valid: com.badlogic.gdx.utils.Array<ValidData>)
 	{
 		var srcTiles = entity.getEdgeTiles(direction)
 		for (srcTile in srcTiles)
@@ -306,6 +306,21 @@ class ActionTelegraphedAttack(): AbstractAction()
 				for (i in 0..count-1)
 				{
 					valid.add(ValidData(combo, direction, srcTile))
+				}
+			}
+		}
+
+		if (comboStep.canMove)
+		{
+			for (srcTile in srcTiles)
+			{
+				val tile = srcTile.level.getTile(srcTile + direction) ?: continue
+				if (isValidAttack(attack, direction, tile, entity))
+				{
+					for (i in 0..count-1)
+					{
+						valid.add(ValidData(combo, direction, srcTile))
+					}
 				}
 			}
 		}
