@@ -3,6 +3,7 @@ package com.lyeeedar.DungeonGeneration.Data
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Enums
+import com.lyeeedar.Pathfinding.PathfindingTile
 import com.lyeeedar.Util.neaten
 import java.util.*
 
@@ -10,11 +11,14 @@ import java.util.*
  * Created by Philip on 08-Apr-16.
  */
 
-class Symbol(val char: Char)
+class Symbol(val char: Char): PathfindingTile
 {
 	var extends: Char? = null
 
 	val contents: EnumMap<Enums.SpaceSlot, XmlReader.Element> = EnumMap<Enums.SpaceSlot, XmlReader.Element>(Enums.SpaceSlot::class.java)
+
+	var passable: Boolean = true
+	var influence: Int = 0
 
 	companion object
 	{
@@ -67,4 +71,7 @@ class Symbol(val char: Char)
 
 		return symbol
 	}
+
+	override fun getPassable(travelType: Enums.SpaceSlot, self: Any?): Boolean = passable || contents.containsKey(Enums.SpaceSlot.WALL)
+	override fun getInfluence(travelType: Enums.SpaceSlot, self: Any?): Int = influence
 }

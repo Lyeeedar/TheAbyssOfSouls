@@ -6,7 +6,6 @@ import com.exp4j.Helpers.EquationHelper
 import com.lyeeedar.DungeonGeneration.RoomGenerators.AbstractRoomGenerator
 import com.lyeeedar.Enums
 import com.lyeeedar.Util.Array2D
-import com.lyeeedar.Util.array2dOfChar
 import java.util.*
 
 /**
@@ -23,6 +22,11 @@ class SymbolicRoomData()
 
 	var x: Int = 0
 	var y: Int = 0
+
+	var lockRotation: Boolean = false
+	var rotate: Boolean = false
+	var flipVert: Boolean = false
+	var flipHori: Boolean = false
 
 	lateinit var ran: Random
 

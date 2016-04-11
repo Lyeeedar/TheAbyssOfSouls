@@ -23,12 +23,13 @@ import java.util.*
 abstract class AbstractLevelGenerator()
 {
 	lateinit var levelData: SymbolicLevelData
+	lateinit var chosenRooms: com.badlogic.gdx.utils.Array<SymbolicRoomData>
 	lateinit var toBePlacedRooms: com.badlogic.gdx.utils.Array<SymbolicRoomData>
 	lateinit var placedRooms: com.badlogic.gdx.utils.Array<SymbolicRoomData>
 	lateinit var rooms:  com.badlogic.gdx.utils.Array<SymbolicRoom>
 	lateinit var ran: Random
 
-	lateinit var contents: Array2D<Symbol?>
+	lateinit var contents: Array2D<Symbol>
 	val width: Int
 		get() = contents.xSize
 	val height: Int
@@ -46,7 +47,7 @@ abstract class AbstractLevelGenerator()
 		{
 			for (y in 0..height-1)
 			{
-				val symbol = contents[x, y] ?: continue
+				val symbol = contents[x, y]
 				for (slot in Enums.SpaceSlot.Values)
 				{
 					val el = symbol.contents[slot] ?: continue
@@ -75,6 +76,11 @@ abstract class AbstractLevelGenerator()
 		}
 
 		return level
+	}
+
+	fun selectRooms()
+	{
+
 	}
 
 	companion object

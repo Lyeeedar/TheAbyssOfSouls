@@ -17,7 +17,7 @@ fun OrderedSet<String>.isAllies(other: OrderedSet<String>): Boolean
 	return false
 }
 
-fun <T> Array<T>.ran(ran: Random): T = this[ran.nextInt(this.size)]
+fun <T> com.badlogic.gdx.utils.Array<T>.ran(ran: Random): T = this[ran.nextInt(this.size)]
 
 fun Float.abs() = Math.abs(this)
 
