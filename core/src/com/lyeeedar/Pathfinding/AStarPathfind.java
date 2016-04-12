@@ -133,8 +133,7 @@ public class AStarPathfind
 			nodes[x][y] = node;
 		}
 
-		// not yet processed, if lower cost update the values and reposition in
-		// list
+		// not yet processed, if lower cost update the values and reposition in list
 		else if ( !node.processed )
 		{
 			if ( cost < node.cost )
@@ -157,10 +156,9 @@ public class AStarPathfind
 		}
 	}
 
-	public boolean isColliding( int x, int y )
+	private boolean isColliding( int x, int y )
 	{
-		if ( x < 0 || y < 0 || x >= width || y >= height || grid[x][y] == null || !grid[x][y].getPassable( travelType, self ) ) { return true; }
-		return false;
+		return x < 0 || y < 0 || x >= width || y >= height || grid[ x ][ y ] == null || !grid[ x ][ y ].getPassable( travelType, self );
 	}
 
 	public Array<Point> getPath()

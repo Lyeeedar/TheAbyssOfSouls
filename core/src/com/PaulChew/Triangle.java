@@ -39,7 +39,7 @@ import java.util.NoSuchElementException;
  * Created December 2007. Replaced general simplices with geometric triangle.
  *
  */
-public class Triangle extends ArraySet<Pnt> {
+public class Triangle extends ArraySet<Pnt> implements Comparable<Triangle> {
 
     private int idNumber;                   // The id number
     private Pnt circumcenter = null;        // The triangle's circumcenter
@@ -148,7 +148,7 @@ public class Triangle extends ArraySet<Pnt> {
         return (this == o);
     }
 
-
+	@Override
 	public int compareTo(Triangle arg0)
 	{
     	for (int i = 0; i < size(); i++)

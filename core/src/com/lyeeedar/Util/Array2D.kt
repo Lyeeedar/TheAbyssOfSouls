@@ -29,6 +29,14 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>) {
 		array[x][y] = t
 	}
 
+	operator fun get(p: Point): T {
+		return array[p.x][p.y]
+	}
+
+	operator fun set(p: Point, t: T) {
+		array[p.x][p.y] = t
+	}
+
 	inline fun forEach(operation: (T) -> Unit) {
 		array.forEach { it.forEach { operation.invoke(it) } }
 	}

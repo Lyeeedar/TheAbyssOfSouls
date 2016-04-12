@@ -22,28 +22,30 @@ class SymbolicRoom()
 	var x: Int = 0
 	var y: Int = 0
 
+	val doors: com.badlogic.gdx.utils.Array<RoomDoor> = com.badlogic.gdx.utils.Array()
+
 	var placement: Enums.Direction = Enums.Direction.CENTER
 
 	// ----------------------------------------------------------------------
-	private fun addDoor(pos: Int, space: Int, dir: Enums.Direction, ran: Random, symbolMap: ObjectMap<Char, Symbol>)
+	private fun addDoor(pos: Int, space: Int, dir: Enums.Direction, ran: Random)
 	{
 		val offset = if (space > 1) ran.nextInt(space - 1) else 0
 
 		if (dir === Enums.Direction.WEST)
 		{
-			doors.add(RoomDoor(Enums.Direction.WEST, Point(0, pos + offset)))
+			doors.add(RoomDoor(0, pos + offset, dir))
 		}
 		else if (dir === Enums.Direction.EAST)
 		{
-			doors.add(RoomDoor(Enums.Direction.EAST, Point(width - 1, pos + offset)))
+			doors.add(RoomDoor(width - 1, pos + offset, dir))
 		}
 		else if (dir === Enums.Direction.NORTH)
 		{
-			doors.add(RoomDoor(Enums.Direction.NORTH, Point(pos + offset, 0)))
+			doors.add(RoomDoor(pos + offset, 0, dir))
 		}
 		else if (dir === Enums.Direction.SOUTH)
 		{
-			doors.add(RoomDoor(Enums.Direction.SOUTH, Point(pos + offset, height - 1)))
+			doors.add(RoomDoor(pos + offset, height - 1, dir))
 		}
 	}
 
@@ -80,7 +82,7 @@ class SymbolicRoom()
 			{
 				if (!contents[x, y].getPassable(Enums.SpaceSlot.ENTITY, null))
 				{
-					addDoor(blockStart, pos - blockStart, dir, ran, symbolMap)
+					addDoor(blockStart, pos - blockStart, dir, ran)
 					blockStart = -1
 				}
 			} else
@@ -95,7 +97,7 @@ class SymbolicRoom()
 		if (blockStart >= 0)
 		{
 			val pos = range - 1
-			addDoor(blockStart, pos - blockStart, dir, ran, symbolMap)
+			addDoor(blockStart, pos - blockStart, dir, ran)
 		}
 	}
 
@@ -150,3 +152,5 @@ class SymbolicRoom()
 		}
 	}
 }
+
+class RoomDoor(x: Int, y: Int, val dir: Enums.Direction): Point(x, y)

@@ -21,7 +21,8 @@ public class Enums
 	{
 		WEAPON,
 		ARMOUR,
-		TRINKET
+		TRINKET,
+		POTION
 	}
 
 	// ----------------------------------------------------------------------

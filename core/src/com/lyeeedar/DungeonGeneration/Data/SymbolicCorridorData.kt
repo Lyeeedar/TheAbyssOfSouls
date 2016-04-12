@@ -13,4 +13,5 @@ class SymbolicCorridorData()
 	}
 
 	lateinit var style: Style
+	var width: Int = 1
 }

@@ -1,12 +1,17 @@
 package com.lyeeedar.DungeonGeneration.LevelGenerators
 
+import com.PaulChew.Pnt
+import com.PaulChew.Triangle
+import com.PaulChew.Triangulation
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.DungeonGeneration.Data.Symbol
 import com.lyeeedar.DungeonGeneration.Data.SymbolicCorridorData
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoom
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoomData
 import com.lyeeedar.DungeonGeneration.RoomGenerators.AbstractRoomGenerator
 import com.lyeeedar.Enums
 import com.lyeeedar.Level.Level
+import com.lyeeedar.Pathfinding.AStarPathfind
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.ran
@@ -57,7 +62,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 		{
 			val actual = SymbolicRoom()
 			actual.fill(ran, room)
-			actual.findDoors( ran );
+			actual.findDoors(ran, levelData.symbolMap);
 
 			rooms.add(actual)
 		}
@@ -66,6 +71,21 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 		connectRooms()
 		placeFactions()
 		markRooms()
+	}
+
+	// ----------------------------------------------------------------------
+	fun markRooms()
+	{
+		for ( room in rooms )
+		{
+			for (x in 0..room.width-1)
+			{
+				for (y in 0..room.height-1)
+				{
+					contents[x+room.x, y+room.y] = room.contents[x, y].copy()
+				}
+			}
+		}
 	}
 
 	// ----------------------------------------------------------------------
@@ -444,5 +464,407 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 				partitionRecursive(nx2, ny2, nwidth2, nheight2)
 			}
 		}
+	}
+
+	// ----------------------------------------------------------------------
+	protected fun connectRooms()
+	{
+		val roomPnts = com.badlogic.gdx.utils.Array<Pnt>()
+
+		for (room in rooms)
+		{
+			for (door in room.doors)
+			{
+				var x = door.x + room.x
+				var y = door.y + room.y
+
+				if (door.dir == Enums.Direction.WEST)
+				{
+					x -= levelData.corridor.width - 1
+				}
+				else if (door.dir == Enums.Direction.NORTH)
+				{
+					y -= levelData.corridor.width - 1
+				}
+
+				if (x >= 1 && y >= 1 && x < width - 1 && y < height - 1)
+				{
+					val p = Pnt(x.toDouble(), y.toDouble())
+					roomPnts.add(p)
+				}
+			}
+		}
+
+		val initialTriangle = Triangle(Pnt(-10000.0, -10000.0), Pnt(10000.0, -10000.0), Pnt(0.0, 10000.0))
+		val dt = Triangulation(initialTriangle)
+
+		for (p in roomPnts)
+		{
+			dt.delaunayPlace(p)
+		}
+
+		val ignoredPaths = com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>()
+		val addedPaths = com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>()
+		val paths = com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>()
+
+		val tris = com.badlogic.gdx.utils.Array<Triangle>()
+		for (tri in dt)
+		{
+			tris.add(tri)
+		}
+		tris.sort();
+
+		for (tri in tris)
+		{
+			calculatePaths(paths, tri, ignoredPaths, addedPaths)
+		}
+
+		for (room in roomPnts)
+		{
+			var closest: Pnt? = null
+			var closestDist = Double.MAX_VALUE
+			var found = false
+			outer@ for (path in paths)
+			{
+				var pair = arrayOf(path.first, path.second)
+				for (p in pair)
+				{
+					if (room[0] == p[0] && room[1] == p[1])
+					{
+						found = true
+						break@outer
+					}
+
+					val tempDist = Math.max(Math.abs(p[0] - room[0]), Math.abs(p[1] - room[1]))
+					if (tempDist < closestDist)
+					{
+						closestDist = tempDist
+						closest = p
+					}
+				}
+			}
+
+			if (!found)
+			{
+				paths.add(Pair<Pnt, Pnt>(room, closest!!))
+			}
+		}
+
+		for (p in paths)
+		{
+			val pathFind = AStarPathfind(contents.array, p.first[0].toInt(), p.first[1].toInt(), p.second[0].toInt(), p.second[1].toInt(), false, true, levelData.corridor.width, Enums.SpaceSlot.ENTITY, null)
+			val path = pathFind.path
+
+			carveCorridor(path)
+			Point.freeAll(path)
+		}
+	}
+
+	// ----------------------------------------------------------------------
+	protected fun carveCorridor(path: com.badlogic.gdx.utils.Array<Point>)
+	{
+		var centralCount = 0
+		var sideCount = 0
+		var placementAlternator = true
+
+		val width = levelData.corridor.width
+
+		for (i in 0..path.size - 1)
+		{
+			val pos = path[i]
+
+			var t = contents[pos]
+
+			for (x in 0..width - 1)
+			{
+				for (y in 0..width - 1)
+				{
+					t = contents[pos.x + x, pos.y + y]
+
+					if (t.char == '#')
+					{
+						t.symbol = dfp.sharedSymbolMap.get('.')
+						t.resolve(levelData.symbolMap)
+					}
+
+					// Wipe out all features not placed by this path
+					if (!t.isRoom && t.placerHashCode !== path.hashCode())
+					{
+						t.symbol = t.symbol.copy()
+						t.symbol.environmentData = null
+					}
+
+					// Wipe out all features in the central square
+					if (!t.isRoom && x > 0 && x < width - 1 && y > 0 && y < width - 1)
+					{
+						t.symbol = t.symbol.copy()
+						t.symbol.environmentData = null
+					}
+				}
+			}
+
+			if (dfp.corridorStyle.centralConstant != null)
+			{
+				t = tiles[pos.x + width / 2][pos.y + width / 2]
+
+				if (t.symbol.shouldPlaceCorridorFeatures())
+				{
+					t.symbol = dfp.corridorStyle.centralConstant.getAsSymbol(t.symbol, dfp)
+					t.placerHashCode = path.hashCode()
+				}
+			}
+
+			if (dfp.corridorStyle.centralRecurring != null)
+			{
+				centralCount++
+
+				if (centralCount == dfp.corridorStyle.centralRecurring.interval)
+				{
+					t = tiles[pos.x + width / 2][pos.y + width / 2]
+
+					if (t.symbol.shouldPlaceCorridorFeatures())
+					{
+						t.symbol = dfp.corridorStyle.centralRecurring.getAsSymbol(t.symbol, dfp)
+						t.placerHashCode = path.hashCode()
+					}
+
+					centralCount = 0
+				}
+			}
+
+			if (dfp.corridorStyle.sideRecurring != null)
+			{
+				sideCount++
+
+				if (sideCount == dfp.corridorStyle.sideRecurring.interval && i > 0)
+				{
+					val placeTop = dfp.corridorStyle.sideRecurring.placementMode === PlacementMode.BOTH
+							|| dfp.corridorStyle.sideRecurring.placementMode === PlacementMode.TOP
+							|| dfp.corridorStyle.sideRecurring.placementMode === PlacementMode.ALTERNATE && placementAlternator
+
+					val placeBottom = dfp.corridorStyle.sideRecurring.placementMode === PlacementMode.BOTH
+							|| dfp.corridorStyle.sideRecurring.placementMode === PlacementMode.BOTTOM
+							|| dfp.corridorStyle.sideRecurring.placementMode === PlacementMode.ALTERNATE && !placementAlternator
+
+					if (path[i - 1].x !== pos.x)
+					{
+						if (dfp.corridorStyle.width === 1)
+						{
+							if (placeTop && isEmpty(tiles[pos.x + width / 2][pos.y - 1]))
+							{
+								t = tiles[pos.x + width / 2][pos.y - 1]
+
+								if (t.symbol.shouldPlaceCorridorFeatures())
+								{
+									t.symbol = dfp.corridorStyle.sideRecurring.getAsSymbol(t.symbol, dfp)
+									t.symbol.attachLocation = Direction.NORTH
+									t.placerHashCode = path.hashCode()
+								}
+							}
+
+							if (placeBottom && isEmpty(tiles[pos.x + width / 2][pos.y + width]))
+							{
+								t = tiles[pos.x + width / 2][pos.y + width]
+
+								if (t.symbol.shouldPlaceCorridorFeatures())
+								{
+									t.symbol = dfp.corridorStyle.sideRecurring.getAsSymbol(t.symbol, dfp)
+									t.symbol.attachLocation = Direction.SOUTH
+									t.placerHashCode = path.hashCode()
+								}
+							}
+						} else
+						{
+							if (placeTop && tiles[pos.x + width / 2][pos.y - 1].symbol.character === '#')
+							{
+								t = tiles[pos.x + width / 2][pos.y]
+
+								if (t.symbol.shouldPlaceCorridorFeatures())
+								{
+									t.symbol = dfp.corridorStyle.sideRecurring.getAsSymbol(t.symbol, dfp)
+									t.symbol.attachLocation = Direction.NORTH
+									t.placerHashCode = path.hashCode()
+								}
+							}
+
+							if (placeBottom && tiles[pos.x + width / 2][pos.y + width].symbol.character === '#')
+							{
+								t = tiles[pos.x + width / 2][pos.y + width - 1]
+
+								if (t.symbol.shouldPlaceCorridorFeatures())
+								{
+									t.symbol = dfp.corridorStyle.sideRecurring.getAsSymbol(t.symbol, dfp)
+									t.symbol.attachLocation = Direction.SOUTH
+									t.placerHashCode = path.hashCode()
+								}
+							}
+						}
+					} else
+					{
+						if (dfp.corridorStyle.width === 1)
+						{
+							if (placeTop && isEmpty(tiles[pos.x - 1][pos.y + width / 2]))
+							{
+								t = tiles[pos.x - 1][pos.y + width / 2]
+
+								if (t.symbol.shouldPlaceCorridorFeatures())
+								{
+									t.symbol = dfp.corridorStyle.sideRecurring.getAsSymbol(t.symbol, dfp)
+									t.symbol.attachLocation = Direction.EAST
+									t.placerHashCode = path.hashCode()
+								}
+							}
+
+							if (placeBottom && isEmpty(tiles[pos.x + width][pos.y + width / 2]))
+							{
+								t = tiles[pos.x + width][pos.y + width / 2]
+
+								if (t.symbol.shouldPlaceCorridorFeatures())
+								{
+									t.symbol = dfp.corridorStyle.sideRecurring.getAsSymbol(t.symbol, dfp)
+									t.symbol.attachLocation = Direction.WEST
+									t.placerHashCode = path.hashCode()
+								}
+							}
+						} else
+						{
+							if (placeTop && tiles[pos.x - 1][pos.y + width / 2].symbol.character === '#')
+							{
+								t = tiles[pos.x][pos.y + width / 2]
+
+								if (t.symbol.shouldPlaceCorridorFeatures())
+								{
+									t.symbol = dfp.corridorStyle.sideRecurring.getAsSymbol(t.symbol, dfp)
+									t.symbol.attachLocation = Direction.EAST
+									t.placerHashCode = path.hashCode()
+								}
+							}
+
+							if (placeBottom && tiles[pos.x + width][pos.y + width / 2].symbol.character === '#')
+							{
+								t = tiles[pos.x + width - 1][pos.y + width / 2]
+
+								if (t.symbol.shouldPlaceCorridorFeatures())
+								{
+									t.symbol = dfp.corridorStyle.sideRecurring.getAsSymbol(t.symbol, dfp)
+									t.symbol.attachLocation = Direction.WEST
+									t.placerHashCode = path.hashCode()
+								}
+							}
+						}
+					}
+
+					sideCount = 0
+					placementAlternator = !placementAlternator
+				}
+			}
+		}
+	}
+
+	// ----------------------------------------------------------------------
+	protected fun calculatePaths(paths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>, triangle: Triangle, ignoredPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>, addedPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>)
+	{
+		val vertices = triangle.toArray(Array(0){ i -> Pnt(0.0, 0.0)})
+
+		var ignore = 0
+		var dist = 0.0
+
+		dist = Math.pow(2.0, vertices[0][0] - vertices[1][0]) + Math.pow(2.0, vertices[0][1] - vertices[1][1])
+
+		var temp = Math.pow(2.0, vertices[0][0] - vertices[2][0]) + Math.pow(2.0, vertices[0][1] - vertices[2][1])
+		if (dist < temp)
+		{
+			dist = temp
+			ignore = 1
+		}
+
+		temp = Math.pow(2.0, vertices[1][0] - vertices[2][0]) + Math.pow(2.0, vertices[1][1] - vertices[2][1])
+		if (dist < temp)
+		{
+			dist = temp
+			ignore = 2
+		}
+
+		if (ignore != 0 && !checkIgnored(vertices[0], vertices[1], ignoredPaths) && !checkAdded(vertices[0], vertices[1], addedPaths))
+		{
+			addPath(vertices[0], vertices[1], paths, ignoredPaths, addedPaths)
+		}
+		else
+		{
+			ignoredPaths.add(Pair(vertices[0], vertices[1]))
+		}
+
+		if (ignore != 1 && !checkIgnored(vertices[0], vertices[2], ignoredPaths) && !checkAdded(vertices[0], vertices[2], addedPaths))
+		{
+			addPath(vertices[0], vertices[2], paths, ignoredPaths, addedPaths)
+		}
+		else
+		{
+			ignoredPaths.add(Pair(vertices[0], vertices[2]))
+		}
+
+		if (ignore != 2 && !checkIgnored(vertices[1], vertices[2], ignoredPaths) && !checkAdded(vertices[1], vertices[2], addedPaths))
+		{
+			addPath(vertices[1], vertices[2], paths, ignoredPaths, addedPaths)
+		}
+		else
+		{
+			ignoredPaths.add(Pair(vertices[1], vertices[2]))
+		}
+	}
+
+	// ----------------------------------------------------------------------
+	protected fun addPath(p1: Pnt, p2: Pnt, paths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>, ignoredPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>, addedPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>)
+	{
+		if (p1[0] < 0
+				|| p1[1] < 0
+				|| p1[0] >= width - 1
+				|| p1[1] >= height - 1
+				|| p2[0] < 0
+				|| p2[1] < 0
+				|| p2[0] >= width - 1
+				|| p2[1] >= height - 1)
+		{
+			ignoredPaths.add(Pair(p1, p2))
+		}
+		else
+		{
+			addedPaths.add(Pair(p1, p2))
+			paths.add(Pair(p1, p2))
+		}
+	}
+
+	// ----------------------------------------------------------------------
+	protected fun checkIgnored(p1: Pnt, p2: Pnt, ignoredPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>): Boolean
+	{
+		for (p in ignoredPaths)
+		{
+			if (p.first.equals(p1) && p.second.equals(p2))
+			{
+				return true
+			}
+			else if (p.first.equals(p2) && p.second.equals(p1))
+			{
+				return true
+			}
+		}
+		return false
+	}
+
+	// ----------------------------------------------------------------------
+	protected fun checkAdded(p1: Pnt, p2: Pnt, addedPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>): Boolean
+	{
+		for (p in addedPaths)
+		{
+			if (p.first.equals(p1) && p.second.equals(p2))
+			{
+				return true
+			}
+			else if (p.first.equals(p2) && p.second.equals(p1))
+			{
+				return true
+			}
+		}
+		return false
 	}
 }

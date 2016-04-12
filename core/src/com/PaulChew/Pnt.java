@@ -88,6 +88,11 @@ public class Pnt implements Comparable<Pnt> {
         return this.coordinates[i];
     }
 
+	public double get(int i)
+	{
+		return this.coordinates[i];
+	}
+
     /**
      * @return this Pnt's dimension.
      */
