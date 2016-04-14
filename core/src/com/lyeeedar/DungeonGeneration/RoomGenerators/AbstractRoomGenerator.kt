@@ -31,7 +31,15 @@ abstract class AbstractRoomGenerator(val ensuresConnectivity: Boolean)
 		fun getClass(name: String): Class<out AbstractRoomGenerator>
 		{
 			val type = when(name) {
-				//"ENABLE", "DISABLE" -> EventActionSetEnabled::class.java
+				"BASIC" -> Basic::class.java
+				"BURROW" -> Burrow::class.java
+				"CELLULARAUTOMATA", "CAVES" -> CellularAutomata::class.java
+				"CHAMBERS", "ROOMS", "COMPLEX" -> Chambers::class.java
+				"ISLAND" -> Island::class.java
+				"OVERLAPPINGRECTS", "RECTS" -> OverlappingRects::class.java
+				"POLYGON" -> Polygon::class.java
+				"RANDOM" -> RandomPlace::class.java
+				"STARBURST" -> Starburst::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid room generator type: $name")

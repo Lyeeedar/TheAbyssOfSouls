@@ -13,5 +13,49 @@ class SymbolicLevelData()
 	val rooms: com.badlogic.gdx.utils.Array<SymbolicRoomData> = com.badlogic.gdx.utils.Array()
 	val roomGenerators: com.badlogic.gdx.utils.Array<XmlReader.Element> = com.badlogic.gdx.utils.Array()
 	var preprocessor: XmlReader.Element? = null
-	val corridor: SymbolicCorridorData = SymbolicCorridorData()
+	var corridor: SymbolicCorridorData = SymbolicCorridorData()
+
+	companion object
+	{
+		fun load(xml: XmlReader.Element): SymbolicLevelData
+		{
+			val level = SymbolicLevelData()
+
+			level.preprocessor = xml.getChildByName("Preprocessor")
+
+			val symbols = xml.getChildByName("Symbols")
+			for (i in 0..symbols.childCount-1)
+			{
+				val el = symbols.getChild(i)
+				val symbol = Symbol.load(el)
+
+				level.symbolMap.put(symbol.char, symbol)
+			}
+
+			val rooms = xml.getChildByName("Rooms")
+			for (i in 0..rooms.childCount-1)
+			{
+				val el = symbols.getChild(i)
+				val room = SymbolicRoomData.load(el)
+
+				level.rooms.add(room)
+			}
+
+			val generators = xml.getChildByName("Generators")
+			for (i in 0..generators.childCount-1)
+			{
+				val el = symbols.getChild(i)
+
+				level.roomGenerators.add(el)
+			}
+
+			val corridorEl = xml.getChildByName("Corridor")
+			if (corridorEl != null)
+			{
+				level.corridor = SymbolicCorridorData.load(corridorEl)
+			}
+
+			return level
+		}
+	}
 }

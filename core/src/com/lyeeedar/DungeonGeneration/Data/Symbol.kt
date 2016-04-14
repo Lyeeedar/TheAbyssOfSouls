@@ -22,7 +22,7 @@ class Symbol(val char: Char): PathfindingTile
 
 	companion object
 	{
-		fun load(xml: XmlReader.Element): Symbol
+		@JvmStatic fun load(xml: XmlReader.Element): Symbol
 		{
 			val symbol = Symbol(xml.get("Char").elementAt(0))
 			symbol.extends = xml.getAttribute("Extends", null)?.elementAt(0)

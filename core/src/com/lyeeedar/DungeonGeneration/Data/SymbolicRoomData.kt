@@ -77,6 +77,7 @@ class SymbolicRoomData()
 			room.spawnEquation = xml.getAttribute("Count", null)?.toLowerCase() ?: room.spawnEquation
 
 			room.placement = Enums.Direction.valueOf(xml.get("Placement", "Centre").toUpperCase())
+			room.lockRotation = xml.getBoolean("LockRotation", false)
 
 			val rowsEl = xml.getChildByName("Rows")
 			if (rowsEl != null)

@@ -97,7 +97,7 @@ abstract class AbstractLevelGenerator()
 		fun getClass(name: String): Class<out AbstractLevelGenerator>
 		{
 			val type = when(name) {
-			//"ENABLE", "DISABLE" -> EventActionSetEnabled::class.java
+				"RECURSIVEDOCK" -> RecursiveDockGenerator::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid level generator type: $name")
