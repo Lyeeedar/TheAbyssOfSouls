@@ -40,7 +40,7 @@ class SymbolicLevelData()
 			{
 				for (i in 0..rooms.childCount - 1)
 				{
-					val el = symbols.getChild(i)
+					val el = rooms.getChild(i)
 					val room = SymbolicRoomData.load(el)
 
 					level.rooms.add(room)

@@ -81,10 +81,10 @@ class SymbolicRoomData()
 		return room
 	}
 
-	fun create(ran: Random): SymbolicRoom
+	fun create(ran: Random, levelData: SymbolicLevelData): SymbolicRoom
 	{
 		val room = SymbolicRoom()
-		room.fill(ran, this)
+		room.fill(ran, this, levelData)
 
 		return room
 	}

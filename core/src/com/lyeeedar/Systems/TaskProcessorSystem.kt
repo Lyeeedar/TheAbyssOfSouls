@@ -42,7 +42,7 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		if (!hasEffects && entitiesToBeProcessed.size == 0)
 		{
 			// process player
-			val player = GlobalData.Global.currentLevel?.player ?: return
+			val player = GlobalData.Global.currentLevel.player
 
 			processEntity(player)
 
@@ -100,8 +100,6 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 				val t = task.tasks.removeIndex(0)
 
 				if (t is TaskMove && e.position().hasEffects(t.direction)) return false
-
-				System.out.println(e.name() + " : " + t.toString())
 
 				t.execute(e)
 				task.actionDelay -= t.cost;

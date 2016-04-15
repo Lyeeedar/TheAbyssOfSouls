@@ -65,7 +65,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 		{
 			val actual = SymbolicRoom()
 			room.resolveSymbols(levelData.symbolMap)
-			actual.fill(ran, room)
+			actual.fill(ran, room, levelData)
 			actual.findDoors(ran, levelData.symbolMap);
 
 			rooms.add(actual)

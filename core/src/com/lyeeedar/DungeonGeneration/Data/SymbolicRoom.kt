@@ -2,9 +2,11 @@ package com.lyeeedar.DungeonGeneration.Data
 
 import com.badlogic.gdx.utils.ObjectMap
 import com.exp4j.Helpers.EquationHelper
+import com.lyeeedar.DungeonGeneration.RoomGenerators.AbstractRoomGenerator
 import com.lyeeedar.Enums
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.ran
 import java.util.*
 
 /**
@@ -123,7 +125,7 @@ class SymbolicRoom()
 	}
 
 	// ----------------------------------------------------------------------
-	fun fill(ran: Random, data: SymbolicRoomData)
+	fun fill(ran: Random, data: SymbolicRoomData, levelData: SymbolicLevelData)
 	{
 		placement = data.placement
 
@@ -135,6 +137,12 @@ class SymbolicRoom()
 		val h = data.heightVal
 
 		contents = Array2D<Symbol>(w, h) { a, b -> data.symbolMap['#'].copy() }
+
+		if (data.contents.xSize == 0 && data.generator == null)
+		{
+			val el = levelData.roomGenerators.ran(ran)
+			data.generator = AbstractRoomGenerator.load(el)
+		}
 
 		if (data.generator != null)
 		{
