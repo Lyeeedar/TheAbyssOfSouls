@@ -11,7 +11,7 @@ import com.lyeeedar.Util.EnumBitflag;
 // Naming priority: NSEW
 public class TilingSprite
 {
-	private static final int CENTER = 1 << ( Enums.Direction.CENTER.ordinal() + 1 );
+	private static final int CENTER = 1 << ( Enums.Direction.CENTRE.ordinal() + 1 );
 	private static final int SOUTH = 1 << ( Enums.Direction.SOUTH.ordinal() + 1 );
 	private static final int NORTH = 1 << ( Enums.Direction.NORTH.ordinal() + 1 );
 

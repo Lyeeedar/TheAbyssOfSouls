@@ -3,8 +3,10 @@ package com.lyeeedar.DungeonGeneration.LevelGenerators
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.reflect.ClassReflection
+import com.exp4j.Helpers.EquationHelper
 import com.lyeeedar.Components.EntityLoader
 import com.lyeeedar.Components.Mappers
+import com.lyeeedar.Components.name
 import com.lyeeedar.Components.tile
 import com.lyeeedar.DungeonGeneration.Data.Symbol
 import com.lyeeedar.DungeonGeneration.Data.SymbolicLevelData
@@ -23,10 +25,10 @@ import java.util.*
 abstract class AbstractLevelGenerator()
 {
 	lateinit var levelData: SymbolicLevelData
-	lateinit var chosenRooms: com.badlogic.gdx.utils.Array<SymbolicRoomData>
-	lateinit var toBePlacedRooms: com.badlogic.gdx.utils.Array<SymbolicRoomData>
-	lateinit var placedRooms: com.badlogic.gdx.utils.Array<SymbolicRoomData>
-	lateinit var rooms:  com.badlogic.gdx.utils.Array<SymbolicRoom>
+	var chosenRooms: com.badlogic.gdx.utils.Array<SymbolicRoomData> = com.badlogic.gdx.utils.Array()
+	var toBePlacedRooms: com.badlogic.gdx.utils.Array<SymbolicRoomData> = com.badlogic.gdx.utils.Array()
+	var placedRooms: com.badlogic.gdx.utils.Array<SymbolicRoomData> = com.badlogic.gdx.utils.Array()
+	var rooms:  com.badlogic.gdx.utils.Array<SymbolicRoom> = com.badlogic.gdx.utils.Array()
 	lateinit var ran: Random
 
 	lateinit var contents: Array2D<Symbol>
@@ -40,6 +42,8 @@ abstract class AbstractLevelGenerator()
 
 	fun create(engine: Engine): Level
 	{
+		engine.removeAllEntities()
+
 		val level = Level()
 		level.grid = Array2D<Tile>(width, height) { x, y -> Tile() }
 
@@ -56,11 +60,7 @@ abstract class AbstractLevelGenerator()
 
 					val pos = Mappers.position.get(entity)
 					pos.position = level.getTile(x, y)!!
-
-					if (slot != pos.slot)
-					{
-						throw RuntimeException("Entity in incorrect slot!")
-					}
+					pos.slot = slot
 
 					for (ex in 0..pos.size-1)
 					{
@@ -71,6 +71,11 @@ abstract class AbstractLevelGenerator()
 					}
 
 					engine.addEntity(entity)
+
+					if (entity.name() == "player")
+					{
+						level.player = entity
+					}
 				}
 			}
 		}
@@ -80,7 +85,29 @@ abstract class AbstractLevelGenerator()
 
 	fun selectRooms()
 	{
+		for (room in levelData.rooms)
+		{
+			val count = EquationHelper.evaluate(room.spawnEquation, ran).toInt()
+			for (i in 0..count-1)
+			{
+				room.ran = ran
+				chosenRooms.add(room.copy())
+			}
+		}
+	}
 
+	// ----------------------------------------------------------------------
+	fun printGrid( )
+	{
+		for ( y in height-1 downTo 0)
+		{
+			for ( x in 0..width-1 )
+			{
+				System.out.print( contents[x, y].char );
+			}
+			System.out.print( "\n" );
+		}
+		System.out.println( "\n" );
 	}
 
 	companion object
@@ -89,7 +116,10 @@ abstract class AbstractLevelGenerator()
 		{
 			val uname = xml.name.toUpperCase()
 			val c = getClass(uname)
-			val instance = ClassReflection.getConstructor(c, AbstractLevelGenerator::class.java).newInstance() as AbstractLevelGenerator
+			val instance = ClassReflection.getConstructor(c).newInstance() as AbstractLevelGenerator
+
+			instance.levelData = SymbolicLevelData.load(xml)
+			instance.ran = Random(0)
 
 			return instance
 		}

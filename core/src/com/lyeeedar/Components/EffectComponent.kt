@@ -15,7 +15,7 @@ class EffectComponent: Component
 	constructor(sprite: Sprite)
 	{
 		this.sprite = sprite
-		this.direction = Enums.Direction.CENTER;
+		this.direction = Enums.Direction.CENTRE;
 	}
 
 	constructor(sprite: Sprite, dir: Enums.Direction)

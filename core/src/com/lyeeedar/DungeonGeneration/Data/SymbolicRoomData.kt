@@ -31,16 +31,16 @@ class SymbolicRoomData()
 	lateinit var ran: Random
 
 	val widthVal: Int by lazy {
-		EquationHelper.evaluate(width, ran).toInt()
+		Math.max(EquationHelper.evaluate(width, ran), 1f).toInt()
 	}
 
 	val heightVal: Int by lazy {
-		EquationHelper.evaluate(height, ran).toInt()
+		Math.max(EquationHelper.evaluate(height, ran), 1f).toInt()
 	}
 
 	val symbolMap: ObjectMap<Char, Symbol> = ObjectMap()
 
-	var placement: Enums.Direction = Enums.Direction.CENTER
+	var placement: Enums.Direction = Enums.Direction.CENTRE
 	var generator: AbstractRoomGenerator? = null
 
 	fun resolveSymbols(sharedMap: ObjectMap<Char, Symbol>)
@@ -57,6 +57,28 @@ class SymbolicRoomData()
 		{
 			symbol.resolve(symbolMap)
 		}
+	}
+
+	fun copy() : SymbolicRoomData
+	{
+		val room = SymbolicRoomData()
+
+		room.spawnEquation = spawnEquation
+		room.contents = contents
+		room.width = width
+		room.height = height
+		room.lockRotation = lockRotation
+		room.rotate = rotate
+		room.flipVert = flipVert
+		room.flipHori = flipHori
+		room.x = x
+		room.y = y
+		room.ran = ran
+		room.symbolMap.putAll(symbolMap)
+		room.placement = placement
+		room.generator = generator
+
+		return room
 	}
 
 	fun create(ran: Random): SymbolicRoom

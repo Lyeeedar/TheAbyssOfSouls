@@ -23,7 +23,7 @@ abstract class AbstractRoomGenerator(val ensuresConnectivity: Boolean)
 		{
 			val uname = xml.name.toUpperCase()
 			val c = getClass(uname)
-			val instance = ClassReflection.getConstructor(c, AbstractRoomGenerator::class.java).newInstance() as AbstractRoomGenerator
+			val instance = ClassReflection.getConstructor(c).newInstance() as AbstractRoomGenerator
 
 			return instance
 		}

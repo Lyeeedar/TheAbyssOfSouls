@@ -5,11 +5,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 import com.badlogic.gdx.utils.XmlReader;
 import com.exp4j.Helpers.EquationHelper;
-import com.lyeeedar.Util.EnumBitflag;
 import com.lyeeedar.Util.FastEnumMap;
 import com.lyeeedar.Util.Point;
-
-import java.util.HashMap;
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -28,7 +25,7 @@ public class Enums
 	// ----------------------------------------------------------------------
 	public enum Direction
 	{
-		CENTER( 0, 0, "C" ),
+		CENTRE( 0, 0, "C" ),
 		NORTH( 0, 1, "N" ),
 		SOUTH( 0, -1, "S" ),
 		EAST( 1, 0, "E" ),
@@ -41,8 +38,8 @@ public class Enums
 		static
 		{
 			// Setup neighbours
-			Direction.CENTER.clockwise = Direction.CENTER;
-			Direction.CENTER.anticlockwise = Direction.CENTER;
+			Direction.CENTRE.clockwise = Direction.CENTRE;
+			Direction.CENTRE.anticlockwise = Direction.CENTRE;
 
 			Direction.NORTH.anticlockwise = Direction.NORTHWEST;
 			Direction.NORTH.clockwise = Direction.NORTHEAST;
@@ -120,7 +117,7 @@ public class Enums
 			dx = MathUtils.clamp( dx, -1, 1 );
 			dy = MathUtils.clamp( dy, -1, 1 );
 
-			Direction d = Direction.CENTER;
+			Direction d = Direction.CENTRE;
 
 			for ( Direction dir : Direction.Values )
 			{
@@ -138,7 +135,7 @@ public class Enums
 		{
 			if ( dx == 0 && dy == 0 )
 			{
-				return Direction.CENTER;
+				return Direction.CENTRE;
 			}
 
 			if ( Math.abs( dx ) > Math.abs( dy ) )

@@ -21,7 +21,7 @@ fun Entity.tile() = Mappers.position.get(this).position as? Tile
 fun Entity.stats() = Mappers.stats.get(this)
 fun Entity.event() = Mappers.event.get(this)
 fun Entity.postEvent(args:EventArgs) = this.event()?.pendingEvents?.add(args)
-fun Entity.name() = Mappers.name.get(this).name
+fun Entity.name() = Mappers.name.get(this)?.name ?: ""
 fun Entity.sprite() = Mappers.sprite.get(this)
 fun Entity.renderOffset() = this.sprite()?.sprite?.spriteAnimation?.renderOffset
 fun Entity.getEquip(slot: Enums.EquipmentSlot) = Mappers.inventory.get(this).equipment.get(slot)
@@ -61,7 +61,8 @@ class EntityLoader()
 		{
 			val entity = if (xml.getAttribute("Extends", null) != null) load(xml.getAttribute("Extends")) else Entity()
 
-			entity.add(NameComponent(xml.get("Name")))
+			val name = xml.get("Name", null)
+			if (name != null) entity.add(NameComponent(name))
 
 			val ai = xml.get("AI", null)
 			if (ai != null) entity.add(TaskComponent(ai))

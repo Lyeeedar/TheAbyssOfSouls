@@ -265,7 +265,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 			if (valid.size == 0 && cstep.canEnd)
 			{
 				atkData.currentCombo = null
-				atkData.currentDir = Enums.Direction.CENTER
+				atkData.currentDir = Enums.Direction.CENTRE
 				atkData.currentIndex = 0
 				atkData.currentTarget = null
 				atkData.currentOffset = null
@@ -288,7 +288,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 		else
 		{
 			atkData.currentCombo = null
-			atkData.currentDir = Enums.Direction.CENTER
+			atkData.currentDir = Enums.Direction.CENTRE
 			atkData.currentIndex = 0
 			atkData.currentTarget = null
 			atkData.currentOffset = null

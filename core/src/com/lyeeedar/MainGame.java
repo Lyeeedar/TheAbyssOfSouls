@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.lyeeedar.Screens.AbstractScreen;
 import com.lyeeedar.Screens.GameScreen;
+import com.lyeeedar.Screens.LoadingScreen;
 
 import javax.swing.*;
 import java.io.PrintWriter;
@@ -13,19 +14,15 @@ import java.util.HashMap;
 
 public class MainGame extends Game
 {
-	public static MainGame Instance;
-
-	public MainGame()
-	{
-		Instance = this;
-	}
+	public MainGame() {}
 
 	public enum ScreenEnum
 	{
-		GAME
+		GAME,
+		LOADING
 	}
 
-	public final HashMap<ScreenEnum, AbstractScreen> screens = new HashMap<ScreenEnum, AbstractScreen>();
+	private final HashMap<ScreenEnum, AbstractScreen> screens = new HashMap<ScreenEnum, AbstractScreen>();
 
 	@Override
 	public void create()
@@ -48,7 +45,7 @@ public class MainGame extends Game
 					FileHandle file = Gdx.files.local( "error.log" );
 					file.writeString( exceptionAsString, false );
 
-					JOptionPane.showMessageDialog( null, "An fatal error occured. Please send error.log to me so that I can fix it.", "An error occured", JOptionPane.ERROR_MESSAGE );
+					JOptionPane.showMessageDialog( null, "A fatal error occurred. Please send the error.log to me so that I can fix it.", "An error occurred", JOptionPane.ERROR_MESSAGE );
 
 					e.printStackTrace();
 				}
@@ -58,8 +55,11 @@ public class MainGame extends Game
 		}
 
 		screens.put( ScreenEnum.GAME, new GameScreen() );
+		screens.put( ScreenEnum.LOADING, new LoadingScreen() );
 
-		switchScreen( ScreenEnum.GAME );
+		LoadingScreen.Instance.load( "Forest" );
+
+		switchScreen( ScreenEnum.LOADING );
 	}
 
 	public void switchScreen( ScreenEnum screen )

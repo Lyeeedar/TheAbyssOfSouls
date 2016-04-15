@@ -21,32 +21,41 @@ class SymbolicLevelData()
 		{
 			val level = SymbolicLevelData()
 
-			level.preprocessor = xml.getChildByName("Preprocessor")
+			level.preprocessor = xml.getChildByName("Preprocessor").getChild(0)
 
 			val symbols = xml.getChildByName("Symbols")
-			for (i in 0..symbols.childCount-1)
+			if (symbols != null)
 			{
-				val el = symbols.getChild(i)
-				val symbol = Symbol.load(el)
+				for (i in 0..symbols.childCount-1)
+				{
+					val el = symbols.getChild(i)
+					val symbol = Symbol.load(el)
 
-				level.symbolMap.put(symbol.char, symbol)
+					level.symbolMap.put(symbol.char, symbol)
+				}
 			}
 
 			val rooms = xml.getChildByName("Rooms")
-			for (i in 0..rooms.childCount-1)
+			if (rooms != null)
 			{
-				val el = symbols.getChild(i)
-				val room = SymbolicRoomData.load(el)
+				for (i in 0..rooms.childCount - 1)
+				{
+					val el = symbols.getChild(i)
+					val room = SymbolicRoomData.load(el)
 
-				level.rooms.add(room)
+					level.rooms.add(room)
+				}
 			}
 
 			val generators = xml.getChildByName("Generators")
-			for (i in 0..generators.childCount-1)
+			if (generators != null)
 			{
-				val el = symbols.getChild(i)
+				for (i in 0..generators.childCount-1)
+				{
+					val el = generators.getChild(i)
 
-				level.roomGenerators.add(el)
+					level.roomGenerators.add(el)
+				}
 			}
 
 			val corridorEl = xml.getChildByName("Corridor")

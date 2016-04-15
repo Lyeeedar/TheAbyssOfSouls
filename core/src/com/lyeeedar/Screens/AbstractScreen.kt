@@ -213,7 +213,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
     lateinit var mainTable: Table
 
     lateinit var inputMultiplexer: InputMultiplexer
-    lateinit var keyboardHelper: ButtonKeyboardHelper
+    var keyboardHelper: ButtonKeyboardHelper = ButtonKeyboardHelper()
 
     var diff: Long = 0
     var start: Long = System.currentTimeMillis()

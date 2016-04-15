@@ -24,7 +24,7 @@ class SymbolicRoom()
 
 	val doors: com.badlogic.gdx.utils.Array<RoomDoor> = com.badlogic.gdx.utils.Array()
 
-	var placement: Enums.Direction = Enums.Direction.CENTER
+	var placement: Enums.Direction = Enums.Direction.CENTRE
 
 	// ----------------------------------------------------------------------
 	private fun addDoor(pos: Int, space: Int, dir: Enums.Direction, ran: Random)
@@ -134,11 +134,12 @@ class SymbolicRoom()
 		val w = data.widthVal
 		val h = data.heightVal
 
-		contents = Array2D<Symbol>(w, h) { x, y -> data.symbolMap['#'].copy() }
+		contents = Array2D<Symbol>(w, h) { a, b -> data.symbolMap['#'].copy() }
 
 		if (data.generator != null)
 		{
 			// generate the room
+			data.generator?.process(contents, data.symbolMap, ran)
 		}
 		else
 		{

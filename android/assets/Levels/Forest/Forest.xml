@@ -1,0 +1,59 @@
+<RecursiveDock>
+
+    <Preprocessor>
+        <Random></Random>
+    </Preprocessor>
+
+    <Corridor>
+        <Style>Wandering</Style>
+        <Width>2</Width>
+    </Corridor>
+
+    <Generators>
+        <CellularAutomata></CellularAutomata>
+        <Starburst></Starburst>
+        <Polygon></Polygon>
+    </Generators>
+
+    <Symbols>
+
+        <Symbol>
+            <Char>.</Char>
+            <Floor>
+                <Sprite>
+                    <Name>Oryx/uf_split/uf_terrain/ground_grass_1</Name>
+                </Sprite>
+            </Floor>
+        </Symbol>
+
+        <Symbol Extends=".">
+            <Char>#</Char>
+            <Wall>
+                <Sprite>
+                    <Name>Oryx/Custom/terrain/tree1</Name>
+                    <DrawActualSize>true</DrawActualSize>
+                </Sprite>
+            </Wall>
+        </Symbol>
+
+    </Symbols>
+
+    <Rooms>
+
+        <Filler Condition="3 + rnd(2)" />
+
+        <Start>
+            <Symbols>
+                <Symbol Extends=".">
+                    <Char>s</Char>
+                    <Entity Extends="player"></Entity>
+                </Symbol>
+            </Symbols>
+            <Rows>
+                <Row>s</Row>
+            </Rows>
+        </Start>
+
+    </Rooms>
+
+</RecursiveDock>

@@ -9,6 +9,7 @@ import com.lyeeedar.DungeonGeneration.Data.SymbolicCorridorData
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoom
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoomData
 import com.lyeeedar.DungeonGeneration.RoomGenerators.AbstractRoomGenerator
+import com.lyeeedar.DungeonGeneration.RoomGenerators.Basic
 import com.lyeeedar.Enums
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Pathfinding.AStarPathfind
@@ -23,12 +24,11 @@ import java.util.*
 
 class RecursiveDockGenerator(): AbstractLevelGenerator()
 {
-	var minPadding: Int = 1
-	var maxPadding: Int = 2
-	var minRoomSize: Int = 3
-	var maxRoomSize: Int = 10
-	val paddedMinRoom: Int
-		get() = minRoomSize + minPadding * 2
+	val minPadding: Int by lazy { (levelData.corridor.width / 2) + 1 }
+	val maxPadding: Int by lazy { minPadding + 3 }
+	var minRoomSize: Int = 7
+	var maxRoomSize: Int = 25
+	val paddedMinRoom: Int by lazy { minRoomSize + minPadding * 2 }
 
 	var size: Int = 10
 
@@ -51,16 +51,20 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 
 			fillGridBase();
 			partition( );
+			printGrid()
 
 			if (toBePlacedRooms.size == 0)
 			{
 				break
 			}
+
+			size += 10
 		}
 
 		for ( room in placedRooms )
 		{
 			val actual = SymbolicRoom()
+			room.resolveSymbols(levelData.symbolMap)
 			actual.fill(ran, room)
 			actual.findDoors(ran, levelData.symbolMap);
 
@@ -71,6 +75,8 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 		connectRooms()
 		//placeFactions()
 		markRooms()
+
+		printGrid()
 	}
 
 	// ----------------------------------------------------------------------
@@ -152,7 +158,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 		while (itr.hasNext())
 		{
 			val room = itr.next()
-			if (room.placement != Enums.Direction.CENTER)
+			if (room.placement != Enums.Direction.CENTRE)
 			{
 				itr.remove()
 
@@ -327,8 +333,15 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			room.height = roomHeight.toString()
 			room.ran = ran
 
-			val genData = levelData.roomGenerators.ran(ran)
-			room.generator = AbstractRoomGenerator.load(genData)
+			if (levelData.roomGenerators.size > 0)
+			{
+				val genData = levelData.roomGenerators.ran(ran)
+				room.generator = AbstractRoomGenerator.load(genData)
+			}
+			else
+			{
+				room.generator = Basic()
+			}
 		}
 
 		if (room == null)

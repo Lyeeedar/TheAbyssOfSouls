@@ -9,10 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.lyeeedar.Level.Level
+import com.lyeeedar.Systems.createEngine
 import com.lyeeedar.UI.Seperator
 import com.lyeeedar.UI.TabPanel
 import com.lyeeedar.UI.Tooltip
 import com.lyeeedar.Util.Controls
+import java.util.concurrent.Executors
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -31,10 +33,10 @@ class GlobalData
 
 	@JvmField var fps: Int = 60
 
-	@JvmField var game: MainGame? = null
+	lateinit var game: MainGame
 
-	@JvmField var currentLevel: Level? = null
-	@JvmField var engine: Engine? = null
+	@JvmField var currentLevel: Level = Level()
+	lateinit var engine: Engine
 
 	@JvmField val controls: Controls = Controls()
 	lateinit var skin: Skin
@@ -51,9 +53,12 @@ class GlobalData
 	@JvmField var android: Boolean = false
 	@JvmField var release: Boolean = false
 
+	@JvmField val threadpool = Executors.newFixedThreadPool(3)
+
 	fun setup()
 	{
 		skin = loadSkin()
+		engine = createEngine()
 	}
 
 	fun loadSkin(): Skin
