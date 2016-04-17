@@ -1,5 +1,7 @@
 package com.lyeeedar.Util
 
+import com.lyeeedar.Enums
+
 /**
  * Created by Philip on 08-Apr-16.
  */
@@ -35,6 +37,10 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>) {
 
 	operator fun set(p: Point, t: T) {
 		array[p.x][p.y] = t
+	}
+
+	operator fun get(p: Point, dir: Enums.Direction): T {
+		return array[p.x + dir.x][p.y + dir.y]
 	}
 
 	inline fun forEach(operation: (T) -> Unit) {

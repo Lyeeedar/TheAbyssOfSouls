@@ -14,6 +14,7 @@ class SymbolicLevelData()
 	val roomGenerators: com.badlogic.gdx.utils.Array<XmlReader.Element> = com.badlogic.gdx.utils.Array()
 	var preprocessor: XmlReader.Element? = null
 	var corridor: SymbolicCorridorData = SymbolicCorridorData()
+	var levelTheme: RoomTheme? = null
 
 	companion object
 	{
@@ -62,6 +63,12 @@ class SymbolicLevelData()
 			if (corridorEl != null)
 			{
 				level.corridor = SymbolicCorridorData.load(corridorEl)
+			}
+
+			val themeEl = xml.getChildByName("Theme")
+			if (themeEl != null)
+			{
+				level.levelTheme = RoomTheme.load(themeEl)
 			}
 
 			return level

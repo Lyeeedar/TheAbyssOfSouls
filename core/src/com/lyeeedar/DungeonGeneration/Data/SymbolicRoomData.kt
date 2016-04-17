@@ -17,8 +17,8 @@ class SymbolicRoomData()
 	var spawnEquation: String = "1"
 
 	var contents: Array2D<Char?> = Array2D()
-	var width: String = "5"
-	var height: String = "5"
+	var width: String = "7"
+	var height: String = "7"
 
 	var x: Int = 0
 	var y: Int = 0

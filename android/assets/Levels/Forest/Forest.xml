@@ -50,10 +50,25 @@
                 </Symbol>
             </Symbols>
             <Rows>
-                <Row>s</Row>
+                <Row>...</Row>
+                <Row>.s.</Row>
+                <Row>...</Row>
             </Rows>
         </Start>
 
     </Rooms>
+
+    <Theme>
+        <Feature>
+            <Coverage>0.6</Coverage>
+            <Entity>
+                <Sprite>
+                    <Name>Oryx/uf_split/uf_terrain/ground_grass_3</Name>
+                </Sprite>
+            </Entity>
+            <Slot>Floor</Slot>
+            <Overwrite />
+        </Feature>
+    </Theme>
 
 </RecursiveDock>

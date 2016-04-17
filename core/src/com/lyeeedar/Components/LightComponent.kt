@@ -25,5 +25,5 @@ class LightComponent: Component
 	var x: Float = 0f
 	var y: Float = 0f
 
-	val cache: ShadowCastCache = ShadowCastCache(FOV.RIPPLE)
+	val cache: ShadowCastCache = ShadowCastCache(FOV.SHADOW)
 }

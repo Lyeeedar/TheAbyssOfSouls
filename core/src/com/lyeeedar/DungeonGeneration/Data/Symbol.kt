@@ -11,7 +11,7 @@ import java.util.*
  * Created by Philip on 08-Apr-16.
  */
 
-class Symbol(val char: Char): PathfindingTile
+class Symbol(var char: Char): PathfindingTile
 {
 	var extends: Char? = null
 

@@ -18,6 +18,14 @@ fun OrderedSet<String>.isAllies(other: OrderedSet<String>): Boolean
 }
 
 fun <T> com.badlogic.gdx.utils.Array<T>.ran(ran: Random): T = this[ran.nextInt(this.size)]
+fun <T> com.badlogic.gdx.utils.Array<T>.removeRan(ran: Random): T
+{
+	val index = ran.nextInt(this.size)
+	val item = this[index]
+	this.removeIndex(index)
+
+	return item
+}
 
 fun Float.abs() = Math.abs(this)
 

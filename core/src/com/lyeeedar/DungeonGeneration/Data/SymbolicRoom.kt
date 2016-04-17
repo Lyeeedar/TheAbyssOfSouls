@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.exp4j.Helpers.EquationHelper
 import com.lyeeedar.DungeonGeneration.RoomGenerators.AbstractRoomGenerator
 import com.lyeeedar.Enums
+import com.lyeeedar.Pathfinding.BresenhamLine
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.ran
@@ -125,6 +126,108 @@ class SymbolicRoom()
 	}
 
 	// ----------------------------------------------------------------------
+	fun carveDoors(levelData: SymbolicLevelData, ran: Random, floor: Symbol, digToCenter: Boolean)
+	{
+		val canAttachCorridorVertically = width >= levelData.corridor.width + 2
+		val canAttachCorridorHorizontally = height >= levelData.corridor.width + 2
+
+		// Place corridor connections
+		// Sides
+		//  1
+		// 0 2
+		//  3
+
+		val numDoors = ran.nextInt(1) + 1
+		for (i in 0..numDoors - 1)
+		{
+			var doorSide = 0
+
+			if (canAttachCorridorHorizontally && canAttachCorridorVertically)
+			{
+				doorSide = ran.nextInt(4)
+			} else if (canAttachCorridorHorizontally)
+			{
+				doorSide = if (ran.nextBoolean()) 0 else 2
+			} else if (canAttachCorridorVertically)
+			{
+				doorSide = if (ran.nextBoolean()) 1 else 3
+			}
+
+			var x = 0
+			var y = 0
+
+			if (doorSide == 0)
+			{
+				x = 0
+				y = 1 + ran.nextInt(height - (1 + levelData.corridor.width))
+
+				for (c in 0..levelData.corridor.width - 1)
+				{
+					contents[x, y + c] = floor.copy()
+				}
+			} else if (doorSide == 1)
+			{
+				x = 1 + ran.nextInt(width - (1 + levelData.corridor.width))
+				y = 0
+
+				for (c in 0..levelData.corridor.width - 1)
+				{
+					contents[x + c, y] = floor.copy()
+				}
+			} else if (doorSide == 2)
+			{
+				x = width - 1
+				y = 1 + ran.nextInt(height - (1 + levelData.corridor.width))
+
+				for (c in 0..levelData.corridor.width - 1)
+				{
+					contents[x, y + c] = floor.copy()
+				}
+			} else if (doorSide == 3)
+			{
+				x = 1 + ran.nextInt(width - (1 + levelData.corridor.width))
+				y = height - 1
+
+				for (c in 0..levelData.corridor.width - 1)
+				{
+					contents[x + c, y] = floor.copy()
+				}
+			}
+
+			val path = BresenhamLine.lineNoDiag(x, y, width / 2, height / 2)
+			for (pos in path)
+			{
+				var done = false
+				if (contents[pos].getPassable(Enums.SpaceSlot.ENTITY, null))
+				{
+					done = true
+				}
+
+				for (ix in 0..levelData.corridor.width - 1)
+				{
+					for (iy in 0..levelData.corridor.width - 1)
+					{
+						val nx = pos.x + ix
+						val ny = pos.y + iy
+
+						if (nx < width && ny < height)
+						{
+							contents[nx, ny] = floor.copy()
+						}
+					}
+				}
+
+				if (!digToCenter && done)
+				{
+					break
+				}
+			}
+
+			Point.freeAll(path)
+		}
+	}
+
+	// ----------------------------------------------------------------------
 	fun fill(ran: Random, data: SymbolicRoomData, levelData: SymbolicLevelData)
 	{
 		placement = data.placement
@@ -148,6 +251,20 @@ class SymbolicRoom()
 		{
 			// generate the room
 			data.generator?.process(contents, data.symbolMap, ran)
+
+			// Ensure solid outer wall
+			for (x in 0..w-1)
+			{
+				for (y in 0..h-1)
+				{
+					if ( x == 0 || x == width - 1 || y == 0 || y == height - 1 )
+					{
+						contents[x, y] = levelData.symbolMap['#']
+					}
+				}
+			}
+
+			carveDoors( levelData, ran, levelData.symbolMap['.'], !(data.generator?.ensuresConnectivity ?: false) );
 		}
 		else
 		{

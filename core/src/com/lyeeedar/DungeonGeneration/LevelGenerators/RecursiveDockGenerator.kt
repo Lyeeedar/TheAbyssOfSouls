@@ -67,6 +67,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			room.resolveSymbols(levelData.symbolMap)
 			actual.fill(ran, room, levelData)
 			actual.findDoors(ran);
+			levelData.levelTheme?.apply(actual, ran)
 
 			rooms.add(actual)
 		}
