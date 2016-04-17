@@ -92,6 +92,7 @@ public class Enums
 		private Direction anticlockwise;
 		private boolean isCardinal = false;
 		public static final Direction[] CardinalValues = {NORTH, EAST, SOUTH, WEST};
+		public static final Direction[] DiagonalValues = {NORTHEAST, NORTHWEST, SOUTHWEST, SOUTHWEST};
 		public static final Direction[] Values = Direction.values();
 
 		Direction( int x, int y, String identifier )

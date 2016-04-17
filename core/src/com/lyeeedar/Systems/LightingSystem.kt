@@ -51,22 +51,30 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 				y += offset[1] / GlobalData.Global.tileSize
 			}
 
-			val shadowCast = light.cache.currentShadowCast
-			for (point in shadowCast)
+			val rawGrid = light.cache.rawOutput
+			for (ix in 0..rawGrid.size-1)
 			{
-				val tile = level.getTile(point) ?: continue
-				val dst2 = point.euclideanDist2(x, y)
+				for (iy in 0..rawGrid[0].size-1)
+				{
+					val lightVal = rawGrid[ix][iy]
+					val gx = ix + light.cache.lastx - light.cache.lastrange
+					val gy = iy + light.cache.lasty - light.cache.lastrange
 
-				var alpha = 1f - dst2 / ( light.dist * light.dist )
-				if (alpha < 0) alpha = 0f
+					val tile = level.getTile(gx, gy) ?: continue
+					val dst2 = tile.euclideanDist2(gx.toFloat(), gy.toFloat())
 
-				temp.set(light.col)
-				temp *= alpha
-				temp *= temp.a
-				temp.a = 1f
+					var alpha = 1f - dst2 / ( light.dist * light.dist )
+					if (alpha < 0) alpha = 0f
 
-				tile.light += temp
-				tile.light.a = 1f
+					temp.set(light.col)
+					temp *= alpha
+					temp *= temp.a
+					temp *= lightVal.toFloat()
+					temp.a = 1f
+
+					tile.light += temp
+					tile.light.a = 1f
+				}
 			}
 		}
 	}

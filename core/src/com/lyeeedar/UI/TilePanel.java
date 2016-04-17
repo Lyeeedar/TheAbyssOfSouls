@@ -361,7 +361,7 @@ public abstract class TilePanel extends Widget
 			{
 				Tooltip.openTooltip.setVisible( false );
 				Tooltip.openTooltip.remove();
-				Tooltip.openTooltip.openTooltip.openTooltip = null;
+				Tooltip.openTooltip = null;
 				Tooltip.openTooltip = null;
 			}
 
@@ -420,7 +420,7 @@ public abstract class TilePanel extends Widget
 			{
 				Tooltip.openTooltip.setVisible( false );
 				Tooltip.openTooltip.remove();
-				Tooltip.openTooltip.openTooltip.openTooltip = null;
+				Tooltip.openTooltip = null;
 				Tooltip.openTooltip = null;
 			}
 		}

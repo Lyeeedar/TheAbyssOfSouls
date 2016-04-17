@@ -170,7 +170,7 @@ public class Starburst extends AbstractRoomGenerator
 		{
 			/* Ask for a reasonable number of arcs. */
 			arc_num = 8 + (height * width / 80);
-			arc_num = (arc_num - 3) + ran.nextInt(6);;
+			arc_num = (arc_num - 3) + ran.nextInt(6);
 			if (arc_num < 8) arc_num = 8;
 			if (arc_num > 45) arc_num = 45;
 		}

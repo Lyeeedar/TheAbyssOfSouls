@@ -9,6 +9,7 @@ import com.lyeeedar.GlobalData
 
 class QuestOutputSetFlag(): AbstractQuestOutput()
 {
+	var clear: Boolean = false
 	lateinit var key: String
 	lateinit var value: String
 
@@ -21,12 +22,24 @@ class QuestOutputSetFlag(): AbstractQuestOutput()
 
 	override fun evaluate()
 	{
-		GlobalData.Global.questManager.flags.put(key, value)
+		if (clear)
+		{
+			GlobalData.Global.questManager.flags.remove(key)
+		}
+		else
+		{
+			GlobalData.Global.questManager.flags.put(key, value)
+		}
 	}
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		if (xml.name != "SetFlag")
+		if (xml.name == "ClearFlag")
+		{
+			clear = true
+			key = xml.text.toLowerCase()
+		}
+		else if (xml.name != "SetFlag")
 		{
 			key = xml.name.substring(2).toLowerCase()
 			value = xml.text.toLowerCase()

@@ -140,7 +140,7 @@ public class Triangle extends ArraySet<Pnt> implements Comparable<Triangle> {
 
     @Override
     public int hashCode () {
-        return (int)(idNumber^(idNumber>>>32));
+        return idNumber ^ ( idNumber >>> 32);
     }
 
     @Override

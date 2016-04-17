@@ -5,19 +5,30 @@ import com.lyeeedar.Enums;
 import com.lyeeedar.Level.Tile;
 import com.lyeeedar.Util.EnumBitflag;
 import com.lyeeedar.Util.Point;
+import squidpony.squidgrid.FOV;
+import squidpony.squidgrid.Radius;
 
 public final class ShadowCastCache
 {
-	private final Enums.SpaceSlot LightPassability;
-
 	public ShadowCastCache( Enums.SpaceSlot LightPassability )
 	{
-		this.LightPassability = LightPassability;
+		this(LightPassability, FOV.SHADOW);
 	}
 
 	public ShadowCastCache()
 	{
-		LightPassability = Enums.SpaceSlot.WALL;
+		this( Enums.SpaceSlot.WALL );
+	}
+
+	public ShadowCastCache(int fovType)
+	{
+		this( Enums.SpaceSlot.WALL, fovType );
+	}
+
+	public ShadowCastCache(Enums.SpaceSlot LightPassability, int fovType)
+	{
+		this.LightPassability = LightPassability;
+		fov = new FOV( fovType );
 	}
 
 	public ShadowCastCache copy()
@@ -40,12 +51,22 @@ public final class ShadowCastCache
 		return cache;
 	}
 
+	private final FOV fov;
+	private final Enums.SpaceSlot LightPassability;
+
 	private int lastrange;
 	private int lastx;
 	private int lasty;
 	private Array<Point> opaqueTiles = new Array<Point>();
 	private Array<Point> clearTiles = new Array<Point>();
 	private Array<Point> shadowCastOutput = new Array<Point>();
+	private double[][] rawOutput;
+
+	public int getLastx() { return lastx; }
+	public int getLasty() { return lasty; }
+	public int getLastrange() { return lastrange; }
+
+	public double[][] getRawOutput() { return rawOutput; }
 
 	public Array<Point> getCurrentShadowCast()
 	{
@@ -100,9 +121,41 @@ public final class ShadowCastCache
 			Point.pool.freeAll( shadowCastOutput );
 			shadowCastOutput.clear();
 
-			ShadowCaster shadow = new ShadowCaster( grid, range );
-			shadow.allowOutOfBounds = allowOutOfBounds;
-			shadow.ComputeFOV( x, y, shadowCastOutput );
+			// build grid
+			double[][] resistanceGrid = new double[range*2][range*2];
+			for (int ix = 0; ix < range*2; ix++)
+			{
+				for (int iy = 0; iy < range*2; iy++)
+				{
+					int gx = ix + x - range;
+					int gy = iy + y - range;
+
+					if (gx >= 0 && gx < grid.length && gy >= 0 && gy < grid[0].length)
+					{
+						resistanceGrid[ix][iy] = grid[gx][gy].getPassable( LightPassability, caster ) ? 0 : 1;
+					}
+					else
+					{
+						resistanceGrid[ix][iy] = 1;
+					}
+				}
+			}
+
+			rawOutput = fov.calculateFOV( resistanceGrid, range, range, range, Radius.SQUARE );
+
+			for (int ix = 0; ix < range*2; ix++)
+			{
+				for ( int iy = 0; iy < range * 2; iy++ )
+				{
+					int gx = ix + x - range;
+					int gy = iy + y - range;
+
+					if (rawOutput[ix][iy] > 0 && gx >= 0 && gx < grid.length && gy >= 0 && gy < grid[0].length)
+					{
+						shadowCastOutput.add( Point.obtain().set( gx, gy ) );
+					}
+				}
+			}
 
 			// build list of clear/opaque
 			opaqueTiles.clear();

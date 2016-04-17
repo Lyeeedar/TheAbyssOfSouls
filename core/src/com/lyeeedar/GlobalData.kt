@@ -38,7 +38,7 @@ class GlobalData
 
 	@JvmField var currentLevel: Level = Level()
 	lateinit var engine: Engine
-	@JvmField var questManager: QuestManager = QuestManager()
+	lateinit var questManager: QuestManager
 
 	@JvmField val controls: Controls = Controls()
 	lateinit var skin: Skin
@@ -61,6 +61,7 @@ class GlobalData
 	{
 		skin = loadSkin()
 		engine = createEngine()
+		questManager = QuestManager()
 	}
 
 	fun loadSkin(): Skin

@@ -29,7 +29,7 @@ abstract class AbstractQuestOutput()
 		fun getClass(name: String): Class<out AbstractQuestOutput>
 		{
 			val type = when(name) {
-			 "SETFLAG" -> QuestOutputSetFlag::class.java
+			 "SETFLAG", "CLEARFLAG" -> QuestOutputSetFlag::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid quest output type: $name")

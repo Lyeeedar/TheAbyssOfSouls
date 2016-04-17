@@ -71,6 +71,7 @@ public class LwjglApplicationChanger extends AbstractApplicationChanger
 		if (!GlobalData.Global.release)
 		{
 			new AtlasCreator();
+			new QuestProcessor();
 		}
 	}
 
