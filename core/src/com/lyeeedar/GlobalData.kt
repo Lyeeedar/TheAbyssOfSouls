@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.lyeeedar.Level.Level
+import com.lyeeedar.Quests.QuestManager
 import com.lyeeedar.Systems.createEngine
 import com.lyeeedar.UI.Seperator
 import com.lyeeedar.UI.TabPanel
@@ -37,6 +38,7 @@ class GlobalData
 
 	@JvmField var currentLevel: Level = Level()
 	lateinit var engine: Engine
+	@JvmField var questManager: QuestManager = QuestManager()
 
 	@JvmField val controls: Controls = Controls()
 	lateinit var skin: Skin

@@ -14,6 +14,18 @@ import com.lyeeedar.Util.Point;
 public class Enums
 {
 	// ----------------------------------------------------------------------
+	public enum Rarity
+	{
+		COMMON,
+		UNCOMMON,
+		RARE,
+		MYSTICAL,
+		LEGENDARY;
+
+		public static final Rarity[] Values = Rarity.values();
+	}
+
+	// ----------------------------------------------------------------------
 	public enum EquipmentSlot
 	{
 		WEAPON,

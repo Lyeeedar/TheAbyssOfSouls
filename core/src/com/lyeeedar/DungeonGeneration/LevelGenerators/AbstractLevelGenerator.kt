@@ -118,6 +118,8 @@ abstract class AbstractLevelGenerator()
 			val c = getClass(uname)
 			val instance = ClassReflection.getConstructor(c).newInstance() as AbstractLevelGenerator
 
+			instance.parse(xml)
+
 			instance.levelData = SymbolicLevelData.load(xml)
 			instance.ran = Random(0)
 

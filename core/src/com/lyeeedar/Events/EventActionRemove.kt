@@ -19,7 +19,7 @@ class EventActionRemove(group: EventActionGroup): NameRestrictedEventAction(grou
 		}
 		else
 		{
-			GlobalData.Global.engine?.removeEntity(entity)
+			GlobalData.Global.engine.removeEntity(entity)
 		}
 	}
 

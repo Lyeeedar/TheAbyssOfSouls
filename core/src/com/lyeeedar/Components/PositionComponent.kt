@@ -33,7 +33,7 @@ class PositionComponent: Component
 	fun hasEffects(direction: Enums.Direction): Boolean
 	{
 		val etile = position as Tile? ?: return false
-		val tile = etile.level.getTile(etile, direction) ?: return false
+		etile.level.getTile(etile, direction) ?: return false
 
 		return hasEffects(position)
 	}

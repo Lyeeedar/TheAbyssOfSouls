@@ -25,6 +25,8 @@ abstract class AbstractRoomGenerator(val ensuresConnectivity: Boolean)
 			val c = getClass(uname)
 			val instance = ClassReflection.getConstructor(c).newInstance() as AbstractRoomGenerator
 
+			instance.parse(xml)
+
 			return instance
 		}
 

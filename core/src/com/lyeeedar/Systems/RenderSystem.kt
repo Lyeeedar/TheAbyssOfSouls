@@ -51,17 +51,11 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 	override fun update(deltaTime: Float)
 	{
-		if (GlobalData.Global.currentLevel == null)
-		{
-			return;
-		}
+		RenderSprite.setBlockSize(GlobalData.Global.currentLevel.width.toFloat(), GlobalData.Global.currentLevel.height.toFloat())
 
-		RenderSprite.setBlockSize(GlobalData.Global.currentLevel?.width?.toFloat() ?: 0f, GlobalData.Global.currentLevel?.height?.toFloat() ?: 0f)
-
-		val player = GlobalData.Global.currentLevel?.player
+		val player = GlobalData.Global.currentLevel.player
 		val playerPos = Mappers.position.get(player);
 		val playerSprite = Mappers.sprite.get(player);
-		val playerTile = player?.tile() ?: return
 
 		var offsetx = GlobalData.Global.resolution[ 0 ] / 2 - playerPos.position.x * GlobalData.Global.tileSize - GlobalData.Global.tileSize / 2;
 		var offsety = GlobalData.Global.resolution[ 1 ] / 2 - playerPos.position.y * GlobalData.Global.tileSize - GlobalData.Global.tileSize / 2;
@@ -125,7 +119,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 			if (tilingSprite != null)
 			{
-				GlobalData.Global.currentLevel?.buildTilingBitflag(directionBitflag, pos.position.x, pos.position.y, tilingSprite.sprite.checkID);
+				GlobalData.Global.currentLevel.buildTilingBitflag(directionBitflag, pos.position.x, pos.position.y, tilingSprite.sprite.checkID);
 				val spriteData = tilingSprite.sprite.getSprite( directionBitflag );
 
 				spriteData.size[0] = pos.size

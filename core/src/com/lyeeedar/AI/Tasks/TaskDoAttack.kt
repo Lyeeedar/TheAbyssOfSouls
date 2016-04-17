@@ -93,7 +93,7 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTileOffset:
 			}
 			effectEntity.add(event)
 
-			GlobalData.Global.engine?.addEntity(effectEntity)
+			GlobalData.Global.engine.addEntity(effectEntity)
 
 			for (x in min.x..max.x)
 			{

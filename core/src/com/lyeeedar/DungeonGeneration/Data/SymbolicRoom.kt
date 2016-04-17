@@ -52,15 +52,15 @@ class SymbolicRoom()
 	}
 
 	// ----------------------------------------------------------------------
-	private fun processSide(dir: Enums.Direction, ran: Random, symbolMap: ObjectMap<Char, Symbol>)
+	private fun processSide(dir: Enums.Direction, ran: Random)
 	{
 		val range = if (dir === Enums.Direction.WEST || dir === Enums.Direction.EAST) height else width
 
 		var blockStart = -1
 		for (pos in 1..range - 1 - 1)
 		{
-			var x = 0
-			var y = 0
+			var x: Int
+			var y: Int
 
 			if (dir === Enums.Direction.WEST)
 			{
@@ -104,7 +104,7 @@ class SymbolicRoom()
 	}
 
 	// ----------------------------------------------------------------------
-	fun findDoors(ran: Random, symbolMap: ObjectMap<Char, Symbol>)
+	fun findDoors(ran: Random)
 	{
 		// Sides
 		//  1
@@ -112,16 +112,16 @@ class SymbolicRoom()
 		//  3
 
 		// Side 0
-		processSide(Enums.Direction.WEST, ran, symbolMap)
+		processSide(Enums.Direction.WEST, ran)
 
 		// Side 2
-		processSide(Enums.Direction.EAST, ran, symbolMap)
+		processSide(Enums.Direction.EAST, ran)
 
 		// Side 1
-		processSide(Enums.Direction.NORTH, ran, symbolMap)
+		processSide(Enums.Direction.NORTH, ran)
 
 		// Side 3
-		processSide(Enums.Direction.SOUTH, ran, symbolMap)
+		processSide(Enums.Direction.SOUTH, ran)
 	}
 
 	// ----------------------------------------------------------------------

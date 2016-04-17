@@ -58,7 +58,7 @@ class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Fa
 			damEntity.add(PositionComponent(entity.tile()!!))
 			entity.tile()?.effects?.add(damEntity)
 
-			GlobalData.Global.engine?.addEntity(damEntity)
+			GlobalData.Global.engine.addEntity(damEntity)
 		}
 	}
 

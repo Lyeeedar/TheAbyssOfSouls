@@ -27,7 +27,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 		{
 			if (field != null)
 			{
-				GlobalData.Global.engine?.removeEntity(field)
+				GlobalData.Global.engine.removeEntity(field)
 			}
 
 			field = value
@@ -180,11 +180,11 @@ class ActionTelegraphedAttack(): AbstractAction()
 
 			combo@ for (combo in atkData.combos)
 			{
-				for (tile in srcTiles)
+				for (srctile in srcTiles)
 				{
-					if (isValidAttack(atkData.attacks.get(combo.steps[0].attack), dir, tile, entity))
+					if (isValidAttack(atkData.attacks.get(combo.steps[0].attack), dir, srctile, entity))
 					{
-						valid.add(ValidData(combo, dir, tile))
+						valid.add(ValidData(combo, dir, srctile))
 						continue@combo
 					}
 				}

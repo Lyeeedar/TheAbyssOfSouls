@@ -35,7 +35,7 @@ class TaskPrepareAttack(val minOffset: Point, val maxOffset: Point, val entity: 
 			entity.sprite().sprite.fixPosition = true
 		}
 
-		GlobalData.Global.engine?.addEntity(entity)
+		GlobalData.Global.engine.addEntity(entity)
 
 		minOffset.free()
 		maxOffset.free()

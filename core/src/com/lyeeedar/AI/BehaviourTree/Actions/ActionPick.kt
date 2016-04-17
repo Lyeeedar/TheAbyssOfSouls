@@ -60,7 +60,7 @@ class ActionPick(): AbstractAction()
 				{
 					for (e in obj)
 					{
-						if (e === GlobalData.Global.currentLevel?.player)
+						if (e === GlobalData.Global.currentLevel.player)
 						{
 							parent.setData(output, e);
 							state = ExecutionState.COMPLETED;

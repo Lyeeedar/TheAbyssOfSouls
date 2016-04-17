@@ -37,7 +37,7 @@ class EventActionEffect(group: EventActionGroup): AbstractEventAction(group)
 		event.parse(fireData)
 		entity.add(event)
 
-		GlobalData.Global.engine?.addEntity(entity)
+		GlobalData.Global.engine.addEntity(entity)
 	}
 
 	override fun parse(xml: XmlReader.Element)

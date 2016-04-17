@@ -43,6 +43,6 @@ class TaskAttack(var direction: Enums.Direction): AbstractTask(EventComponent.Ev
 		effect.add(pos)
 		next.effects.add(effect)
 
-		GlobalData.Global.engine?.addEntity(effect)
+		GlobalData.Global.engine.addEntity(effect)
 	}
 }

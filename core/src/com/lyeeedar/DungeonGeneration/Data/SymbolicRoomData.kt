@@ -91,7 +91,7 @@ class SymbolicRoomData()
 
 	companion object
 	{
-		fun load(xml: XmlReader.Element): SymbolicRoomData
+		@JvmStatic fun load(xml: XmlReader.Element): SymbolicRoomData
 		{
 			val room = SymbolicRoomData()
 

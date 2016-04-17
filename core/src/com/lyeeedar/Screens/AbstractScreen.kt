@@ -45,7 +45,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
         camera.setToOrtho(false, GlobalData.Global.resolution[0], GlobalData.Global.resolution[1]);
         camera.update();
 
-		GlobalData.Global.engine?.render()?.batchHDRColour?.projectionMatrix = camera.combined
+		GlobalData.Global.engine.render()?.batchHDRColour?.projectionMatrix = camera.combined
         stage.viewport.camera = camera;
         stage.viewport.worldWidth = GlobalData.Global.resolution[0];
         stage.viewport.worldHeight = GlobalData.Global.resolution[1];
@@ -75,7 +75,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
         camera.setToOrtho(false, GlobalData.Global.resolution[0], GlobalData.Global.resolution[1]);
         camera.update();
 
-		GlobalData.Global.engine?.render()?.batchHDRColour?.projectionMatrix = camera.combined
+		GlobalData.Global.engine.render()?.batchHDRColour?.projectionMatrix = camera.combined
         stage.viewport.camera = camera;
         stage.viewport.worldWidth = GlobalData.Global.resolution[0];
         stage.viewport.worldHeight = GlobalData.Global.resolution[1];
