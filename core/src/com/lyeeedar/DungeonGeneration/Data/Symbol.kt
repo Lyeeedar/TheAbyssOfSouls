@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Enums
 import com.lyeeedar.Pathfinding.PathfindingTile
+import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.neaten
 import java.util.*
 
@@ -15,7 +16,7 @@ class Symbol(var char: Char): PathfindingTile
 {
 	var extends: Char? = null
 
-	val contents: EnumMap<Enums.SpaceSlot, XmlReader.Element> = EnumMap<Enums.SpaceSlot, XmlReader.Element>(Enums.SpaceSlot::class.java)
+	val contents: FastEnumMap<Enums.SpaceSlot, XmlReader.Element> = FastEnumMap<Enums.SpaceSlot, XmlReader.Element>(Enums.SpaceSlot::class.java)
 
 	var passable: Boolean = true
 	var influence: Int = 0
@@ -72,6 +73,6 @@ class Symbol(var char: Char): PathfindingTile
 		return symbol
 	}
 
-	override fun getPassable(travelType: Enums.SpaceSlot, self: Any?): Boolean = passable || contents.containsKey(Enums.SpaceSlot.WALL)
+	override fun getPassable(travelType: Enums.SpaceSlot, self: Any?): Boolean = passable
 	override fun getInfluence(travelType: Enums.SpaceSlot, self: Any?): Int = influence
 }

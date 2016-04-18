@@ -6,7 +6,15 @@
 
     <Corridor>
         <Style>Wandering</Style>
-        <Width>2</Width>
+        <Width>1</Width>
+        <CentralConstant>
+            <Entity>
+                <Sprite>
+                    <Name>Oryx/uf_split/uf_terrain/ground_dirt_brown_1</Name>
+                </Sprite>
+            </Entity>
+            <Slot>Floor</Slot>
+        </CentralConstant>
     </Corridor>
 
     <Generators>
@@ -60,6 +68,7 @@
 
     <Theme>
         <Feature>
+            <Placement>Hidden</Placement>
             <Coverage>0.6</Coverage>
             <Entity>
                 <Sprite>

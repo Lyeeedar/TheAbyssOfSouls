@@ -17,6 +17,8 @@ class SymbolicCorridorData()
 	lateinit var style: Style
 	var width: Int = 1
 
+	var centralConstant: SymbolicFeature? = null
+
 	companion object
 	{
 		fun load(xml: XmlReader.Element): SymbolicCorridorData
@@ -25,6 +27,12 @@ class SymbolicCorridorData()
 
 			corridor.style = Style.valueOf(xml.get("Style", "normal").toUpperCase())
 			corridor.width = xml.getInt("Width", 1)
+
+			val ccEl = xml.getChildByName("CentralConstant")
+			if (ccEl != null)
+			{
+				corridor.centralConstant = SymbolicFeature.load(ccEl)
+			}
 
 			return corridor
 		}

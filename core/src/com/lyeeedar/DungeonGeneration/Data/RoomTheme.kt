@@ -87,14 +87,18 @@ class RoomTheme()
 				// a valid start, shadow cast to see if we can spot a door
 
 				val sightMap = fov.calculateFOV(resistanceMap, valid.x, valid.y)
+
+				var canSee = false
 				for (door in room.doors)
 				{
 					if (sightMap[door.x][door.y] > 0)
 					{
-						output.add(valid)
+						canSee = true
 						break
 					}
 				}
+
+				if (!canSee) output.add(valid)
 			}
 		}
 
@@ -219,7 +223,7 @@ class RoomTheme()
 				if (valid.size > 0)
 				{
 					var count = if (feature.useCount) feature.count else (valid.size.toFloat() * feature.coverage).toInt()
-					while (count > 0)
+					while (count > 0 && valid.size > 0)
 					{
 						val pos = valid.removeRan(ran)
 						room.contents[pos].contents[feature.slot] = feature.entity

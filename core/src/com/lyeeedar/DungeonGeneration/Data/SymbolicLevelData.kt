@@ -22,7 +22,11 @@ class SymbolicLevelData()
 		{
 			val level = SymbolicLevelData()
 
-			level.preprocessor = xml.getChildByName("Preprocessor").getChild(0)
+			val preEl = xml.getChildByName("Preprocessor")
+			if (preEl != null)
+			{
+				level.preprocessor = preEl.getChild(0)
+			}
 
 			val symbols = xml.getChildByName("Symbols")
 			if (symbols != null)

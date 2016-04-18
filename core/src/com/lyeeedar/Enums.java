@@ -272,6 +272,8 @@ public class Enums
 		AIR;
 
 		public static final SpaceSlot[] Values = SpaceSlot.values();
+		public static final SpaceSlot[] BasicValues = { FLOOR, WALL };
+		public static final SpaceSlot[] InterestingValues = {ENTITY, AIR};
 	}
 
 	// ----------------------------------------------------------------------

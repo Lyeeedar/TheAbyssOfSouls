@@ -34,19 +34,19 @@ class SymbolicRoom()
 	{
 		val offset = if (space > 1) ran.nextInt(space - 1) else 0
 
-		if (dir === Enums.Direction.WEST)
+		if (dir == Enums.Direction.WEST)
 		{
 			doors.add(RoomDoor(0, pos + offset, dir))
 		}
-		else if (dir === Enums.Direction.EAST)
+		else if (dir == Enums.Direction.EAST)
 		{
 			doors.add(RoomDoor(width - 1, pos + offset, dir))
 		}
-		else if (dir === Enums.Direction.NORTH)
+		else if (dir == Enums.Direction.NORTH)
 		{
 			doors.add(RoomDoor(pos + offset, 0, dir))
 		}
-		else if (dir === Enums.Direction.SOUTH)
+		else if (dir == Enums.Direction.SOUTH)
 		{
 			doors.add(RoomDoor(pos + offset, height - 1, dir))
 		}
@@ -55,27 +55,30 @@ class SymbolicRoom()
 	// ----------------------------------------------------------------------
 	private fun processSide(dir: Enums.Direction, ran: Random)
 	{
-		val range = if (dir === Enums.Direction.WEST || dir === Enums.Direction.EAST) height else width
+		val range = if (dir == Enums.Direction.WEST || dir == Enums.Direction.EAST) height else width
 
 		var blockStart = -1
-		for (pos in 1..range - 1 - 1)
+		for (pos in 1..range - 2)
 		{
 			var x: Int
 			var y: Int
 
-			if (dir === Enums.Direction.WEST)
+			if (dir == Enums.Direction.WEST)
 			{
 				x = 0
 				y = pos
-			} else if (dir === Enums.Direction.EAST)
+			}
+			else if (dir == Enums.Direction.EAST)
 			{
 				x = width - 1
 				y = pos
-			} else if (dir === Enums.Direction.NORTH)
+			}
+			else if (dir == Enums.Direction.NORTH)
 			{
 				x = pos
 				y = 0
-			} else
+			}
+			else
 			{
 				x = pos
 				y = height - 1
@@ -83,14 +86,15 @@ class SymbolicRoom()
 
 			if (blockStart >= 0)
 			{
-				if (!contents[x, y].getPassable(Enums.SpaceSlot.ENTITY, null))
+				if (contents[x, y].contents.containsKey(Enums.SpaceSlot.WALL))
 				{
 					addDoor(blockStart, pos - blockStart, dir, ran)
 					blockStart = -1
 				}
-			} else
+			}
+			else
 			{
-				if (contents[x,y].getPassable(Enums.SpaceSlot.ENTITY, null))
+				if (!contents[x, y].contents.containsKey(Enums.SpaceSlot.WALL))
 				{
 					blockStart = pos
 				}
@@ -165,7 +169,8 @@ class SymbolicRoom()
 				{
 					contents[x, y + c] = floor.copy()
 				}
-			} else if (doorSide == 1)
+			}
+			else if (doorSide == 1)
 			{
 				x = 1 + ran.nextInt(width - (1 + levelData.corridor.width))
 				y = 0
@@ -174,7 +179,8 @@ class SymbolicRoom()
 				{
 					contents[x + c, y] = floor.copy()
 				}
-			} else if (doorSide == 2)
+			}
+			else if (doorSide == 2)
 			{
 				x = width - 1
 				y = 1 + ran.nextInt(height - (1 + levelData.corridor.width))
@@ -183,7 +189,8 @@ class SymbolicRoom()
 				{
 					contents[x, y + c] = floor.copy()
 				}
-			} else if (doorSide == 3)
+			}
+			else if (doorSide == 3)
 			{
 				x = 1 + ran.nextInt(width - (1 + levelData.corridor.width))
 				y = height - 1

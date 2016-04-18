@@ -6,84 +6,84 @@ filter: MipMapLinearLinear,MipMapLinearLinear
 repeat: none
 EffectSprites/Claw/Claw_1
   rotate: false
-  xy: 410, 42
+  xy: 482, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Claw/Claw_2
   rotate: false
-  xy: 446, 42
+  xy: 518, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Claw/Claw_3
   rotate: false
-  xy: 482, 42
+  xy: 554, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_1
   rotate: false
-  xy: 262, 10
+  xy: 670, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_2
   rotate: false
-  xy: 670, 78
+  xy: 314, 10
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_3
   rotate: false
-  xy: 314, 10
+  xy: 722, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_4
   rotate: false
-  xy: 722, 78
+  xy: 774, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Slash/Slash_0
   rotate: false
-  xy: 518, 42
+  xy: 590, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Slash/Slash_1
   rotate: false
-  xy: 554, 42
+  xy: 626, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Slash/Slash_2
   rotate: false
-  xy: 590, 42
+  xy: 662, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Slash/Slash_3
   rotate: false
-  xy: 626, 42
+  xy: 698, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Slash/Slash_4
   rotate: false
-  xy: 662, 42
+  xy: 734, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -97,70 +97,70 @@ EffectSprites/Thrust/Thrust_0
   index: -1
 EffectSprites/Thrust/Thrust_1
   rotate: false
-  xy: 878, 94
+  xy: 930, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Thrust/Thrust_2
   rotate: false
-  xy: 914, 94
+  xy: 966, 94
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Thrust/Thrust_3
   rotate: false
-  xy: 950, 94
+  xy: 410, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Thrust/Thrust_4
   rotate: false
-  xy: 986, 94
+  xy: 446, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Button
   rotate: false
-  xy: 698, 42
+  xy: 770, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ButtonBorder
   rotate: false
-  xy: 734, 42
+  xy: 806, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ButtonDown
   rotate: false
-  xy: 770, 42
+  xy: 842, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Checked
   rotate: false
-  xy: 806, 42
+  xy: 878, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Cog
   rotate: false
-  xy: 842, 42
+  xy: 930, 58
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Eye
   rotate: false
-  xy: 878, 58
+  xy: 966, 58
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -181,21 +181,21 @@ GUI/PanelVertical
   index: -1
 GUI/PassiveTileBorder
   rotate: false
-  xy: 986, 58
+  xy: 474, 6
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 474, 14
+  xy: 726, 14
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/QuestionMark
   rotate: false
-  xy: 878, 22
+  xy: 510, 6
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -209,14 +209,14 @@ GUI/SeperatorHorizontal
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 502, 6
+  xy: 1002, 94
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
   index: -1
 GUI/Sheathed
   rotate: false
-  xy: 914, 22
+  xy: 546, 6
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -230,14 +230,14 @@ GUI/SpeechBubble
   index: -1
 GUI/SpeechBubbleArrow
   rotate: false
-  xy: 474, 2
+  xy: 726, 2
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 GUI/TextField
   rotate: false
-  xy: 950, 22
+  xy: 582, 6
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -258,7 +258,7 @@ GUI/TileBorder
   index: -1
 GUI/TilePanel
   rotate: false
-  xy: 986, 22
+  xy: 618, 6
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -272,49 +272,49 @@ GUI/Tooltip
   index: -1
 GUI/Unchecked
   rotate: false
-  xy: 402, 6
+  xy: 654, 6
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Unsheathed
   rotate: false
-  xy: 438, 6
+  xy: 690, 6
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/background
   rotate: false
-  xy: 774, 78
+  xy: 826, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 914, 58
+  xy: 402, 6
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 950, 58
+  xy: 438, 6
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/loading
   rotate: false
-  xy: 826, 78
+  xy: 878, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/terrain/tree1
   rotate: false
-  xy: 566, 78
+  xy: 210, 10
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -347,23 +347,30 @@ Oryx/uf_split/uf_heroes/zombie_a_3
   orig: 48, 48
   offset: 0, 0
   index: -1
-Oryx/uf_split/uf_terrain/ground_grass_1
+Oryx/uf_split/uf_terrain/ground_dirt_brown_1
   rotate: false
   xy: 158, 10
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_terrain/ground_grass_1
+  rotate: false
+  xy: 566, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 grass
   rotate: false
-  xy: 158, 10
+  xy: 566, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/ground_grass_3
   rotate: false
-  xy: 210, 10
+  xy: 618, 78
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -398,7 +405,7 @@ player_3
   index: -1
 wall
   rotate: false
-  xy: 618, 78
+  xy: 262, 10
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

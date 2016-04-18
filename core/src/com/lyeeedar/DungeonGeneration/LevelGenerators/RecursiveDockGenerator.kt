@@ -72,16 +72,16 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			rooms.add(actual)
 		}
 
-		markRooms()
+		markRooms(false)
 		connectRooms()
 		//placeFactions()
-		markRooms()
+		markRooms(true)
 
 		printGrid()
 	}
 
 	// ----------------------------------------------------------------------
-	fun markRooms()
+	fun markRooms(interestingOnly: Boolean)
 	{
 		for ( room in rooms )
 		{
@@ -89,7 +89,23 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			{
 				for (y in 0..room.height-1)
 				{
-					contents[x+room.x, y+room.y] = room.contents[x, y].copy()
+					if (interestingOnly)
+					{
+						for (slot in Enums.SpaceSlot.InterestingValues)
+						{
+							val entity = room.contents[x, y].contents[slot]
+							if (entity != null) contents[x+room.x, y+room.y].contents[slot] = entity
+						}
+					}
+					else
+					{
+						contents[x+room.x, y+room.y] = room.contents[x, y].copy()
+					}
+
+					if (contents[x+room.x, y+room.y].contents.containsKey(Enums.SpaceSlot.WALL))
+					{
+						contents[x+room.x, y+room.y].passable = false;
+					}
 				}
 			}
 		}
@@ -142,6 +158,8 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 					SymbolicCorridorData.Style.WANDERING -> ran.nextInt( ( width + height ) / 2 ) + ( width + height ) / 2
 					else -> width + height
 				}
+
+				if (!contents[x, y].contents.containsKey(Enums.SpaceSlot.WALL)) contents[x, y].influence = 0
 			}
 		}
 	}
@@ -313,12 +331,12 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 				// If it fits then place the room and rotate/flip as neccesary
 				if (fits)
 				{
-					room = testRoom
+					room = testRoom.copy()
 					toBePlacedRooms.removeIndex(index)
 
-					room.flipVert = flipVert
-					room.flipHori = flipHori
-					room.rotate = rotate
+					if (flipVert) room.flipVert()
+					if (flipHori) room.flipHori()
+					if (rotate) room.rotate()
 				}
 			}
 		}
@@ -505,6 +523,8 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 				{
 					val p = Pnt(x.toDouble(), y.toDouble())
 					roomPnts.add(p)
+
+					contents[x, y].char = '+'
 				}
 			}
 		}
@@ -587,17 +607,25 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			{
 				for (y in 0..width - 1)
 				{
-					val t = contents[pos.x + x, pos.y + y]
+					var t = contents[pos.x + x, pos.y + y]
 
 					if (t.char == '#')
 					{
-						contents[pos.x + x, pos.y + y] = levelData.symbolMap['.']
+						contents[pos.x + x, pos.y + y] = levelData.symbolMap['.'].copy()
+						t = contents[pos.x + x, pos.y + y]
 						t.resolve(levelData.symbolMap)
 					}
 
 					t.passable = true
 					t.influence = 0
 				}
+			}
+
+			if (levelData.corridor.centralConstant != null)
+			{
+				val t = contents[pos.x + levelData.corridor.width/2, pos.y + levelData.corridor.width/2]
+				t.contents[levelData.corridor.centralConstant?.slot] = levelData.corridor.centralConstant?.entity
+				//if (t.char == '.') t.char = 'P'
 			}
 		}
 	}

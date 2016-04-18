@@ -16,27 +16,22 @@ class SymbolicRoomData()
 {
 	var spawnEquation: String = "1"
 
-	var contents: Array2D<Char?> = Array2D()
-	var width: String = "7"
-	var height: String = "7"
+	var contents: Array2D<Char> = Array2D()
+	var width: String = "11"
+	var height: String = "11"
 
 	var x: Int = 0
 	var y: Int = 0
 
 	var lockRotation: Boolean = false
-	var rotate: Boolean = false
-	var flipVert: Boolean = false
-	var flipHori: Boolean = false
 
 	lateinit var ran: Random
 
-	val widthVal: Int by lazy {
-		Math.max(EquationHelper.evaluate(width, ran), 1f).toInt()
-	}
+	val widthVal: Int
+		get() = Math.max(EquationHelper.evaluate(width, ran), 1f).toInt()
 
-	val heightVal: Int by lazy {
-		Math.max(EquationHelper.evaluate(height, ran), 1f).toInt()
-	}
+	val heightVal: Int
+		get() = Math.max(EquationHelper.evaluate(height, ran), 1f).toInt()
 
 	val symbolMap: ObjectMap<Char, Symbol> = ObjectMap()
 
@@ -59,6 +54,63 @@ class SymbolicRoomData()
 		}
 	}
 
+	// ----------------------------------------------------------------------
+	fun rotate()
+	{
+		if (contents.xSize > 0)
+		{
+			val newContents = Array2D<Char>(heightVal, widthVal) { x, y -> contents[0, 0] };
+
+			for (x in 0..widthVal - 1)
+			{
+				for (y in 0..heightVal - 1)
+				{
+					newContents[y, x] = contents[x, y];
+				}
+			}
+
+			contents = newContents;
+		}
+
+		val temp = height;
+		height = width;
+		width = temp;
+	}
+
+	// ----------------------------------------------------------------------
+	fun flipVert()
+	{
+		if (contents.xSize > 0)
+		{
+			for (x in 0..widthVal - 1)
+			{
+				for (y in 0..heightVal / 2 - 1)
+				{
+					val temp = contents[x, y];
+					contents[x, y] = contents[x, heightVal - y - 1];
+					contents[x, heightVal - y - 1] = temp;
+				}
+			}
+		}
+	}
+
+	// ----------------------------------------------------------------------
+	fun flipHori()
+	{
+		if (contents.xSize > 0)
+		{
+			for (x in 0..widthVal / 2 - 1)
+			{
+				for (y in 0..heightVal - 1)
+				{
+					val temp = contents[x, y];
+					contents[x, y] = contents[widthVal - x - 1, y];
+					contents[widthVal - x - 1, y] = temp;
+				}
+			}
+		}
+	}
+
 	fun copy() : SymbolicRoomData
 	{
 		val room = SymbolicRoomData()
@@ -68,9 +120,6 @@ class SymbolicRoomData()
 		room.width = width
 		room.height = height
 		room.lockRotation = lockRotation
-		room.rotate = rotate
-		room.flipVert = flipVert
-		room.flipHori = flipHori
 		room.x = x
 		room.y = y
 		room.ran = ran
@@ -119,7 +168,7 @@ class SymbolicRoomData()
 				room.width = width.toString()
 				room.height = height.toString()
 
-				room.contents = Array2D<Char>(width, height)
+				room.contents = Array2D<Char>(width, height) { x, y -> '#' }
 
 				for (y in 0..height-1)
 				{

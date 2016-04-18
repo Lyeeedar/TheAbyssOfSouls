@@ -1,5 +1,7 @@
 package com.lyeeedar.Util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Iterator;
 
 public final class FastEnumMap<T extends Enum<T>, V> implements Iterable<V>
@@ -28,6 +30,13 @@ public final class FastEnumMap<T extends Enum<T>, V> implements Iterable<V>
 	}
 
 	public void put( T key, V value )
+	{
+		items[ key.ordinal() ] = value;
+
+		calculateSize();
+	}
+
+	public void set( T key, V value )
 	{
 		items[ key.ordinal() ] = value;
 
