@@ -43,6 +43,23 @@ class Level()
 		get() = grid.ySize
 
 	// ----------------------------------------------------------------------
+	val rooms: com.badlogic.gdx.utils.Array<Room> = com.badlogic.gdx.utils.Array()
+
+	// ----------------------------------------------------------------------
+	fun getRoom(point: Point) = getRoom(point.x, point.y)
+	fun getRoom(x: Int, y: Int): Room?
+	{
+		for (room in rooms)
+		{
+			if (room.x <= x && room.x+room.width >= x && room.y <= y && room.y+room.height >= y)
+			{
+				return room
+			}
+		}
+		return null
+	}
+
+	// ----------------------------------------------------------------------
 	fun getTile(point: Point) = getTile(point.x, point.y)
 
 	// ----------------------------------------------------------------------

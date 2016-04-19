@@ -1,6 +1,7 @@
 package com.lyeeedar.DungeonGeneration.LevelGenerators
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.exp4j.Helpers.EquationHelper
@@ -14,6 +15,7 @@ import com.lyeeedar.DungeonGeneration.Data.SymbolicRoom
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoomData
 import com.lyeeedar.Enums
 import com.lyeeedar.Level.Level
+import com.lyeeedar.Level.Room
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.Array2D
 import java.util.*
@@ -78,6 +80,27 @@ abstract class AbstractLevelGenerator()
 					}
 				}
 			}
+		}
+
+		val roomMap = ObjectMap<SymbolicRoom, Room>()
+		for (room in rooms)
+		{
+			val r = Room(room.x, room.y, room.width, room.height)
+			r.level = level
+
+			roomMap.put(room, r)
+		}
+
+		for (room in rooms)
+		{
+			val r = roomMap[room]
+			for (neighbour in room.neighbours)
+			{
+				val n = roomMap[neighbour]
+				r.neighbours.add(n)
+			}
+
+			level.rooms.add(r)
 		}
 
 		return level

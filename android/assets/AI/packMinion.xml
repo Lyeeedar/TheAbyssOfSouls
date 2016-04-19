@@ -1,0 +1,25 @@
+<Any>
+    <ClearValue Key="Enemy"/>
+
+    <GetAllVisible Type="Tiles" Key="Tiles"/>
+    <GetAllVisible Type="Enemies" Key="Enemies"/>
+    <Pick Input="Enemies" Output="Enemy"/>
+    <ConvertTo Input="Enemy" Output="EnemyPos" Type="Position"/>
+    <ConvertTo Input="Leader" Output="LeaderPos" Type="Position"/>
+
+    <Priority>
+        <Sequence>
+            <CheckValue Key="EnemyPos"/>
+            <CheckValue Condition="morale < 0"/>
+            <MoveAway Key="EnemyPos"/>
+        </Sequence>
+		<Import Path="attackClosest"/>
+        <MoveTo Key="LeaderPos" Dst="4"/>
+		<Random>
+			<Wait/>
+            <Wait/>
+			<Import Path="wander"/>
+		</Random>
+    </Priority>
+
+</Any>

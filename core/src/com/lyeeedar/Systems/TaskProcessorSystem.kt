@@ -92,6 +92,7 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		{
 			if (task.tasks.size == 0)
 			{
+				task.ai.setData("leader", task.leader)
 				task.ai.update(e)
 			}
 

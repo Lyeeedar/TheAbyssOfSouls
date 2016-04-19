@@ -10,8 +10,15 @@
         <CentralConstant>
             <Entity>
                 <Sprite>
-                    <Name>Oryx/uf_split/uf_terrain/ground_dirt_brown_1</Name>
+                    <Name>Oryx/uf_split/uf_terrain/ground_grass_3</Name>
                 </Sprite>
+                <TilingSprite>
+                    <Name>Path</Name>
+                    <Mask>Masks/path</Mask>
+                    <Sprite>
+                        <Name>Oryx/uf_split/uf_terrain/ground_dirt_brown_1</Name>
+                    </Sprite>
+                </TilingSprite>
             </Entity>
             <Slot>Floor</Slot>
         </CentralConstant>

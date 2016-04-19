@@ -73,6 +73,9 @@ class EntityLoader()
 			val slot = xml.get("Slot", null)
 			if (slot != null) pos.slot = Enums.SpaceSlot.valueOf(slot.toUpperCase())
 
+			val canSwap = xml.get("CanSwap", null)
+			if (canSwap != null) pos.canSwap = xml.getBoolean("CanSwap")
+
 			val size = xml.getInt("Size", -1)
 			if (size != -1) pos.size = size
 
@@ -99,9 +102,8 @@ class EntityLoader()
 				if (statistics != null)
 				{
 					Enums.Statistic.load(statistics, stats.stats)
-					stats.hp = stats.stats.get(Enums.Statistic.MAX_HEALTH)
-					stats.stamina = stats.stats.get(Enums.Statistic.MAX_STAMINA)
-					stats.morale = stats.stats.get(Enums.Statistic.MORALE)
+					stats.stats[Enums.Statistic.HEALTH] = stats.stats[Enums.Statistic.MAX_HEALTH]
+					stats.stats[Enums.Statistic.STAMINA] = stats.stats[Enums.Statistic.MAX_STAMINA]
 				}
 
 				if (factions != null)

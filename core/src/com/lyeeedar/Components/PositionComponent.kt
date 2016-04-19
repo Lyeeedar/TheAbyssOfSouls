@@ -27,6 +27,7 @@ class PositionComponent: Component
 	var max: Point = Point()
 	var slot: Enums.SpaceSlot = Enums.SpaceSlot.ENTITY
 	var size: Int = 1
+	var canSwap: Boolean = false
 
 	fun hasEffects() = hasEffects(position)
 

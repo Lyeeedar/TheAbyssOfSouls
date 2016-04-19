@@ -114,7 +114,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 					sprite.sprite.size[1] = pos.size
 				}
 
-				queueSprite(sprite.sprite, drawX, drawY, offsetx, offsety, pos.slot, tile)
+				queueSprite(sprite.sprite, drawX, drawY, offsetx, offsety, pos.slot, tile, 0)
 			}
 
 			if (tilingSprite != null)
@@ -125,7 +125,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 				spriteData.size[0] = pos.size
 				spriteData.size[1] = pos.size
 
-				queueSprite(spriteData, drawX, drawY, offsetx, offsety, pos.slot, tile)
+				queueSprite(spriteData, drawX, drawY, offsetx, offsety, pos.slot, tile, 1)
 			}
 
 			if (effect != null)
@@ -144,7 +144,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 				effect.sprite.rotation = effect.direction.angle
 
-				queueSprite(effect.sprite, drawX, drawY, offsetx, offsety, Enums.SpaceSlot.AIR, tile)
+				queueSprite(effect.sprite, drawX, drawY, offsetx, offsety, Enums.SpaceSlot.AIR, tile, 2)
 			}
 		}
 
@@ -177,7 +177,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: Enums.SpaceSlot, tile: Tile)
+	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: Enums.SpaceSlot, tile: Tile, index: Int)
 	{
 		var x = ix
 		var y = iy
@@ -191,7 +191,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 		if ( x + GlobalData.Global.tileSize < 0 || y + GlobalData.Global.tileSize < 0 || x > GlobalData.Global.resolution[ 0 ] || y > GlobalData.Global.resolution[ 1 ] ) { return; }
 
-		val rs = RenderSprite.obtain().set( sprite, x, y, offsetx, offsety, slot, tile );
+		val rs = RenderSprite.obtain().set( sprite, x, y, offsetx, offsety, slot, tile, index );
 
 		heap.add( rs, rs.comparisonVal );
 	}
@@ -205,7 +205,7 @@ class RenderSprite : BinaryHeap.Node(0f) {
 
 	var comparisonVal: Float = 0f
 
-	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: Enums.SpaceSlot, tile: Tile): RenderSprite {
+	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: Enums.SpaceSlot, tile: Tile, index: Int): RenderSprite {
 		this.sprite = sprite
 		this.x = x
 		this.y = y
@@ -218,7 +218,7 @@ class RenderSprite : BinaryHeap.Node(0f) {
 		val sx = bx.toInt()
 		var sy = by.toInt()
 
-		comparisonVal = MAX_Y_BLOCK_SIZE - sy * Y_BLOCK_SIZE + (MAX_X_BLOCK_SIZE - sx * X_BLOCK_SIZE) + slot.ordinal
+		comparisonVal = MAX_Y_BLOCK_SIZE - sy * Y_BLOCK_SIZE + (MAX_X_BLOCK_SIZE - sx * X_BLOCK_SIZE) + slot.ordinal * 3 + index
 
 		return this
 	}
@@ -230,7 +230,7 @@ class RenderSprite : BinaryHeap.Node(0f) {
 		val pool: Pool<RenderSprite> = Pools.get( RenderSprite::class.java, Int.MAX_VALUE )
 		fun obtain() = RenderSprite.pool.obtain()
 
-		val X_BLOCK_SIZE = Enums.SpaceSlot.Values.size
+		val X_BLOCK_SIZE = Enums.SpaceSlot.Values.size * 3
 		var Y_BLOCK_SIZE = 0f
 		var MAX_Y_BLOCK_SIZE = 0f
 		var MAX_X_BLOCK_SIZE = 0f

@@ -279,25 +279,28 @@ public class Enums
 	// ----------------------------------------------------------------------
 	public enum Statistic
 	{
+		HEALTH,
+		STAMINA,
 		MAX_HEALTH,
 		MAX_STAMINA,
 		SIGHT,
 		MORALE,
+		MORALE_CHANGE,
 
 		PHYSICAL_ATTACK,
-		SHOCK_ATTACK,
+		CORRUPTION_ATTACK,
 		ACID_ATTACK,
-		ICE_ATTACK,
+		SOUND_ATTACK,
 		VORPAL_ATTACK,
 
 		PHYSICAL_DEFENSE,
-		SHOCK_DEFENSE,
+		CORRUPTION_DEFENSE,
 		ACID_DEFENSE,
-		ICE_DEFENSE,
+		SOUND_DEFENSE,
 		VORPAL_DEFENSE;
 
-		public static final Statistic[] ATTACK_STATS = { PHYSICAL_ATTACK, SHOCK_ATTACK, ACID_ATTACK, ICE_ATTACK, VORPAL_ATTACK };
-		public static final Statistic[] DEFENSE_STATS = { PHYSICAL_DEFENSE, SHOCK_DEFENSE, ACID_DEFENSE, ICE_DEFENSE, VORPAL_DEFENSE };
+		public static final Statistic[] ATTACK_STATS = { PHYSICAL_ATTACK, CORRUPTION_ATTACK, ACID_ATTACK, SOUND_ATTACK, VORPAL_ATTACK };
+		public static final Statistic[] DEFENSE_STATS = { PHYSICAL_DEFENSE, CORRUPTION_DEFENSE, ACID_DEFENSE, SOUND_DEFENSE, VORPAL_DEFENSE };
 		public static final Statistic[] Values = Statistic.values();
 
 		static

@@ -29,6 +29,8 @@ class SymbolicRoom()
 
 	var placement: Enums.Direction = Enums.Direction.CENTRE
 
+	val neighbours: com.badlogic.gdx.utils.Array<SymbolicRoom> = com.badlogic.gdx.utils.Array()
+
 	// ----------------------------------------------------------------------
 	private fun addDoor(pos: Int, space: Int, dir: Enums.Direction, ran: Random)
 	{

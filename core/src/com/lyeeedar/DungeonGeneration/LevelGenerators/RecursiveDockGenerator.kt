@@ -591,7 +591,30 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 
 			carveCorridor(path)
 			Point.freeAll(path)
+
+			val room1 = getRoom(p.first[0].toInt(), p.first[1].toInt())
+			val room2 = getRoom(p.second[0].toInt(), p.second[1].toInt())
+
+			if (room1 != null && room2 != null && room1 != room2)
+			{
+				room1.neighbours.add(room2)
+				room2.neighbours.add(room1)
+			}
 		}
+	}
+
+	// ----------------------------------------------------------------------
+	fun getRoom(x: Int, y: Int): SymbolicRoom?
+	{
+		for (room in rooms)
+		{
+			if (room.x <= x && room.x+room.width >= x && room.y <= y && room.y+room.height >= y)
+			{
+				return room
+			}
+		}
+
+		return null
 	}
 
 	// ----------------------------------------------------------------------

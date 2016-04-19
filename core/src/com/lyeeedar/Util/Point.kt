@@ -50,6 +50,7 @@ open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0)
 
 	fun taxiDist(other: Point) = Math.max( Math.abs(other.x - x), Math.abs(other.y - y) )
 	fun dist(other: Point) = Math.abs(other.x - x) + Math.abs(other.y - y)
+	fun dist(ox: Int, oy: Int) = Math.abs(ox - x) + Math.abs(oy - y)
 	fun euclideanDist(other: Point) = Vector2.dst(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())
 	fun euclideanDist(ox: Float, oy:Float) = Vector2.dst(x.toFloat(), y.toFloat(), ox, oy)
 	fun euclideanDist2(other: Point) = Vector2.dst2(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())

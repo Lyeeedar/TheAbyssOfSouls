@@ -24,17 +24,24 @@ class StatisticsComponent: Component
 			return field
 		}
 	val factions: OrderedSet<String> = OrderedSet()
-	var hp: Float = 1f
+	var hp: Float
+		get() = stats.get(Enums.Statistic.HEALTH)
 		set(value)
 		{
-			val diff = value - field
-			field = value
-			morale += (diff / stats.get(Enums.Statistic.MAX_HEALTH)) * 100f
+			val diff = value - hp
+			stats[Enums.Statistic.HEALTH] = value
+			morale += (diff / hp) * moraleChange
 
 			damTally += diff
 		}
 	var damTally: Float = 0f
 
-	var stamina: Float = 1f
-	var morale: Float = 100f
+	var stamina: Float
+		get() = stats[Enums.Statistic.STAMINA]
+		set(value) { stats[Enums.Statistic.STAMINA] = value }
+	var morale: Float
+		get() = stats[Enums.Statistic.MORALE]
+		set(value) { stats[Enums.Statistic.MORALE] = value }
+	val moraleChange: Float
+		get() = stats[Enums.Statistic.MORALE_CHANGE]
 }
