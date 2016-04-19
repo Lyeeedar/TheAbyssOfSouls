@@ -27,6 +27,6 @@ class ActionClearValue(): AbstractAction()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		key = xml.getAttribute("Key");
+		key = xml.getAttribute("Key").toLowerCase()
 	}
 }

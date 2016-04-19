@@ -1,14 +1,14 @@
 <DataScope>
 	<Any>
-		<Sequence>
-			<Invert>
-				<CheckValue Key="Pos"></CheckValue>
-			</Invert>
-			<Pick Criteria="rnd" Input="Tiles" Output="Pos"></Pick>
-		</Sequence>
-		<Sequence>
-			<MoveTo Key="Pos"></MoveTo>
-			<ClearValue Key="Pos"></ClearValue>
-		</Sequence>
+		<Priority>
+            <CheckValue Key="Pos"/>
+			<Pick Criteria="rnd" Input="Tiles" Output="Pos"/>
+		</Priority>
+        <SetState Completed="Running" Failed="Completed">
+            <Until State="Running">
+                <MoveTo Key="Pos"/>
+                <ClearValue Key="Pos"/>
+            </Until>
+        </SetState>
 	</Any>
 </DataScope>

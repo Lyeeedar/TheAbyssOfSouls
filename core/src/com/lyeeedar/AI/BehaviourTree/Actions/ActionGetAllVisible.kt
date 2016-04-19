@@ -93,7 +93,7 @@ class ActionGetAllVisible(): AbstractAction()
 	}
 
 	override fun parse(xml: XmlReader.Element) {
-		key = xml.getAttribute("Key")
+		key = xml.getAttribute("Key").toLowerCase()
 		if (xml.getAttribute("Type", null) != null)
 		{
 			type = Type.valueOf(xml.getAttribute("Type").toUpperCase())

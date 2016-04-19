@@ -5,13 +5,22 @@
     <GetAllVisible Type="Enemies" Key="Enemies"/>
     <Pick Input="Enemies" Output="Enemy"/>
     <ConvertTo Input="Enemy" Output="EnemyPos" Type="Position"/>
+    <ClearValue Key="LeaderPos"/>
     <ConvertTo Input="Leader" Output="LeaderPos" Type="Position"/>
 
     <Priority>
         <Sequence>
             <CheckValue Key="EnemyPos"/>
             <CheckValue Condition="morale < 0"/>
-            <MoveAway Key="EnemyPos"/>
+            <Priority>
+                <CheckValue Key="DstRoom"/>
+                <Sequence>
+                    <GetNeighbourRoom Key="Room"/>
+                    <ConvertTo Input="Room" Output="DstRoom"/>
+                </Sequence>
+            </Priority>
+            <MoveTo Key="DstRoom"/>
+            <ClearValue Key="DstRoom"/>
         </Sequence>
 		<Import Path="attackClosest"/>
         <MoveTo Key="LeaderPos" Dst="4"/>

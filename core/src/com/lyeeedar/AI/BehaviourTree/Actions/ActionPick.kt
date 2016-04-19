@@ -84,8 +84,8 @@ class ActionPick(): AbstractAction()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		input = xml.getAttribute("Input")
-		output = xml.getAttribute("Output")
+		input = xml.getAttribute("Input").toLowerCase()
+		output = xml.getAttribute("Output").toLowerCase()
 		criteria = xml.getAttribute("Criteria", "Distance").toLowerCase()
 		lowest = xml.getBooleanAttribute("Lowest", true)
 	}

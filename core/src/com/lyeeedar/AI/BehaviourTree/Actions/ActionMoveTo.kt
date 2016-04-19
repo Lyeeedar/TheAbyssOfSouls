@@ -21,6 +21,8 @@ class ActionMoveTo(): AbstractAction()
 	var towards: Boolean = true
 	lateinit var key: String
 
+	var lastPos: Point = Point.ZERO
+
 	override fun evaluate(entity: Entity): ExecutionState
 	{
 		val target = getData( key, null ) as? Point;
@@ -38,6 +40,7 @@ class ActionMoveTo(): AbstractAction()
 		// if we arrived at our target, succeed
 		if ( (towards && tile.taxiDist(target) <= dst) || (!towards && tile.taxiDist(target) >= dst) )
 		{
+			lastPos = Point.ZERO
 			state = ExecutionState.COMPLETED;
 			return state;
 		}
@@ -48,6 +51,7 @@ class ActionMoveTo(): AbstractAction()
 		// if couldnt find a valid path, fail
 		if ( path.size < 2 )
 		{
+			lastPos = Point.ZERO
 			Point.freeAll(path)
 			state = ExecutionState.FAILED;
 			return state;
@@ -55,9 +59,19 @@ class ActionMoveTo(): AbstractAction()
 
 		var nextTile = tile.level.getTile( path.get( 1 ) );
 
+		// possible loop, quit just in case
+		if (nextTile == lastPos)
+		{
+			lastPos = Point.ZERO
+			Point.freeAll(path)
+			state = ExecutionState.FAILED;
+			return state;
+		}
+
 		// if next step is impassable then fail
 		if ( ! ( nextTile?.getPassable( posData.slot, entity ) ?: false ) )
 		{
+			lastPos = Point.ZERO
 			Point.freeAll(path)
 			state = ExecutionState.FAILED;
 			return state;
@@ -70,12 +84,14 @@ class ActionMoveTo(): AbstractAction()
 		{
 			if ( path.size - 1 <= dst || offset == Point.ZERO )
 			{
+				lastPos = Point.ZERO
 				Point.freeAll(path)
 				offset.free()
 				state = ExecutionState.COMPLETED;
 				return state;
 			}
 
+			lastPos = tile
 			taskData.tasks.add(TaskMove(Enums.Direction.getDirection(offset)));
 		}
 		// if moving away then just run directly away
@@ -83,14 +99,17 @@ class ActionMoveTo(): AbstractAction()
 		{
 			if ( path.size - 1 >= dst || offset == Point.ZERO )
 			{
+				lastPos = Point.ZERO
 				Point.freeAll(path)
 				offset.free()
 				state = ExecutionState.COMPLETED;
 				return state;
 			}
 
-			offset *= -1
-			taskData.tasks.add(TaskMove(Enums.Direction.getDirection(offset)));
+			lastPos = tile
+			val opposite = offset * -1
+			taskData.tasks.add(TaskMove(Enums.Direction.getDirection(opposite)));
+			opposite.free()
 		}
 
 		Point.freeAll(path)
@@ -101,7 +120,7 @@ class ActionMoveTo(): AbstractAction()
 
 	override fun cancel()
 	{
-
+		lastPos = Point.ZERO
 	}
 
 	override fun parse( xml: XmlReader.Element)
@@ -117,6 +136,6 @@ class ActionMoveTo(): AbstractAction()
 			dst = Integer.parseInt( xml.getAttribute( "Distance", "500" ) );
 			towards = false;
 		}
-		key = xml.getAttribute( "Key" );
+		key = xml.getAttribute( "Key" ).toLowerCase()
 	}
 }

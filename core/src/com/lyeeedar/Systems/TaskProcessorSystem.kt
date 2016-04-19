@@ -9,6 +9,7 @@ import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.Components.*
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.GlobalData
+import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -80,18 +81,48 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		}
 	}
 
+	fun findClosestLeader(name: String, pos: Point): Entity?
+	{
+		var closest: Entity? = null
+		var dist: Int = Int.MAX_VALUE
+
+		for (entity in entities)
+		{
+			val tile = entity.tile() ?: continue
+			val n = entity.name()
+
+			if (n == name)
+			{
+				val d = tile.dist(pos)
+				if (d < dist)
+				{
+					dist = d
+					closest = entity
+				}
+			}
+		}
+
+		return closest
+	}
+
 	fun processEntity(e: Entity): Boolean
 	{
 		val task = Mappers.task.get(e)
 		val stats = Mappers.stats.get(e)
+		val pos = Mappers.position.get(e)
 
 		if (stats.hp <= 0) return true
-		if (e.position().hasEffects()) return false
+		if (pos.hasEffects()) return false
 
 		if (task.actionDelay >= 0)
 		{
 			if (task.tasks.size == 0)
 			{
+				if (task.leaderName != null && task.leader == null)
+				{
+					task.leader = findClosestLeader(task.leaderName!!, pos.position)
+				}
+
 				task.ai.setData("leader", task.leader)
 				task.ai.update(e)
 			}
@@ -100,10 +131,12 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 			{
 				val t = task.tasks.removeIndex(0)
 
-				if (t is TaskMove && e.position().hasEffects(t.direction)) return false
+				if (t is TaskMove && e.pos().hasEffects(t.direction)) return false
 
 				t.execute(e)
 				task.actionDelay -= t.cost;
+
+				e.pos().turnsOnTile++
 
 				e.postEvent(EventArgs(t.eventType, e, e, t.cost))
 			}

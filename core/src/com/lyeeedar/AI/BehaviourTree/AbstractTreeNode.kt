@@ -11,6 +11,7 @@ import com.lyeeedar.AI.BehaviourTree.Actions.*
 import com.lyeeedar.AI.BehaviourTree.Conditionals.ConditionalCheckValue
 import com.lyeeedar.AI.BehaviourTree.Decorators.*
 import com.lyeeedar.AI.BehaviourTree.Selectors.*
+import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -24,7 +25,17 @@ abstract class AbstractTreeNode()
 	var data: ObjectMap<String, Any>? = null
 
 	//----------------------------------------------------------------------
-	open fun setData(key:String, value:Any?) = data?.put(key, value)
+	open fun setData(key:String, value:Any?)
+	{
+		val oldVal = data?.get(key)
+		if (oldVal != value && oldVal is Point && oldVal.javaClass == Point::class.java)
+		{
+			oldVal.free()
+		}
+
+		data?.put(key, value)
+	}
+
 	fun getData(key:String, fallback:Any? = null) = data?.get(key) ?: fallback
 
 	//----------------------------------------------------------------------
@@ -76,6 +87,7 @@ abstract class AbstractTreeNode()
 				"GETALLVISIBLE" -> ActionGetAllVisible::class.java
 				"GETROOM", "GETNEIGHBOURROOM" -> ActionGetRoom::class.java
 				"MOVETO", "MOVEAWAY" -> ActionMoveTo::class.java
+				"INCREMENT", "DECREMENT" -> ActionIncrement::class.java
 				"PICK" -> ActionPick::class.java
 				"PROCESSINPUT" -> ActionProcessInput::class.java
 				"SETVALUE" -> ActionSetValue::class.java

@@ -5,6 +5,8 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.tile
+import com.lyeeedar.Level.Room
+import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 29-Mar-16.
@@ -25,6 +27,10 @@ class ActionConvertTo(): AbstractAction()
 		{
 			out = obj.tile() ?: Mappers.position.get(obj).position
 		}
+		else if (obj is Room)
+		{
+			out = Point.obtain().set(obj.x + obj.width/2, obj.y + obj.height/2)
+		}
 
 		if (out != null)
 		{
@@ -41,9 +47,9 @@ class ActionConvertTo(): AbstractAction()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		input = xml.get("Input")
-		output = xml.get("Output")
-		type = xml.get("Type")
+		input = xml.get("Input").toLowerCase()
+		output = xml.get("Output").toLowerCase()
+		type = xml.get("Type", "Position").toLowerCase()
 	}
 
 	override fun cancel()

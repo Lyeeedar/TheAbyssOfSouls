@@ -52,6 +52,6 @@ class SelectorUntil(): AbstractSelector()
 	{
 		super.parse(xml);
 
-		until = ExecutionState.valueOf(xml.getAttribute("State").toUpperCase());
+		until = ExecutionState.valueOf(xml.getAttribute("State", "Running").toUpperCase());
 	}
 }

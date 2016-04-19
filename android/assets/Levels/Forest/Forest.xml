@@ -10,7 +10,7 @@
         <CentralConstant>
             <Entity>
                 <Sprite>
-                    <Name>Oryx/uf_split/uf_terrain/ground_grass_3</Name>
+                    <Name>Oryx/uf_split/uf_terrain/ground_grass_1</Name>
                 </Sprite>
                 <TilingSprite>
                     <Name>Path</Name>
@@ -55,7 +55,7 @@
 
     <Rooms>
 
-        <Filler Condition="3 + rnd(2)" />
+        <Filler Condition="6 + rnd(6)" />
 
         <Start>
             <Symbols>
@@ -63,11 +63,21 @@
                     <Char>s</Char>
                     <Entity Extends="player"></Entity>
                 </Symbol>
+                <Symbol Extends=".">
+                    <Char>e</Char>
+                    <Entity Extends="enemy">
+                        <Leader>player</Leader>
+                    </Entity>
+                </Symbol>
             </Symbols>
             <Rows>
-                <Row>...</Row>
-                <Row>.s.</Row>
-                <Row>...</Row>
+                <Row>eee</Row>
+                <Row>eee</Row>
+                <Row>eee</Row>
+                <Row>eee</Row>
+                <Row>eee</Row>
+                <Row>ese</Row>
+                <Row>eee</Row>
             </Rows>
         </Start>
 

@@ -46,7 +46,7 @@ class DecoratorSetState(): AbstractDecorator()
 			failed = state
 		}
 
-		if (xml.get("Succeed", null) != null) { completed = ExecutionState.valueOf(xml.getAttribute("Succeed").toUpperCase()); }
+		if (xml.get("Completed", null) != null) { completed = ExecutionState.valueOf(xml.getAttribute("Completed").toUpperCase()); }
 		if (xml.get("Running", null) != null) { running = ExecutionState.valueOf(xml.getAttribute("Running").toUpperCase()); }
 		if (xml.get("Failed", null) != null) { failed = ExecutionState.valueOf(xml.getAttribute("Failed").toUpperCase()); }
 	}

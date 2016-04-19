@@ -162,7 +162,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 		for (entity in hpEntities)
 		{
-			val pos = entity.position()
+			val pos = entity.pos()
 			val stats = entity.stats()
 
 			val txt = stats.damTally.abs().toInt().toString()

@@ -1,7 +1,7 @@
 <Entity>
     <Name>enemy</Name>
 
-    <AI>basicMonster</AI>
+    <AI>packMinion</AI>
 
     <Slot>Entity</Slot>
     <Size>1</Size>
@@ -20,7 +20,7 @@
         <Physical_Defense>1</Physical_Defense>
     </Statistics>
 
-    <Factions>enemy</Factions>
+    <Factions>player</Factions>
 
     <Inventory>
         <Equipment>

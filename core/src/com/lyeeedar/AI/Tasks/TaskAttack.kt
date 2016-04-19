@@ -21,7 +21,7 @@ class TaskAttack(var direction: Enums.Direction): AbstractTask(EventComponent.Ev
 	override fun execute(e: Entity)
 	{
 		val tile = e.tile() ?: return
-		e.sprite().sprite.spriteAnimation = BumpAnimation(0.25f, direction)
+		e.sprite().sprite.spriteAnimation = BumpAnimation.obtain().set(0.25f, direction)
 
 		val next = tile.neighbours.get(direction)
 

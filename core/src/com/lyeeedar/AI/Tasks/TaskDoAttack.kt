@@ -28,7 +28,7 @@ class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTileOffset:
 
 		System.out.println(srcTileOffset)
 
-		e.sprite().sprite.spriteAnimation = BumpAnimation(0.25f, dir);
+		e.sprite().sprite.spriteAnimation = BumpAnimation.obtain().set(0.25f, dir);
 
 		// actually do the attack
 		if (atk.hitType.equals("all"))

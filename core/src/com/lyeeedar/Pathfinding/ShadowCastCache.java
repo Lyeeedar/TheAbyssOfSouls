@@ -118,7 +118,7 @@ public final class ShadowCastCache
 
 		if ( recalculate )
 		{
-			Point.pool.freeAll( shadowCastOutput );
+			Point.freeAll( shadowCastOutput );
 			shadowCastOutput.clear();
 
 			// build grid

@@ -2,6 +2,7 @@ package com.lyeeedar.AI.BehaviourTree.Selectors
 
 import com.badlogic.ashley.core.Entity
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
+import com.lyeeedar.Util.removeRan
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -22,16 +23,17 @@ class SelectorRandom(): AbstractSelector()
 		if (i == -1)
 		{
 			numList.clear();
-			for (i in 0..nodes.size-1) { numList.add(i); }
+			for (n in 0..nodes.size-1) { numList.add(n); }
 
 			while (state == ExecutionState.FAILED && numList.size > 0)
 			{
-				var ti = ran.nextInt(numList.size);
-				i = numList.get(ti);
-				numList.removeIndex(ti);
-
+				i = numList.removeRan(ran)
 				state = nodes.get(i).evaluate(entity);
 			}
+		}
+		else
+		{
+			state = nodes.get(i).evaluate(entity);
 		}
 
 		if (state != ExecutionState.RUNNING)

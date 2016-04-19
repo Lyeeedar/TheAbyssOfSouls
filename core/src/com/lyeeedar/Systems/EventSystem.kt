@@ -17,7 +17,7 @@ class EventSystem(): IteratingSystem(Family.all(EventComponent::class.java).get(
 	override fun processEntity(entity: Entity?, deltaTime: Float)
 	{
 		if (entity == null) return
-		val pos = entity.position() ?: return
+		val pos = entity.pos() ?: return
 		val tile = entity.tile() ?: return
 
 		val eventData = Mappers.event.get(entity)

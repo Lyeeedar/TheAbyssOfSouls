@@ -21,6 +21,8 @@ public abstract class AbstractSpriteAnimation
 
 	public abstract void parse( Element xml );
 
+	public abstract void free();
+
 	public abstract AbstractSpriteAnimation copy();
 
 	public static AbstractSpriteAnimation load( Element xml )

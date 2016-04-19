@@ -1,10 +1,11 @@
 <Entity>
     <Name>player</Name>
 
-    <AI>player</AI>
+    <AI>packLeader</AI>
 
     <Slot>Entity</Slot>
     <Size>1</Size>
+    <CanSwap>true</CanSwap>
 
     <Sprite>
         <Name>player</Name>
@@ -12,7 +13,7 @@
     </Sprite>
 
     <Light>
-        <Colour><RGB>255,255,255</RGB><Alpha>0.3</Alpha></Colour>
+        <Colour><RGB>255,255,255</RGB><Alpha>1</Alpha></Colour>
         <Distance>5</Distance>
     </Light>
 

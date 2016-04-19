@@ -20,6 +20,7 @@ class PositionComponent: Component
 		{
 			field = value
 			max = value
+			turnsOnTile = 0
 		}
 	var min: Point
 		set(value) { position = value }
@@ -28,6 +29,8 @@ class PositionComponent: Component
 	var slot: Enums.SpaceSlot = Enums.SpaceSlot.ENTITY
 	var size: Int = 1
 	var canSwap: Boolean = false
+
+	var turnsOnTile: Int = 0
 
 	fun hasEffects() = hasEffects(position)
 

@@ -10,13 +10,14 @@ import com.lyeeedar.Enums
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.Items.Item
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Util.isAllies
 import kotlin.reflect.KClass
 
 /**
  * Created by Philip on 20-Mar-16.
  */
 
-fun Entity.position() = Mappers.position.get(this)
+fun Entity.pos() = Mappers.position.get(this)
 fun Entity.tile() = Mappers.position.get(this).position as? Tile
 fun Entity.stats() = Mappers.stats.get(this)
 fun Entity.event() = Mappers.event.get(this)
@@ -67,7 +68,10 @@ class EntityLoader()
 			val ai = xml.get("AI", null)
 			if (ai != null) entity.add(TaskComponent(ai))
 
-			val pos = entity.position() ?: PositionComponent()
+			val leader = xml.get("Leader", null)
+			if (leader != null) Mappers.task.get(entity).leaderName = leader
+
+			val pos = entity.pos() ?: PositionComponent()
 			entity.add(pos)
 
 			val slot = xml.get("Slot", null)
@@ -164,10 +168,11 @@ class EntityLoader()
 	}
 }
 
+fun Entity.isAllies(other: Entity): Boolean { return if (this.stats() != null && other.stats() != null) this.stats().factions.isAllies(other.stats().factions) else false }
 
 fun Entity.getEdgeTiles(dir: Enums.Direction): com.badlogic.gdx.utils.Array<Tile>
 {
-	val pos = this.position()
+	val pos = this.pos()
 	val tile = this.tile() ?: throw RuntimeException("argh tile is null")
 
 	var xstep = 0;

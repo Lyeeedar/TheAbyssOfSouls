@@ -27,6 +27,7 @@ class TaskComponent: Component
 	}
 
 	val ai: IAI
+	var leaderName: String? = null
 	var leader: Entity? = null
 	val tasks: com.badlogic.gdx.utils.Array<AbstractTask> = com.badlogic.gdx.utils.Array()
 	var actionDelay: Float = 0f

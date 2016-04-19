@@ -23,9 +23,17 @@ open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0)
 		@JvmField val MAX = Point(Int.MAX_VALUE, Int.MAX_VALUE)
 		@JvmField val MIN = Point(-Int.MAX_VALUE, -Int.MAX_VALUE)
 
-        @JvmField val pool: Pool<Point> = Pools.get( Point::class.java, Int.MAX_VALUE )
+        private val pool: Pool<Point> = Pools.get( Point::class.java, Int.MAX_VALUE )
 
-        @JvmStatic fun obtain() = Point.pool.obtain()
+        @JvmStatic fun obtain(): Point
+		{
+			val point = Point.pool.obtain()
+
+			if (point.obtained) throw RuntimeException()
+
+			point.obtained = true
+			return point
+		}
 
 		@JvmStatic fun freeAll(items: Iterable<Point>) = { for (item in items) item.free() }
     }
@@ -34,9 +42,6 @@ open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0)
 
     fun set(x: Int, y: Int): Point
     {
-        if (obtained) throw RuntimeException()
-        obtained = true
-
         this.x = x
         this.y = y
         return this
@@ -46,7 +51,7 @@ open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0)
 
     fun copy() = Point.obtain().set(this);
 
-    fun free() = Point.pool.free(this)
+    fun free() { if (obtained) { Point.pool.free(this); obtained = false } }
 
 	fun taxiDist(other: Point) = Math.max( Math.abs(other.x - x), Math.abs(other.y - y) )
 	fun dist(other: Point) = Math.abs(other.x - x) + Math.abs(other.y - y)
@@ -56,7 +61,8 @@ open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0)
 	fun euclideanDist2(other: Point) = Vector2.dst2(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())
 	fun euclideanDist2(ox: Float, oy:Float) = Vector2.dst2(x.toFloat(), y.toFloat(), ox, oy)
 
-	//operator fun times(other: Int) = obtain().set(x * other, y * other)
+	operator fun times(other: Int) = obtain().set(x * other, y * other)
+
 	operator fun times(other: Matrix3): Point
 	{
 		val vec = Pools.obtain(Vector3::class.java)
@@ -112,9 +118,6 @@ open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0)
 
     override fun reset()
     {
-        if (!obtained) throw RuntimeException()
-        obtained = false
-
         x = 0
         y = 0
     }

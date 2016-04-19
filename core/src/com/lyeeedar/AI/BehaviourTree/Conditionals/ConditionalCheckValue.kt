@@ -87,12 +87,11 @@ class ConditionalCheckValue(): AbstractConditional()
 	//----------------------------------------------------------------------
 	override fun parse(xml: XmlReader.Element)
 	{
-		this.key = xml.getAttribute("Key", null);
+		this.key = xml.getAttribute("Key", null)?.toLowerCase()
 		this.succeed = ExecutionState.valueOf(xml.getAttribute("Success", "COMPLETED").toUpperCase());
 		this.fail = ExecutionState.valueOf(xml.getAttribute("Failure", "FAILED").toUpperCase());
 
-		this.condition = xml.getAttribute("Condition", null);
-		if (this.condition != null) { this.condition = this.condition?.toLowerCase(); }
+		this.condition = xml.getAttribute("Condition", null)?.toLowerCase();
 
 		reliesOn = xml.getAttribute( "ReliesOn", "" ).toLowerCase().split( "," ).toTypedArray();
 	}

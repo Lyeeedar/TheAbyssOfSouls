@@ -170,6 +170,7 @@ public final class Sprite
 
 			if ( looped )
 			{
+				spriteAnimation.free();
 				spriteAnimation = null;
 			}
 		}

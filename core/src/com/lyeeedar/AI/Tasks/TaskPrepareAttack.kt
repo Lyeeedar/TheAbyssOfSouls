@@ -19,15 +19,15 @@ class TaskPrepareAttack(val minOffset: Point, val maxOffset: Point, val entity: 
 		val etile = e.tile() ?: return
 		val tile = etile.level.getTile(etile, minOffset) ?: return
 
-		e.sprite().sprite.spriteAnimation = BumpAnimation(0.4f, dir.opposite);
+		e.sprite().sprite.spriteAnimation = BumpAnimation.obtain().set(0.4f, dir.opposite);
 
 		//tile.contents.put(Enums.SpaceSlot.AIR, entity)
-		if (entity.position() == null)
+		if (entity.pos() == null)
 		{
 			entity.add(PositionComponent())
 		}
-		entity.position().min = tile
-		entity.position().max = etile + maxOffset
+		entity.pos().min = tile
+		entity.pos().max = etile + maxOffset
 		entity.sprite().sprite.rotation = atk.currentDir.angle
 
 		if (atk.currentDir == Enums.Direction.WEST || atk.currentDir == Enums.Direction.EAST)

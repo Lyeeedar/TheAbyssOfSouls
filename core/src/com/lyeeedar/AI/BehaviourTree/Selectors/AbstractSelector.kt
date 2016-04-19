@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.AbstractNodeContainer
 import com.lyeeedar.AI.BehaviourTree.AbstractTreeNode
 import com.lyeeedar.AI.BehaviourTree.Decorators.AbstractDecorator
+import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -28,6 +29,12 @@ abstract class AbstractSelector(): AbstractNodeContainer()
 	// ----------------------------------------------------------------------
 	override fun setData( key:String, value:Any? )
 	{
+		val oldVal = data?.get(key)
+		if (oldVal != value && oldVal is Point && oldVal.javaClass == Point::class.java)
+		{
+			oldVal.free()
+		}
+
 		if ( value == null )
 		{
 			data?.remove( key );

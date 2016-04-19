@@ -2,15 +2,11 @@ package com.lyeeedar.Level
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
-import com.lyeeedar.Components.LightComponent
-import com.lyeeedar.Components.Mappers
+import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Pathfinding.PathfindingTile
-import com.lyeeedar.Util.Colour
-import com.lyeeedar.Util.EnumBitflag
-import com.lyeeedar.Util.FastEnumMap
-import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -35,6 +31,18 @@ class Tile() : Point(0, 0), PathfindingTile
 		val obj = contents.get(travelType)
 		if (obj != null && obj != self)
 		{
+			if (self is Entity && self.isAllies(obj))
+			{
+				if (self.pos().canSwap)
+				{
+					return true
+				}
+				else if (obj.pos().turnsOnTile < 3)
+				{
+					return true
+				}
+			}
+
 			return false;
 		}
 

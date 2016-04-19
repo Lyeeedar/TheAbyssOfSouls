@@ -1,10 +1,7 @@
 package com.lyeeedar.AI.Tasks
 
 import com.badlogic.ashley.core.Entity
-import com.lyeeedar.Components.EventComponent
-import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.stats
-import com.lyeeedar.Components.tile
+import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
@@ -63,16 +60,16 @@ class TaskMove(var direction: Enums.Direction): AbstractTask(EventComponent.Even
 					}
 				}
 
-				sprite.sprite.spriteAnimation = MoveAnimation(0.15f, next.getPosDiff(prev), MoveAnimation.MoveEquation.LINEAR)
+				sprite.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, next.getPosDiff(prev), MoveAnimation.MoveEquation.LINEAR)
 			}
 			else if (pos.canSwap && pos.size == 1)
 			{
 				val collisionTile = prev.level.getTile(prev, direction.x, direction.y)
-				if (collisionTile != null && collisionTile.contents.get(Enums.SpaceSlot.WALL) != null)
+				if (collisionTile != null && collisionTile.contents.get(Enums.SpaceSlot.WALL) == null)
 				{
 					// we collided with an entity
 					val collisionEntity = collisionTile.contents.get(pos.slot)
-					if (e.stats().factions.isAllies(collisionEntity.stats().factions))
+					if (e.isAllies(collisionEntity))
 					{
 						// if allies then we can swap
 
@@ -81,14 +78,14 @@ class TaskMove(var direction: Enums.Direction): AbstractTask(EventComponent.Even
 						pos.position = next
 						e.tile()?.contents?.remove(pos.slot)
 						next.contents[pos.slot] = e
-						sprite.sprite.spriteAnimation = MoveAnimation(0.15f, next.getPosDiff(prev), MoveAnimation.MoveEquation.LINEAR)
+						sprite.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, next.getPosDiff(prev), MoveAnimation.MoveEquation.LINEAR)
 
 						// Then move other
 						val opos = Mappers.position.get(collisionEntity)
 						opos.position = prev
 						prev.contents[opos.slot] = collisionEntity
 						val osprite = Mappers.sprite.get(collisionEntity)
-						osprite.sprite.spriteAnimation = MoveAnimation(0.15f, prev.getPosDiff(next), MoveAnimation.MoveEquation.LINEAR)
+						osprite.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, prev.getPosDiff(next), MoveAnimation.MoveEquation.LINEAR)
 					}
 				}
 			}

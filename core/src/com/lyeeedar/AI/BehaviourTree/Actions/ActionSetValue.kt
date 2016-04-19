@@ -28,7 +28,7 @@ class ActionSetValue(): AbstractAction()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		key = xml.getAttribute("Key");
-		value = xml.getAttribute("Value");
+		key = xml.getAttribute("Key").toLowerCase()
+		value = xml.getAttribute("Value")
 	}
 }

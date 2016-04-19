@@ -93,7 +93,7 @@ class ActionGetRoom(): AbstractAction()
 	override fun parse(xml: XmlReader.Element)
 	{
 		neighbour = xml.name == "GetNeighbourRoom"
-		key = xml.getAttribute("Key")
+		key = xml.getAttribute("Key").toLowerCase()
 		metaVal = xml.getAttribute("MetaVal", null)
 	}
 
