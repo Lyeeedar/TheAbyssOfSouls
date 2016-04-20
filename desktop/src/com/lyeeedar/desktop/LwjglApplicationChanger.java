@@ -54,8 +54,6 @@ public class LwjglApplicationChanger extends AbstractApplicationChanger
 
 		GlobalData.Global.movementTypePathfind = pref.getBoolean( "pathfindMovement" );
 		GlobalData.Global.musicVolume = pref.getFloat( "musicVolume" );
-		GlobalData.Global.ambientVolume = pref.getFloat( "ambientVolume" );
-		GlobalData.Global.effectVolume = pref.getFloat( "effectVolume" );
 
 		for ( Controls.Keys key : Controls.Keys.values() )
 		{
@@ -91,8 +89,6 @@ public class LwjglApplicationChanger extends AbstractApplicationChanger
 
 		GlobalData.Global.movementTypePathfind = pref.getBoolean( "pathfindMovement" );
 		GlobalData.Global.musicVolume = pref.getFloat( "musicVolume" );
-		GlobalData.Global.ambientVolume = pref.getFloat( "ambientVolume" );
-		GlobalData.Global.effectVolume = pref.getFloat( "effectVolume" );
 
 		for ( Controls.Keys key : Controls.Keys.values() )
 		{

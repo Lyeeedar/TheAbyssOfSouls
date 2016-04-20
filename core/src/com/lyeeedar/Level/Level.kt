@@ -32,7 +32,30 @@ class Level()
 					}
 				}
 			}
+
+			recalculateGrids()
 		}
+
+	var doubleGrid: Array<DoubleArray> = Array(0) { i -> DoubleArray(0) { i -> 0.0 } }
+	var charGrid: Array<CharArray> = Array(0) { i -> CharArray(0) { i -> '.' } }
+
+	fun recalculateGrids()
+	{
+		doubleGrid = Array(width) { i -> DoubleArray(height) { i -> 0.0 } }
+		charGrid = Array(width) { i -> CharArray(height) { i -> '.' } }
+
+		for (x in 0..width-1)
+		{
+			for (y in 0..height - 1)
+			{
+				if (grid[x, y].contents.containsKey(Enums.SpaceSlot.WALL))
+				{
+					doubleGrid[x][y] = 1.0
+					charGrid[x][y] = '#'
+				}
+			}
+		}
+	}
 
 	lateinit var player: Entity
 

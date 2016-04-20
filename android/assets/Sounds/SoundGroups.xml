@@ -1,0 +1,11 @@
+<Groups>
+    <Group>
+        <Name>Combat</Name>
+    </Group>
+    <Group>
+        <Name>Ambient</Name>
+    </Group>
+    <Group>
+        <Name>UI</Name>
+    </Group>
+</Groups>

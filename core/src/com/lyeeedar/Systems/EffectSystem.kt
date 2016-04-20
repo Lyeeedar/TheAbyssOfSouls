@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.lyeeedar.Components.EffectComponent
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.postEvent
+import com.lyeeedar.Components.tile
 
 /**
  * Created by Philip on 22-Mar-16.
@@ -28,6 +29,12 @@ class EffectSystem(): IteratingSystem(Family.all(EffectComponent::class.java).ge
 		{
 			entity?.postEvent(event)
 			effect.eventMap.remove(effect.sprite.animationStage)
+		}
+
+		if (effect.sprite.sound != null)
+		{
+			effect.sprite.sound.play(entity?.tile()!!)
+			effect.sprite.sound = null
 		}
 	}
 }

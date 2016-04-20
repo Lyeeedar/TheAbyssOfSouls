@@ -72,10 +72,10 @@ public class AssetManager
 	{
 		if ( loadedSounds.containsKey( path ) ) { return loadedSounds.get( path ); }
 
-		FileHandle file = Gdx.files.internal( "Sound/" + path + ".mp3" );
+		FileHandle file = Gdx.files.internal( "Sounds/" + path + ".mp3" );
 		if ( !file.exists() )
 		{
-			file = Gdx.files.internal( "Sound/" + path + ".ogg" );
+			file = Gdx.files.internal( "Sounds/" + path + ".ogg" );
 
 			if ( !file.exists() )
 			{

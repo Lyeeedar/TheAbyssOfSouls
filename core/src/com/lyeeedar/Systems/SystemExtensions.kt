@@ -16,6 +16,7 @@ val systemList: Array<KClass<out EntitySystem>> = arrayOf(
 		SpriteUpdaterSystem::class,
 		EffectSystem::class,
 		EventSystem::class,
+		SoundSystem::class,
 		CleanupSystem::class,
 		LightingSystem::class,
 		RenderSystem::class

@@ -47,9 +47,9 @@ class ActionConvertTo(): AbstractAction()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		input = xml.get("Input").toLowerCase()
-		output = xml.get("Output").toLowerCase()
-		type = xml.get("Type", "Position").toLowerCase()
+		input = xml.getAttribute("Input").toLowerCase()
+		output = xml.getAttribute("Output").toLowerCase()
+		type = xml.getAttribute("Type", "Position").toLowerCase()
 	}
 
 	override fun cancel()

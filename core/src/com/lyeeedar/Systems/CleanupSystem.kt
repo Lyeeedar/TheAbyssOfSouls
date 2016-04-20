@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
 import com.lyeeedar.Components.*
+import com.lyeeedar.Enums
 import com.lyeeedar.Level.Tile
 
 /**
@@ -48,6 +49,11 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 					{
 						tile.level.getTile(tile, x, y)?.contents?.remove(pos.slot)
 					}
+				}
+
+				if (pos.slot == Enums.SpaceSlot.WALL)
+				{
+					tile.level.recalculateGrids()
 				}
 			}
 

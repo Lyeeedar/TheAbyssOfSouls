@@ -32,6 +32,11 @@ class PositionComponent: Component
 
 	var turnsOnTile: Int = 0
 
+	val x: Int
+		get() = position.x
+	val y: Int
+		get() = position.y
+
 	fun hasEffects() = hasEffects(position)
 
 	fun hasEffects(direction: Enums.Direction): Boolean

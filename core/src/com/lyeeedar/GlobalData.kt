@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Quests.QuestManager
+import com.lyeeedar.Sound.SoundGroup
 import com.lyeeedar.Systems.createEngine
 import com.lyeeedar.UI.Seperator
 import com.lyeeedar.UI.TabPanel
@@ -47,8 +48,6 @@ class GlobalData
 	@JvmField var animationSpeed: Float = 1f
 	@JvmField var tileSize: Float = 32f
 
-	@JvmField var effectVolume: Float = 1f
-	@JvmField var ambientVolume: Float = 1f
 	@JvmField var musicVolume: Float = 1f
 
 	@JvmField var applicationChanger: AbstractApplicationChanger? = null
@@ -62,6 +61,7 @@ class GlobalData
 		skin = loadSkin()
 		engine = createEngine()
 		questManager = QuestManager()
+		SoundGroup.init()
 	}
 
 	fun loadSkin(): Skin

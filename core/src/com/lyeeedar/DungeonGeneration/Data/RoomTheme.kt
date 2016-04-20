@@ -67,7 +67,6 @@ class RoomTheme()
 	fun getValidHidden(validList: com.badlogic.gdx.utils.Array<Point>, feature: SymbolicFeature, room: SymbolicRoom): com.badlogic.gdx.utils.Array<Point>
 	{
 		val resistanceMap = Array(room.width) { i -> DoubleArray(room.height) { i -> 0.0 } }
-				Array2D<Double>(room.width, room.height) { x, y -> 0.0 }
 		for (x in 0..room.width-1)
 		{
 			for (y in 0..room.height-1)

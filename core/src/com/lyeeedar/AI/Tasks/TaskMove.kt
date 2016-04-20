@@ -1,9 +1,11 @@
 package com.lyeeedar.AI.Tasks
 
 import com.badlogic.ashley.core.Entity
+import com.lyeeedar.AssetManager
 import com.lyeeedar.Components.*
 import com.lyeeedar.Enums
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Sound.SoundInstance
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Util.isAllies
 
@@ -61,6 +63,9 @@ class TaskMove(var direction: Enums.Direction): AbstractTask(EventComponent.Even
 				}
 
 				sprite.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, next.getPosDiff(prev), MoveAnimation.MoveEquation.LINEAR)
+
+				val sound = SoundInstance(AssetManager.loadSound("hit"), "Combat")
+				sound.play(next)
 			}
 			else if (pos.canSwap && pos.size == 1)
 			{

@@ -45,11 +45,11 @@ class MoveAnimation : AbstractSpriteAnimation
 
 		if (eqn == MoveEquation.SMOOTHSTEP)
 		{
-			alpha = (alpha * alpha * (3 - 2 * alpha)) // smoothstep
+			alpha = (alpha * alpha * (3f - 2f * alpha)) // smoothstep
 		}
 		else if (eqn == MoveEquation.EXPONENTIAL)
 		{
-			alpha = 1 - (1 - alpha) * (1 - alpha) * (1 - alpha) * (1 - alpha)
+			alpha = 1f - (1f - alpha) * (1f - alpha) * (1f - alpha) * (1f - alpha)
 		}
 
 		offset[0] = (diff!![0] * alpha).toInt().toFloat()
@@ -58,7 +58,7 @@ class MoveAnimation : AbstractSpriteAnimation
 		if (eqn == MoveEquation.LEAP)
 		{
 			// B2(t) = (1 - t) * (1 - t) * p0 + 2 * (1-t) * t * p1 + t*t*p2
-			alpha = (1 - alpha) * (1 - alpha) * 0f + 2f * (1 - alpha) * alpha * 1f + alpha * alpha * 0f
+			alpha = (1f - alpha) * (1f - alpha) * 0f + 2f * (1f - alpha) * alpha * 1f + alpha * alpha * 0f
 			offset[1] += GlobalData.Global.tileSize * leapHeight * alpha
 		}
 
