@@ -16,6 +16,7 @@ import com.lyeeedar.Pathfinding.AStarPathfind
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.ran
+import com.lyeeedar.Util.removeRan
 import java.util.*
 
 /**
@@ -61,6 +62,8 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			size += 10
 		}
 
+		placeFactions()
+
 		for ( room in placedRooms )
 		{
 			val actual = SymbolicRoom()
@@ -68,16 +71,49 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			actual.fill(ran, room, levelData)
 			actual.findDoors(ran);
 			levelData.levelTheme?.apply(actual, ran)
+			room.faction?.apply(actual, ran)
 
 			rooms.add(actual)
 		}
 
 		markRooms(false)
 		connectRooms()
-		//placeFactions()
 		markRooms(true)
 
 		printGrid()
+	}
+
+	// ----------------------------------------------------------------------
+	fun placeFactions()
+	{
+		var factionCount = 0
+		val emptyRooms = com.badlogic.gdx.utils.Array<SymbolicRoomData>()
+
+		for ( room in placedRooms )
+		{
+			if (room.faction != null)
+			{
+				factionCount++
+			}
+			else
+			{
+				emptyRooms.add(room)
+			}
+		}
+
+		if (levelData.factions.size > 0)
+		{
+			val targetCount = (rooms.size.toFloat() * 0.6f).toInt()
+			while (factionCount < targetCount && emptyRooms.size > 0)
+			{
+				val faction = levelData.factions.ran(ran)
+				val room = emptyRooms.removeRan(ran)
+
+				room.faction = faction
+
+				factionCount++
+			}
+		}
 	}
 
 	// ----------------------------------------------------------------------

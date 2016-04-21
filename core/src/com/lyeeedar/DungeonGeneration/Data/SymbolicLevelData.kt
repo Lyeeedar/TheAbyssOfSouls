@@ -12,6 +12,7 @@ class SymbolicLevelData()
 	val symbolMap: ObjectMap<Char, Symbol> = ObjectMap()
 	val rooms: com.badlogic.gdx.utils.Array<SymbolicRoomData> = com.badlogic.gdx.utils.Array()
 	val roomGenerators: com.badlogic.gdx.utils.Array<XmlReader.Element> = com.badlogic.gdx.utils.Array()
+	val factions: com.badlogic.gdx.utils.Array<FactionData> = com.badlogic.gdx.utils.Array()
 	var preprocessor: XmlReader.Element? = null
 	var corridor: SymbolicCorridorData = SymbolicCorridorData()
 	var levelTheme: RoomTheme? = null
@@ -49,6 +50,18 @@ class SymbolicLevelData()
 					val room = SymbolicRoomData.load(el)
 
 					level.rooms.add(room)
+				}
+			}
+
+			val factions = xml.getChildByName("Factions")
+			if (factions != null)
+			{
+				for (i in 0..factions.childCount-1)
+				{
+					val el = factions.getChild(i)
+					val faction = FactionData.load(el)
+
+					level.factions.add(faction)
 				}
 			}
 
