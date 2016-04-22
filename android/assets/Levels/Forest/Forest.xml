@@ -58,6 +58,7 @@
         <Filler Condition="6 + rnd(6)" />
 
         <Start>
+            <NoFaction>true</NoFaction>
             <Symbols>
                 <Symbol Extends=".">
                     <Char>s</Char>
@@ -71,13 +72,9 @@
                 </Symbol>
             </Symbols>
             <Rows>
-                <Row>eee</Row>
-                <Row>eee</Row>
-                <Row>eee</Row>
-                <Row>eee</Row>
-                <Row>eee</Row>
-                <Row>ese</Row>
-                <Row>eee</Row>
+                <Row>...</Row>
+                <Row>.s.</Row>
+                <Row>...</Row>
             </Rows>
         </Start>
 
@@ -96,5 +93,9 @@
             <Overwrite />
         </Feature>
     </Theme>
+
+    <Factions>
+        <Faction>Troll</Faction>
+    </Factions>
 
 </RecursiveDock>

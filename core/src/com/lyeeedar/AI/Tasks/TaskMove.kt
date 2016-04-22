@@ -64,8 +64,8 @@ class TaskMove(var direction: Enums.Direction): AbstractTask(EventComponent.Even
 
 				sprite.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, next.getPosDiff(prev), MoveAnimation.MoveEquation.LINEAR)
 
-				val sound = SoundInstance(AssetManager.loadSound("hit"), "Combat")
-				sound.play(next)
+				//val sound = SoundInstance(AssetManager.loadSound("hit"), "Combat")
+				//sound.play(next)
 			}
 			else if (pos.canSwap && pos.size == 1)
 			{

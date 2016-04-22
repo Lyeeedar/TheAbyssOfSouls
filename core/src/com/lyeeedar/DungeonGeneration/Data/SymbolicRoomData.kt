@@ -38,6 +38,7 @@ class SymbolicRoomData()
 	var placement: Enums.Direction = Enums.Direction.CENTRE
 	var generator: AbstractRoomGenerator? = null
 	var faction: FactionData? = null
+	var noFaction: Boolean = false
 
 	fun resolveSymbols(sharedMap: ObjectMap<Char, Symbol>)
 	{
@@ -127,6 +128,8 @@ class SymbolicRoomData()
 		room.symbolMap.putAll(symbolMap)
 		room.placement = placement
 		room.generator = generator
+		room.noFaction = noFaction
+		room.faction = faction
 
 		return room
 	}
@@ -156,6 +159,7 @@ class SymbolicRoomData()
 			{
 				room.faction = FactionData.load(faction)
 			}
+			room.noFaction = xml.getBoolean("NoFaction", false)
 
 			val rowsEl = xml.getChildByName("Rows")
 			if (rowsEl != null)

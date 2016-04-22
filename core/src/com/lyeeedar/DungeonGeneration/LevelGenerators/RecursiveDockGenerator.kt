@@ -95,7 +95,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			{
 				factionCount++
 			}
-			else
+			else if (!room.noFaction)
 			{
 				emptyRooms.add(room)
 			}
@@ -103,7 +103,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 
 		if (levelData.factions.size > 0)
 		{
-			val targetCount = (rooms.size.toFloat() * 0.6f).toInt()
+			val targetCount = (placedRooms.size.toFloat() * 0.6f).toInt()
 			while (factionCount < targetCount && emptyRooms.size > 0)
 			{
 				val faction = levelData.factions.ran(ran)

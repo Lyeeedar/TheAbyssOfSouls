@@ -13,6 +13,8 @@ package com.lyeeedar.Pathfinding;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BinaryHeap;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.lyeeedar.Enums;
 import com.lyeeedar.Util.EnumBitflag;
 import com.lyeeedar.Util.Point;
@@ -125,7 +127,7 @@ public class AStarPathfind
 		// not added to open list yet, so add it
 		if ( node == null )
 		{
-			node = new Node( x, y );
+			node = pool.obtain().set( x, y );
 			node.cost = cost;
 			node.parent = parent;
 			openList.add( node, node.cost );
@@ -174,6 +176,7 @@ public class AStarPathfind
 
 		if ( nodes[endx][endy] == null )
 		{
+			free();
 			return null;
 		}
 		else
@@ -193,11 +196,29 @@ public class AStarPathfind
 
 			path.reverse();
 
+			free();
 			return path;
 		}
 	}
 
-	private class Node extends BinaryHeap.Node
+	private void free()
+	{
+		for (int x = 0; x < width; x++)
+		{
+			for (int y = 0; y < height; y++)
+			{
+				Node node = nodes[x][y];
+				if (node != null)
+				{
+					pool.free( node );
+				}
+			}
+		}
+	}
+
+	private static final Pool<Node> pool = Pools.get( Node.class, Integer.MAX_VALUE );
+
+	public static class Node extends BinaryHeap.Node
 	{
 		public int x;
 		public int y;
@@ -206,12 +227,17 @@ public class AStarPathfind
 
 		public boolean processed = false;
 
-		public Node( int x, int y )
+		public Node()
 		{
 			super(0);
+		}
 
+		public Node set( int x, int y )
+		{
 			this.x = x;
 			this.y = y;
+
+			return this;
 		}
 
 		@Override

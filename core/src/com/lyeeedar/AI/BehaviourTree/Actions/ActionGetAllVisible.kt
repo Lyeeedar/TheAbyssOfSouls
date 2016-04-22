@@ -52,7 +52,7 @@ class ActionGetAllVisible(): AbstractAction()
 				{
 					val estats = Mappers.stats.get(e) ?: continue
 
-					if (e != entity && estats.factions.isAllies(stats.factions))
+					if (e != entity && estats.hp > 0 && estats.factions.isAllies(stats.factions))
 					{
 						temp.add(e)
 					}
@@ -72,7 +72,7 @@ class ActionGetAllVisible(): AbstractAction()
 				{
 					val estats = Mappers.stats.get(e) ?: continue
 
-					if (e != entity && !estats.factions.isAllies(stats.factions))
+					if (e != entity && estats.hp > 0 && !estats.factions.isAllies(stats.factions))
 					{
 						temp.add(e)
 					}

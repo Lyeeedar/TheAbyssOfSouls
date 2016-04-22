@@ -41,7 +41,7 @@ class FactionData()
 			}
 		}
 
-		var packSize = (minPack + ran.nextInt(maxPack-minPack)) - 1
+		var packSize = if (minPack >= maxPack) minPack - 1 else (minPack + ran.nextInt(maxPack-minPack)) - 1
 
 		val leader = leaders.ran(ran)
 		placeEntity(leader, room, ran, validList)

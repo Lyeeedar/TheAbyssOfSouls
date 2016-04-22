@@ -1,0 +1,93 @@
+<Faction>
+    <MinPack>4</MinPack>
+    <MaxPack>4</MaxPack>
+
+    <Leaders>
+        <Entity>
+            <Name>troll</Name>
+
+            <AI>packLeader</AI>
+
+            <Slot>Entity</Slot>
+            <Size>1</Size>
+            <CanSwap>true</CanSwap>
+
+            <Sprite>
+                <Name>Oryx/uf_split/uf_heroes/troll</Name>
+                <DrawActualSize>true</DrawActualSize>
+            </Sprite>
+
+            <Statistics>
+                <Max_Health>20</Max_Health>
+                <Max_Stamina>100</Max_Stamina>
+                <Sight>5</Sight>
+                <Morale>90</Morale>
+                <Physical_Attack>2</Physical_Attack>
+                <Physical_Defense>1</Physical_Defense>
+            </Statistics>
+
+            <Factions>troll</Factions>
+
+            <Inventory>
+                <Equipment>
+                    <Weapon>
+                        <Name>Sword</Name>
+                        <HitSprite>
+                            <Name>EffectSprites/Slash/Slash</Name>
+                            <UpdateRate>0.1</UpdateRate>
+                        </HitSprite>
+                        <Slot>Weapon</Slot>
+                        <Statistics>
+                            <Physical_Attack>2</Physical_Attack>
+                        </Statistics>
+                    </Weapon>
+                </Equipment>
+            </Inventory>
+        </Entity>
+    </Leaders>
+
+    <Minions>
+        <Entity>
+            <Name>fly</Name>
+
+            <AI>packMinion</AI>
+            <Leader>troll</Leader>
+
+            <Slot>Entity</Slot>
+            <Size>1</Size>
+
+            <Sprite>
+                <Name>Oryx/uf_split/uf_heroes/flies</Name>
+                <DrawActualSize>true</DrawActualSize>
+            </Sprite>
+
+            <Statistics>
+                <Max_Health>20</Max_Health>
+                <Max_Stamina>100</Max_Stamina>
+                <Sight>5</Sight>
+                <Morale>90</Morale>
+                <Physical_Attack>2</Physical_Attack>
+                <Physical_Defense>1</Physical_Defense>
+            </Statistics>
+
+            <Factions>troll</Factions>
+
+            <Inventory>
+                <Equipment>
+                    <Weapon>
+                        <Name>Sword</Name>
+                        <HitSprite>
+                            <Name>EffectSprites/Slash/Slash</Name>
+                            <UpdateRate>0.1</UpdateRate>
+                        </HitSprite>
+                        <Slot>Weapon</Slot>
+                        <Statistics>
+                            <Physical_Attack>2</Physical_Attack>
+                        </Statistics>
+                    </Weapon>
+                </Equipment>
+            </Inventory>
+        </Entity>
+    </Minions>
+
+</Faction>

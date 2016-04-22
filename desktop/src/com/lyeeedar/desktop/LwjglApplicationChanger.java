@@ -39,7 +39,7 @@ public class LwjglApplicationChanger extends AbstractApplicationChanger
 		cfg.fullscreen = pref.getBoolean( "fullscreen" );
 		cfg.vSyncEnabled = pref.getBoolean( "vSync" );
 		cfg.foregroundFPS = 0;
-		cfg.backgroundFPS = 2;
+		cfg.backgroundFPS = 0;
 		cfg.samples = pref.getInteger( "msaa" );
 		cfg.addIcon( "Sprites/Unpacked/Icon32.png", FileType.Internal );
 		cfg.allowSoftwareMode = true;

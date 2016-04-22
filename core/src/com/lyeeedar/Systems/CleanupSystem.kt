@@ -41,7 +41,7 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 			{
 				val tile = (pos.position as Tile)
 
-				if (tile.effects.size != 0) return
+				if (pos.hasEffects()) return
 
 				for (x in 0..pos.size-1)
 				{
