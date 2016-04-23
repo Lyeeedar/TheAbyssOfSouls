@@ -68,7 +68,10 @@ class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Fa
 		{
 			val el = xml.getChild(i)
 
-			damMap.put(Enums.Statistic.valueOf(el.name.toUpperCase()), el.text.toFloat())
+			val elemName = el.name.toUpperCase() + "_ATTACK"
+			val elem = Enums.Statistic.valueOf(elemName)
+
+			damMap.put(elem, el.text.toFloat())
 		}
 	}
 

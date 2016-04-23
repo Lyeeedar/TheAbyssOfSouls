@@ -21,7 +21,6 @@ class TaskPrepareAttack(val minOffset: Point, val maxOffset: Point, val entity: 
 
 		e.sprite().sprite.spriteAnimation = BumpAnimation.obtain().set(0.4f, dir.opposite);
 
-		//tile.contents.put(Enums.SpaceSlot.AIR, entity)
 		if (entity.pos() == null)
 		{
 			entity.add(PositionComponent())

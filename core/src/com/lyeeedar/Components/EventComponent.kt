@@ -73,4 +73,12 @@ class EventComponent: Component
 			}
 		}
 	}
+
+	fun parseHitData(xml: XmlReader.Element)
+	{
+		val group = EventActionGroup()
+		group.parse(xml)
+
+		registerHandler(EventType.HIT, group)
+	}
 }

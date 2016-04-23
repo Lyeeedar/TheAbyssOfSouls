@@ -28,7 +28,7 @@ class TargettingEntities(): AbstractTargetting()
 		{
 			"ALLIES", "ALLY", "FRIEND" -> Mode.ALLIES
 			"ENEMIES", "ENEMY", "FOE" -> Mode.ENEMIES
-			"SELF", "PLAYER", "ME" -> Mode.SELF
+			"SELF", "ME" -> Mode.SELF
 			else -> Mode.ALL
 		}
 	}

@@ -30,7 +30,7 @@ abstract class AbstractTargetting()
 		fun getClass(name: String): Class<out AbstractTargetting>
 		{
 			val type = when(name) {
-				"ALL", "ENTITIES", "ALLIES", "ENEMIES", "ALLY", "ENEMY", "FRIEND", "FOE" -> TargettingEntities::class.java
+				"ALL", "ENTITIES", "ALLIES", "ENEMIES", "ALLY", "ENEMY", "FRIEND", "FOE", "SELF", "ME" -> TargettingEntities::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid ability targetting type: $name")

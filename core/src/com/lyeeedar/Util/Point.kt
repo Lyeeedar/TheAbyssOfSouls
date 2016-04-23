@@ -11,23 +11,57 @@ import com.lyeeedar.Enums
  * Created by Philip on 20-Mar-16.
  */
 
-open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0) : Pool.Poolable
+open class Point : Pool.Poolable
 {
+	var locked: Boolean = false
+	var fromPool: Boolean = false
+
+	var x: Int = 0
+		set(value)
+		{
+			if (locked) throw RuntimeException("Tried to edit a locked point")
+			if (fromPool && !obtained) throw RuntimeException("Tried to edit a freed point")
+			field = value
+		}
+
+	var y: Int = 0
+		set(value)
+		{
+			if (locked) throw RuntimeException("Tried to edit a locked point")
+			if (fromPool && !obtained) throw RuntimeException("Tried to edit a freed point")
+			field = value
+		}
+
+	constructor()
+	{
+
+	}
+
+	constructor(x: Int, y: Int)
+	{
+		this.x = x
+		this.y = y
+	}
+	constructor(x: Int, y: Int, locked: Boolean) : this(x, y)
+	{
+		this.locked = locked
+	}
     constructor( other: Point ) : this(other.x, other.y)
 
     companion object
     {
-		@JvmField val ZERO = Point(0, 0)
-		@JvmField val ONE = Point(1, 1)
-		@JvmField val MINUS_ONE = Point(-1, -1)
-		@JvmField val MAX = Point(Int.MAX_VALUE, Int.MAX_VALUE)
-		@JvmField val MIN = Point(-Int.MAX_VALUE, -Int.MAX_VALUE)
+		@JvmField val ZERO = Point(0, 0, true)
+		@JvmField val ONE = Point(1, 1, true)
+		@JvmField val MINUS_ONE = Point(-1, -1, true)
+		@JvmField val MAX = Point(Int.MAX_VALUE, Int.MAX_VALUE, true)
+		@JvmField val MIN = Point(-Int.MAX_VALUE, -Int.MAX_VALUE, true)
 
         private val pool: Pool<Point> = Pools.get( Point::class.java, Int.MAX_VALUE )
 
         @JvmStatic fun obtain(): Point
 		{
 			val point = Point.pool.obtain()
+			point.fromPool = true
 
 			if (point.obtained) throw RuntimeException()
 
@@ -118,7 +152,6 @@ open class Point constructor(@JvmField var x: Int = 0, @JvmField var y: Int = 0)
 
     override fun reset()
     {
-        x = 0
-        y = 0
+
     }
 }

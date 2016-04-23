@@ -28,13 +28,9 @@
                 </HitSprite>
 
                 <Effects>
-                    <OnHit>
-                        <Group Name="">
-                            <Damage>
-                                <Physical_Attack>100</Physical_Attack>
-                            </Damage>
-                        </Group>
-                    </OnHit>
+                    <Damage>
+                        <Physical>100</Physical>
+                    </Damage>
                 </Effects>
 
             </Attack>
@@ -72,13 +68,9 @@
                 </HitSprite>
 
                 <Effects>
-                    <OnHit>
-                        <Group Name="">
-                            <Damage>
-                                <Physical_Attack>100</Physical_Attack>
-                            </Damage>
-                        </Group>
-                    </OnHit>
+                    <Damage>
+                        <Physical>100</Physical>
+                    </Damage>
                 </Effects>
 
             </Attack>
@@ -118,13 +110,9 @@
                 </HitSprite>
 
                 <Effects>
-                    <OnHit>
-                        <Group Name="">
-                            <Damage>
-                                <Physical_Attack>100</Physical_Attack>
-                            </Damage>
-                        </Group>
-                    </OnHit>
+                    <Damage>
+                        <Physical>100</Physical>
+                    </Damage>
                 </Effects>
 
             </Attack>
