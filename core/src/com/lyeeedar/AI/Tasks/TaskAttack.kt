@@ -34,7 +34,7 @@ class TaskAttack(var direction: Enums.Direction): AbstractTask(EventComponent.Ev
 
 		val event = EventComponent()
 		val group = EventActionGroup()
-		group.actions.add(EventActionDamage(group, weapon.stats))
+		group.actions.add(EventActionDamage(group, weapon.attack))
 		event.registerHandler(EventComponent.EventType.HIT, group)
 		effect.add(event)
 

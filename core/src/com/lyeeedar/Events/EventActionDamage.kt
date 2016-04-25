@@ -16,30 +16,27 @@ import com.lyeeedar.Util.FastEnumMap
 
 class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Family.all(StatisticsComponent::class.java).get())
 {
-	constructor(group: EventActionGroup, stats: FastEnumMap<Enums.Statistic, Float>) : this(group)
+	constructor(group: EventActionGroup, stats: FastEnumMap<Enums.ElementType, Float>) : this(group)
 	{
-		for (stat in Enums.Statistic.ATTACK_STATS)
+		for (elem in Enums.ElementType.Values)
 		{
-			damMap.put(stat, stats.get(stat))
+			damMap.put(elem, stats.get(elem) ?: 0f)
 		}
 	}
 
-	val damMap: FastEnumMap<Enums.Statistic, Float> = Enums.Statistic.getStatisticsBlock()
+	val damMap: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap()
 
 	override fun handle(args: EventArgs, entity: Entity)
 	{
 		val stats = Mappers.stats.get(entity)
 
 		var totalDam = 0f
-		for (i in 0..Enums.Statistic.ATTACK_STATS.size-1)
+		for (elem in Enums.ElementType.Values)
 		{
-			val atkStat = Enums.Statistic.ATTACK_STATS[i]
-			val defStat = Enums.Statistic.DEFENSE_STATS[i]
-
-			val atk = damMap.get(atkStat) ?: 0f
+			val atk = damMap.get(elem) ?: 0f
 			if (atk == 0f) continue
 
-			val def = stats.stats.get(defStat) ?: 0f
+			val def = stats.defense.get(elem) ?: 0f
 
 			val dam = Math.max(0f, atk - def)
 
@@ -68,8 +65,7 @@ class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Fa
 		{
 			val el = xml.getChild(i)
 
-			val elemName = el.name.toUpperCase() + "_ATTACK"
-			val elem = Enums.Statistic.valueOf(elemName)
+			val elem = Enums.ElementType.valueOf(el.name.toUpperCase())
 
 			damMap.put(elem, el.text.toFloat())
 		}

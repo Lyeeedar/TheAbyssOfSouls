@@ -105,6 +105,25 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		return closest
 	}
 
+	fun processEntityStats(e: Entity)
+	{
+		val stats = Mappers.stats.get(e)
+
+		if (stats.hp == stats.maxHP)
+		{
+			stats.bonusHP = 0f
+		}
+		else if (stats.bonusHP > 0)
+		{
+			stats.hp += Math.max(stats.bonusHP, 10f)
+		}
+
+		if (!stats.staminaReduced && stats.stamina < stats.maxStamina)
+		{
+			stats.stamina += 10f
+		}
+	}
+
 	fun processEntity(e: Entity): Boolean
 	{
 		val task = Mappers.task.get(e)
@@ -113,6 +132,8 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 
 		if (stats.hp <= 0) return true
 		if (pos.hasEffects()) return false
+
+		stats.staminaReduced = false
 
 		if (task.actionDelay >= 0)
 		{
@@ -137,6 +158,7 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 				task.actionDelay -= t.cost;
 
 				e.pos().turnsOnTile++
+				processEntityStats(e)
 
 				e.postEvent(EventArgs(t.eventType, e, e, t.cost))
 			}

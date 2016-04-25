@@ -97,8 +97,10 @@ class EntityLoader()
 
 			val statistics = xml.getChildByName("Statistics")
 			val factions = xml.getChildByName("Factions")
+			val attack = xml.getChildByName("Attack")
+			val defense = xml.getChildByName("Defense")
 
-			if (statistics != null || factions != null)
+			if (statistics != null || factions != null || attack != null || defense != null)
 			{
 				val stats = entity.stats() ?: StatisticsComponent()
 				entity.add(stats)
@@ -115,6 +117,11 @@ class EntityLoader()
 					if (factions.getBooleanAttribute("Override", false)) stats.factions.clear()
 					val split = factions.text.toLowerCase().split(",")
 					for (faction in split) stats.factions.add(faction)
+				}
+
+				if (attack != null)
+				{
+					stats.attack = Enums.ElementType.load(attack)
 				}
 			}
 

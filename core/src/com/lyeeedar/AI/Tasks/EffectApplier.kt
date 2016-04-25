@@ -81,15 +81,15 @@ class EffectApplier()
 					{
 						if (action is EventActionDamage)
 						{
-							for (stat in Enums.Statistic.ATTACK_STATS)
+							for (elem in Enums.ElementType.Values)
 							{
-								val baseAtk = stats.stats.get(stat)
-								val sclAtk = action.damMap.get(stat)
+								val baseAtk = stats.attack.get(elem)
+								val sclAtk = action.damMap.get(elem)
 
 								val sclVal = sclAtk / 100f
 								val newAtk = baseAtk * sclVal
 
-								action.damMap.put(stat, newAtk)
+								action.damMap.put(elem, newAtk)
 							}
 						}
 					}

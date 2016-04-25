@@ -20,7 +20,9 @@ class Item()
 	// Equipable stuff
 	var slot: Enums.EquipmentSlot? = null
 	lateinit var type: String
-	lateinit var stats: FastEnumMap<Enums.Statistic, Float>
+	var attack: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap(0f)
+	var defense: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap(0f)
+	var power: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap(1f)
 	var hitSprite: Sprite? = null
 	// abilities
 
@@ -39,7 +41,13 @@ class Item()
 
 			item.slot = if (xml.get("Slot", null) != null) Enums.EquipmentSlot.valueOf(xml.get("Slot").toUpperCase()) else null
 			item.type = xml.get("Type", "")
-			item.stats = Enums.Statistic.load(xml.getChildByName("Statistics"))
+
+			val attack = xml.getChildByName("Attack")
+			if (attack != null) item.attack = Enums.ElementType.load(attack)
+
+			val defense = xml.getChildByName("Defense")
+			if (defense != null) item.defense = Enums.ElementType.load(defense)
+
 			item.hitSprite = loadSprite(xml.getChildByName("HitSprite"))
 
 			item.value = xml.getInt("Value", 0)

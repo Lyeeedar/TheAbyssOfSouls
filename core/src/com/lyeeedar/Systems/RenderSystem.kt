@@ -32,9 +32,7 @@ import com.lyeeedar.Util.abs
 class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 {
 	val batchHDRColour: HDRColourSpriteBatch = HDRColourSpriteBatch()
-	val damFont: BitmapFont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 20)
 	lateinit var entities: ImmutableArray<Entity>
-	lateinit var hpEntities: ImmutableArray<Entity>
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap<RenderSprite>()
 	val directionBitflag: EnumBitflag<Enums.Direction> = EnumBitflag<Enums.Direction>()
 
@@ -46,7 +44,6 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 	override fun addedToEngine(engine: Engine?)
 	{
 		entities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java).one(SpriteComponent::class.java, TilingSpriteComponent::class.java, EffectComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
-		hpEntities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java, StatisticsComponent::class.java).get()) ?: throw RuntimeException("It broked")
 	}
 
 	override fun update(deltaTime: Float)
@@ -158,19 +155,6 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 			rs.sprite.render(batchHDRColour, rs.x, rs.y, GlobalData.Global.tileSize, GlobalData.Global.tileSize );
 
 			rs.free()
-		}
-
-		for (entity in hpEntities)
-		{
-			val pos = entity.pos()
-			val stats = entity.stats()
-
-			val txt = stats.damTally.abs().toInt().toString()
-
-			val drawX = pos.position.x * GlobalData.Global.tileSize + offsetx;
-			val drawY = (pos.position.y+1) * GlobalData.Global.tileSize + offsety;
-
-			damFont.draw(batchHDRColour, txt, drawX, drawY)
 		}
 
 		batchHDRColour.end()
