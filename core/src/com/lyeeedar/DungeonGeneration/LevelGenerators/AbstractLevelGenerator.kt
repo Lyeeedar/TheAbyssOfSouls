@@ -13,10 +13,10 @@ import com.lyeeedar.DungeonGeneration.Data.Symbol
 import com.lyeeedar.DungeonGeneration.Data.SymbolicLevelData
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoom
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoomData
-import com.lyeeedar.Enums
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Room
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
 import java.util.*
 
@@ -54,7 +54,7 @@ abstract class AbstractLevelGenerator()
 			for (y in 0..height-1)
 			{
 				val symbol = contents[x, y]
-				for (slot in Enums.SpaceSlot.Values)
+				for (slot in SpaceSlot.Values)
 				{
 					val el = symbol.contents[slot] ?: continue
 

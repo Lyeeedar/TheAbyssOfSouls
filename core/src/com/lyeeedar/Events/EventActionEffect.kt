@@ -6,7 +6,6 @@ import com.lyeeedar.AssetManager
 import com.lyeeedar.Components.EffectComponent
 import com.lyeeedar.Components.EventComponent
 import com.lyeeedar.Components.PositionComponent
-import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.Sprite

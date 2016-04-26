@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.lyeeedar.AssetManager
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile

@@ -4,7 +4,8 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.OrderedSet
-import com.lyeeedar.Enums
+import com.lyeeedar.ElementType
+import com.lyeeedar.Statistic
 import com.lyeeedar.Util.FastEnumMap
 import java.util.*
 
@@ -16,11 +17,11 @@ class StatisticsComponent: Component
 {
 	constructor()
 
-	val attack: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap(0f)
-	val defense: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap(0f)
-	val power: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap(1f)
+	val attack: FastEnumMap<ElementType, Float> = ElementType.getElementMap(0f)
+	val defense: FastEnumMap<ElementType, Float> = ElementType.getElementMap(0f)
+	val power: FastEnumMap<ElementType, Float> = ElementType.getElementMap(1f)
 
-	val stats: FastEnumMap<Enums.Statistic, Float> = Enums.Statistic.getStatisticsBlock(0f)
+	val stats: FastEnumMap<Statistic, Float> = Statistic.getStatisticsBlock(0f)
 	val variableMap: ObjectFloatMap<String> = ObjectFloatMap()
 		get()
 		{
@@ -29,13 +30,13 @@ class StatisticsComponent: Component
 		}
 	val factions: OrderedSet<String> = OrderedSet()
 	var hp: Float
-		get() = stats.get(Enums.Statistic.HEALTH)
+		get() = stats.get(Statistic.HEALTH)
 		set(value)
 		{
 			val v = Math.min(value, maxHP)
 
 			val diff = v - hp
-			stats[Enums.Statistic.HEALTH] = v
+			stats[Statistic.HEALTH] = v
 			morale += (diff / hp) * moraleChange
 
 			if (diff < 0)
@@ -50,17 +51,22 @@ class StatisticsComponent: Component
 	var bonusHP: Float = 0f
 
 	var maxHP: Float
-		get() = stats[Enums.Statistic.MAX_HEALTH]
-		set(value) { stats[Enums.Statistic.MAX_HEALTH] = value }
+		get() = stats[Statistic.MAX_HEALTH]
+		set(value)
+		{
+			stats[Statistic.MAX_HEALTH] = value
+
+			if (hp < value) hp = value
+		}
 
 	var stamina: Float
-		get() = stats[Enums.Statistic.STAMINA]
+		get() = stats[Statistic.STAMINA]
 		set(value)
 		{
 			val v = Math.min(maxStamina, value)
 
 			val diff = v - stamina
-			stats[Enums.Statistic.STAMINA] = v
+			stats[Statistic.STAMINA] = v
 			if (diff < 0)
 			{
 				staminaReduced = true
@@ -69,12 +75,17 @@ class StatisticsComponent: Component
 	var staminaReduced: Boolean = false
 
 	var maxStamina: Float
-		get() = stats[Enums.Statistic.MAX_STAMINA]
-		set(value) { stats[Enums.Statistic.MAX_STAMINA] = value }
+		get() = stats[Statistic.MAX_STAMINA]
+		set(value)
+		{
+			stats[Statistic.MAX_STAMINA] = value
+
+			if (stamina < value) stamina = value
+		}
 
 	var morale: Float
-		get() = stats[Enums.Statistic.MORALE]
-		set(value) { stats[Enums.Statistic.MORALE] = value }
+		get() = stats[Statistic.MORALE]
+		set(value) { stats[Statistic.MORALE] = value }
 	val moraleChange: Float
-		get() = stats[Enums.Statistic.MORALE_CHANGE]
+		get() = stats[Statistic.MORALE_CHANGE]
 }

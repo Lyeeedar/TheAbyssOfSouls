@@ -4,15 +4,16 @@ import com.PaulChew.Pnt
 import com.PaulChew.Triangle
 import com.PaulChew.Triangulation
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Direction
 import com.lyeeedar.DungeonGeneration.Data.Symbol
 import com.lyeeedar.DungeonGeneration.Data.SymbolicCorridorData
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoom
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoomData
 import com.lyeeedar.DungeonGeneration.RoomGenerators.AbstractRoomGenerator
 import com.lyeeedar.DungeonGeneration.RoomGenerators.Basic
-import com.lyeeedar.Enums
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Pathfinding.AStarPathfind
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.ran
@@ -127,7 +128,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 				{
 					if (interestingOnly)
 					{
-						for (slot in Enums.SpaceSlot.InterestingValues)
+						for (slot in SpaceSlot.InterestingValues)
 						{
 							val entity = room.contents[x, y].contents[slot]
 							if (entity != null) contents[x+room.x, y+room.y].contents[slot] = entity
@@ -138,7 +139,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 						contents[x+room.x, y+room.y] = room.contents[x, y].copy()
 					}
 
-					if (contents[x+room.x, y+room.y].contents.containsKey(Enums.SpaceSlot.WALL))
+					if (contents[x+room.x, y+room.y].contents.containsKey(SpaceSlot.WALL))
 					{
 						contents[x+room.x, y+room.y].passable = false;
 					}
@@ -195,7 +196,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 					else -> width + height
 				}
 
-				if (!contents[x, y].contents.containsKey(Enums.SpaceSlot.WALL)) contents[x, y].influence = 0
+				if (!contents[x, y].contents.containsKey(SpaceSlot.WALL)) contents[x, y].influence = 0
 			}
 		}
 	}
@@ -207,13 +208,13 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 		val max = Point(width, height)
 
 		// place edge rooms
-		val edges = EnumMap<Enums.Direction, com.badlogic.gdx.utils.Array<SymbolicRoomData>>(Enums.Direction::class.java)
+		val edges = EnumMap<Direction, com.badlogic.gdx.utils.Array<SymbolicRoomData>>(Direction::class.java)
 
 		val itr = toBePlacedRooms.iterator()
 		while (itr.hasNext())
 		{
 			val room = itr.next()
-			if (room.placement != Enums.Direction.CENTRE)
+			if (room.placement != Direction.CENTRE)
 			{
 				itr.remove()
 
@@ -228,7 +229,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			}
 		}
 
-		for (dir in Enums.Direction.CardinalValues)
+		for (dir in Direction.CardinalValues)
 		{
 			val block = edges[dir] ?: continue
 
@@ -546,11 +547,11 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 				var x = door.x + room.x
 				var y = door.y + room.y
 
-				if (door.dir == Enums.Direction.WEST)
+				if (door.dir == Direction.WEST)
 				{
 					x -= levelData.corridor.width - 1
 				}
-				else if (door.dir == Enums.Direction.NORTH)
+				else if (door.dir == Direction.NORTH)
 				{
 					y -= levelData.corridor.width - 1
 				}
@@ -622,7 +623,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 
 		for (p in paths)
 		{
-			val pathFind = AStarPathfind(contents.array, p.first[0].toInt(), p.first[1].toInt(), p.second[0].toInt(), p.second[1].toInt(), false, true, levelData.corridor.width, Enums.SpaceSlot.ENTITY, null)
+			val pathFind = AStarPathfind(contents.array, p.first[0].toInt(), p.first[1].toInt(), p.second[0].toInt(), p.second[1].toInt(), false, true, levelData.corridor.width, SpaceSlot.ENTITY, null)
 			val path = pathFind.path
 
 			carveCorridor(path)

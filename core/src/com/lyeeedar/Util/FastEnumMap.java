@@ -111,6 +111,14 @@ public final class FastEnumMap<T extends Enum<T>, V> implements Iterable<V>
 		calculateSize();
 	}
 
+	public void addAll(FastEnumMap<T, V> other)
+	{
+		for (T key : keyType.getEnumConstants())
+		{
+			put( key, other.get( key ) );
+		}
+	}
+
 	public Iterator<V> iterator()
 	{
 		return new FastEnumMapIterator(this);

@@ -2,8 +2,9 @@ package com.lyeeedar.Components
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Point
 
 /**
@@ -26,7 +27,7 @@ class PositionComponent: Component
 		set(value) { position = value }
 		get() { return position }
 	var max: Point = Point()
-	var slot: Enums.SpaceSlot = Enums.SpaceSlot.ENTITY
+	var slot: SpaceSlot = SpaceSlot.ENTITY
 	var size: Int = 1
 	var canSwap: Boolean = false
 
@@ -39,7 +40,7 @@ class PositionComponent: Component
 
 	fun hasEffects() = hasEffects(position)
 
-	fun hasEffects(direction: Enums.Direction): Boolean
+	fun hasEffects(direction: Direction): Boolean
 	{
 		val etile = position as Tile? ?: return false
 		etile.level.getTile(etile, direction) ?: return false

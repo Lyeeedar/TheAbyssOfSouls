@@ -3,7 +3,8 @@ package com.lyeeedar.AI.Tasks
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.scenes.scene2d.actions.EventAction
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
+import com.lyeeedar.EquipmentSlot
 import com.lyeeedar.Events.EventActionDamage
 import com.lyeeedar.Events.EventActionGroup
 import com.lyeeedar.Events.EventArgs
@@ -16,7 +17,7 @@ import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
  * Created by Philip on 29-Mar-16.
  */
 
-class TaskAttack(var direction: Enums.Direction): AbstractTask(EventComponent.EventType.ATTACK)
+class TaskAttack(var direction: Direction): AbstractTask(EventComponent.EventType.ATTACK)
 {
 	override fun execute(e: Entity)
 	{
@@ -25,7 +26,7 @@ class TaskAttack(var direction: Enums.Direction): AbstractTask(EventComponent.Ev
 
 		val next = tile.neighbours.get(direction)
 
-		val weapon: Item = e.getEquip(Enums.EquipmentSlot.WEAPON)
+		val weapon: Item = e.getEquip(EquipmentSlot.WEAPON)
 
 		val sprite = weapon.hitSprite?.copy() ?: return
 

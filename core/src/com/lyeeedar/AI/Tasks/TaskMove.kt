@@ -3,9 +3,10 @@ package com.lyeeedar.AI.Tasks
 import com.badlogic.ashley.core.Entity
 import com.lyeeedar.AssetManager
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sound.SoundInstance
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Util.isAllies
 
@@ -13,7 +14,7 @@ import com.lyeeedar.Util.isAllies
  * Created by Philip on 22-Mar-16.
  */
 
-class TaskMove(var direction: Enums.Direction): AbstractTask(EventComponent.EventType.MOVE)
+class TaskMove(var direction: Direction): AbstractTask(EventComponent.EventType.MOVE)
 {
 	override fun execute(e: Entity)
 	{
@@ -31,7 +32,7 @@ class TaskMove(var direction: Enums.Direction): AbstractTask(EventComponent.Even
 				for (y in 0..pos.size-1)
 				{
 					val tile = prev.level.getTile(prev, x+direction.x, y+direction.y)
-					if (tile == null || (tile.contents.get(pos.slot) != null && tile.contents.get(pos.slot) != e) || tile.contents.get(Enums.SpaceSlot.WALL) != null)
+					if (tile == null || (tile.contents.get(pos.slot) != null && tile.contents.get(pos.slot) != e) || tile.contents.get(SpaceSlot.WALL) != null)
 					{
 						isValidMove = false
 						break@outer
@@ -70,7 +71,7 @@ class TaskMove(var direction: Enums.Direction): AbstractTask(EventComponent.Even
 			else if (pos.canSwap && pos.size == 1)
 			{
 				val collisionTile = prev.level.getTile(prev, direction.x, direction.y)
-				if (collisionTile != null && collisionTile.contents.get(Enums.SpaceSlot.WALL) == null)
+				if (collisionTile != null && collisionTile.contents.get(SpaceSlot.WALL) == null)
 				{
 					// we collided with an entity
 					val collisionEntity = collisionTile.contents.get(pos.slot)

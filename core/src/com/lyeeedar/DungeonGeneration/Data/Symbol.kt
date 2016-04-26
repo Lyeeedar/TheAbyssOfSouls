@@ -2,8 +2,8 @@ package com.lyeeedar.DungeonGeneration.Data
 
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Enums
 import com.lyeeedar.Pathfinding.PathfindingTile
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.neaten
 import java.util.*
@@ -16,7 +16,7 @@ class Symbol(var char: Char): PathfindingTile
 {
 	var extends: Char? = null
 
-	val contents: FastEnumMap<Enums.SpaceSlot, XmlReader.Element> = FastEnumMap<Enums.SpaceSlot, XmlReader.Element>(Enums.SpaceSlot::class.java)
+	val contents: FastEnumMap<SpaceSlot, XmlReader.Element> = FastEnumMap<SpaceSlot, XmlReader.Element>(SpaceSlot::class.java)
 
 	var passable: Boolean = true
 	var influence: Int = 0
@@ -28,7 +28,7 @@ class Symbol(var char: Char): PathfindingTile
 			val symbol = Symbol(xml.get("Char").elementAt(0))
 			symbol.extends = xml.getAttribute("Extends", null)?.elementAt(0)
 
-			for (slot in Enums.SpaceSlot.Values)
+			for (slot in SpaceSlot.Values)
 			{
 				val el = xml.getChildByName(slot.toString().neaten())
 				if (el != null)
@@ -50,7 +50,7 @@ class Symbol(var char: Char): PathfindingTile
 
 			symbol.resolve(symbolMap)
 
-			for (slot in Enums.SpaceSlot.Values)
+			for (slot in SpaceSlot.Values)
 			{
 				if (symbol.contents.containsKey(slot) && !contents.containsKey(slot))
 				{
@@ -65,7 +65,7 @@ class Symbol(var char: Char): PathfindingTile
 		val symbol = Symbol(char)
 		symbol.extends = extends
 
-		for (slot in Enums.SpaceSlot.Values)
+		for (slot in SpaceSlot.Values)
 		{
 			symbol.contents.put(slot, contents[slot])
 		}
@@ -73,6 +73,6 @@ class Symbol(var char: Char): PathfindingTile
 		return symbol
 	}
 
-	override fun getPassable(travelType: Enums.SpaceSlot, self: Any?): Boolean = passable
-	override fun getInfluence(travelType: Enums.SpaceSlot, self: Any?): Int = influence
+	override fun getPassable(travelType: SpaceSlot, self: Any?): Boolean = passable
+	override fun getInfluence(travelType: SpaceSlot, self: Any?): Int = influence
 }

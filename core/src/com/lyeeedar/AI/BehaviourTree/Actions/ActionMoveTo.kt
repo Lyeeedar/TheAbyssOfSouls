@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Pathfinding.Pathfinder
@@ -47,6 +47,13 @@ class ActionMoveTo(): AbstractAction()
 
 		val pathFinder = Pathfinder(tile.level.grid.array, tile.x, tile.y, target.x, target.y, GlobalData.Global.canMoveDiagonal, posData.size, entity);
 		val path = pathFinder.getPath( posData.slot );
+
+		if (path == null)
+		{
+			lastPos = Point.ZERO
+			state = ExecutionState.FAILED;
+			return state;
+		}
 
 		// if couldnt find a valid path, fail
 		if ( path.size < 2 )
@@ -92,7 +99,7 @@ class ActionMoveTo(): AbstractAction()
 			}
 
 			lastPos = tile
-			taskData.tasks.add(TaskMove(Enums.Direction.getDirection(offset)));
+			taskData.tasks.add(TaskMove(Direction.getDirection(offset)));
 		}
 		// if moving away then just run directly away
 		else
@@ -108,7 +115,7 @@ class ActionMoveTo(): AbstractAction()
 
 			lastPos = tile
 			val opposite = offset * -1
-			taskData.tasks.add(TaskMove(Enums.Direction.getDirection(opposite)));
+			taskData.tasks.add(TaskMove(Direction.getDirection(opposite)));
 			opposite.free()
 		}
 

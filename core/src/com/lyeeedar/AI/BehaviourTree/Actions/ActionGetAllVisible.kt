@@ -5,8 +5,8 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.ShadowCastComponent
-import com.lyeeedar.Enums
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Statistic
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.isAllies
 
@@ -35,7 +35,7 @@ class ActionGetAllVisible(): AbstractAction()
 		{
 			cache = ShadowCastComponent()
 
-			cache.cache.getShadowCast(tile.level.grid.array, tile.x, tile.y, stats.stats.get(Enums.Statistic.SIGHT).toInt(), entity)
+			cache.cache.getShadowCast(tile.level.grid.array, tile.x, tile.y, stats.stats.get(Statistic.SIGHT).toInt(), entity)
 
 			entity.add(cache)
 		}

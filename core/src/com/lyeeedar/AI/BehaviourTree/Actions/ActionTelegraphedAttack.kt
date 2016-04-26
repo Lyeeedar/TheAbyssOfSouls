@@ -9,7 +9,7 @@ import com.lyeeedar.AI.Tasks.TaskDoAttack
 import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.AI.Tasks.TaskPrepareAttack
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.Point
@@ -21,7 +21,7 @@ import com.lyeeedar.Util.isAllies
 
 class ActionTelegraphedAttack(): AbstractAction()
 {
-	data class ValidData(val combo: Combo, val direction: Enums.Direction, val srcTile: Tile)
+	data class ValidData(val combo: Combo, val direction: Direction, val srcTile: Tile)
 	var readyEntity: Entity? = null
 		set(value)
 		{
@@ -53,7 +53,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 		return state
 	}
 
-	fun isValidAttack(attack: Attack, direction: Enums.Direction, srcTile: Tile, entity: Entity): Boolean
+	fun isValidAttack(attack: Attack, direction: Direction, srcTile: Tile, entity: Entity): Boolean
 	{
 		val entityTile = entity.tile() ?: return false
 		val entityStats = entity.stats() ?: return false
@@ -174,7 +174,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 		// find all valid combos + direction
 		val valid = com.badlogic.gdx.utils.Array<ValidData>()
 
-		for (dir in Enums.Direction.CardinalValues)
+		for (dir in Direction.CardinalValues)
 		{
 			val srcTiles = entity.getEdgeTiles(dir)
 
@@ -265,7 +265,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 			if (valid.size == 0 && cstep.canEnd)
 			{
 				atkData.currentCombo = null
-				atkData.currentDir = Enums.Direction.CENTRE
+				atkData.currentDir = Direction.CENTRE
 				atkData.currentIndex = 0
 				atkData.currentTarget = null
 				atkData.currentOffset = null
@@ -288,7 +288,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 		else
 		{
 			atkData.currentCombo = null
-			atkData.currentDir = Enums.Direction.CENTRE
+			atkData.currentDir = Direction.CENTRE
 			atkData.currentIndex = 0
 			atkData.currentTarget = null
 			atkData.currentOffset = null
@@ -296,7 +296,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 		}
 	}
 
-	fun updateValid(combo: Combo, comboStep: ComboStep, direction: Enums.Direction, count: Int, entity: Entity, attack: Attack, valid: com.badlogic.gdx.utils.Array<ValidData>)
+	fun updateValid(combo: Combo, comboStep: ComboStep, direction: Direction, count: Int, entity: Entity, attack: Attack, valid: com.badlogic.gdx.utils.Array<ValidData>)
 	{
 		var srcTiles = entity.getEdgeTiles(direction)
 		for (srcTile in srcTiles)

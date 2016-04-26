@@ -1,6 +1,6 @@
 package com.lyeeedar.Util
 
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 
 /**
  * Created by Philip on 08-Apr-16.
@@ -39,7 +39,7 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>) {
 		array[p.x][p.y] = t
 	}
 
-	operator fun get(p: Point, dir: Enums.Direction): T {
+	operator fun get(p: Point, dir: Direction): T {
 		return array[p.x + dir.x][p.y + dir.y]
 	}
 

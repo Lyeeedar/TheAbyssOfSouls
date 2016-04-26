@@ -5,8 +5,7 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.AssetManager
-import com.lyeeedar.Enums
+import com.lyeeedar.*
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.Items.Item
 import com.lyeeedar.Level.Tile
@@ -25,7 +24,7 @@ fun Entity.postEvent(args:EventArgs) = this.event()?.pendingEvents?.add(args)
 fun Entity.name() = Mappers.name.get(this)?.name ?: ""
 fun Entity.sprite() = Mappers.sprite.get(this)
 fun Entity.renderOffset() = this.sprite()?.sprite?.spriteAnimation?.renderOffset
-fun Entity.getEquip(slot: Enums.EquipmentSlot) = Mappers.inventory.get(this).equipment.get(slot)
+fun Entity.getEquip(slot: EquipmentSlot) = Mappers.inventory.get(this).equipment.get(slot)
 
 class Mappers
 {
@@ -75,7 +74,7 @@ class EntityLoader()
 			entity.add(pos)
 
 			val slot = xml.get("Slot", null)
-			if (slot != null) pos.slot = Enums.SpaceSlot.valueOf(slot.toUpperCase())
+			if (slot != null) pos.slot = SpaceSlot.valueOf(slot.toUpperCase())
 
 			val canSwap = xml.get("CanSwap", null)
 			if (canSwap != null) pos.canSwap = xml.getBoolean("CanSwap")
@@ -107,9 +106,9 @@ class EntityLoader()
 
 				if (statistics != null)
 				{
-					Enums.Statistic.load(statistics, stats.stats)
-					stats.stats[Enums.Statistic.HEALTH] = stats.stats[Enums.Statistic.MAX_HEALTH]
-					stats.stats[Enums.Statistic.STAMINA] = stats.stats[Enums.Statistic.MAX_STAMINA]
+					Statistic.load(statistics, stats.stats)
+					stats.stats[Statistic.HEALTH] = stats.stats[Statistic.MAX_HEALTH]
+					stats.stats[Statistic.STAMINA] = stats.stats[Statistic.MAX_STAMINA]
 				}
 
 				if (factions != null)
@@ -121,7 +120,12 @@ class EntityLoader()
 
 				if (attack != null)
 				{
-					stats.attack = Enums.ElementType.load(attack)
+					stats.attack.addAll(ElementType.load(attack))
+				}
+
+				if (defense != null)
+				{
+					stats.defense.addAll(ElementType.load(defense))
 				}
 			}
 
@@ -177,7 +181,7 @@ class EntityLoader()
 
 fun Entity.isAllies(other: Entity): Boolean { return if (this.stats() != null && other.stats() != null) this.stats().factions.isAllies(other.stats().factions) else false }
 
-fun Entity.getEdgeTiles(dir: Enums.Direction): com.badlogic.gdx.utils.Array<Tile>
+fun Entity.getEdgeTiles(dir: Direction): com.badlogic.gdx.utils.Array<Tile>
 {
 	val pos = this.pos()
 	val tile = this.tile() ?: throw RuntimeException("argh tile is null")
@@ -188,7 +192,7 @@ fun Entity.getEdgeTiles(dir: Enums.Direction): com.badlogic.gdx.utils.Array<Tile
 	var sx = 0;
 	var sy = 0;
 
-	if ( dir == Enums.Direction.NORTH )
+	if ( dir == Direction.NORTH )
 	{
 		sx = 0;
 		sy = pos.size - 1;
@@ -196,7 +200,7 @@ fun Entity.getEdgeTiles(dir: Enums.Direction): com.badlogic.gdx.utils.Array<Tile
 		xstep = 1;
 		ystep = 0;
 	}
-	else if ( dir == Enums.Direction.SOUTH )
+	else if ( dir == Direction.SOUTH )
 	{
 		sx = 0;
 		sy = 0;
@@ -204,7 +208,7 @@ fun Entity.getEdgeTiles(dir: Enums.Direction): com.badlogic.gdx.utils.Array<Tile
 		xstep = 1;
 		ystep = 0;
 	}
-	else if ( dir == Enums.Direction.EAST )
+	else if ( dir == Direction.EAST )
 	{
 		sx = pos.size - 1;
 		sy = 0;
@@ -212,7 +216,7 @@ fun Entity.getEdgeTiles(dir: Enums.Direction): com.badlogic.gdx.utils.Array<Tile
 		xstep = 0;
 		ystep = 1;
 	}
-	else if ( dir == Enums.Direction.WEST )
+	else if ( dir == Direction.WEST )
 	{
 		sx = 0;
 		sy = 0;

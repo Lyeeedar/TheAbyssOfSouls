@@ -6,7 +6,7 @@ import com.lyeeedar.Ability.Cost.AbstractCost
 import com.lyeeedar.Ability.Targetting.AbstractTargetting
 import com.lyeeedar.Ability.Targetting.TargettingEntities
 import com.lyeeedar.AssetManager
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.Point
@@ -29,7 +29,7 @@ class Ability()
 	lateinit var effectData: XmlReader.Element
 
 	var caster: Entity? = null
-	var dir: Enums.Direction = Enums.Direction.CENTRE
+	var dir: Direction = Direction.CENTRE
 	var targetTile: Tile? = null
 
 	fun process()

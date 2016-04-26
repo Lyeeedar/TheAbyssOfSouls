@@ -3,8 +3,8 @@ package com.lyeeedar.DungeonGeneration.Data
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.EquationHelper
+import com.lyeeedar.Direction
 import com.lyeeedar.DungeonGeneration.RoomGenerators.AbstractRoomGenerator
-import com.lyeeedar.Enums
 import com.lyeeedar.Util.Array2D
 import java.util.*
 
@@ -35,7 +35,7 @@ class SymbolicRoomData()
 
 	val symbolMap: ObjectMap<Char, Symbol> = ObjectMap()
 
-	var placement: Enums.Direction = Enums.Direction.CENTRE
+	var placement: Direction = Direction.CENTRE
 	var generator: AbstractRoomGenerator? = null
 	var faction: FactionData? = null
 	var noFaction: Boolean = false
@@ -151,7 +151,7 @@ class SymbolicRoomData()
 			room.spawnEquation = xml.getAttribute("Condition", null)?.toLowerCase() ?: room.spawnEquation
 			room.spawnEquation = xml.getAttribute("Count", null)?.toLowerCase() ?: room.spawnEquation
 
-			room.placement = Enums.Direction.valueOf(xml.get("Placement", "Centre").toUpperCase())
+			room.placement = Direction.valueOf(xml.get("Placement", "Centre").toUpperCase())
 			room.lockRotation = xml.getBoolean("LockRotation", false)
 
 			val faction = xml.getChildByName("Faction")

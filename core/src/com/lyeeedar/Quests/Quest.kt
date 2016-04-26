@@ -10,11 +10,11 @@ import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AssetManager
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoomData
-import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.MainGame
 import com.lyeeedar.Quests.Input.AbstractQuestInput
 import com.lyeeedar.Quests.Output.QuestOutputGroup
+import com.lyeeedar.Rarity
 import com.lyeeedar.Screens.LoadingScreen
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.UI.Seperator
@@ -35,7 +35,7 @@ class Quest
 	lateinit var levelText: String
 	var difficulty: Int = 0
 	lateinit var music: String
-	lateinit var rarity: Enums.Rarity
+	lateinit var rarity: Rarity
 
 	lateinit var path: String
 	var inputs = Array<AbstractQuestInput>()
@@ -79,7 +79,7 @@ class Quest
 		levelText = xml.get("LevelText")
 		difficulty = xml.getInt("Difficulty")
 		music = xml.get("Music")
-		rarity = Enums.Rarity.valueOf(xml.get("Rarity", "COMMON").toUpperCase())
+		rarity = Rarity.valueOf(xml.get("Rarity", "COMMON").toUpperCase())
 
 		val inputsElement = xml.getChildByName("Inputs")
 		if (inputsElement != null)

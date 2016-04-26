@@ -2,7 +2,7 @@ package com.lyeeedar.AI.Tasks
 
 import com.badlogic.ashley.core.Entity
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
 import com.lyeeedar.Util.Point
@@ -11,7 +11,7 @@ import com.lyeeedar.Util.Point
  * Created by Philip on 31-Mar-16.
  */
 
-class TaskPrepareAttack(val minOffset: Point, val maxOffset: Point, val entity: Entity, val dir: Enums.Direction): AbstractTask(EventComponent.EventType.NONE)
+class TaskPrepareAttack(val minOffset: Point, val maxOffset: Point, val entity: Entity, val dir: Direction): AbstractTask(EventComponent.EventType.NONE)
 {
 	override fun execute(e: Entity)
 	{
@@ -29,7 +29,7 @@ class TaskPrepareAttack(val minOffset: Point, val maxOffset: Point, val entity: 
 		entity.pos().max = etile + maxOffset
 		entity.sprite().sprite.rotation = atk.currentDir.angle
 
-		if (atk.currentDir == Enums.Direction.WEST || atk.currentDir == Enums.Direction.EAST)
+		if (atk.currentDir == Direction.WEST || atk.currentDir == Direction.EAST)
 		{
 			entity.sprite().sprite.fixPosition = true
 		}

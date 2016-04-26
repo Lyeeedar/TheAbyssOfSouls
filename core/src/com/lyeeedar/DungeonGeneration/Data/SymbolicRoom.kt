@@ -2,9 +2,10 @@ package com.lyeeedar.DungeonGeneration.Data
 
 import com.badlogic.gdx.utils.ObjectMap
 import com.exp4j.Helpers.EquationHelper
+import com.lyeeedar.Direction
 import com.lyeeedar.DungeonGeneration.RoomGenerators.AbstractRoomGenerator
-import com.lyeeedar.Enums
 import com.lyeeedar.Pathfinding.BresenhamLine
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.ran
@@ -27,37 +28,37 @@ class SymbolicRoom()
 
 	val doors: com.badlogic.gdx.utils.Array<RoomDoor> = com.badlogic.gdx.utils.Array()
 
-	var placement: Enums.Direction = Enums.Direction.CENTRE
+	var placement: Direction = Direction.CENTRE
 
 	val neighbours: com.badlogic.gdx.utils.Array<SymbolicRoom> = com.badlogic.gdx.utils.Array()
 
 	// ----------------------------------------------------------------------
-	private fun addDoor(pos: Int, space: Int, dir: Enums.Direction, ran: Random)
+	private fun addDoor(pos: Int, space: Int, dir: Direction, ran: Random)
 	{
 		val offset = if (space > 1) ran.nextInt(space - 1) else 0
 
-		if (dir == Enums.Direction.WEST)
+		if (dir == Direction.WEST)
 		{
 			doors.add(RoomDoor(0, pos + offset, dir))
 		}
-		else if (dir == Enums.Direction.EAST)
+		else if (dir == Direction.EAST)
 		{
 			doors.add(RoomDoor(width - 1, pos + offset, dir))
 		}
-		else if (dir == Enums.Direction.NORTH)
+		else if (dir == Direction.NORTH)
 		{
 			doors.add(RoomDoor(pos + offset, 0, dir))
 		}
-		else if (dir == Enums.Direction.SOUTH)
+		else if (dir == Direction.SOUTH)
 		{
 			doors.add(RoomDoor(pos + offset, height - 1, dir))
 		}
 	}
 
 	// ----------------------------------------------------------------------
-	private fun processSide(dir: Enums.Direction, ran: Random)
+	private fun processSide(dir: Direction, ran: Random)
 	{
-		val range = if (dir == Enums.Direction.WEST || dir == Enums.Direction.EAST) height else width
+		val range = if (dir == Direction.WEST || dir == Direction.EAST) height else width
 
 		var blockStart = -1
 		for (pos in 1..range - 2)
@@ -65,17 +66,17 @@ class SymbolicRoom()
 			var x: Int
 			var y: Int
 
-			if (dir == Enums.Direction.WEST)
+			if (dir == Direction.WEST)
 			{
 				x = 0
 				y = pos
 			}
-			else if (dir == Enums.Direction.EAST)
+			else if (dir == Direction.EAST)
 			{
 				x = width - 1
 				y = pos
 			}
-			else if (dir == Enums.Direction.NORTH)
+			else if (dir == Direction.NORTH)
 			{
 				x = pos
 				y = 0
@@ -88,7 +89,7 @@ class SymbolicRoom()
 
 			if (blockStart >= 0)
 			{
-				if (contents[x, y].contents.containsKey(Enums.SpaceSlot.WALL))
+				if (contents[x, y].contents.containsKey(SpaceSlot.WALL))
 				{
 					addDoor(blockStart, pos - blockStart, dir, ran)
 					blockStart = -1
@@ -96,7 +97,7 @@ class SymbolicRoom()
 			}
 			else
 			{
-				if (!contents[x, y].contents.containsKey(Enums.SpaceSlot.WALL))
+				if (!contents[x, y].contents.containsKey(SpaceSlot.WALL))
 				{
 					blockStart = pos
 				}
@@ -119,16 +120,16 @@ class SymbolicRoom()
 		//  3
 
 		// Side 0
-		processSide(Enums.Direction.WEST, ran)
+		processSide(Direction.WEST, ran)
 
 		// Side 2
-		processSide(Enums.Direction.EAST, ran)
+		processSide(Direction.EAST, ran)
 
 		// Side 1
-		processSide(Enums.Direction.NORTH, ran)
+		processSide(Direction.NORTH, ran)
 
 		// Side 3
-		processSide(Enums.Direction.SOUTH, ran)
+		processSide(Direction.SOUTH, ran)
 	}
 
 	// ----------------------------------------------------------------------
@@ -207,7 +208,7 @@ class SymbolicRoom()
 			for (pos in path)
 			{
 				var done = false
-				if (contents[pos].getPassable(Enums.SpaceSlot.ENTITY, null))
+				if (contents[pos].getPassable(SpaceSlot.ENTITY, null))
 				{
 					done = true
 				}
@@ -288,4 +289,4 @@ class SymbolicRoom()
 	}
 }
 
-class RoomDoor(x: Int, y: Int, val dir: Enums.Direction): Point(x, y)
+class RoomDoor(x: Int, y: Int, val dir: Direction): Point(x, y)

@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AssetManager
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
+import com.lyeeedar.ElementType
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.FastEnumMap
@@ -16,22 +16,22 @@ import com.lyeeedar.Util.FastEnumMap
 
 class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Family.all(StatisticsComponent::class.java).get())
 {
-	constructor(group: EventActionGroup, stats: FastEnumMap<Enums.ElementType, Float>) : this(group)
+	constructor(group: EventActionGroup, stats: FastEnumMap<ElementType, Float>) : this(group)
 	{
-		for (elem in Enums.ElementType.Values)
+		for (elem in ElementType.Values)
 		{
 			damMap.put(elem, stats.get(elem) ?: 0f)
 		}
 	}
 
-	val damMap: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap()
+	val damMap: FastEnumMap<ElementType, Float> = ElementType.getElementMap()
 
 	override fun handle(args: EventArgs, entity: Entity)
 	{
 		val stats = Mappers.stats.get(entity)
 
 		var totalDam = 0f
-		for (elem in Enums.ElementType.Values)
+		for (elem in ElementType.Values)
 		{
 			val atk = damMap.get(elem) ?: 0f
 			if (atk == 0f) continue
@@ -65,7 +65,7 @@ class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Fa
 		{
 			val el = xml.getChild(i)
 
-			val elem = Enums.ElementType.valueOf(el.name.toUpperCase())
+			val elem = ElementType.valueOf(el.name.toUpperCase())
 
 			damMap.put(elem, el.text.toFloat())
 		}

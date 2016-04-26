@@ -1,7 +1,7 @@
 package com.lyeeedar.DungeonGeneration.Data
 
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Enums
+import com.lyeeedar.SpaceSlot
 
 /**
  * Created by Philip on 17-Apr-16.
@@ -24,7 +24,7 @@ class SymbolicFeature()
 	}
 
 	lateinit var entity: XmlReader.Element
-	lateinit var slot: Enums.SpaceSlot
+	lateinit var slot: SpaceSlot
 	lateinit var placement: Placement
 
 	var overwrite: Boolean = false
@@ -40,7 +40,7 @@ class SymbolicFeature()
 			val feature = SymbolicFeature()
 
 			feature.entity = xml.getChildByName("Entity")
-			feature.slot = Enums.SpaceSlot.valueOf(xml.get("Slot", "Entity").toUpperCase())
+			feature.slot = SpaceSlot.valueOf(xml.get("Slot", "Entity").toUpperCase())
 
 			feature.placement = Placement.valueOf(xml.get("Placement", "ANY").toUpperCase())
 

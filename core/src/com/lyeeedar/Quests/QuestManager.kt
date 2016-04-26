@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Enums
+import com.lyeeedar.Rarity
 
 import java.io.IOException
 import java.util.Random
@@ -52,7 +52,7 @@ class QuestManager
 			{
 				if (Math.abs(quest.difficulty - difficulty) <= 1 && quest.evaluateInputs())
 				{
-					val rarity = Enums.Rarity.Values.size - quest.rarity.ordinal + 1
+					val rarity = Rarity.Values.size - quest.rarity.ordinal + 1
 					for (i in 0..rarity - 1)
 					{
 						validQuests.add(quest)

@@ -4,12 +4,12 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.GlobalData
 
 class BumpAnimation : AbstractSpriteAnimation
 {
-	private var direction: Enums.Direction? = null
+	private var direction: Direction? = null
 
 	private val offset = floatArrayOf(0f, 0f)
 
@@ -18,7 +18,7 @@ class BumpAnimation : AbstractSpriteAnimation
 
 	}
 
-	fun set(duration: Float, direction: Enums.Direction): BumpAnimation
+	fun set(duration: Float, direction: Direction): BumpAnimation
 	{
 		this.duration = duration
 		this.duration *= GlobalData.Global.animationSpeed
@@ -54,7 +54,7 @@ class BumpAnimation : AbstractSpriteAnimation
 	override fun set(duration: Float, diff: FloatArray)
 	{
 		this.duration = duration
-		this.direction = Enums.Direction.getDirection(diff)
+		this.direction = Direction.getDirection(diff)
 		this.time = 0f
 	}
 

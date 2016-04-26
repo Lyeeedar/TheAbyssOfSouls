@@ -5,8 +5,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.SpaceSlot
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -51,7 +51,7 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 					}
 				}
 
-				if (pos.slot == Enums.SpaceSlot.WALL)
+				if (pos.slot == SpaceSlot.WALL)
 				{
 					tile.level.recalculateGrids()
 				}

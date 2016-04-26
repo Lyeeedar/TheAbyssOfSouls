@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity
 import com.lyeeedar.AI.BehaviourTree.BehaviourTree
 import com.lyeeedar.AI.IAI
 import com.lyeeedar.AI.Tasks.AbstractTask
-import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation

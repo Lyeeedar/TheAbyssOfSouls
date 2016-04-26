@@ -7,7 +7,8 @@ import com.lyeeedar.AI.Tasks.TaskAttack
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.getEquip
 import com.lyeeedar.Components.stats
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
+import com.lyeeedar.EquipmentSlot
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.isAllies
@@ -27,7 +28,7 @@ class ActionAttack(): AbstractAction()
 		val taskData = Mappers.task.get(entity)
 		val tile = posData.position as? Tile
 		val stats = entity.stats()
-		val wep = entity.getEquip(Enums.EquipmentSlot.WEAPON)
+		val wep = entity.getEquip(EquipmentSlot.WEAPON)
 
 		state = ExecutionState.FAILED;
 		// doesnt have all the needed data, fail
@@ -52,7 +53,7 @@ class ActionAttack(): AbstractAction()
 
 		if (!canAttack) return state
 
-		val dir = Enums.Direction.getDirection(tile, target)
+		val dir = Direction.getDirection(tile, target)
 		val attack = TaskAttack(dir)
 
 		taskData.tasks.add(attack)

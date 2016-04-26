@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Vector3
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.Events.EventActionDamage
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.GlobalData
@@ -17,7 +17,7 @@ import com.lyeeedar.Util.Point
  * Created by Philip on 02-Apr-16.
  */
 
-class TaskDoAttack(val atk: Attack, val dir: Enums.Direction, val srcTileOffset: Point): AbstractTask(EventComponent.EventType.NONE)
+class TaskDoAttack(val atk: Attack, val dir: Direction, val srcTileOffset: Point): AbstractTask(EventComponent.EventType.NONE)
 {
 	var comboAttack: TaskPrepareAttack? = null
 

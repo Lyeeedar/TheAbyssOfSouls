@@ -5,11 +5,13 @@ import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
+import com.lyeeedar.ElementType
 import com.lyeeedar.Events.EventActionDamage
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
 import com.lyeeedar.Util.Point
@@ -24,7 +26,7 @@ class EffectApplier()
 	{
 		fun apply(
 				srcEntity: Entity, srcTileOffset: Point, // src data
-				dir: Enums.Direction, targetTile: Point, // target data
+				dir: Direction, targetTile: Point, // target data
 				hitPoints: com.badlogic.gdx.utils.Array<Point>, hitType: String, // hit data
 				hitSprite: Sprite, effectData: XmlReader.Element) // effect data
 		{
@@ -70,7 +72,7 @@ class EffectApplier()
 				val position = PositionComponent()
 				position.min = min!!
 				position.max = max!!
-				position.slot = Enums.SpaceSlot.AIR
+				position.slot = SpaceSlot.AIR
 				effectEntity.add(position)
 
 				val event = EventComponent()
@@ -81,7 +83,7 @@ class EffectApplier()
 					{
 						if (action is EventActionDamage)
 						{
-							for (elem in Enums.ElementType.Values)
+							for (elem in ElementType.Values)
 							{
 								val baseAtk = stats.attack.get(elem)
 								val sclAtk = action.damMap.get(elem)

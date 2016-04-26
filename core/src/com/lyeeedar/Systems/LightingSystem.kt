@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.*
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.math.Vector2
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Util.Colour
@@ -52,6 +51,7 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 			}
 
 			val rawGrid = light.cache.rawOutput
+			if (rawGrid == null) continue
 			for (ix in 0..rawGrid.size-1)
 			{
 				for (iy in 0..rawGrid[0].size-1)

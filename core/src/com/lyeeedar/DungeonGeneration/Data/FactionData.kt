@@ -2,7 +2,7 @@ package com.lyeeedar.DungeonGeneration.Data
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Enums
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.ran
 import com.lyeeedar.Util.removeRan
@@ -30,7 +30,7 @@ class FactionData()
 		{
 			for ( y in 0..room.height-1 )
 			{
-				if ( room.contents[x, y].getPassable( Enums.SpaceSlot.WALL, null ) )
+				if ( room.contents[x, y].getPassable( SpaceSlot.WALL, null ) )
 				{
 					val point = Point.obtain().set( x, y );
 					if ( x > 0 && x < room.width - 1 && y > 0 && y < room.height - 1 )
@@ -62,7 +62,7 @@ class FactionData()
 
 		val slotEl = xml.getChildByNameRecursive("Slot")
 		val slotText = slotEl?.text ?: "Entity"
-		val slot = Enums.SpaceSlot.valueOf(slotText.toUpperCase())
+		val slot = SpaceSlot.valueOf(slotText.toUpperCase())
 
 		val temp = com.badlogic.gdx.utils.Array<Point>(validList)
 		var placed = false

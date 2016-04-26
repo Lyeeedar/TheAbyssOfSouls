@@ -2,7 +2,7 @@ package com.lyeeedar.Pathfinding;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import com.lyeeedar.Enums;
+import com.lyeeedar.SpaceSlot;
 import com.lyeeedar.Util.EnumBitflag;
 import com.lyeeedar.Util.Point;
 
@@ -13,7 +13,7 @@ public class BresenhamLine
 		return lineNoDiag( x0, y0, x1, y1, null, false, 0, null, null );
 	}
 
-	public static Array<Point> lineNoDiag( int x0, int y0, int x1, int y1, PathfindingTile[][] Grid, boolean checkPassable, int range, Enums.SpaceSlot travelType, Object self )
+	public static Array<Point> lineNoDiag( int x0, int y0, int x1, int y1, PathfindingTile[][] Grid, boolean checkPassable, int range, SpaceSlot travelType, Object self )
 	{
 		int xDist = Math.abs( x1 - x0 );
 		int yDist = -Math.abs( y1 - y0 );
@@ -51,7 +51,7 @@ public class BresenhamLine
 		return path;
 	}
 
-	public static Array<Point> line( int x, int y, int x2, int y2, PathfindingTile[][] Grid, boolean checkPassable, int range, Enums.SpaceSlot travelType, Object self )
+	public static Array<Point> line( int x, int y, int x2, int y2, PathfindingTile[][] Grid, boolean checkPassable, int range, SpaceSlot travelType, Object self )
 	{
 		x = MathUtils.clamp( x, 0, Grid.length - 1 );
 		x2 = MathUtils.clamp( x2, 0, Grid.length - 1 );

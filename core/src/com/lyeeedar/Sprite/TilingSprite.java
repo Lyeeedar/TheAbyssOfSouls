@@ -5,15 +5,15 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.lyeeedar.AssetManager;
-import com.lyeeedar.Enums;
+import com.lyeeedar.Direction;
 import com.lyeeedar.Util.EnumBitflag;
 
 // Naming priority: NSEW
 public class TilingSprite
 {
-	private static final int CENTER = 1 << ( Enums.Direction.CENTRE.ordinal() + 1 );
-	private static final int SOUTH = 1 << ( Enums.Direction.SOUTH.ordinal() + 1 );
-	private static final int NORTH = 1 << ( Enums.Direction.NORTH.ordinal() + 1 );
+	private static final int CENTER = 1 << ( Direction.CENTRE.ordinal() + 1 );
+	private static final int SOUTH = 1 << ( Direction.SOUTH.ordinal() + 1 );
+	private static final int NORTH = 1 << ( Direction.NORTH.ordinal() + 1 );
 
 	public TilingSprite()
 	{
@@ -169,7 +169,7 @@ public class TilingSprite
 //		return AssetManager.packPixmap( "Sprites/" + maskedName + ".png", merged );
 	}
 
-	public static Array<String> getMasks( EnumBitflag<Enums.Direction> emptyDirections )
+	public static Array<String> getMasks( EnumBitflag<Direction> emptyDirections )
 	{
 		Array<String> masks = new Array<String>();
 
@@ -178,74 +178,74 @@ public class TilingSprite
 			masks.add("C");
 		}
 
-		if (emptyDirections.contains( Enums.Direction.NORTH ))
+		if (emptyDirections.contains( Direction.NORTH ))
 		{
-			if (emptyDirections.contains( Enums.Direction.EAST ))
+			if (emptyDirections.contains( Direction.EAST ))
 			{
 				masks.add("NE");
 			}
 
-			if (emptyDirections.contains( Enums.Direction.WEST ))
+			if (emptyDirections.contains( Direction.WEST ))
 			{
 				masks.add("NW");
 			}
 
-			if (!emptyDirections.contains( Enums.Direction.EAST ) && !emptyDirections.contains( Enums.Direction.WEST ))
+			if (!emptyDirections.contains( Direction.EAST ) && !emptyDirections.contains( Direction.WEST ))
 			{
 				masks.add("N");
 			}
 		}
 
-		if (emptyDirections.contains( Enums.Direction.SOUTH ))
+		if (emptyDirections.contains( Direction.SOUTH ))
 		{
-			if (emptyDirections.contains( Enums.Direction.EAST ))
+			if (emptyDirections.contains( Direction.EAST ))
 			{
 				masks.add("SE");
 			}
 
-			if (emptyDirections.contains( Enums.Direction.WEST ))
+			if (emptyDirections.contains( Direction.WEST ))
 			{
 				masks.add("SW");
 			}
 
-			if (!emptyDirections.contains( Enums.Direction.EAST ) && !emptyDirections.contains( Enums.Direction.WEST ))
+			if (!emptyDirections.contains( Direction.EAST ) && !emptyDirections.contains( Direction.WEST ))
 			{
 				masks.add("S");
 			}
 		}
 
-		if (emptyDirections.contains( Enums.Direction.EAST ))
+		if (emptyDirections.contains( Direction.EAST ))
 		{
-			if (!emptyDirections.contains( Enums.Direction.NORTH ) && !emptyDirections.contains( Enums.Direction.SOUTH ))
+			if (!emptyDirections.contains( Direction.NORTH ) && !emptyDirections.contains( Direction.SOUTH ))
 			{
 				masks.add("E");
 			}
 		}
 
-		if (emptyDirections.contains( Enums.Direction.WEST ))
+		if (emptyDirections.contains( Direction.WEST ))
 		{
-			if (!emptyDirections.contains( Enums.Direction.NORTH ) && !emptyDirections.contains( Enums.Direction.SOUTH ))
+			if (!emptyDirections.contains( Direction.NORTH ) && !emptyDirections.contains( Direction.SOUTH ))
 			{
 				masks.add("W");
 			}
 		}
 
-		if (emptyDirections.contains( Enums.Direction.NORTHEAST ) && !emptyDirections.contains( Enums.Direction.NORTH ) && !emptyDirections.contains( Enums.Direction.EAST ))
+		if (emptyDirections.contains( Direction.NORTHEAST ) && !emptyDirections.contains( Direction.NORTH ) && !emptyDirections.contains( Direction.EAST ))
 		{
 			masks.add("DNE");
 		}
 
-		if (emptyDirections.contains( Enums.Direction.NORTHWEST ) && !emptyDirections.contains( Enums.Direction.NORTH ) && !emptyDirections.contains( Enums.Direction.WEST ))
+		if (emptyDirections.contains( Direction.NORTHWEST ) && !emptyDirections.contains( Direction.NORTH ) && !emptyDirections.contains( Direction.WEST ))
 		{
 			masks.add("DNW");
 		}
 
-		if (emptyDirections.contains( Enums.Direction.SOUTHEAST ) && !emptyDirections.contains( Enums.Direction.SOUTH ) && !emptyDirections.contains( Enums.Direction.EAST ))
+		if (emptyDirections.contains( Direction.SOUTHEAST ) && !emptyDirections.contains( Direction.SOUTH ) && !emptyDirections.contains( Direction.EAST ))
 		{
 			masks.add("DSE");
 		}
 
-		if (emptyDirections.contains( Enums.Direction.SOUTHWEST ) && !emptyDirections.contains( Enums.Direction.SOUTH ) && !emptyDirections.contains( Enums.Direction.WEST ))
+		if (emptyDirections.contains( Direction.SOUTHWEST ) && !emptyDirections.contains( Direction.SOUTH ) && !emptyDirections.contains( Direction.WEST ))
 		{
 			masks.add("DSW");
 		}
@@ -253,11 +253,11 @@ public class TilingSprite
 		return masks;
 	}
 
-	public Sprite getSprite( EnumBitflag<Enums.Direction> emptyDirections )
+	public Sprite getSprite( EnumBitflag<Direction> emptyDirections )
 	{
 		if (hasAllElements)
 		{
-			if (emptyDirections.contains( Enums.Direction.SOUTH ))
+			if (emptyDirections.contains( Direction.SOUTH ))
 			{
 				return sprites.get( SOUTH );
 			}

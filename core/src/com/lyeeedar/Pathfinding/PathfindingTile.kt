@@ -1,6 +1,6 @@
 package com.lyeeedar.Pathfinding
 
-import com.lyeeedar.Enums
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.EnumBitflag
 
 /**
@@ -9,7 +9,7 @@ import com.lyeeedar.Util.EnumBitflag
 
 interface PathfindingTile
 {
-    fun getPassable(travelType: Enums.SpaceSlot, self: Any?): Boolean
+    fun getPassable(travelType: SpaceSlot, self: Any?): Boolean
 
-    fun getInfluence(travelType: Enums.SpaceSlot, self: Any?): Int
+    fun getInfluence(travelType: SpaceSlot, self: Any?): Int
 }

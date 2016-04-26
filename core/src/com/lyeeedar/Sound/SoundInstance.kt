@@ -17,7 +17,6 @@ import com.lyeeedar.AssetManager
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.PositionComponent
 import com.lyeeedar.Components.TaskComponent
-import com.lyeeedar.Enums
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Pathfinding.AStarPathfind

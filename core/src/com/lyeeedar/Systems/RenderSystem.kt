@@ -15,9 +15,10 @@ import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.lyeeedar.AssetManager
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Util.Colour
@@ -34,7 +35,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 	val batchHDRColour: HDRColourSpriteBatch = HDRColourSpriteBatch()
 	lateinit var entities: ImmutableArray<Entity>
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap<RenderSprite>()
-	val directionBitflag: EnumBitflag<Enums.Direction> = EnumBitflag<Enums.Direction>()
+	val directionBitflag: EnumBitflag<Direction> = EnumBitflag<Direction>()
 
 	var screenShakeRadius: Float = 0f
 	var screenShakeAccumulator: Float = 0f
@@ -130,7 +131,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 				effect.sprite.size[0] = pos.max.x - pos.min.x + 1
 				effect.sprite.size[1] = pos.max.y - pos.min.y + 1
 
-				if (effect.direction == Enums.Direction.EAST || effect.direction == Enums.Direction.WEST)
+				if (effect.direction == Direction.EAST || effect.direction == Direction.WEST)
 				{
 					val temp = effect.sprite.size[0]
 					effect.sprite.size[0] = effect.sprite.size[1]
@@ -141,7 +142,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 				effect.sprite.rotation = effect.direction.angle
 
-				queueSprite(effect.sprite, drawX, drawY, offsetx, offsety, Enums.SpaceSlot.AIR, tile, 2)
+				queueSprite(effect.sprite, drawX, drawY, offsetx, offsety, SpaceSlot.AIR, tile, 2)
 			}
 		}
 
@@ -161,7 +162,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: Enums.SpaceSlot, tile: Tile, index: Int)
+	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, tile: Tile, index: Int)
 	{
 		var x = ix
 		var y = iy
@@ -189,7 +190,7 @@ class RenderSprite : BinaryHeap.Node(0f) {
 
 	var comparisonVal: Float = 0f
 
-	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: Enums.SpaceSlot, tile: Tile, index: Int): RenderSprite {
+	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, tile: Tile, index: Int): RenderSprite {
 		this.sprite = sprite
 		this.x = x
 		this.y = y
@@ -214,7 +215,7 @@ class RenderSprite : BinaryHeap.Node(0f) {
 		val pool: Pool<RenderSprite> = Pools.get( RenderSprite::class.java, Int.MAX_VALUE )
 		fun obtain() = RenderSprite.pool.obtain()
 
-		val X_BLOCK_SIZE = Enums.SpaceSlot.Values.size * 3
+		val X_BLOCK_SIZE = SpaceSlot.Values.size * 3
 		var Y_BLOCK_SIZE = 0f
 		var MAX_Y_BLOCK_SIZE = 0f
 		var MAX_X_BLOCK_SIZE = 0f

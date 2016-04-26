@@ -1,7 +1,7 @@
 package com.lyeeedar.Components
 
 import com.badlogic.ashley.core.Component
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.FastEnumMap
@@ -15,16 +15,16 @@ class EffectComponent: Component
 	constructor(sprite: Sprite)
 	{
 		this.sprite = sprite
-		this.direction = Enums.Direction.CENTRE;
+		this.direction = Direction.CENTRE;
 	}
 
-	constructor(sprite: Sprite, dir: Enums.Direction)
+	constructor(sprite: Sprite, dir: Direction)
 	{
 		this.sprite = sprite
 		this.direction = dir
 	}
 
-	constructor(sprite: Sprite, dir: Enums.Direction, stage: Sprite.AnimationStage, args: EventArgs)
+	constructor(sprite: Sprite, dir: Direction, stage: Sprite.AnimationStage, args: EventArgs)
 	{
 		this.sprite = sprite
 		this.direction = dir
@@ -32,7 +32,7 @@ class EffectComponent: Component
 	}
 
 	val sprite: Sprite
-	val direction: Enums.Direction
+	val direction: Direction
 	val eventMap: FastEnumMap<Sprite.AnimationStage, EventArgs>	= FastEnumMap(Sprite.AnimationStage::class.java)
 	var completed: Boolean = false
 }

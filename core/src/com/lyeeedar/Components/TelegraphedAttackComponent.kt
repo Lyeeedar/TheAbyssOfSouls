@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AssetManager
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.Point
 
@@ -22,7 +22,7 @@ class TelegraphedAttackComponent: Component
 
 	var currentCombo: Combo? = null
 	var currentIndex: Int = 0
-	var currentDir: Enums.Direction = Enums.Direction.CENTRE
+	var currentDir: Direction = Direction.CENTRE
 	var currentTarget: Point? = null
 	var currentOffset: Point? = null
 

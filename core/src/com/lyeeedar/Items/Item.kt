@@ -1,7 +1,8 @@
 package com.lyeeedar.Items
 
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Enums
+import com.lyeeedar.ElementType
+import com.lyeeedar.EquipmentSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.loadSprite
@@ -18,11 +19,11 @@ class Item()
 	var icon: Sprite? = null
 
 	// Equipable stuff
-	var slot: Enums.EquipmentSlot? = null
+	var slot: EquipmentSlot? = null
 	lateinit var type: String
-	var attack: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap(0f)
-	var defense: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap(0f)
-	var power: FastEnumMap<Enums.ElementType, Float> = Enums.ElementType.getElementMap(1f)
+	val attack: FastEnumMap<ElementType, Float> = ElementType.getElementMap(0f)
+	val defense: FastEnumMap<ElementType, Float> = ElementType.getElementMap(0f)
+	val power: FastEnumMap<ElementType, Float> = ElementType.getElementMap(1f)
 	var hitSprite: Sprite? = null
 	// abilities
 
@@ -39,14 +40,14 @@ class Item()
 			item.description = xml.get("Description", "")
 			item.icon = loadSprite(xml.getChildByName("Icon"))
 
-			item.slot = if (xml.get("Slot", null) != null) Enums.EquipmentSlot.valueOf(xml.get("Slot").toUpperCase()) else null
+			item.slot = if (xml.get("Slot", null) != null) EquipmentSlot.valueOf(xml.get("Slot").toUpperCase()) else null
 			item.type = xml.get("Type", "")
 
 			val attack = xml.getChildByName("Attack")
-			if (attack != null) item.attack = Enums.ElementType.load(attack)
+			if (attack != null) item.attack.addAll(ElementType.load(attack))
 
 			val defense = xml.getChildByName("Defense")
-			if (defense != null) item.defense = Enums.ElementType.load(defense)
+			if (defense != null) item.defense.addAll(ElementType.load(defense))
 
 			item.hitSprite = loadSprite(xml.getChildByName("HitSprite"))
 

@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -111,7 +111,7 @@ open class Point : Pool.Poolable
 		return this
 	}
 
-	operator fun plus(other: Enums.Direction) = obtain().set(x + other.x, y + other.y)
+	operator fun plus(other: Direction) = obtain().set(x + other.x, y + other.y)
 	operator fun plus(other: Point) = obtain().set(x + other.x, y + other.y)
 	operator fun minus(other: Point) = obtain().set(x - other.x, y - other.y)
 	operator fun times(other: Point) = obtain().set(x * other.x, y * other.y)

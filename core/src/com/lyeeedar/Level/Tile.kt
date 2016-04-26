@@ -3,9 +3,10 @@ package com.lyeeedar.Level
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.lyeeedar.Components.*
-import com.lyeeedar.Enums
+import com.lyeeedar.Direction
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Pathfinding.PathfindingTile
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.*
 
 /**
@@ -14,19 +15,19 @@ import com.lyeeedar.Util.*
 
 class Tile() : Point(0, 0), PathfindingTile
 {
-    val neighbours: FastEnumMap<Enums.Direction, Tile> = FastEnumMap( Enums.Direction::class.java )
-    val contents: FastEnumMap<Enums.SpaceSlot, Entity> = FastEnumMap( Enums.SpaceSlot::class.java )
+    val neighbours: FastEnumMap<Direction, Tile> = FastEnumMap( Direction::class.java )
+    val contents: FastEnumMap<SpaceSlot, Entity> = FastEnumMap( SpaceSlot::class.java )
 	val effects: com.badlogic.gdx.utils.Array<Entity> = com.badlogic.gdx.utils.Array<Entity>(false, 4)
 	lateinit var level: Level
 	var visible: Boolean = false
 	var seen: Boolean = false
 	val light: Colour = Colour()
 
-    override fun getInfluence(travelType: Enums.SpaceSlot, self: Any?) = 0
+    override fun getInfluence(travelType: SpaceSlot, self: Any?) = 0
 
-    override fun getPassable(travelType: Enums.SpaceSlot, self: Any?): Boolean
+    override fun getPassable(travelType: SpaceSlot, self: Any?): Boolean
     {
-        if (contents.get(Enums.SpaceSlot.WALL) != null) { return false; }
+        if (contents.get(SpaceSlot.WALL) != null) { return false; }
 
 		val obj = contents.get(travelType)
 		if (obj != null && obj != self)

@@ -2,8 +2,8 @@ package com.lyeeedar.DungeonGeneration.Data
 
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Enums
-import com.lyeeedar.Enums.Direction
+import com.lyeeedar.Direction
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
@@ -27,7 +27,7 @@ class RoomTheme()
 			val x1 = x + dir.x
 			val y1 = y + dir.y
 
-			val collide = x1 >= 0 && y1 >= 0 && x1 < room.width && y1 < room.height && !room.contents[x1, y1].getPassable(Enums.SpaceSlot.WALL, null)
+			val collide = x1 >= 0 && y1 >= 0 && x1 < room.width && y1 < room.height && !room.contents[x1, y1].getPassable(SpaceSlot.WALL, null)
 
 			if (collide)
 			{
@@ -71,7 +71,7 @@ class RoomTheme()
 		{
 			for (y in 0..room.height-1)
 			{
-				resistanceMap[x][y] = if (room.contents[x, y].contents[Enums.SpaceSlot.WALL] != null) 1.0 else 0.0
+				resistanceMap[x][y] = if (room.contents[x, y].contents[SpaceSlot.WALL] != null) 1.0 else 0.0
 			}
 		}
 
@@ -114,10 +114,10 @@ class RoomTheme()
 			{
 				for (dir in Direction.CardinalValues)
 				{
-					if (room.contents[valid, dir].contents[Enums.SpaceSlot.WALL] != null)
+					if (room.contents[valid, dir].contents[SpaceSlot.WALL] != null)
 					{
-						val cw = room.contents[valid, dir.clockwise].contents[Enums.SpaceSlot.WALL] != null
-						val ccw = room.contents[valid, dir.anticlockwise].contents[Enums.SpaceSlot.WALL] != null
+						val cw = room.contents[valid, dir.clockwise].contents[SpaceSlot.WALL] != null
+						val ccw = room.contents[valid, dir.anticlockwise].contents[SpaceSlot.WALL] != null
 
 						if (cw || ccw)
 						{
@@ -142,7 +142,7 @@ class RoomTheme()
 			{
 				for (dir in Direction.CardinalValues)
 				{
-					if (room.contents[valid, dir].contents[Enums.SpaceSlot.WALL] != null)
+					if (room.contents[valid, dir].contents[SpaceSlot.WALL] != null)
 					{
 						output.add(valid)
 						break
@@ -165,7 +165,7 @@ class RoomTheme()
 				var clear = true
 				for (dir in Direction.CardinalValues)
 				{
-					if (room.contents[valid, dir].contents[Enums.SpaceSlot.WALL] != null)
+					if (room.contents[valid, dir].contents[SpaceSlot.WALL] != null)
 					{
 						clear = false
 						break
@@ -190,7 +190,7 @@ class RoomTheme()
 		{
 			for ( y in 0..room.height-1 )
 			{
-				if ( room.contents[x, y].getPassable( Enums.SpaceSlot.WALL, null ) )
+				if ( room.contents[x, y].getPassable( SpaceSlot.WALL, null ) )
 				{
 					val point = Point.obtain().set( x, y );
 					if ( x > 0 && x < room.width - 1 && y > 0 && y < room.height - 1 )
