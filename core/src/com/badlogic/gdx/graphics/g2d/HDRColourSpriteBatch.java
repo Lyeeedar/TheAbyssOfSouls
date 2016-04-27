@@ -192,6 +192,16 @@ public class HDRColourSpriteBatch implements Batch {
 			shader.end();
 	}
 
+	public void tintColour(Colour tint)
+	{
+		colour.timesAssign( tint );
+	}
+
+	public void tintColour(Color tint)
+	{
+		colour.timesAssign( tint );
+	}
+
 	@Override
 	public void setColor( Color tint )
 	{

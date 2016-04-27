@@ -21,8 +21,6 @@
         <Max_Health>100</Max_Health>
         <Max_Stamina>100</Max_Stamina>
         <Sight>10</Sight>
-        <Physical_Attack>2</Physical_Attack>
-        <Physical_Defense>1</Physical_Defense>
     </Statistics>
 
     <Factions>player</Factions>
@@ -36,9 +34,9 @@
                     <UpdateRate>0.1</UpdateRate>
                 </HitSprite>
                 <Slot>Weapon</Slot>
-                <Statistics>
-                    <Physical_Attack>20</Physical_Attack>
-                </Statistics>
+                <Attack>
+                    <Physical>20</Physical>
+                </Attack>
             </Weapon>
         </Equipment>
     </Inventory>

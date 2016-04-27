@@ -1,5 +1,7 @@
 package com.lyeeedar.Util
 
+import com.badlogic.gdx.graphics.Color
+
 /**
  * Created by Philip on 30-Mar-16.
  */
@@ -52,6 +54,14 @@ class Colour()
 	}
 
 	operator fun timesAssign(other: Colour)
+	{
+		r *= other.r;
+		g *= other.g;
+		b *= other.b;
+		a *= other.a;
+	}
+
+	operator fun timesAssign(other: Color)
 	{
 		r *= other.r;
 		g *= other.g;

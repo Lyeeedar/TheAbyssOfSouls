@@ -21,11 +21,13 @@ import com.lyeeedar.Util.Colour
 
 class GameScreen(): AbstractScreen()
 {
+	// ----------------------------------------------------------------------
 	override fun create()
 	{
 
 	}
 
+	// ----------------------------------------------------------------------
 	override fun doRender(delta: Float)
 	{
 		GlobalData.Global.engine.update(delta)

@@ -71,7 +71,7 @@ class ConditionalCheckValue(): AbstractConditional()
 			}
 		}
 
-		val conditionVal = EquationHelper.evaluate( condition, variableMap );
+		val conditionVal = EquationHelper.evaluate( condition!!, variableMap );
 
 		state = if (conditionVal != 0f) succeed else fail;
 		return state;

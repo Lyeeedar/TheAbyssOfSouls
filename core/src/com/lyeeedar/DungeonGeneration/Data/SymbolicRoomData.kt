@@ -28,10 +28,10 @@ class SymbolicRoomData()
 	lateinit var ran: Random
 
 	val widthVal: Int
-		get() = Math.max(EquationHelper.evaluate(width, ran), 1f).toInt()
+		get() = Math.max(EquationHelper.evaluate(width, ran = ran), 1f).toInt()
 
 	val heightVal: Int
-		get() = Math.max(EquationHelper.evaluate(height, ran), 1f).toInt()
+		get() = Math.max(EquationHelper.evaluate(height, ran = ran), 1f).toInt()
 
 	val symbolMap: ObjectMap<Char, Symbol> = ObjectMap()
 

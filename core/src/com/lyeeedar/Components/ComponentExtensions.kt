@@ -44,6 +44,7 @@ class Mappers
 		@JvmField val inventory: ComponentMapper<InventoryComponent> = ComponentMapper.getFor(InventoryComponent::class.java)
 		@JvmField val telegraphed: ComponentMapper<TelegraphedAttackComponent> = ComponentMapper.getFor(TelegraphedAttackComponent::class.java)
 		@JvmField val readyAttack: ComponentMapper<ReadyAttackComponent> = ComponentMapper.getFor(ReadyAttackComponent::class.java)
+		@JvmField val ability: ComponentMapper<AbilityComponent> = ComponentMapper.getFor(AbilityComponent::class.java)
 	}
 }
 

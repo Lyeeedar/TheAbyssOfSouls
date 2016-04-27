@@ -110,7 +110,7 @@ abstract class AbstractLevelGenerator()
 	{
 		for (room in levelData.rooms)
 		{
-			val count = EquationHelper.evaluate(room.spawnEquation, ran).toInt()
+			val count = EquationHelper.evaluate(room.spawnEquation, ran = ran).toInt()
 			for (i in 0..count-1)
 			{
 				room.ran = ran

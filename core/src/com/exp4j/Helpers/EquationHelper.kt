@@ -16,104 +16,99 @@ import net.objecthunter.exp4j.ExpressionBuilder
 
 class EquationHelper
 {
-	private val emptyMap = Statistic.emptyMap
-
-	fun tryBuild(expB: ExpressionBuilder): Expression?
+	companion object
 	{
-		var exp: Expression? = null
+		private val emptyMap = Statistic.emptyMap
 
-		// try
-		// {
-		exp = expB.build()
-		// }
-		// catch (Exception e) { }
-
-		return exp
-	}
-
-	fun setVariableNames(expB: ExpressionBuilder, variableMap: ObjectFloatMap<String>, prefix: String)
-	{
-		for (key in variableMap.keys())
+		fun tryBuild(expB: ExpressionBuilder): Expression?
 		{
-			expB.variable(prefix + key)
+			var exp: Expression? = null
+
+			// try
+			// {
+			exp = expB.build()
+			// }
+			// catch (Exception e) { }
+
+			return exp
 		}
-	}
 
-	fun setVariableValues(exp: Expression, variableMap: ObjectFloatMap<String>, prefix: String)
-	{
-		for (key in variableMap.keys())
+		fun setVariableNames(expB: ExpressionBuilder, variableMap: ObjectFloatMap<String>, prefix: String)
 		{
-			exp.setVariable(prefix + key, variableMap.get(key, 0f).toDouble())
-		}
-	}
-
-	@JvmOverloads fun createEquationBuilder(eqn: String, ran: Random = MathUtils.random): ExpressionBuilder
-	{
-		val expB = ExpressionBuilder(eqn)
-		BooleanOperators.applyOperators(expB)
-		expB.function(RandomFunction(ran))
-		expB.function(ChanceFunction(ran))
-		MathUtilFunctions.applyFunctions(expB)
-
-		return expB
-	}
-
-	fun isNumber(string: String?): Boolean
-	{
-		if (string == null || string.isEmpty())
-		{
-			return false
-		}
-		var i = 0
-		if (string[0] == '-')
-		{
-			if (string.length > 1)
+			for (key in variableMap.keys())
 			{
+				expB.variable(prefix + key)
+			}
+		}
+
+		fun setVariableValues(exp: Expression, variableMap: ObjectFloatMap<String>, prefix: String)
+		{
+			for (key in variableMap.keys())
+			{
+				exp.setVariable(prefix + key, variableMap.get(key, 0f).toDouble())
+			}
+		}
+
+		@JvmOverloads fun createEquationBuilder(eqn: String, ran: Random = MathUtils.random): ExpressionBuilder
+		{
+			val expB = ExpressionBuilder(eqn)
+			BooleanOperators.applyOperators(expB)
+			expB.function(RandomFunction(ran))
+			expB.function(ChanceFunction(ran))
+			MathUtilFunctions.applyFunctions(expB)
+
+			return expB
+		}
+
+		fun isNumber(string: String?): Boolean
+		{
+			if (string == null || string.isEmpty())
+			{
+				return false
+			}
+			var i = 0
+			if (string[0] == '-')
+			{
+				if (string.length > 1)
+				{
+					i++
+				} else
+				{
+					return false
+				}
+			}
+			while (i < string.length)
+			{
+				if (!Character.isDigit(string[i]))
+				{
+					return false
+				}
 				i++
 			}
-			else
-			{
-				return false
-			}
+			return true
 		}
-		while (i < string.length)
+
+		fun evaluate(eqn: String, variableMap: ObjectFloatMap<String> = emptyMap, ran: Random = MathUtils.random): Float
 		{
-			if (!Character.isDigit(string[i]))
+			if (isNumber(eqn))
 			{
-				return false
-			}
-			i++
-		}
-		return true
-	}
-
-	fun evaluate(eqn: String, ran: Random): Float
-	{
-		return evaluate(eqn, emptyMap, ran)
-	}
-
-	@JvmOverloads fun evaluate(eqn: String, variableMap: ObjectFloatMap<String> = emptyMap, ran: Random = MathUtils.random): Float
-	{
-		if (isNumber(eqn))
-		{
-			return Integer.parseInt(eqn).toFloat()
-		}
-		else
-		{
-			val expB = createEquationBuilder(eqn, ran)
-			setVariableNames(expB, variableMap, "")
-			val exp = tryBuild(expB)
-
-			if (exp == null)
+				return Integer.parseInt(eqn).toFloat()
+			} else
 			{
-				return 0f
-			}
-			else
-			{
-				setVariableValues(exp, variableMap, "")
-				val rawVal = exp.evaluate()
+				val expB = createEquationBuilder(eqn, ran)
+				setVariableNames(expB, variableMap, "")
+				val exp = tryBuild(expB)
 
-				return rawVal.toFloat()
+				if (exp == null)
+				{
+					return 0f
+				} else
+				{
+					setVariableValues(exp, variableMap, "")
+					val rawVal = exp.evaluate()
+
+					return rawVal.toFloat()
+				}
 			}
 		}
 	}

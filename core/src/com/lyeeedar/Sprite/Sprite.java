@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.lyeeedar.Enums;
 import com.lyeeedar.GlobalData;
 import com.lyeeedar.Sound.SoundInstance;
 import com.lyeeedar.Sprite.SpriteAnimation.AbstractSpriteAnimation;

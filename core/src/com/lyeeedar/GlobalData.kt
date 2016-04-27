@@ -1,6 +1,7 @@
 package com.lyeeedar
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -40,6 +41,9 @@ class GlobalData
 	@JvmField var currentLevel: Level = Level()
 	lateinit var engine: Engine
 	lateinit var questManager: QuestManager
+
+	val player: Entity
+		get() = currentLevel.player
 
 	@JvmField val controls: Controls = Controls()
 	lateinit var skin: Skin
