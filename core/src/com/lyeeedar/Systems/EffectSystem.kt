@@ -33,7 +33,7 @@ class EffectSystem(): IteratingSystem(Family.all(EffectComponent::class.java).ge
 
 		if (effect.sprite.sound != null)
 		{
-			effect.sprite.sound.play(entity?.tile()!!)
+			effect.sprite.sound?.play(entity?.tile()!!)
 			effect.sprite.sound = null
 		}
 	}

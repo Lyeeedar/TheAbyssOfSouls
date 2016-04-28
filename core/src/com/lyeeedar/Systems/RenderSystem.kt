@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.BinaryHeap
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
-import com.lyeeedar.AssetManager
+
 import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
 import com.lyeeedar.GlobalData
@@ -60,10 +60,13 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 		if ( playerSprite.sprite.spriteAnimation is MoveAnimation )
 		{
-			val offset = playerSprite.sprite.spriteAnimation.renderOffset
+			val offset = playerSprite.sprite.spriteAnimation?.renderOffset()
 
-			offsetx -= offset[0]
-			offsety -= offset[1]
+			if (offset != null)
+			{
+				offsetx -= offset[0]
+				offsety -= offset[1]
+			}
 		}
 
 		// do screen shake
@@ -169,9 +172,13 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 		if ( sprite.spriteAnimation != null )
 		{
-			val offset = sprite.spriteAnimation.renderOffset;
-			x += offset[ 0 ];
-			y += offset[ 1 ];
+			val offset = sprite.spriteAnimation?.renderOffset()
+
+			if (offset != null)
+			{
+				x += offset[0]
+				y += offset[1]
+			}
 		}
 
 		if ( x + GlobalData.Global.tileSize < 0 || y + GlobalData.Global.tileSize < 0 || x > GlobalData.Global.resolution[ 0 ] || y > GlobalData.Global.resolution[ 1 ] ) { return; }

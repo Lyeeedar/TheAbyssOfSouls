@@ -5,11 +5,12 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Ability.Cost.AbstractCost
 import com.lyeeedar.Ability.Targetting.AbstractTargetting
 import com.lyeeedar.Ability.Targetting.TargettingEntities
-import com.lyeeedar.AssetManager
+
 import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.Point
+import com.lyeeedar.loadSprite
 
 /**
  * Created by Philip on 22-Apr-16.
@@ -47,7 +48,7 @@ class Ability()
 			ability.description = xml.get("Description", "")
 
 			val icon = xml.getChildByName("Icon")
-			if (icon != null) ability.icon = AssetManager.loadSprite(icon)
+			if (icon != null) ability.icon = loadSprite(icon)
 
 			val costs = xml.getChildByName("Cost")
 			if (costs != null)
@@ -124,7 +125,7 @@ class Ability()
 			ability.hitType = xml.get("HitType", "All").toLowerCase()
 
 			val hitSprite = xml.getChildByName("HitSprite")
-			if (hitSprite != null) ability.hitSprite = AssetManager.loadSprite(xml)
+			if (hitSprite != null) ability.hitSprite = loadSprite(xml)
 
 			ability.effectData = xml.getChildByName("Effects")
 

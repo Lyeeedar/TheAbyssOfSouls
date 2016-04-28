@@ -13,6 +13,16 @@ class StretchAnimation : AbstractSpriteAnimation
 		EXTEND, REVERSEEXTEND, EXPAND
 	}
 
+	override fun duration(): Float = duration
+
+	override fun time(): Float = time
+
+	override fun renderOffset(): FloatArray? = offset
+
+	override fun renderScale(): FloatArray? = scale
+
+	private var duration: Float = 0f
+	private var time: Float = 0f
 	private var diff: FloatArray? = null
 	private var finalScale: Float = 0.toFloat()
 	private var eqn: StretchEquation? = null
@@ -77,16 +87,6 @@ class StretchAnimation : AbstractSpriteAnimation
 		}
 
 		return time > duration
-	}
-
-	override fun getRenderOffset(): FloatArray
-	{
-		return offset
-	}
-
-	override fun getRenderScale(): FloatArray
-	{
-		return scale
 	}
 
 	override fun set(duration: Float, diff: FloatArray)

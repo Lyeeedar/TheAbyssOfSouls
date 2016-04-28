@@ -9,8 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
-import com.lyeeedar.Ability.Targetting.AbilityWrapper
+import com.lyeeedar.Ability.AbilityChain
+import com.lyeeedar.Ability.AbilityWrapper
 import com.lyeeedar.Components.Mappers
+import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.Colour
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
@@ -19,42 +21,99 @@ import java.awt.event.MouseListener
  * Created by Philip on 27-Apr-16.
  */
 
-class AbilityWidget(val ability: AbilityWrapper, val entity: Entity, var w: Float, var h: Float) : Widget()
+class AbilityWidget(val entity: Entity) : Widget()
 {
+	var maxAbilities: Int = 0
+	val tileSize: Float = 32f
+
+	val currentAbilities: com.badlogic.gdx.utils.Array<AbilityChain> = com.badlogic.gdx.utils.Array()
+
 	init
 	{
+		val abilityData = Mappers.ability.get(entity)
+
+		maxAbilities = abilityData.abilities.size
+
 		addListener( object : ClickListener() {
 			override fun clicked(event: InputEvent?, x: Float, y: Float)
 			{
-				val abilityData = Mappers.ability.get(entity)
+				var clickedOn: AbilityChain? = null
 
-				if (abilityData.current == null)
+				var i = 0
+				for (ability in currentAbilities)
 				{
-					abilityData.current = ability
-				}
-			}
+					var yo = i++ * tileSize
 
-			override fun enter(event: InputEvent?, x: Float, y: Float, pointer: Int, fromActor: Actor?)
-			{
-				mouseOver = true
+					val ay = getY() + yo
+
+					if (y >= ay && y <= ay + tileSize)
+					{
+						clickedOn = ability
+						break
+					}
+				}
+
+				if (clickedOn != null)
+				{
+					// if root then prepare
+					var rootWrapper: AbilityWrapper? = abilityData.abilities.singleOrNull { x -> x.root == clickedOn }
+					if (rootWrapper != null)
+					{
+						abilityData.current = rootWrapper
+					}
+					// else if chain then advance
+					else
+					{
+						var wrapper: AbilityWrapper? = abilityData.abilities.singleOrNull { x -> x.current.next.contains(clickedOn) }
+						wrapper?.current = clickedOn
+					}
+				}
 			}
 
 			override fun exit(event: InputEvent?, x: Float, y: Float, pointer: Int, toActor: Actor?)
 			{
-				mouseOver = false
+				mouseOverAbility = null
+			}
+
+			override fun mouseMoved(event: InputEvent?, x: Float, y: Float): Boolean
+			{
+				mouseOverAbility = null
+
+				var i = 0
+				for (ability in currentAbilities)
+				{
+					var yo = i++ * tileSize
+
+					if ( ability.ability.icon.spriteAnimation != null )
+					{
+						val offset = ability.ability.icon.spriteAnimation!!.renderOffset();
+						if (offset != null) yo += offset[1];
+					}
+
+					val ay = getY() + yo
+
+					if (y >= ay && y <= ay + tileSize)
+					{
+						mouseOverAbility = ability
+						return true
+					}
+				}
+
+				return false
 			}
 		})
 	}
 
-	var mouseOver: Boolean = false
+	var mouseOverAbility: AbilityChain? = null
 
-	override fun getPrefWidth() = w
-	override fun getPrefHeight() = h
+	override fun getPrefWidth() = tileSize
+	override fun getPrefHeight() = tileSize * maxAbilities
 
 	override fun act(delta: Float)
 	{
 		super.act(delta)
-		ability.current.ability.icon.update(delta)
+
+		for (ability in currentAbilities) ability.ability.icon.update(delta)
 	}
 
 	override fun draw(batch: Batch?, parentAlpha: Float)
@@ -65,25 +124,35 @@ class AbilityWidget(val ability: AbilityWrapper, val entity: Entity, var w: Floa
 
 		val abilityData = Mappers.ability.get(entity)
 
-		if (abilityData.current == ability)
+		var i = 0
+		for (ability in currentAbilities)
 		{
-			hdrBatch.setColor(ability.current.ability.icon.colour)
-			hdrBatch.tintColour(Color.YELLOW)
-			ability.current.ability.icon.render(hdrBatch, x, y, w, h)
-		}
-		else if (abilityData.current != null)
-		{
-			hdrBatch.setColor(ability.current.ability.icon.colour)
-			hdrBatch.tintColour(Color.DARK_GRAY)
-			ability.current.ability.icon.render(hdrBatch, x, y, w, h)
-		}
-		else
-		{
-			hdrBatch.setColor(ability.current.ability.icon.colour)
+			if (abilityData.current?.current == ability)
+			{
+				hdrBatch.color = Color.YELLOW
+			}
+			else if (abilityData.current != null)
+			{
+				hdrBatch.color = Color.DARK_GRAY
+			}
+			else if (mouseOverAbility == ability)
+			{
+				hdrBatch.color = Color.FIREBRICK
+			}
+			else
+			{
+				hdrBatch.color = Color.WHITE
+			}
 
-			if (mouseOver) hdrBatch.tintColour(Color.FIREBRICK)
+			var yo = i++ * tileSize
 
-			ability.current.ability.icon.render(hdrBatch, x, y, w, h)
+			if ( ability.ability.icon.spriteAnimation != null )
+			{
+				val offset = ability.ability.icon.spriteAnimation!!.renderOffset();
+				if (offset != null) yo += offset[1];
+			}
+
+			ability.ability.icon.render(hdrBatch, x, y + yo, tileSize, tileSize)
 		}
 	}
 }

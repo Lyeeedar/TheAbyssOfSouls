@@ -1,7 +1,6 @@
 package com.lyeeedar.AI.Tasks
 
 import com.badlogic.ashley.core.Entity
-import com.lyeeedar.AssetManager
 import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile

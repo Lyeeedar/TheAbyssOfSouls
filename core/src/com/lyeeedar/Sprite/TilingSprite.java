@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.XmlReader.Element;
-import com.lyeeedar.AssetManager;
+;
 import com.lyeeedar.Direction;
 import com.lyeeedar.Util.EnumBitflag;
 

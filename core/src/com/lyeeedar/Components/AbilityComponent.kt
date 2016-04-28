@@ -3,7 +3,7 @@ package com.lyeeedar.Components
 import com.badlogic.ashley.core.Component
 import com.lyeeedar.Ability.Ability
 import com.lyeeedar.Ability.AbilityChain
-import com.lyeeedar.Ability.Targetting.AbilityWrapper
+import com.lyeeedar.Ability.AbilityWrapper
 
 /**
  * Created by Philip on 23-Apr-16.

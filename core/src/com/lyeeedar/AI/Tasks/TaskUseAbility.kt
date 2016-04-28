@@ -2,7 +2,7 @@ package com.lyeeedar.AI.Tasks
 
 import com.badlogic.ashley.core.Entity
 import com.lyeeedar.Ability.Ability
-import com.lyeeedar.Ability.Targetting.AbilityWrapper
+import com.lyeeedar.Ability.AbilityWrapper
 import com.lyeeedar.Components.EventComponent
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Util.Point

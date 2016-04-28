@@ -14,10 +14,21 @@ class MoveAnimation : AbstractSpriteAnimation
 		LINEAR, SMOOTHSTEP, EXPONENTIAL, LEAP
 	}
 
+	override fun duration(): Float = duration
+
+	override fun time(): Float = time
+
+	override fun renderOffset(): FloatArray? = offset
+
+	override fun renderScale(): FloatArray? = null
+
 	private var diff: FloatArray? = null
 	private var eqn: MoveEquation? = null
 
 	var leapHeight = 3f
+
+	private var duration: Float = 0f
+	private var time: Float = 0f
 
 	private val offset = floatArrayOf(0f, 0f)
 
@@ -63,16 +74,6 @@ class MoveAnimation : AbstractSpriteAnimation
 		}
 
 		return time > duration
-	}
-
-	override fun getRenderOffset(): FloatArray
-	{
-		return offset
-	}
-
-	override fun getRenderScale(): FloatArray?
-	{
-		return null
 	}
 
 	override fun set(duration: Float, diff: FloatArray)

@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
-import com.lyeeedar.AssetManager
+
 import com.lyeeedar.Components.*
 import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Level

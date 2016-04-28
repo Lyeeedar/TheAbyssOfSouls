@@ -1,4 +1,4 @@
-package com.lyeeedar.Ability.Targetting
+package com.lyeeedar.Ability
 
 import com.lyeeedar.Ability.AbilityChain
 

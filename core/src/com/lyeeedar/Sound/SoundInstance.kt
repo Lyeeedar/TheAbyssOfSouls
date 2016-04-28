@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.XmlReader.Element
-import com.lyeeedar.AssetManager
+
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.PositionComponent
 import com.lyeeedar.Components.TaskComponent

@@ -9,9 +9,19 @@ import com.lyeeedar.GlobalData
 
 class BumpAnimation : AbstractSpriteAnimation
 {
+	override fun duration(): Float = duration
+
+	override fun time(): Float = time
+
+	override fun renderOffset(): FloatArray? = offset
+
+	override fun renderScale(): FloatArray? = null
+
 	private var direction: Direction? = null
 
 	private val offset = floatArrayOf(0f, 0f)
+	private var duration: Float = 0f
+	private var time: Float = 0f
 
 	constructor()
 	{
@@ -39,16 +49,6 @@ class BumpAnimation : AbstractSpriteAnimation
 		offset[1] = (GlobalData.Global.tileSize / 3 * alpha * direction!!.y.toFloat()).toInt().toFloat()
 
 		return time > duration
-	}
-
-	override fun getRenderOffset(): FloatArray
-	{
-		return offset
-	}
-
-	override fun getRenderScale(): FloatArray?
-	{
-		return null
 	}
 
 	override fun set(duration: Float, diff: FloatArray)

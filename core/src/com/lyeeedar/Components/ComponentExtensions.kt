@@ -23,7 +23,7 @@ fun Entity.event() = Mappers.event.get(this)
 fun Entity.postEvent(args:EventArgs) = this.event()?.pendingEvents?.add(args)
 fun Entity.name() = Mappers.name.get(this)?.name ?: ""
 fun Entity.sprite() = Mappers.sprite.get(this)
-fun Entity.renderOffset() = this.sprite()?.sprite?.spriteAnimation?.renderOffset
+fun Entity.renderOffset() = this.sprite()?.sprite?.spriteAnimation?.renderOffset()
 fun Entity.getEquip(slot: EquipmentSlot) = Mappers.inventory.get(this).equipment.get(slot)
 
 class Mappers
