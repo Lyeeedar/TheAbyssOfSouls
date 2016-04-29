@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.XmlReader.Element
+import com.lyeeedar.AssetManager
 
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.PositionComponent
@@ -150,7 +151,7 @@ class SoundInstance
 			val sound = SoundInstance()
 			sound.name = xml.get("Name")
 			sound.groupName = xml.get("Group")
-			sound.sound = AssetManager.loadSound(sound.name)
+			sound.sound = AssetManager.loadSound(sound.name)!!
 
 			sound.rangeMin = xml.getInt("RangeMin")
 			sound.rangeMax = xml.getInt("RangeMax")
@@ -196,7 +197,7 @@ class SoundInstance
 			{
 				val sound = SoundInstance()
 				sound.name = name
-				sound.sound = AssetManager.loadSound(name)
+				sound.sound = AssetManager.loadSound(name)!!
 				return sound
 			}
 		}

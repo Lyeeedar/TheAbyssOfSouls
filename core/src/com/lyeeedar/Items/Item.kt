@@ -1,11 +1,11 @@
 package com.lyeeedar.Items
 
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.AssetManager
 import com.lyeeedar.ElementType
 import com.lyeeedar.EquipmentSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.FastEnumMap
-import com.lyeeedar.loadSprite
 
 /**
  * Created by Philip on 29-Mar-16.
@@ -38,7 +38,9 @@ class Item()
 			val item = Item()
 			item.name = xml.get("Name", "")
 			item.description = xml.get("Description", "")
-			item.icon = loadSprite(xml.getChildByName("Icon"))
+
+			val icon = xml.getChildByName("Icon")
+			if (icon != null) item.icon = AssetManager.loadSprite(icon)
 
 			item.slot = if (xml.get("Slot", null) != null) EquipmentSlot.valueOf(xml.get("Slot").toUpperCase()) else null
 			item.type = xml.get("Type", "")
@@ -49,7 +51,7 @@ class Item()
 			val defense = xml.getChildByName("Defense")
 			if (defense != null) item.defense.addAll(ElementType.load(defense))
 
-			item.hitSprite = loadSprite(xml.getChildByName("HitSprite"))
+			item.hitSprite = AssetManager.loadSprite(xml.getChildByName("HitSprite"))
 
 			item.value = xml.getInt("Value", 0)
 			item.dropChance = xml.get("Drop", "1")

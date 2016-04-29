@@ -3,6 +3,7 @@ package com.lyeeedar.Events
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.AssetManager
 
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.SpriteComponent
@@ -25,7 +26,7 @@ class EventActionSetTilingSprite(group: EventActionGroup): NameRestrictedEventAc
 		}
 		else
 		{
-			entity.add(TilingSpriteComponent(AssetManager.loadTilingSprite(spriteData)))
+			entity.add(TilingSpriteComponent(AssetManager.loadTilingSprite(spriteData!!)))
 		}
 	}
 
