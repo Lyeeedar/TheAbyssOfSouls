@@ -5,8 +5,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
 import com.lyeeedar.Components.*
+import com.lyeeedar.GlobalData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Sprite.Sprite
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -26,18 +28,36 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 
 	override fun processEntity(entity: Entity?, deltaTime: Float)
 	{
+		val level = GlobalData.Global.currentLevel
+		val pos = entity?.pos()!!
+		var visible = false
+		for (x in pos.min.x..pos.max.x)
+		{
+			for (y in pos.min.y..pos.max.y)
+			{
+				val tile = level.getTile(x, y) ?: continue
+				if (tile.visible)
+				{
+					visible = true
+					break
+				}
+			}
+		}
+
 		val stats = Mappers.stats.get(entity)
 		if (stats != null && stats.hp < 0)
 		{
-			// only cleanup if tile has no effects
-			val sprite = Mappers.sprite.get(entity)
-			if (sprite?.sprite?.spriteAnimation != null) return
+			if (visible)
+			{
+				// only cleanup if tile has no effects
+				val sprite = Mappers.sprite.get(entity)
+				if (sprite?.sprite?.spriteAnimation != null) return
+			}
 
 			val tasks = Mappers.task.get(entity)
 			tasks.ai.cancel()
 
-			val pos = Mappers.position.get(entity)
-			if (pos?.position is Tile)
+			if (pos.position is Tile)
 			{
 				val tile = (pos.position as Tile)
 
@@ -61,13 +81,28 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 		}
 
 		val effect = Mappers.effect.get(entity)
-		if (effect != null && effect.completed)
+		if (effect != null)
 		{
 			val event = Mappers.event.get(entity)
-			if (event == null || event.pendingEvents.size == 0)
+
+			// if not visible fire remaining
+			if (!visible)
 			{
-				val pos = Mappers.position.get(entity)
-				if (pos?.position is Tile)
+				for (stage in Sprite.AnimationStage.Values)
+				{
+					val e = effect.eventMap[stage]
+					if (e != null) entity?.postEvent(e)
+				}
+
+				// process remaining events
+				eng.getSystem(EventSystem::class.java).processEntity(entity)
+
+				effect.completed = true
+			}
+
+			if (effect.completed && (event == null || event.pendingEvents.size == 0))
+			{
+				if (pos.position is Tile)
 				{
 					val tile = (pos.position as Tile)
 
@@ -82,6 +117,7 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 
 				eng.removeEntity(entity)
 			}
+
 		}
 
 		val readyAttack = Mappers.readyAttack.get(entity)

@@ -26,13 +26,24 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 
 	override fun update(deltaTime: Float)
 	{
-		val level = posLightEntities[0].tile()?.level ?: return
+		val level = GlobalData.Global.currentLevel
 		for (x in 0.. level.width-1)
 		{
 			for (y in 0..level.height-1)
 			{
-				level.getTile(x, y)?.light?.set(0f, 0f, 0f, 0f)
+				val tile = level.getTile(x, y) ?: continue
+				tile.light.set(level.ambient)
+				tile.visible = false
 			}
+		}
+
+		// update visible/seen
+		val visible = Mappers.shadow.get(level.player).cache.currentShadowCast
+		for (point in visible)
+		{
+			val tile = level.getTile(point) ?: continue
+			tile.visible = true
+			tile.seen = true
 		}
 
 		for (entity in posLightEntities)
@@ -50,8 +61,8 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 				y += offset[1] / GlobalData.Global.tileSize
 			}
 
-			val rawGrid = light.cache.rawOutput
-			if (rawGrid == null) continue
+			val rawGrid = light.cache.rawOutput ?: continue
+
 			for (ix in 0..rawGrid.size-1)
 			{
 				for (iy in 0..rawGrid[0].size-1)

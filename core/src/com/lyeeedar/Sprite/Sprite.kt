@@ -22,7 +22,12 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 		INVALID,
 		START,
 		MIDDLE,
-		END
+		END;
+
+		companion object
+		{
+			val Values = AnimationStage.values()
+		}
 	}
 
 	enum class AnimationMode

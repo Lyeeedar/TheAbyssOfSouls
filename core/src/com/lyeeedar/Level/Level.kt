@@ -5,6 +5,7 @@ import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Direction
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
+import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
 
@@ -65,6 +66,8 @@ class Level()
 
 	val height: Int
 		get() = grid.ySize
+
+	val ambient: Colour = Colour(0.1f, 0.1f, 0.1f, 1f)
 
 	// ----------------------------------------------------------------------
 	val rooms: com.badlogic.gdx.utils.Array<Room> = com.badlogic.gdx.utils.Array()

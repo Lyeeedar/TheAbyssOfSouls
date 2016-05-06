@@ -88,6 +88,15 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 		{
 			val pos = Mappers.position.get(entity) ?: continue
 			val tile = entity.tile() ?: continue
+			if (!tile.seen) continue
+
+			if (!tile.visible)
+			{
+				// dont draw dynamic entities on non visible tiles
+				val task = Mappers.task.get(entity)
+				if (task != null) continue
+			}
+
 			val sprite = Mappers.sprite.get(entity)
 			val tilingSprite = Mappers.tilingSprite.get(entity)
 			val effect = Mappers.effect.get(entity)
@@ -202,7 +211,7 @@ class RenderSprite : BinaryHeap.Node(0f) {
 		this.x = x
 		this.y = y
 
-		this.light.set(tile.light)
+		if (tile.visible) this.light.set(tile.light) else this.light.set(tile.level.ambient)
 
 		val bx = (x - offsetx).toFloat() / GlobalData.Global.tileSize
 		val by = (y - offsety).toFloat() / GlobalData.Global.tileSize

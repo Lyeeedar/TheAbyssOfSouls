@@ -14,6 +14,11 @@ import com.lyeeedar.Level.Tile
 
 class EventSystem(): IteratingSystem(Family.all(EventComponent::class.java).get(), systemList.indexOf(EventSystem::class))
 {
+	fun processEntity(entity: Entity?)
+	{
+		processEntity(entity, 0f)
+	}
+
 	override fun processEntity(entity: Entity?, deltaTime: Float)
 	{
 		if (entity == null) return
