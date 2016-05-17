@@ -42,6 +42,8 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 	var screenShakeSpeed: Float = 0f
 	var screenShakeAngle: Float = 0f
 
+	var activeShader: ShaderProgram? = null
+
 	override fun addedToEngine(engine: Engine?)
 	{
 		entities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java).one(SpriteComponent::class.java, TilingSpriteComponent::class.java, EffectComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
@@ -164,6 +166,23 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 		{
 			val rs = heap.pop();
 
+			if (!rs.tile.visible)
+			{
+				if (activeShader == null)
+				{
+					activeShader = GrayscaleShader.Instance
+					batchHDRColour.shader = activeShader
+				}
+			}
+			else
+			{
+				if (activeShader != null)
+				{
+					activeShader = null
+					batchHDRColour.shader = activeShader
+				}
+			}
+
 			batchHDRColour.setColor(rs.light)
 			rs.sprite.render(batchHDRColour, rs.x, rs.y, GlobalData.Global.tileSize, GlobalData.Global.tileSize );
 
@@ -201,15 +220,18 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 class RenderSprite : BinaryHeap.Node(0f) {
 	lateinit var sprite: Sprite
 	var light: Colour = Colour()
+	lateinit var tile: Tile
 	var x: Float = 0f
 	var y: Float = 0f
 
 	var comparisonVal: Float = 0f
 
-	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, tile: Tile, index: Int): RenderSprite {
+	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, tile: Tile, index: Int): RenderSprite
+	{
 		this.sprite = sprite
 		this.x = x
 		this.y = y
+		this.tile = tile
 
 		if (tile.visible) this.light.set(tile.light) else this.light.set(tile.level.ambient)
 
@@ -241,5 +263,47 @@ class RenderSprite : BinaryHeap.Node(0f) {
 			MAX_Y_BLOCK_SIZE = Y_BLOCK_SIZE * height
 			MAX_X_BLOCK_SIZE = X_BLOCK_SIZE * width
 		}
+	}
+}
+
+class GrayscaleShader
+{
+	companion object
+	{
+		var vertexShader = """
+attribute vec4 a_position;
+attribute vec4 a_color;
+attribute vec2 a_texCoord0;
+
+uniform mat4 u_projTrans;
+
+varying vec4 v_color;
+varying vec2 v_texCoords;
+
+void main()
+{
+	v_color = a_color;
+	v_texCoords = a_texCoord0;
+	gl_Position = u_projTrans * a_position;
+}
+"""
+
+		var fragmentShader = """
+#ifdef GL_ES
+	precision mediump float;
+#endif
+
+varying vec4 v_color;
+varying vec2 v_texCoords;
+uniform sampler2D u_texture;
+
+void main()
+{
+	vec4 c = v_color * texture2D(u_texture, v_texCoords);
+	float grey = (c.r + c.g + c.b) / 3.0;
+	gl_FragColor = vec4(grey, grey, grey, c.a);
+}
+"""
+		var Instance = ShaderProgram(vertexShader, fragmentShader)
 	}
 }

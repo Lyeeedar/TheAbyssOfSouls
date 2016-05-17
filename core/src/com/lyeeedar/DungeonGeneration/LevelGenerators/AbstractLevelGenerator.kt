@@ -5,10 +5,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.exp4j.Helpers.EquationHelper
-import com.lyeeedar.Components.EntityLoader
-import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.name
-import com.lyeeedar.Components.tile
+import com.lyeeedar.Components.*
 import com.lyeeedar.DungeonGeneration.Data.Symbol
 import com.lyeeedar.DungeonGeneration.Data.SymbolicLevelData
 import com.lyeeedar.DungeonGeneration.Data.SymbolicRoom
@@ -77,6 +74,10 @@ abstract class AbstractLevelGenerator()
 					if (entity.name() == "player")
 					{
 						level.player = entity
+						if (!Mappers.shadow.has(entity))
+						{
+							entity.add(ShadowCastComponent())
+						}
 					}
 				}
 			}

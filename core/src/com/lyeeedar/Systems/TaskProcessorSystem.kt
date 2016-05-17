@@ -19,12 +19,14 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 {
 	lateinit var entities: ImmutableArray<Entity>
 	lateinit var sprites: ImmutableArray<Entity>
+	lateinit var effects: ImmutableArray<Entity>
 	val entitiesToBeProcessed: com.badlogic.gdx.utils.Array<Entity> = com.badlogic.gdx.utils.Array<Entity>(false, 32)
 
 	override fun addedToEngine(engine: Engine?)
 	{
 		entities = engine?.getEntitiesFor(Family.all(TaskComponent::class.java, StatisticsComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 		sprites = engine?.getEntitiesFor(Family.all(SpriteComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
+		effects = engine?.getEntitiesFor(Family.all(EffectComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 	}
 
 	override fun update(deltaTime: Float)
@@ -38,6 +40,11 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 				hasEffects = true;
 				break
 			}
+		}
+
+		if (!hasEffects)
+		{
+			hasEffects = effects.size() > 0
 		}
 
 		if (!hasEffects && entitiesToBeProcessed.size == 0)

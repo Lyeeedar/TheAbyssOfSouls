@@ -18,11 +18,11 @@ class ActionProcessInput(): AbstractAction()
 {
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		var targetPos = getData( "ClickPos", null ) as? Point;
+		var targetPos = getData( "clickpos", null ) as? Point;
 
 		if ( targetPos != null )
 		{
-			setData( "ClickPos", null );
+			setData( "clickpos", null );
 		}
 		else
 		{
@@ -66,11 +66,11 @@ class ActionProcessInput(): AbstractAction()
 			if (targetPos == tile)
 			{
 				Mappers.task.get(entity).tasks.add(TaskWait())
-				parent.setData( "Pos", null );
+				parent.setData( "pos", null );
 			}
 			else
 			{
-				parent.setData( "Pos", targetPos );
+				parent.setData( "pos", targetPos );
 			}
 		}
 

@@ -45,7 +45,7 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 		}
 
 		val stats = Mappers.stats.get(entity)
-		if (stats != null && stats.hp < 0)
+		if (stats != null && stats.hp <= 0)
 		{
 			if (visible)
 			{

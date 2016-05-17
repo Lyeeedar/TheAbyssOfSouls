@@ -275,5 +275,4 @@ public class TabPanel extends Table {
 			if (style.disabledFontColor != null) this.disabledFontColor = new Color(style.disabledFontColor);
 		}
 	}
-
 }
