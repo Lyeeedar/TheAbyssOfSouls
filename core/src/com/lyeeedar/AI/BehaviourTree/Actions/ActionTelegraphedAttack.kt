@@ -113,7 +113,7 @@ class ActionTelegraphedAttack(): AbstractAction()
 			minTile = tile + atkData.currentOffset!! + atkData.currentDir.anticlockwise
 			maxTile = minTile
 		}
-		else if (atkData.currentAttack.readyType == "left")
+		else if (atkData.currentAttack.readyType == "right")
 		{
 			minTile = tile + atkData.currentOffset!! + atkData.currentDir.clockwise
 			maxTile = minTile
