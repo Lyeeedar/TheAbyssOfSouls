@@ -5,16 +5,16 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
 import com.lyeeedar.Components.*
-import com.lyeeedar.GlobalData
+import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
-import com.lyeeedar.Sprite.Sprite
 
 /**
  * Created by Philip on 21-Mar-16.
  */
 
-class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.java, EffectComponent::class.java, ReadyAttackComponent::class.java).get(), systemList.indexOf(CleanupSystem::class))
+class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.java, EffectComponent::class.java).get(), systemList.indexOf(CleanupSystem::class))
 {
 	lateinit var eng: Engine
 
@@ -28,7 +28,7 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 
 	override fun processEntity(entity: Entity?, deltaTime: Float)
 	{
-		val level = GlobalData.Global.currentLevel
+		val level = Global.currentLevel
 		val pos = entity?.pos()!!
 		var visible = false
 		for (x in pos.min.x..pos.max.x)
@@ -51,7 +51,7 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 			{
 				// only cleanup if tile has no effects
 				val sprite = Mappers.sprite.get(entity)
-				if (sprite?.sprite?.spriteAnimation != null) return
+				if (sprite?.sprite?.animation != null) return
 			}
 
 			val tasks = Mappers.task.get(entity)
@@ -118,19 +118,6 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 				eng.removeEntity(entity)
 			}
 
-		}
-
-		val readyAttack = Mappers.readyAttack.get(entity)
-		if (readyAttack != null)
-		{
-			if (readyAttack.action.readyEntity != entity)
-			{
-				eng.removeEntity(entity)
-			}
-			else if (readyAttack.parent.stats().hp <= 0)
-			{
-				eng.removeEntity(entity)
-			}
 		}
 	}
 

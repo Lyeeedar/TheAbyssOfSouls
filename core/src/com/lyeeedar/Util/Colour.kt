@@ -18,6 +18,11 @@ class Colour()
 		set(col)
 	}
 
+	constructor(col: Color) : this()
+	{
+		set(col.r, col.g, col.b, col.a)
+	}
+
 	constructor(r: Float, g:Float, b:Float, a:Float) : this()
 	{
 		set(r, g, b, a)
@@ -53,6 +58,12 @@ class Colour()
 		return this
 	}
 
+	fun mul(other: Colour) : Colour
+	{
+		timesAssign(other)
+		return this
+	}
+
 	operator fun timesAssign(other: Colour)
 	{
 		r *= other.r;
@@ -83,5 +94,21 @@ class Colour()
 		g += other.g;
 		b += other.b;
 		a += other.a;
+	}
+
+	fun lerp(target: Colour, t: Float) : Colour
+	{
+		this.r += t * (target.r - this.r)
+		this.g += t * (target.g - this.g)
+		this.b += t * (target.b - this.b)
+		this.a += t * (target.a - this.a)
+
+		return this
+	}
+
+	companion object
+	{
+		val WHITE = Colour(Color.WHITE)
+		val GOLD = Colour(Color.GOLD)
 	}
 }

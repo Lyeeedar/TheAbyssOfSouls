@@ -7,9 +7,9 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.*
 import com.lyeeedar.Events.EventArgs
-import com.lyeeedar.Items.Item
+import com.lyeeedar.Level.Item
 import com.lyeeedar.Level.Tile
-import com.lyeeedar.Util.isAllies
+import com.lyeeedar.Util.AssetManager
 import kotlin.reflect.KClass
 
 /**
@@ -23,8 +23,9 @@ fun Entity.event() = Mappers.event.get(this)
 fun Entity.postEvent(args:EventArgs) = this.event()?.pendingEvents?.add(args)
 fun Entity.name() = Mappers.name.get(this)?.name ?: ""
 fun Entity.sprite() = Mappers.sprite.get(this)
-fun Entity.renderOffset() = this.sprite()?.sprite?.spriteAnimation?.renderOffset()
-fun Entity.getEquip(slot: EquipmentSlot) = Mappers.inventory.get(this).equipment.get(slot)
+fun Entity.renderOffset() = this.sprite()?.sprite?.animation?.renderOffset()
+fun Entity.task() = Mappers.task.get(this)
+fun Entity.combo() = Mappers.combo.get(this)
 
 class Mappers
 {
@@ -42,9 +43,8 @@ class Mappers
 		@JvmField val name: ComponentMapper<NameComponent> = ComponentMapper.getFor(NameComponent::class.java)
 		@JvmField val effect: ComponentMapper<EffectComponent> = ComponentMapper.getFor(EffectComponent::class.java)
 		@JvmField val inventory: ComponentMapper<InventoryComponent> = ComponentMapper.getFor(InventoryComponent::class.java)
-		@JvmField val telegraphed: ComponentMapper<TelegraphedAttackComponent> = ComponentMapper.getFor(TelegraphedAttackComponent::class.java)
-		@JvmField val readyAttack: ComponentMapper<ReadyAttackComponent> = ComponentMapper.getFor(ReadyAttackComponent::class.java)
-		@JvmField val ability: ComponentMapper<AbilityComponent> = ComponentMapper.getFor(AbilityComponent::class.java)
+		@JvmField val directionalSprite: ComponentMapper<DirectionalSpriteComponent> = ComponentMapper.getFor(DirectionalSpriteComponent::class.java)
+		@JvmField val combo: ComponentMapper<ComboComponent> = ComponentMapper.getFor(ComboComponent::class.java)
 	}
 }
 
@@ -67,9 +67,6 @@ class EntityLoader()
 
 			val ai = xml.get("AI", null)
 			if (ai != null) entity.add(TaskComponent(ai))
-
-			val leader = xml.get("Leader", null)
-			if (leader != null) Mappers.task.get(entity).leaderName = leader
 
 			val pos = entity.pos() ?: PositionComponent()
 			entity.add(pos)
@@ -95,41 +92,6 @@ class EntityLoader()
 			val occludes = xml.getBoolean("Occludes", false)
 			if (occludes) entity.add(OccluderComponent())
 
-			val statistics = xml.getChildByName("Statistics")
-			val factions = xml.getChildByName("Factions")
-			val attack = xml.getChildByName("Attack")
-			val defense = xml.getChildByName("Defense")
-
-			if (statistics != null || factions != null || attack != null || defense != null)
-			{
-				val stats = entity.stats() ?: StatisticsComponent()
-				entity.add(stats)
-
-				if (statistics != null)
-				{
-					Statistic.load(statistics, stats.stats)
-					stats.stats[Statistic.HEALTH] = stats.stats[Statistic.MAX_HEALTH]
-					stats.stats[Statistic.STAMINA] = stats.stats[Statistic.MAX_STAMINA]
-				}
-
-				if (factions != null)
-				{
-					if (factions.getBooleanAttribute("Override", false)) stats.factions.clear()
-					val split = factions.text.toLowerCase().split(",")
-					for (faction in split) stats.factions.add(faction)
-				}
-
-				if (attack != null)
-				{
-					stats.attack.addAll(ElementType.load(attack))
-				}
-
-				if (defense != null)
-				{
-					stats.defense.addAll(ElementType.load(defense))
-				}
-			}
-
 			val eventsEl = xml.getChildByName("Events")
 			if (eventsEl != null)
 			{
@@ -138,42 +100,7 @@ class EntityLoader()
 				events.parse(eventsEl)
 			}
 
-			val telegraphedEl = xml.getChildByName("TelegraphedAttacks")
-			if (telegraphedEl != null)
-			{
-				val telegraph = TelegraphedAttackComponent()
-				telegraph.parse(telegraphedEl)
-				entity.add(telegraph)
-			}
-
-			val inventory = xml.getChildByName("Inventory")
-			if (inventory != null)
-			{
-				val inv = InventoryComponent()
-
-				val equipment = inventory.getChildByName("Equipment")
-				if (equipment != null)
-				{
-					for (i in 0..equipment.childCount-1)
-					{
-						val el = equipment.getChild(i)
-						val item = Item.load(el)
-
-						inv.equipment.put(item.slot, item)
-					}
-				}
-
-				for (i in 0..inventory.childCount-1)
-				{
-					val el = inventory.getChild(i)
-
-					if (el == equipment) continue
-
-					inv.items.add(Item.load(el))
-				}
-
-				entity.add(inv)
-			}
+			entity.add(StatisticsComponent())
 
 			return entity
 		}

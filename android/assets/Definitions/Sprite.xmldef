@@ -1,0 +1,28 @@
+<Definitions>
+	<StructDef Name="Sprite" DescriptionChild="Name" RefKey="StructDef">
+		<File Name="Name" BasePath="Sprites" AllowedFileTypes="png" Default="white" SkipIfDefault="False" RefKey="File" />
+		<Boolean Name="DrawActualSize" RefKey="Boolean" />
+		<Number Name="UpdateRate" Min="0" Default="0.5" RefKey="Number" />
+		<Colour Name="Colour" HasAlpha="True" RefKey="Colour" />
+	</StructDef>
+	<StructDef Name="TilingSprite" DescriptionChild="Name" RefKey="StructDef">
+		<String Name="Name" SkipIfDefault="False" RefKey="String" />
+		<Enum Name="Mode" EnumValues="Premade,Masked" SkipIfDefault="False" RefKey="Enum" />
+		<File Name="Mask" BasePath="Sprites" AllowedFileTypes="png" VisibleIf="Mode == Masked" RefKey="File" />
+		<Reference Name="Front" Keys="Sprite" VisibleIf="Mode == Premade" RefKey="Reference" />
+		<Reference Name="Top" Keys="Sprite" VisibleIf="Mode == Premade" RefKey="Reference" />
+		<Reference Name="Overhang" Keys="Sprite" VisibleIf="Mode == Premade" RefKey="Reference" />
+	</StructDef>
+	<StructDef Name="DirectedSprite" Collapse="True" RefKey="StructDef">
+		<File Name="Path" BasePath="Sprites" AllowedFileTypes="png" SkipIfDefault="False" RefKey="File" />
+	</StructDef>
+	<StructDef Name="SpriteWrapper" RefKey="StructDef">
+		<Reference Name="Sprite" Keys="Sprite" RefKey="Reference" />
+		<Reference Name="TilingSprite" Keys="TilingSprite" RefKey="Reference" />
+	</StructDef>
+	<StructDef Name="ParticleEffect" DescriptionChild="Name" RefKey="StructDef">
+		<File Name="Name" BasePath="Particles" AllowedFileTypes="xml" SkipIfDefault="False" RefKey="File" />
+		<Number Name="SpeedMultiplier" Min="0" Default="1" RefKey="Number" />
+		<Colour Name="Colour" HasAlpha="True" RefKey="Colour" />
+	</StructDef>
+</Definitions>

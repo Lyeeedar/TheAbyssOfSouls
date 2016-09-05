@@ -22,7 +22,7 @@ class EquationHelper
 
 		fun tryBuild(expB: ExpressionBuilder): Expression?
 		{
-			var exp: Expression? = null
+			var exp: Expression?
 
 			// try
 			// {

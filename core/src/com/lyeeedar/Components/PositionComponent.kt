@@ -19,6 +19,8 @@ class PositionComponent: Component
 	var position: Point = Point() // bottom left pos
 		set(value)
 		{
+			facing = Direction.getCardinalDirection(value.x - field.x, value.y - field.y)
+
 			field = value
 			max = value
 			turnsOnTile = 0
@@ -30,6 +32,8 @@ class PositionComponent: Component
 	var slot: SpaceSlot = SpaceSlot.ENTITY
 	var size: Int = 1
 	var canSwap: Boolean = false
+
+	var facing: Direction = Direction.SOUTH
 
 	var turnsOnTile: Int = 0
 

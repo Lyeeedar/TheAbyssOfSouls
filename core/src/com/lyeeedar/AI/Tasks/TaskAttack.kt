@@ -8,10 +8,10 @@ import com.lyeeedar.EquipmentSlot
 import com.lyeeedar.Events.EventActionDamage
 import com.lyeeedar.Events.EventActionGroup
 import com.lyeeedar.Events.EventArgs
-import com.lyeeedar.GlobalData
-import com.lyeeedar.Items.Item
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
+import com.lyeeedar.Global
+import com.lyeeedar.Level.Item
+import com.lyeeedar.Renderables.Animation.BumpAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
 
 /**
  * Created by Philip on 29-Mar-16.
@@ -22,7 +22,7 @@ class TaskAttack(var direction: Direction): AbstractTask(EventComponent.EventTyp
 	override fun execute(e: Entity)
 	{
 		val tile = e.tile() ?: return
-		e.sprite().sprite.spriteAnimation = BumpAnimation.obtain().set(0.25f, direction)
+		e.sprite().sprite.animation = BumpAnimation.obtain().set(0.25f, direction)
 
 		val next = tile.neighbours.get(direction)
 
@@ -44,6 +44,6 @@ class TaskAttack(var direction: Direction): AbstractTask(EventComponent.EventTyp
 		effect.add(pos)
 		next.effects.add(effect)
 
-		GlobalData.Global.engine.addEntity(effect)
+		Global.engine.addEntity(effect)
 	}
 }

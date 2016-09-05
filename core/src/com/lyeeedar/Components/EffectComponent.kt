@@ -3,7 +3,7 @@ package com.lyeeedar.Components
 import com.badlogic.ashley.core.Component
 import com.lyeeedar.Direction
 import com.lyeeedar.Events.EventArgs
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.FastEnumMap
 
 /**

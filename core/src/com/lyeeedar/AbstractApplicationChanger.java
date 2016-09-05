@@ -28,7 +28,7 @@ public abstract class AbstractApplicationChanger
 			return;
 		}
 
-		Gdx.app = createApplication( GlobalData.Global.game, prefs );
+		Gdx.app = createApplication( Global.game, prefs );
 	}
 
 	public abstract void processResources();

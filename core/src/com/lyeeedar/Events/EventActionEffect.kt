@@ -2,14 +2,14 @@ package com.lyeeedar.Events
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.AssetManager
-
 import com.lyeeedar.Components.EffectComponent
+
 import com.lyeeedar.Components.EventComponent
 import com.lyeeedar.Components.PositionComponent
-import com.lyeeedar.GlobalData
+import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Util.AssetManager
 
 /**
  * Created by Philip on 22-Mar-16.
@@ -37,7 +37,7 @@ class EventActionEffect(group: EventActionGroup): AbstractEventAction(group)
 		event.parse(fireData)
 		entity.add(event)
 
-		GlobalData.Global.engine.addEntity(entity)
+		Global.engine.addEntity(entity)
 	}
 
 	override fun parse(xml: XmlReader.Element)

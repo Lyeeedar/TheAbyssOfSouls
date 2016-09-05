@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
-import com.lyeeedar.GlobalData
 import com.lyeeedar.Pathfinding.PathfindingTile
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.*
@@ -44,19 +43,11 @@ class Tile() : Point(0, 0), PathfindingTile
 				}
 			}
 
-			return false;
+			return false
 		}
 
-        return true;
+        return true
     }
-
-	fun getPosDiff(p: Point): FloatArray
-	{
-		val oldPos = floatArrayOf(p.x * GlobalData.Global.tileSize, p.y * GlobalData.Global.tileSize)
-		val newPos = floatArrayOf(x * GlobalData.Global.tileSize, y * GlobalData.Global.tileSize)
-
-		return floatArrayOf(oldPos[0]-newPos[0], oldPos[1]-newPos[1])
-	}
 
 	fun hasTriggerEffects(): Boolean
 	{

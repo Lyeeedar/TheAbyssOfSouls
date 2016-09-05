@@ -1,17 +1,12 @@
 package com.lyeeedar.AI.Tasks
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.math.Interpolation
 import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
-import com.lyeeedar.Sound.SoundInstance
+import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.SpaceSlot
-import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
-import com.lyeeedar.Util.isAllies
-
-/**
- * Created by Philip on 22-Mar-16.
- */
 
 class TaskMove(var direction: Direction): AbstractTask(EventComponent.EventType.MOVE)
 {
@@ -62,10 +57,7 @@ class TaskMove(var direction: Direction): AbstractTask(EventComponent.EventType.
 					}
 				}
 
-				sprite.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, next.getPosDiff(prev), MoveAnimation.MoveEquation.LINEAR)
-
-				//val sound = SoundInstance(AssetManager.loadSound("hit"), "Combat")
-				//sound.play(next)
+				sprite.sprite.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
 			}
 			else if (pos.canSwap && pos.size == 1)
 			{
@@ -83,14 +75,14 @@ class TaskMove(var direction: Direction): AbstractTask(EventComponent.EventType.
 						pos.position = next
 						e.tile()?.contents?.remove(pos.slot)
 						next.contents[pos.slot] = e
-						sprite.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, next.getPosDiff(prev), MoveAnimation.MoveEquation.LINEAR)
+						sprite.sprite.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
 
 						// Then move other
 						val opos = Mappers.position.get(collisionEntity)
 						opos.position = prev
 						prev.contents[opos.slot] = collisionEntity
 						val osprite = Mappers.sprite.get(collisionEntity)
-						osprite.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, prev.getPosDiff(next), MoveAnimation.MoveEquation.LINEAR)
+						osprite.sprite.animation = MoveAnimation.obtain().set(prev, next, 0.15f)
 					}
 				}
 			}

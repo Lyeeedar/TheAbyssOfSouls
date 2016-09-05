@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.*
-import com.lyeeedar.GlobalData
 
 /**
  * Created by Philip on 22-Mar-16.

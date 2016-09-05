@@ -6,7 +6,7 @@ import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Direction
-import com.lyeeedar.GlobalData
+import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Pathfinding.Pathfinder
 import com.lyeeedar.Util.Point
@@ -33,8 +33,8 @@ class ActionMoveTo(): AbstractAction()
 		// doesnt have all the needed data, fail
 		if ( target == null || posData == null || tile == null || taskData == null )
 		{
-			state = ExecutionState.FAILED;
-			return state;
+			state = ExecutionState.FAILED
+			return state
 		}
 
 		// if we arrived at our target, succeed
@@ -45,14 +45,14 @@ class ActionMoveTo(): AbstractAction()
 			return state;
 		}
 
-		val pathFinder = Pathfinder(tile.level.grid.array, tile.x, tile.y, target.x, target.y, GlobalData.Global.canMoveDiagonal, posData.size, entity);
-		val path = pathFinder.getPath( posData.slot );
+		val pathFinder = Pathfinder(tile.level.grid.array, tile.x, tile.y, target.x, target.y, Global.canMoveDiagonal, posData.size, entity)
+		val path = pathFinder.getPath( posData.slot )
 
 		if (path == null)
 		{
 			lastPos = Point.ZERO
-			state = ExecutionState.FAILED;
-			return state;
+			state = ExecutionState.FAILED
+			return state
 		}
 
 		// if couldnt find a valid path, fail
@@ -60,8 +60,8 @@ class ActionMoveTo(): AbstractAction()
 		{
 			lastPos = Point.ZERO
 			Point.freeAll(path)
-			state = ExecutionState.FAILED;
-			return state;
+			state = ExecutionState.FAILED
+			return state
 		}
 
 		var nextTile = tile.level.getTile( path.get( 1 ) );

@@ -9,7 +9,8 @@
     <Increment Key="RoomCounter"/>
 
     <Priority>
-        <Sequence>
+        <!--Sequence>
+            <CheckValue Key="EnemyPos"/>
             <CheckValue Condition="morale < 0"/>
             <Priority>
                 <CheckValue Key="DstRoom"/>
@@ -20,7 +21,7 @@
             </Priority>
             <MoveTo Key="DstRoom"/>
             <ClearValue Key="DstRoom"/>
-        </Sequence>
+        </Sequence-->
 		<Import Path="attackClosest"/>
 
 		<Random>

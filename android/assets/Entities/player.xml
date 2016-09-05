@@ -1,19 +1,19 @@
 <Entity>
     <Name>player</Name>
 
-    <AI>packLeader</AI>
+    <AI>player</AI>
 
     <Slot>Entity</Slot>
     <Size>1</Size>
     <CanSwap>true</CanSwap>
 
-    <Sprite>
+    <Sprite RefKey="Sprite">
         <Name>player</Name>
         <DrawActualSize>true</DrawActualSize>
     </Sprite>
 
     <Light>
-        <Colour><RGB>255,255,255</RGB><Alpha>1</Alpha></Colour>
+        <Colour>255,255,255</Colour>
         <Distance>5</Distance>
     </Light>
 

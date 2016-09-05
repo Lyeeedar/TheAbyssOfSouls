@@ -9,11 +9,11 @@ import com.lyeeedar.Direction
 import com.lyeeedar.ElementType
 import com.lyeeedar.Events.EventActionDamage
 import com.lyeeedar.Events.EventArgs
-import com.lyeeedar.GlobalData
+import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Renderables.Animation.BumpAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
 import com.lyeeedar.Util.Point
 
 /**
@@ -33,7 +33,7 @@ class EffectApplier()
 			val entityTile = srcEntity.tile() ?: return
 			val stats = srcEntity.stats() ?: return
 
-			srcEntity.sprite().sprite.spriteAnimation = BumpAnimation.obtain().set(0.25f, dir);
+			srcEntity.sprite().sprite.animation = BumpAnimation.obtain().set(0.25f, dir);
 
 			// actually do the attack
 			if (hitType.equals("all"))
@@ -98,7 +98,7 @@ class EffectApplier()
 				}
 				effectEntity.add(event)
 
-				GlobalData.Global.engine.addEntity(effectEntity)
+				Global.engine.addEntity(effectEntity)
 
 				for (x in min.x..max.x)
 				{

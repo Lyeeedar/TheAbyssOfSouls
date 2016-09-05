@@ -5,10 +5,10 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.ShadowCastComponent
+import com.lyeeedar.Components.isAllies
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Statistic
 import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.isAllies
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -40,11 +40,11 @@ class ActionGetAllVisible(): AbstractAction()
 			entity.add(cache)
 		}
 
-		var points = cache.cache.currentShadowCast
+		val points = cache.cache.currentShadowCast
 
 		if (type == Type.ALLIES)
 		{
-			var temp = com.badlogic.gdx.utils.Array<Entity>()
+			val temp = com.badlogic.gdx.utils.Array<Entity>()
 			for (point in points)
 			{
 				val etile = tile.level.getTile(point) ?: continue
@@ -64,7 +64,7 @@ class ActionGetAllVisible(): AbstractAction()
 		}
 		else if (type == Type.ENEMIES)
 		{
-			var temp = com.badlogic.gdx.utils.Array<Entity>()
+			val temp = com.badlogic.gdx.utils.Array<Entity>()
 			for (point in points)
 			{
 				val etile = tile.level.getTile(point) ?: continue

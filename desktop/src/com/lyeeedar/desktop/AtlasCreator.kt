@@ -9,9 +9,10 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
-import com.lyeeedar.Sprite.TilingSprite
+import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.ImageUtils
+import com.lyeeedar.Util.getChildrenByAttributeRecursively
 
 import java.awt.image.BufferedImage
 import java.io.File
@@ -46,23 +47,20 @@ class AtlasCreator
 		packer = TexturePacker(File("Sprites"), settings)
 
 		findFilesRecursive(File("").absoluteFile)
+		parseCodeFilesRecursive(File("../../core/src").absoluteFile)
 
 		// pack default stuff
-		processSprite("grass")
-		processSprite("wall")
-		processSprite("player")
-		processSprite("EffectSprites/Hit/Hit")
 
 		// pack GUI
-		val guiDir = File("Sprites/GUI")
-		val guiFiles = guiDir.listFiles()
-		for (file in guiFiles)
-		{
-			if (file.path.endsWith(".png"))
-			{
-				packer.addImage(file)
-			}
-		}
+//		val guiDir = File("Sprites/GUI")
+//		val guiFiles = guiDir.listFiles()
+//		for (file in guiFiles)
+//		{
+//			if (file.path.endsWith(".png"))
+//			{
+//				packer.addImage(file)
+//			}
+//		}
 
 		val outDir = File("Atlases")
 		val contents = outDir.listFiles()
@@ -72,7 +70,8 @@ class AtlasCreator
 				if (file.path.endsWith(".png"))
 				{
 					file.delete()
-				} else if (file.path.endsWith(".atlas"))
+				}
+				else if (file.path.endsWith(".atlas"))
 				{
 					file.delete()
 				}
@@ -90,10 +89,70 @@ class AtlasCreator
 			if (file.isDirectory)
 			{
 				findFilesRecursive(file)
-			} else if (file.path.endsWith(".xml"))
+			}
+			else if (file.path.endsWith(".xml"))
 			{
 				parseXml(file.path)
 			}
+		}
+	}
+
+	private fun parseCodeFilesRecursive(dir: File)
+	{
+		val contents = dir.listFiles() ?: return
+
+		for (file in contents)
+		{
+			if (file.isDirectory)
+			{
+				parseCodeFilesRecursive(file)
+			}
+			else
+			{
+				parseCodeFile(file.path)
+			}
+		}
+	}
+
+	private fun parseCodeFile(file: String)
+	{
+		val contents = File(file).readText()
+		val regex = Regex("AssetManager.loadSprite\\(\".*?\"")//(\".*\")")
+
+		val occurances = regex.findAll(contents)
+
+		for (occurance in occurances)
+		{
+			var path = occurance.value
+			path = path.replace("AssetManager.loadSprite(\"", "")
+			path = path.replace("\"", "")
+
+			processSprite(path)
+		}
+
+		val regex2 = Regex("AssetManager.loadTextureRegion\\(\".*?\"")//(\".*\")")
+
+		val occurances2 = regex2.findAll(contents)
+
+		for (occurance in occurances2)
+		{
+			var path = occurance.value
+			path = path.replace("AssetManager.loadTextureRegion(\"", "")
+			path = path.replace("\"", "")
+
+			processSprite(path)
+		}
+
+		val tilingRegex = Regex("TilingSprite\\(\".*?\", \".*?\", \".*?\"")
+		val occurances3 = tilingRegex.findAll(contents)
+
+		for (occurance in occurances3)
+		{
+			val split = occurance.value.split("\", \"")
+			val baseName = split[1]
+			val maskName = split[2].subSequence(0, split[2].length-1).toString()
+
+			processTilingSprite(baseName, maskName, false)
 		}
 	}
 
@@ -117,14 +176,7 @@ class AtlasCreator
 
 		val spriteElements = Array<XmlReader.Element>()
 
-		spriteElements.addAll(xml.getChildrenByNameRecursively("Sprite"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("Icon"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("UseSprite"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("HitSprite"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("ReadySprite"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("MovementSprite"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("ReplacementSprite"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("AdditionalSprite"))
+		spriteElements.addAll(xml.getChildrenByAttributeRecursively("RefKey", "Sprite"))
 
 		for (el in spriteElements)
 		{
@@ -135,7 +187,7 @@ class AtlasCreator
 			}
 		}
 
-		val tilingSpriteElements = xml.getChildrenByNameRecursively("TilingSprite")
+		val tilingSpriteElements = xml.getChildrenByAttributeRecursively("RefKey", "TilingSprite")
 
 		for (el in tilingSpriteElements)
 		{
@@ -145,6 +197,59 @@ class AtlasCreator
 				throw RuntimeException("Failed to process tiling sprite in file: " + file)
 			}
 		}
+
+		val particleElements = xml.getChildrenByNameRecursively("TextureKeyframes")
+
+		for (el in particleElements)
+		{
+			val succeed = processParticle(el)
+			if (!succeed)
+			{
+				throw RuntimeException("Failed to process particle in file: " + file)
+			}
+		}
+	}
+
+	private fun processParticle(xml: XmlReader.Element) : Boolean
+	{
+		val streamsEl = xml.getChildrenByName("Stream")
+		if (streamsEl.size == 0)
+		{
+			return processParticleStream(xml)
+		}
+		else
+		{
+			for (el in streamsEl)
+			{
+				if (!processParticleStream(el)) return false
+			}
+		}
+
+		return true
+	}
+
+	private fun processParticleStream(xml: XmlReader.Element) : Boolean
+	{
+		for (i in 0..xml.childCount-1)
+		{
+			val el = xml.getChild(i)
+			var path: String
+
+			if (el.text != null)
+			{
+				val split = el.text.split("|")
+				path = split[1]
+			}
+			else
+			{
+				path = el.get("Value")
+			}
+
+			val found = processSprite(path)
+			if (!found) return false
+		}
+
+		return true
 	}
 
 	private fun processTilingSprite(spriteElement: XmlReader.Element): Boolean
@@ -171,7 +276,16 @@ class AtlasCreator
 
 			if (overhangElement != null)
 			{
-				exists = tryPackSprite(overhangElement)
+
+				// pack top overhang
+				exists = packOverhang(topElement.get("Name"), overhangElement.get("Name"))
+				if (!exists)
+				{
+					return false
+				}
+
+				// pack front overhang
+				exists = packOverhang(frontElement.get("Name"), overhangElement.get("Name"))
 				if (!exists)
 				{
 					return false
@@ -208,6 +322,46 @@ class AtlasCreator
 			}
 		}
 
+		return true
+	}
+
+	private fun packOverhang(topName: String, overhangName: String) : Boolean
+	{
+		val composedName = topName + ": Overhang :" + overhangName
+
+		// File exists on disk, no need to compose
+		if (tryPackSprite(composedName))
+		{
+			println("Added Overhang sprite: " + composedName)
+			return true
+		}
+
+		val topHandle = Gdx.files.internal("Sprites/$topName.png")
+		if (!topHandle.exists())
+		{
+			System.err.println("Failed to find sprite for: " + topName)
+			return false
+		}
+
+		val overhangHandle = Gdx.files.internal("Sprites/$overhangName.png")
+		if (!overhangHandle.exists())
+		{
+			System.err.println("Failed to find sprite for: " + overhangName)
+			return false
+		}
+
+		val top = Pixmap(topHandle)
+		val overhang = Pixmap(overhangHandle)
+		val composed = ImageUtils.composeOverhang(top, overhang)
+		top.dispose()
+		overhang.dispose()
+
+		val image = ImageUtils.pixmapToImage(composed)
+		composed.dispose()
+
+		val path = "Sprites/$composedName.png"
+		packer.addImage(image, composedName)
+		packedPaths.add(path)
 		return true
 	}
 
@@ -309,7 +463,9 @@ class AtlasCreator
 
 	private fun tryPackSprite(name: String): Boolean
 	{
-		val path = "Sprites/$name.png"
+		var path = name
+		if (!path.startsWith("Sprites/")) path = "Sprites/" + path
+		if (!path.endsWith(".png")) path += ".png"
 
 		if (packedPaths.contains(path))
 		{
@@ -323,7 +479,8 @@ class AtlasCreator
 			packer.addImage(handle.file())
 			packedPaths.add(path)
 			return true
-		} else
+		}
+		else
 		{
 			return false
 		}

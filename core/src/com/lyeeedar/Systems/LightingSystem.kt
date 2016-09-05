@@ -4,8 +4,7 @@ import com.badlogic.ashley.core.*
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.math.Vector2
 import com.lyeeedar.Components.*
-import com.lyeeedar.GlobalData
-import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
+import com.lyeeedar.Global
 import com.lyeeedar.Util.Colour
 
 /**
@@ -26,7 +25,7 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 
 	override fun update(deltaTime: Float)
 	{
-		val level = GlobalData.Global.currentLevel
+		val level = Global.currentLevel
 		for (x in 0.. level.width-1)
 		{
 			for (y in 0..level.height-1)
@@ -38,7 +37,14 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 		}
 
 		// update visible/seen
-		val visible = Mappers.shadow.get(level.player).cache.currentShadowCast
+		var shadow = Mappers.shadow.get(level.player)
+		if (shadow == null)
+		{
+			shadow = ShadowCastComponent()
+			level.player.add(shadow)
+		}
+
+		val visible = shadow.cache.currentShadowCast
 		for (point in visible)
 		{
 			val tile = level.getTile(point) ?: continue
@@ -57,8 +63,8 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 
 			if (offset != null)
 			{
-				x += offset[0] / GlobalData.Global.tileSize
-				y += offset[1] / GlobalData.Global.tileSize
+				x += offset[0]
+				y += offset[1]
 			}
 
 			val rawGrid = light.cache.rawOutput ?: continue
@@ -85,7 +91,7 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 					//temp *= lightVal.toFloat()
 					temp.a = 1f
 
-					tile.light += temp
+					//tile.light += temp
 					tile.light.a = 1f
 				}
 			}

@@ -1,0 +1,52 @@
+<Data>
+    <Symbols>
+        <Symbol>
+            <Char>.</Char>
+            <Sprite RefKey="Sprite">
+                <Name>Oryx/uf_split/uf_terrain/floor_extra_8</Name>
+            </Sprite>
+        </Symbol>
+        <Symbol IsWall="true">
+            <Char>#</Char>
+            <TilingSprite RefKey="TilingSprite">
+                <Name>Wall</Name>
+                <Front RefKey="Sprite">
+                    <Name>Oryx/uf_split/uf_terrain/wall_dungeon_14</Name>
+                </Front>
+                <Top RefKey="Sprite">
+                    <Name>Oryx/uf_split/uf_terrain/wall_dungeon_7</Name>
+                </Top>
+                <Overhang RefKey="Sprite">
+                    <Name>Oryx/uf_split/uf_terrain/wall_dungeon_1</Name>
+                </Overhang>
+            </TilingSprite>
+        </Symbol>
+        <Symbol>
+            <Char>~</Char>
+            <Sprite RefKey="Sprite">
+                <Name>Oryx/uf_split/uf_terrain/water_green</Name>
+            </Sprite>
+        </Symbol>
+        <Symbol>
+            <Char>!</Char>
+            <Sprite RefKey="Sprite">
+                <Name>Oryx/uf_split/uf_terrain/floor_extra_8</Name>
+            </Sprite>
+            <Sprite RefKey="Sprite">
+                <Name>Oryx/uf_split/uf_heroes/rat</Name>
+                <DrawActualSize>true</DrawActualSize>
+            </Sprite>
+        </Symbol>
+    </Symbols>
+    <Rows>
+        <Line>########..#</Line>
+        <Line>#~~~......#</Line>
+        <Line>#~~~......#</Line>
+        <Line>#~~~......#</Line>
+        <Line>#~~~......#</Line>
+        <Line>#......!###</Line>
+        <Line>#..!....~~#</Line>
+        <Line>#......!~~#</Line>
+        <Line>#.......~~#</Line>
+    </Rows>
+</Data>

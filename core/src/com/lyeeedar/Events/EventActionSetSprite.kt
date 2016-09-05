@@ -3,11 +3,10 @@ package com.lyeeedar.Events
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.AssetManager
 
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.SpriteComponent
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Util.AssetManager
 
 /**
  * Created by Philip on 22-Mar-16.

@@ -30,11 +30,5 @@ class EffectSystem(): IteratingSystem(Family.all(EffectComponent::class.java).ge
 			entity?.postEvent(event)
 			effect.eventMap.remove(effect.sprite.animationStage)
 		}
-
-		if (effect.sprite.sound != null)
-		{
-			effect.sprite.sound?.play(entity?.tile()!!)
-			effect.sprite.sound = null
-		}
 	}
 }

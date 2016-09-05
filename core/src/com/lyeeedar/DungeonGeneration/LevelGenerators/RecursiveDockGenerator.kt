@@ -1,8 +1,7 @@
 package com.lyeeedar.DungeonGeneration.LevelGenerators
 
-import com.PaulChew.Pnt
-import com.PaulChew.Triangle
-import com.PaulChew.Triangulation
+import com.badlogic.gdx.math.DelaunayTriangulator
+import com.badlogic.gdx.utils.FloatArray
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.DungeonGeneration.Data.Symbol
@@ -16,8 +15,8 @@ import com.lyeeedar.Pathfinding.AStarPathfind
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.ran
-import com.lyeeedar.Util.removeRan
+import com.lyeeedar.Util.random
+import com.lyeeedar.Util.removeRandom
 import java.util.*
 
 /**
@@ -107,8 +106,8 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			val targetCount = (placedRooms.size.toFloat() * 0.6f).toInt()
 			while (factionCount < targetCount && emptyRooms.size > 0)
 			{
-				val faction = levelData.factions.ran(ran)
-				val room = emptyRooms.removeRan(ran)
+				val faction = levelData.factions.random(ran)
+				val room = emptyRooms.removeRandom(ran)
 
 				room.faction = faction
 
@@ -391,7 +390,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 
 			if (levelData.roomGenerators.size > 0)
 			{
-				val genData = levelData.roomGenerators.ran(ran)
+				val genData = levelData.roomGenerators.random(ran)
 				room.generator = AbstractRoomGenerator.load(genData)
 			}
 			else
@@ -538,7 +537,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 	// ----------------------------------------------------------------------
 	protected fun connectRooms()
 	{
-		val roomPnts = com.badlogic.gdx.utils.Array<Pnt>()
+		val roomPnts = com.badlogic.gdx.utils.Array<Point>()
 
 		for (room in rooms)
 		{
@@ -558,7 +557,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 
 				if (x >= 1 && y >= 1 && x < width - 1 && y < height - 1)
 				{
-					val p = Pnt(x.toDouble(), y.toDouble())
+					val p = Point.obtain().set(x, y)
 					roomPnts.add(p)
 
 					contents[x, y].char = '+'
@@ -566,24 +565,27 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			}
 		}
 
-		val initialTriangle = Triangle(Pnt(-10000.0, -10000.0), Pnt(10000.0, -10000.0), Pnt(0.0, 10000.0))
-		val dt = Triangulation(initialTriangle)
+		val ignoredPaths = com.badlogic.gdx.utils.Array<Pair<Point, Point>>()
+		val addedPaths = com.badlogic.gdx.utils.Array<Pair<Point, Point>>()
+		val paths = com.badlogic.gdx.utils.Array<Pair<Point, Point>>()
 
-		for (p in roomPnts)
+		val triangulator = DelaunayTriangulator()
+		val flatPoints = com.badlogic.gdx.utils.Array<Float>()
+		for (point in roomPnts)
 		{
-			dt.delaunayPlace(p)
+			flatPoints.add(point.x.toFloat())
+			flatPoints.add(point.y.toFloat())
 		}
 
-		val ignoredPaths = com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>()
-		val addedPaths = com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>()
-		val paths = com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>()
+		val indices = triangulator.computeTriangles(kotlin.FloatArray(flatPoints.size) { i -> flatPoints[i] }, true)
+
 
 		val tris = com.badlogic.gdx.utils.Array<Triangle>()
-		for (tri in dt)
+		for (i in 0..(indices.size/3))
 		{
-			tris.add(tri)
+			tris.add(Triangle(roomPnts[i*3 + 0],roomPnts[i*3 + 1], roomPnts[i*3 + 2]))
 		}
-		tris.sort();
+		tris.sort()
 
 		for (tri in tris)
 		{
@@ -592,12 +594,12 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 
 		for (room in roomPnts)
 		{
-			var closest: Pnt? = null
-			var closestDist = Double.MAX_VALUE
+			var closest: Point? = null
+			var closestDist = Int.MAX_VALUE
 			var found = false
 			outer@ for (path in paths)
 			{
-				var pair = arrayOf(path.first, path.second)
+				val pair = arrayOf(path.first, path.second)
 				for (p in pair)
 				{
 					if (room[0] == p[0] && room[1] == p[1])
@@ -617,7 +619,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 
 			if (!found)
 			{
-				paths.add(Pair<Pnt, Pnt>(room, closest!!))
+				paths.add(Pair<Point, Point>(room, closest!!))
 			}
 		}
 
@@ -691,23 +693,21 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 	}
 
 	// ----------------------------------------------------------------------
-	protected fun calculatePaths(paths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>, triangle: Triangle, ignoredPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>, addedPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>)
+	protected fun calculatePaths(paths: com.badlogic.gdx.utils.Array<Pair<Point, Point>>, vertices: Triangle, ignoredPaths: com.badlogic.gdx.utils.Array<Pair<Point, Point>>, addedPaths: com.badlogic.gdx.utils.Array<Pair<Point, Point>>)
 	{
-		val vertices = triangle.toArray(Array(0){ i -> Pnt(0.0, 0.0)})
-
 		var ignore = 0
 		var dist: Double
 
-		dist = Math.pow(2.0, vertices[0][0] - vertices[1][0]) + Math.pow(2.0, vertices[0][1] - vertices[1][1])
+		dist = Math.pow(2.0, vertices[0][0].toDouble() - vertices[1][0]) + Math.pow(2.0, vertices[0][1].toDouble() - vertices[1][1])
 
-		var temp = Math.pow(2.0, vertices[0][0] - vertices[2][0]) + Math.pow(2.0, vertices[0][1] - vertices[2][1])
+		var temp = Math.pow(2.0, vertices[0][0].toDouble() - vertices[2][0]) + Math.pow(2.0, vertices[0][1].toDouble() - vertices[2][1])
 		if (dist < temp)
 		{
 			dist = temp
 			ignore = 1
 		}
 
-		temp = Math.pow(2.0, vertices[1][0] - vertices[2][0]) + Math.pow(2.0, vertices[1][1] - vertices[2][1])
+		temp = Math.pow(2.0, vertices[1][0].toDouble() - vertices[2][0]) + Math.pow(2.0, vertices[1][1].toDouble() - vertices[2][1])
 		if (dist < temp)
 		{
 			ignore = 2
@@ -742,7 +742,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 	}
 
 	// ----------------------------------------------------------------------
-	protected fun addPath(p1: Pnt, p2: Pnt, paths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>, ignoredPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>, addedPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>)
+	protected fun addPath(p1: Point, p2: Point, paths: com.badlogic.gdx.utils.Array<Pair<Point, Point>>, ignoredPaths: com.badlogic.gdx.utils.Array<Pair<Point, Point>>, addedPaths: com.badlogic.gdx.utils.Array<Pair<Point, Point>>)
 	{
 		if (p1[0] < 0
 				|| p1[1] < 0
@@ -763,7 +763,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 	}
 
 	// ----------------------------------------------------------------------
-	protected fun checkIgnored(p1: Pnt, p2: Pnt, ignoredPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>): Boolean
+	protected fun checkIgnored(p1: Point, p2: Point, ignoredPaths: com.badlogic.gdx.utils.Array<Pair<Point, Point>>): Boolean
 	{
 		for (p in ignoredPaths)
 		{
@@ -780,7 +780,7 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 	}
 
 	// ----------------------------------------------------------------------
-	protected fun checkAdded(p1: Pnt, p2: Pnt, addedPaths: com.badlogic.gdx.utils.Array<Pair<Pnt, Pnt>>): Boolean
+	protected fun checkAdded(p1: Point, p2: Point, addedPaths: com.badlogic.gdx.utils.Array<Pair<Point, Point>>): Boolean
 	{
 		for (p in addedPaths)
 		{
@@ -794,5 +794,16 @@ class RecursiveDockGenerator(): AbstractLevelGenerator()
 			}
 		}
 		return false
+	}
+}
+
+data class Triangle(val p1: Point, val p2: Point, val p3: Point)
+{
+	operator fun get(x: Int) = when(x)
+	{
+		0 -> p1
+		1 -> p2
+		2 -> p3
+		else -> throw IndexOutOfBoundsException()
 	}
 }

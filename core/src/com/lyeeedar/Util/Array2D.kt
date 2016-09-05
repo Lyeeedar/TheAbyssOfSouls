@@ -6,7 +6,7 @@ import com.lyeeedar.Direction
  * Created by Philip on 08-Apr-16.
  */
 
-class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>) {
+class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>): Sequence<T> {
 
 	companion object {
 
@@ -23,6 +23,12 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>) {
 		}
 	}
 
+	fun tryGet(x:Int, y:Int, fallback:T): T
+	{
+		if (x < 0 || x >= xSize || y < 0 || y >=ySize) return fallback
+		else return this[x, y]
+	}
+
 	operator fun get(x: Int, y: Int): T {
 		return array[x][y]
 	}
@@ -35,12 +41,12 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>) {
 		return array[p.x][p.y]
 	}
 
-	operator fun set(p: Point, t: T) {
-		array[p.x][p.y] = t
-	}
-
 	operator fun get(p: Point, dir: Direction): T {
 		return array[p.x + dir.x][p.y + dir.y]
+	}
+
+	operator fun set(p: Point, t: T) {
+		array[p.x][p.y] = t
 	}
 
 	inline fun forEach(operation: (T) -> Unit) {
@@ -49,5 +55,46 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>) {
 
 	inline fun forEachIndexed(operation: (x: Int, y: Int, T) -> Unit) {
 		array.forEachIndexed { x, p -> p.forEachIndexed { y, t -> operation.invoke(x, y, t) } }
+	}
+
+	override operator fun iterator(): Iterator<T> =  Array2DIterator(this)
+
+	class Array2DIterator<T>(val array: Array2D<T>): Iterator<T>
+	{
+		var x = 0
+		var y = 0
+
+		override fun hasNext(): Boolean = x < array.xSize
+
+		override fun next(): T
+		{
+			val el = array[x, y]
+
+			y++
+			if (y == array.ySize)
+			{
+				y = 0
+				x++
+			}
+
+			return el
+		}
+
+	}
+
+	override fun toString(): String
+	{
+		var string = ""
+
+		for (y in 0..ySize-1)
+		{
+			for (x in 0..xSize-1)
+			{
+				string += this[x,y].toString() + " "
+			}
+			string += "\n\n"
+		}
+
+		return string
 	}
 }

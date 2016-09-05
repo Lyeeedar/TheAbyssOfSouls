@@ -1,10 +1,7 @@
 <Any Reset="true">
     <ProcessInput></ProcessInput>
     <Priority>
-        <Sequence>
-            <Attack Key="Pos"></Attack>
-            <ClearValue Key="Pos"></ClearValue>
-        </Sequence>
+
         <Until State="Running">
             <MoveTo Key="Pos"></MoveTo>
             <ClearValue Key="Pos"></ClearValue>

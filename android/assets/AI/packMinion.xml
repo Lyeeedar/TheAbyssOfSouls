@@ -9,7 +9,7 @@
     <ConvertTo Input="Leader" Output="LeaderPos" Type="Position"/>
 
     <Priority>
-        <Sequence>
+        <!--Sequence>
             <CheckValue Key="EnemyPos"/>
             <CheckValue Condition="morale < 0"/>
             <Priority>
@@ -21,7 +21,7 @@
             </Priority>
             <MoveTo Key="DstRoom"/>
             <ClearValue Key="DstRoom"/>
-        </Sequence>
+        </Sequence-->
 		<Import Path="attackClosest"/>
         <MoveTo Key="LeaderPos" Dst="4"/>
 		<Random>

@@ -82,6 +82,7 @@ abstract class AbstractTreeNode()
 
 			// Actions
 				"ATTACK" -> ActionAttack::class.java
+				"COMBO" -> ActionCombo::class.java
 				"CLEARVALUE" -> ActionClearValue::class.java
 				"CONVERTTO" -> ActionConvertTo::class.java
 				"GETALLVISIBLE" -> ActionGetAllVisible::class.java
@@ -91,7 +92,6 @@ abstract class AbstractTreeNode()
 				"PICK" -> ActionPick::class.java
 				"PROCESSINPUT" -> ActionProcessInput::class.java
 				"SETVALUE" -> ActionSetValue::class.java
-				"TELEGRAPHEDATTACK" -> ActionTelegraphedAttack::class.java
 				"WAIT" -> ActionWait::class.java
 
 			// Conditionals

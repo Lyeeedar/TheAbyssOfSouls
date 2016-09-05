@@ -2,7 +2,7 @@ package com.lyeeedar.AI.BehaviourTree.Selectors
 
 import com.badlogic.ashley.core.Entity
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
-import com.lyeeedar.Util.removeRan
+import com.lyeeedar.Util.removeRandom
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -11,7 +11,7 @@ import com.lyeeedar.Util.removeRan
 class SelectorRandom(): AbstractSelector()
 {
 	//----------------------------------------------------------------------
-	val ran: java.util.Random = java.util.Random();
+	val ran: java.util.Random = java.util.Random()
 	val numList: com.badlogic.gdx.utils.Array<Int> = com.badlogic.gdx.utils.Array<Int>(false, 16);
 	var i: Int = -1
 
@@ -27,7 +27,7 @@ class SelectorRandom(): AbstractSelector()
 
 			while (state == ExecutionState.FAILED && numList.size > 0)
 			{
-				i = numList.removeRan(ran)
+				i = numList.removeRandom(ran)
 				state = nodes.get(i).evaluate(entity);
 			}
 		}

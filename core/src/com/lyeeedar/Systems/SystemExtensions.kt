@@ -12,11 +12,10 @@ import kotlin.reflect.KClass
 
 val systemList: Array<KClass<out EntitySystem>> = arrayOf(
 		TaskProcessorSystem::class,
+		DirectionalSpriteSystem::class,
 		ShadowCastSystem::class,
-		SpriteUpdaterSystem::class,
 		EffectSystem::class,
 		EventSystem::class,
-		SoundSystem::class,
 		CleanupSystem::class,
 		LightingSystem::class,
 		RenderSystem::class

@@ -124,8 +124,6 @@ public final class FastEnumMap<T extends Enum<T>, V> implements Iterable<V>
 		return new FastEnumMapIterator(this);
 	}
 
-	private FastEnumMapIterator iterator;
-
 	private class FastEnumMapIterator implements Iterator<V>
 	{
 		int i = 0;

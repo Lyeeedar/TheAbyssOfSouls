@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.ran
-import com.lyeeedar.Util.removeRan
+import com.lyeeedar.Util.random
+import com.lyeeedar.Util.removeRandom
 import java.util.*
 
 /**
@@ -43,12 +43,12 @@ class FactionData()
 
 		var packSize = if (minPack >= maxPack) minPack - 1 else (minPack + ran.nextInt(maxPack-minPack)) - 1
 
-		val leader = leaders.ran(ran)
+		val leader = leaders.random(ran)
 		placeEntity(leader, room, ran, validList)
 
 		while (packSize > 0 && minions.size > 0)
 		{
-			val minion = minions.ran(ran)
+			val minion = minions.random(ran)
 			placeEntity(minion, room, ran, validList)
 
 			packSize--
@@ -68,7 +68,7 @@ class FactionData()
 		var placed = false
 		outer@ while (temp.size > 0)
 		{
-			val testPoint = temp.removeRan(ran)
+			val testPoint = temp.removeRandom(ran)
 
 			for (x in 0..size-1)
 			{
@@ -98,7 +98,7 @@ class FactionData()
 
 		if (!placed)
 		{
-			val point = validList.ran(ran)
+			val point = validList.random(ran)
 			room.contents[point].contents[slot] = xml
 		}
 	}

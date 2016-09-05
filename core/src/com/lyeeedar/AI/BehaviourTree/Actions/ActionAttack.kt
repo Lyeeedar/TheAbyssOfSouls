@@ -6,12 +6,12 @@ import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskAttack
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.getEquip
+import com.lyeeedar.Components.isAllies
 import com.lyeeedar.Components.stats
 import com.lyeeedar.Direction
 import com.lyeeedar.EquipmentSlot
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.isAllies
 
 /**
  * Created by Philip on 30-Mar-16.
@@ -28,13 +28,12 @@ class ActionAttack(): AbstractAction()
 		val taskData = Mappers.task.get(entity)
 		val tile = posData.position as? Tile
 		val stats = entity.stats()
-		val wep = entity.getEquip(EquipmentSlot.WEAPON)
 
-		state = ExecutionState.FAILED;
+		state = ExecutionState.FAILED
 		// doesnt have all the needed data, fail
-		if ( target == null || posData == null || tile == null || taskData == null || stats == null || wep == null || target.dist(tile) > 1 )
+		if ( target == null || posData == null || tile == null || taskData == null || stats == null || target.dist(tile) > 1 )
 		{
-			return state;
+			return state
 		}
 
 		val targetTile = tile.level.getTile(target) ?: return state
@@ -58,8 +57,8 @@ class ActionAttack(): AbstractAction()
 
 		taskData.tasks.add(attack)
 
-		state = ExecutionState.COMPLETED;
-		return state;
+		state = ExecutionState.COMPLETED
+		return state
 	}
 
 	override fun parse(xml: XmlReader.Element)

@@ -1,6 +1,6 @@
 package com.lyeeedar.Pathfinding
 
-import com.lyeeedar.GlobalData
+import com.lyeeedar.Global
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
@@ -15,7 +15,7 @@ class Pathfinder<T: PathfindingTile>(private val Grid: Array<Array<T>>, private 
 
 		if (path == null)
 		{
-			if (GlobalData.Global.canMoveDiagonal)
+			if (Global.canMoveDiagonal)
 			{
 				path = BresenhamLine.line(startx, starty, endx, endy, Grid, true, Integer.MAX_VALUE, travelType, self)
 			} else

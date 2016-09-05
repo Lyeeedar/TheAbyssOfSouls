@@ -6,13 +6,14 @@ import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.Scaling
+import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
-import com.lyeeedar.GlobalData
-import com.lyeeedar.Systems.render
-import com.lyeeedar.UI.ButtonKeyboardHelper
+import com.lyeeedar.Global
+import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Point
 
 /**
@@ -31,83 +32,45 @@ abstract class AbstractScreen() : Screen, InputProcessor
     //############################################################################
     //region Screen
 
+	// ----------------------------------------------------------------------
+	fun swapTo()
+	{
+		Global.game.switchScreen(this)
+	}
+
     // ----------------------------------------------------------------------
-    override fun show() {
-        if ( !created ) {
-            baseCreate();
-            created = true;
+    override fun show()
+	{
+        if ( !created )
+		{
+            baseCreate()
+            created = true
         }
 
-        Gdx.input.inputProcessor = inputMultiplexer;
-
-        camera = OrthographicCamera(GlobalData.Global.resolution[0], GlobalData.Global.resolution[1]);
-        camera.translate(GlobalData.Global.resolution[0] / 2, GlobalData.Global.resolution[1] / 2);
-        camera.setToOrtho(false, GlobalData.Global.resolution[0], GlobalData.Global.resolution[1]);
-        camera.update();
-
-		GlobalData.Global.engine.render()?.batchHDRColour?.projectionMatrix = camera.combined
-        stage.viewport.camera = camera;
-        stage.viewport.worldWidth = GlobalData.Global.resolution[0];
-        stage.viewport.worldHeight = GlobalData.Global.resolution[1];
-        stage.viewport.screenWidth = GlobalData.Global.screenSize[0];
-        stage.viewport.screenHeight = GlobalData.Global.screenSize[1];
+        Gdx.input.inputProcessor = inputMultiplexer
     }
 
     // ----------------------------------------------------------------------
-    override fun resize(width: Int, height: Int) {
-        GlobalData.Global.screenSize[0] = width;
-        GlobalData.Global.screenSize[1] = height;
-
-        var w = 360.0f;
-        var h = 480.0f;
-
-        if ( width < height ) {
-            h = w * height.toFloat() / width.toFloat();
-        } else {
-            w = h * width.toFloat() / height.toFloat();
-        }
-
-        GlobalData.Global.resolution[0] = w;
-        GlobalData.Global.resolution[1] = h;
-
-        camera = OrthographicCamera(GlobalData.Global.resolution[0], GlobalData.Global.resolution[1]);
-        camera.translate(GlobalData.Global.resolution[0] / 2, GlobalData.Global.resolution[1] / 2);
-        camera.setToOrtho(false, GlobalData.Global.resolution[0], GlobalData.Global.resolution[1]);
-        camera.update();
-
-		GlobalData.Global.engine.render()?.batchHDRColour?.projectionMatrix = camera.combined
-        stage.viewport.camera = camera;
-        stage.viewport.worldWidth = GlobalData.Global.resolution[0];
-        stage.viewport.worldHeight = GlobalData.Global.resolution[1];
-        stage.viewport.screenWidth = GlobalData.Global.screenSize[0];
-        stage.viewport.screenHeight = GlobalData.Global.screenSize[1];
+    override fun resize(width: Int, height: Int)
+	{
+        stage.viewport.update(width, height, true)
     }
 
     // ----------------------------------------------------------------------
     override fun render(delta: Float)
 	{
-        stage.act();
+        stage.act()
+		Future.update(delta)
 
-        Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         doRender(delta)
 
-        stage.draw();
-
-		if (!GlobalData.Global.release)
-		{
-			debugAccumulator += delta
-			if (debugAccumulator >= 0f)
-			{
-				debugAccumulator = -0.5f
-
-				System.out.println("FPS: " + (1f / frametime))
-			}
-		}
+        stage.draw()
 
         // limit fps
-        sleep();
+        sleep()
     }
 
     // ----------------------------------------------------------------------
@@ -127,7 +90,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
     //region InputProcessor
 
     // ----------------------------------------------------------------------
-    override fun keyDown( keycode: Int ) = keyboardHelper.keyDown(keycode)
+    override fun keyDown( keycode: Int ) = false
 
     // ----------------------------------------------------------------------
     override fun keyUp( keycode: Int ) = false
@@ -145,11 +108,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
     override fun touchDragged( screenX: Int, screenY: Int, pointer: Int ) = false
 
     // ----------------------------------------------------------------------
-    override fun mouseMoved( screenX: Int, screenY: Int ): Boolean
-    {
-        keyboardHelper.clear();
-        return false;
-    }
+    override fun mouseMoved( screenX: Int, screenY: Int ) = false
 
     // ----------------------------------------------------------------------
     override fun scrolled(amount: Int) = false
@@ -159,38 +118,40 @@ abstract class AbstractScreen() : Screen, InputProcessor
     //region Methods
 
     // ----------------------------------------------------------------------
-    fun baseCreate() {
-        stage = Stage(ScreenViewport());
+    fun baseCreate()
+	{
+        stage = Stage()
+		stage.viewport = ScalingViewport(Scaling.fit, Global.resolution[0], Global.resolution[1])
 
-        mainTable = Table();
-        mainTable.setFillParent(true);
-        stage.addActor(mainTable);
+        mainTable = Table()
+        mainTable.setFillParent(true)
+        stage.addActor(mainTable)
 
-        inputMultiplexer = InputMultiplexer();
+        inputMultiplexer = InputMultiplexer()
 
-        var inputProcessorOne = this;
-        var inputProcessorTwo = stage;
+        val inputProcessorOne = this
+        val inputProcessorTwo = stage
 
-        inputMultiplexer.addProcessor(inputProcessorTwo);
-        inputMultiplexer.addProcessor(inputProcessorOne);
+        inputMultiplexer.addProcessor(inputProcessorTwo)
+        inputMultiplexer.addProcessor(inputProcessorOne)
 
         create()
     }
 
     // ----------------------------------------------------------------------
     fun sleep() {
-		diff = System.currentTimeMillis() - start;
-        if ( GlobalData.Global.fps > 0 ) {
+		diff = System.currentTimeMillis() - start
+        if ( Global.fps > 0 ) {
 
-            var targetDelay = 1000 / GlobalData.Global.fps
+            val targetDelay = 1000 / Global.fps
             if ( diff < targetDelay ) {
                 try {
-                    Thread.sleep(targetDelay - diff);
+                    Thread.sleep(targetDelay - diff)
                 } catch (e: InterruptedException) {
                 }
             }
         }
-		start = System.currentTimeMillis();
+		start = System.currentTimeMillis()
 
 		if (frametime == -1f)
 		{
@@ -208,12 +169,10 @@ abstract class AbstractScreen() : Screen, InputProcessor
 
     var created: Boolean = false
 
-    lateinit var camera: OrthographicCamera
     lateinit var stage: Stage
     lateinit var mainTable: Table
 
     lateinit var inputMultiplexer: InputMultiplexer
-    var keyboardHelper: ButtonKeyboardHelper = ButtonKeyboardHelper()
 
     var diff: Long = 0
     var start: Long = System.currentTimeMillis()

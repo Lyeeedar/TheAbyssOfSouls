@@ -7,7 +7,7 @@ import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.removeRan
+import com.lyeeedar.Util.removeRandom
 import squidpony.squidgrid.FOV
 import java.util.*
 
@@ -224,7 +224,7 @@ class RoomTheme()
 					var count = if (feature.useCount) feature.count else (valid.size.toFloat() * feature.coverage).toInt()
 					while (count > 0 && valid.size > 0)
 					{
-						val pos = valid.removeRan(ran)
+						val pos = valid.removeRandom(ran)
 						room.contents[pos].contents[feature.slot] = feature.entity
 						room.contents[pos].char = 'E'
 

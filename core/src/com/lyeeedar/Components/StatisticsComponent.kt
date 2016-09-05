@@ -21,7 +21,7 @@ class StatisticsComponent: Component
 	val defense: FastEnumMap<ElementType, Float> = ElementType.getElementMap(0f)
 	val power: FastEnumMap<ElementType, Float> = ElementType.getElementMap(1f)
 
-	val stats: FastEnumMap<Statistic, Float> = Statistic.getStatisticsBlock(0f)
+	val stats: FastEnumMap<Statistic, Float> = Statistic.getStatisticsBlock(1f)
 	val variableMap: ObjectFloatMap<String> = ObjectFloatMap()
 		get()
 		{
@@ -88,4 +88,14 @@ class StatisticsComponent: Component
 		set(value) { stats[Statistic.MORALE] = value }
 	val moraleChange: Float
 		get() = stats[Statistic.MORALE_CHANGE]
+}
+
+fun OrderedSet<String>.isAllies(other: OrderedSet<String>): Boolean
+{
+	for (faction in this)
+	{
+		if (other.contains(faction)) return true
+	}
+
+	return false
 }

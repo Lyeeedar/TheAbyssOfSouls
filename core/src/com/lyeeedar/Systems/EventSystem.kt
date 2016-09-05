@@ -24,8 +24,8 @@ class EventSystem(): IteratingSystem(Family.all(EventComponent::class.java).get(
 		if (entity == null) return
 		val pos = entity.pos() ?: return
 		val tile = entity.tile() ?: return
+		val eventData = Mappers.event.get(entity) ?: return
 
-		val eventData = Mappers.event.get(entity)
 		eventData.pendingEvents.add(EventArgs(EventComponent.EventType.TURN, entity, entity, deltaTime))
 
 		while (eventData.pendingEvents.size > 0)

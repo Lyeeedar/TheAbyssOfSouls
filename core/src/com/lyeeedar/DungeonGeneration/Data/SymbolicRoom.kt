@@ -8,7 +8,7 @@ import com.lyeeedar.Pathfinding.BresenhamLine
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.ran
+import com.lyeeedar.Util.random
 import java.util.*
 
 /**
@@ -253,7 +253,7 @@ class SymbolicRoom()
 
 		if (data.contents.xSize == 0 && data.generator == null)
 		{
-			val el = levelData.roomGenerators.ran(ran)
+			val el = levelData.roomGenerators.random(ran)
 			data.generator = AbstractRoomGenerator.load(el)
 		}
 

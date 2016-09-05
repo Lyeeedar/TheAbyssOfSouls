@@ -1,0 +1,10 @@
+kotlin.UninitializedPropertyAccessException: lateinit property sprite has not been initialized
+	at com.lyeeedar.Components.SpriteComponent.getSprite(SpriteComponent.kt:18)
+	at com.lyeeedar.Systems.DirectionalSpriteSystem.processEntity(DirectionalSpriteSystem.kt:48)
+	at com.badlogic.ashley.systems.IteratingSystem.update(IteratingSystem.java:66)
+	at com.badlogic.ashley.core.Engine.update(Engine.java:314)
+	at com.lyeeedar.Screens.TestDirectionalScreen.doRender(TestDirectionalScreen.kt:55)
+	at com.lyeeedar.Screens.AbstractScreen.render(AbstractScreen.kt:68)
+	at com.badlogic.gdx.Game.render(Game.java:46)
+	at com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop(LwjglApplication.java:223)
+	at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:124)

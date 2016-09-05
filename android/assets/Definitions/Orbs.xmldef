@@ -1,0 +1,14 @@
+<Definitions>
+	<Struct Name="Orbs" RefKey="Struct">
+		<Struct Name="Template" RefKey="Struct">
+			<Reference Name="Sprite" Keys="Sprite" RefKey="Reference" />
+			<Reference Name="Death" Keys="ParticleEffect" RefKey="Reference" />
+		</Struct>
+		<Collection Name="Types" RefKey="Collection">
+			<Struct Name="Orb" ChildAsName="Name" RefKey="Struct">
+				<String Name="Name" RefKey="String" />
+				<Colour Name="Colour" RefKey="Colour" />
+			</Struct>
+		</Collection>
+	</Struct>
+</Definitions>

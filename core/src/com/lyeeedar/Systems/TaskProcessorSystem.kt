@@ -8,7 +8,7 @@ import com.badlogic.ashley.utils.ImmutableArray
 import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.Components.*
 import com.lyeeedar.Events.EventArgs
-import com.lyeeedar.GlobalData
+import com.lyeeedar.Global
 import com.lyeeedar.Util.Point
 
 /**
@@ -35,7 +35,7 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		for (entity in sprites)
 		{
 			val sprite = Mappers.sprite.get(entity)
-			if (sprite.sprite.spriteAnimation != null)
+			if (sprite.sprite.animation != null)
 			{
 				hasEffects = true;
 				break
@@ -50,11 +50,11 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		if (!hasEffects && entitiesToBeProcessed.size == 0)
 		{
 			// process player
-			val player = GlobalData.Global.currentLevel.player
+			val player = Global.currentLevel.player
 
 			processEntity(player)
 
-			val playerTask = Mappers.task.get(player);
+			val playerTask = Mappers.task.get(player)
 			if (playerTask.actionDelay < 0)
 			{
 				for (entity in entities)
@@ -133,9 +133,9 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 
 	fun processEntity(e: Entity): Boolean
 	{
-		val task = Mappers.task.get(e)
-		val stats = Mappers.stats.get(e)
-		val pos = Mappers.position.get(e)
+		val task = Mappers.task.get(e) ?: return true
+		val stats = Mappers.stats.get(e) ?: return true
+		val pos = Mappers.position.get(e) ?: return true
 
 		if (stats.hp <= 0) return true
 		if (pos.hasEffects()) return false

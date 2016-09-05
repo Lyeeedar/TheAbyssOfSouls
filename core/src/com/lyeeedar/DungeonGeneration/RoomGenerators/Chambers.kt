@@ -9,7 +9,7 @@ import com.lyeeedar.DungeonGeneration.Data.Symbol
 import com.lyeeedar.DungeonGeneration.RoomGenerators.AbstractRoomGenerator
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.ran
+import com.lyeeedar.Util.random
 
 /**
  * Seperates the room via Binary Space partitioning, then places doors to
@@ -167,7 +167,7 @@ class Chambers : AbstractRoomGenerator(true)
 				}
 			}
 
-			val doorPos = if (possibleDoorTiles.size > 0) possibleDoorTiles.ran(ran) else null
+			val doorPos = if (possibleDoorTiles.size > 0) possibleDoorTiles.random(ran) else null
 
 			if (doorPos != null)
 			{

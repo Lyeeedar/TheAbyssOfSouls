@@ -3,12 +3,12 @@ package com.lyeeedar.Events
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.AssetManager
 
 import com.lyeeedar.Components.*
 import com.lyeeedar.ElementType
-import com.lyeeedar.GlobalData
+import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap
 
 /**
@@ -56,7 +56,7 @@ class EventActionDamage(group: EventActionGroup): IteratingEventAction(group, Fa
 			damEntity.add(PositionComponent(entity.tile()!!))
 			entity.tile()?.effects?.add(damEntity)
 
-			GlobalData.Global.engine.addEntity(damEntity)
+			Global.engine.addEntity(damEntity)
 		}
 	}
 

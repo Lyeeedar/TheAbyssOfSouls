@@ -3,7 +3,7 @@ package com.lyeeedar.Events
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.stats
-import com.lyeeedar.GlobalData
+import com.lyeeedar.Global
 
 /**
  * Created by Philip on 22-Mar-16.
@@ -19,7 +19,7 @@ class EventActionRemove(group: EventActionGroup): NameRestrictedEventAction(grou
 		}
 		else
 		{
-			GlobalData.Global.engine.removeEntity(entity)
+			Global.engine.removeEntity(entity)
 		}
 	}
 

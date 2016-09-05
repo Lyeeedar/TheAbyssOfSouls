@@ -1,12 +1,22 @@
 package com.lyeeedar
 
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.EquationHelper
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.vectorToAngle
+
+// ----------------------------------------------------------------------
+enum class BlendMode constructor(val src: Int, val dst: Int)
+{
+	MULTIPLICATIVE(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA),
+	ADDITIVE(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+}
 
 // ----------------------------------------------------------------------
 enum class Rarity
@@ -55,12 +65,14 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 	var isCardinal = false
 		private set
 
+	val cardinalClockwise: Direction
+			get() = clockwise.clockwise
+	val cardinalAnticlockwise: Direction
+			get() = anticlockwise.anticlockwise
+
 	init
 	{
-		// basis vector = 0, 1
-		val dot = (0 * x + 1 * y).toDouble() // dot product
-		val det = (0 * y - 1 * x).toDouble() // determinant
-		angle = Math.atan2(det, dot).toFloat() * MathUtils.radiansToDegrees
+		angle = vectorToAngle(x.toFloat(), y.toFloat())
 	}
 
 	val opposite: Direction
@@ -114,6 +126,14 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 			return getDirection(point.x, point.y)
 		}
 
+		fun getDirection(path: kotlin.Array<Vector2>): Direction
+		{
+			val x = path.last().x - path.first().x
+			val y = path.last().y - path.first().y
+
+			return getDirection(x.toInt(), y.toInt())
+		}
+
 		fun getDirection(dir: FloatArray): Direction
 		{
 			val x = if (dir[0] < 0) -1 else if (dir[0] > 0) 1 else 0
@@ -160,16 +180,19 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 				if (dx < 0)
 				{
 					return Direction.WEST
-				} else
+				}
+				else
 				{
 					return Direction.EAST
 				}
-			} else
+			}
+			else
 			{
 				if (dy < 0)
 				{
 					return Direction.SOUTH
-				} else
+				}
+				else
 				{
 					return Direction.NORTH
 				}
@@ -237,24 +260,6 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 
 			return hitTiles
 		}
-	}
-}
-
-// ----------------------------------------------------------------------
-enum class SpaceSlot
-{
-	FLOOR,
-	WALL,
-	ENTITY,
-	AIR;
-
-
-	companion object
-	{
-
-		val Values = SpaceSlot.values()
-		val BasicValues = arrayOf(FLOOR, WALL)
-		val InterestingValues = arrayOf(ENTITY, AIR)
 	}
 }
 
@@ -428,5 +433,23 @@ enum class ElementType
 
 			return map
 		}
+	}
+}
+
+// ----------------------------------------------------------------------
+enum class SpaceSlot
+{
+	FLOOR,
+	WALL,
+	ENTITY,
+	AIR;
+
+
+	companion object
+	{
+
+		val Values = SpaceSlot.values()
+		val BasicValues = arrayOf(FLOOR, WALL)
+		val InterestingValues = arrayOf(ENTITY, AIR)
 	}
 }

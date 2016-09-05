@@ -2,7 +2,7 @@ package com.lyeeedar.Components
 
 import com.badlogic.ashley.core.Component
 import com.lyeeedar.EquipmentSlot
-import com.lyeeedar.Items.Item
+import com.lyeeedar.Level.Item
 import com.lyeeedar.Util.FastEnumMap
 
 /**

@@ -1,0 +1,27 @@
+<Definitions>
+	<StructDef Name="CompletionCondition" ChildAsName="Condition" RefKey="StructDef">
+		<Enum Name="Condition" EnumValues="None,Kill,Matches,Sink,Time,Turns" SkipIfDefault="False" RefKey="Enum" />
+		<Collection Name="Orbs" MinCount="1" SkipIfDefault="False" VisibleIf="Condition == Matches" RefKey="Collection">
+			<Number Name="Count" Type="Int" Min="1" Default="10" RefKey="Number" />
+		</Collection>
+		<Number Name="Sink" Type="Int" Min="1" Default="4" SkipIfDefault="False" VisibleIf="Condition == Sink" RefKey="Number" />
+		<Number Name="Time" Type="Int" Min="1" Default="60" SkipIfDefault="False" VisibleIf="Condition == Time" RefKey="Number" />
+		<Number Name="Turns" Type="Int" Min="1" Default="30" SkipIfDefault="False" VisibleIf="Condition == Turns" RefKey="Number" />
+	</StructDef>
+	<Struct Name="Level" RefKey="Struct">
+		<Collection Name="Grid" MinCount="1" RefKey="Collection">
+			<MultilineString Name="Rows" ElementPerLine="True" RefKey="MultilineString" />
+		</Collection>
+		<String Name="Faction" RefKey="String" />
+		<Collection Name="AllowedVictories" MinCount="1" RefKey="Collection">
+			<Reference Name="" Keys="CompletionCondition" Nullable="False" SkipIfDefault="False" RefKey="Reference" />
+		</Collection>
+		<Collection Name="AllowedDefeats" MinCount="1" RefKey="Collection">
+			<Reference Name="" Keys="CompletionCondition" Nullable="False" SkipIfDefault="False" RefKey="Reference" />
+		</Collection>
+		<String Name="Type" RefKey="String" />
+		<Enum Name="Category" EnumValues="Empty,Good,Bad,Boss" SkipIfDefault="False" RefKey="Enum" />
+		<Reference Name="UncompletedMapSprite" Keys="Sprite" RefKey="Reference" />
+		<Reference Name="CompletedMapSprite" Keys="Sprite" RefKey="Reference" />
+	</Struct>
+</Definitions>
