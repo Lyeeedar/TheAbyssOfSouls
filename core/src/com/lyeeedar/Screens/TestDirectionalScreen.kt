@@ -2,6 +2,9 @@ package com.lyeeedar.Screens
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.lyeeedar.Combo.ComboStep
+import com.lyeeedar.Combo.SlashComboStep
+import com.lyeeedar.Combo.WaitComboStep
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Level
@@ -18,7 +21,7 @@ class TestDirectionalScreen : AbstractScreen()
 		Global.currentLevel = Level()
 		Global.currentLevel.ambient.set(Colour.WHITE)
 
-		Global.currentLevel.grid = Array2D(5, 5) { x, y -> Tile() }
+		Global.currentLevel.grid = Array2D(10, 10) { x, y -> Tile() }
 		for (tile in Global.currentLevel.grid)
 		{
 			val e = Entity()
@@ -41,14 +44,28 @@ class TestDirectionalScreen : AbstractScreen()
 		Global.currentLevel.grid[2, 2].contents[player.pos()!!.slot] = player
 		player.pos()!!.position = Global.currentLevel.grid[2, 2]
 
+		Global.engine.addEntity(player)
+
+		val monster = EntityLoader.load("monster")
+
 		val dirSprite = DirectionalSprite()
 		dirSprite.upSprites["idle"] = AssetManager.loadSprite("Monster/rat_up_idle", drawActualSize = true)
 		dirSprite.downSprites["idle"] = AssetManager.loadSprite("Monster/rat_down_idle", drawActualSize = true)
+		dirSprite.upSprites["attack"] = AssetManager.loadSprite("Monster/rat_up_attack", drawActualSize = true)
+		dirSprite.downSprites["attack"] = AssetManager.loadSprite("Monster/rat_down_attack", drawActualSize = true)
 
-		player.remove(SpriteComponent::class.java)
-		player.add(DirectionalSpriteComponent(dirSprite))
+		monster.add(DirectionalSpriteComponent(dirSprite))
 
-		Global.engine.addEntity(player)
+		Global.currentLevel.grid[7, 7].contents[monster.pos()!!.slot] = monster
+		monster.pos()!!.position = Global.currentLevel.grid[7, 7]
+
+		val combo = ComboComponent()
+		monster.add(combo)
+		val step = WaitComboStep()
+		step.nextSteps.add(SlashComboStep())
+		combo.combos.add(step)
+
+		Global.engine.addEntity(monster)
 	}
 
 	override fun doRender(delta: Float)

@@ -8,11 +8,6 @@
     <ConvertTo Input="Enemy" Output="EnemyPos" Type="Position"></ConvertTo>
 
     <Priority>
-        <Sequence>
-            <CheckValue Key="EnemyPos"></CheckValue>
-            <CheckValue Condition="morale < 50"></CheckValue>
-            <MoveAway Key="EnemyPos"></MoveAway>
-        </Sequence>
 		<Import Path="attackClosest"></Import>
 		<Random>
 			<Wait></Wait>

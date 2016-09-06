@@ -14,7 +14,7 @@ import com.lyeeedar.SpaceSlot
  * Created by Philip on 21-Mar-16.
  */
 
-class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.java, EffectComponent::class.java).get(), systemList.indexOf(CleanupSystem::class))
+class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.java, EffectComponent::class.java, ParticleComponent::class.java).get(), systemList.indexOf(CleanupSystem::class))
 {
 	lateinit var eng: Engine
 
@@ -28,8 +28,26 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 
 	override fun processEntity(entity: Entity?, deltaTime: Float)
 	{
+		if (entity == null) return
+
+		val particle = Mappers.particle.get(entity)
+		if (particle != null)
+		{
+			if (!particle.repeat && particle.particleEffect.completed)
+			{
+				entity.remove(ParticleComponent::class.java)
+
+				if (entity.components.size() == 1 && entity.components.first() is PositionComponent)
+				{
+					// we are now empty, throw us away
+					Global.engine.removeEntity(entity)
+					return
+				}
+			}
+		}
+
 		val level = Global.currentLevel
-		val pos = entity?.pos()!!
+		val pos = entity.pos()!!
 		var visible = false
 		for (x in pos.min.x..pos.max.x)
 		{
@@ -91,7 +109,7 @@ class CleanupSystem(): IteratingSystem(Family.one(StatisticsComponent::class.jav
 				for (stage in Sprite.AnimationStage.Values)
 				{
 					val e = effect.eventMap[stage]
-					if (e != null) entity?.postEvent(e)
+					if (e != null) entity.postEvent(e)
 				}
 
 				// process remaining events

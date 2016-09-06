@@ -55,6 +55,7 @@ abstract class ComboStep
 			val step: ComboStep = when (xml.name.toUpperCase())
 			{
 				"WAIT" -> WaitComboStep()
+				"SLASH" -> SlashComboStep()
 				else -> throw NotImplementedError("Unknown combo step type: " + xml.name.toUpperCase())
 			}
 

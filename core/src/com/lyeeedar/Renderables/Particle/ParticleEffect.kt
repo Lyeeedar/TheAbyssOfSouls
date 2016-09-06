@@ -35,7 +35,8 @@ class ParticleEffect : Renderable()
 	val emitters = Array<Emitter>()
 	val position = Vector2()
 	var rotation: Float = 0f
-	var size: Float = 1f
+	var sizex: Float = 1f
+	var sizey: Float = 1f
 
 	var collisionGrid: Array2D<Boolean>? = null
 	var collisionFun: ((x: Int, y: Int) -> Unit)? = null
@@ -82,8 +83,8 @@ class ParticleEffect : Renderable()
 		val y = position.y + (posOffset?.get(1) ?: 0f)
 
 		val scale = animation?.renderScale()
-		val sx = size * (scale?.get(0) ?: 1f)
-		val sy = size * (scale?.get(1) ?: 1f)
+		val sx = sizex * (scale?.get(0) ?: 1f)
+		val sy = sizey * (scale?.get(1) ?: 1f)
 
 		for (emitter in emitters)
 		{

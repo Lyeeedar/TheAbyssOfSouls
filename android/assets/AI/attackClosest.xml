@@ -1,7 +1,7 @@
 <DataScope>
 	<Any>
 		<Priority>
-		    <Attack Key="EnemyPos"></Attack>
+		    <Combo></Combo>
 		    <Until State="Running">
 				<MoveTo Key="EnemyPos"></MoveTo>
 				<ClearValue Key="EnemyPos"></ClearValue>

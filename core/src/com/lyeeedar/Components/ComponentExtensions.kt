@@ -45,6 +45,7 @@ class Mappers
 		@JvmField val inventory: ComponentMapper<InventoryComponent> = ComponentMapper.getFor(InventoryComponent::class.java)
 		@JvmField val directionalSprite: ComponentMapper<DirectionalSpriteComponent> = ComponentMapper.getFor(DirectionalSpriteComponent::class.java)
 		@JvmField val combo: ComponentMapper<ComboComponent> = ComponentMapper.getFor(ComboComponent::class.java)
+		@JvmField val particle: ComponentMapper<ParticleComponent> = ComponentMapper.getFor(ParticleComponent::class.java)
 	}
 }
 

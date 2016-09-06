@@ -34,21 +34,21 @@ EffectSprites/Hit/Hit_4
   index: -1
 GUI/Button
   rotate: false
-  xy: 454, 59
+  xy: 526, 59
   size: 30, 15
   orig: 30, 15
   offset: 0, 0
   index: -1
 GUI/Checked
   rotate: false
-  xy: 398, 50
+  xy: 470, 50
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 426, 50
+  xy: 498, 50
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -62,14 +62,14 @@ GUI/SeperatorHorizontal
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 354, 6
+  xy: 760, 42
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
   index: -1
 GUI/TextField
   rotate: false
-  xy: 334, 42
+  xy: 406, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -83,7 +83,7 @@ GUI/Tooltip
   index: -1
 GUI/Unchecked
   rotate: false
-  xy: 370, 50
+  xy: 442, 50
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -95,9 +95,23 @@ GUI/background
   orig: 64, 64
   offset: 0, 0
   index: -1
+Monster/rat_down_attack_1
+  rotate: false
+  xy: 370, 26
+  size: 32, 48
+  orig: 32, 48
+  offset: 0, 0
+  index: -1
 Monster/rat_down_idle_1
   rotate: false
   xy: 298, 26
+  size: 32, 48
+  orig: 32, 48
+  offset: 0, 0
+  index: -1
+Monster/rat_up_attack_1
+  rotate: false
+  xy: 334, 26
   size: 32, 48
   orig: 32, 48
   offset: 0, 0
@@ -139,7 +153,7 @@ Oryx/uf_split/uf_heroes/rat_3
   index: -1
 Oryx/uf_split/uf_interface/uf_interface_681
   rotate: false
-  xy: 608, 58
+  xy: 720, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -223,56 +237,56 @@ Oryx/uf_split/uf_terrain/water_green_4
   index: -1
 Particle/droplet
   rotate: false
-  xy: 588, 58
+  xy: 700, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/ember_2
   rotate: false
-  xy: 548, 58
+  xy: 660, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/glow
   rotate: false
-  xy: 568, 58
+  xy: 680, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_1
   rotate: false
-  xy: 334, 22
+  xy: 560, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_2
   rotate: false
-  xy: 334, 2
+  xy: 580, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_3
   rotate: false
-  xy: 488, 58
+  xy: 600, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/spark
   rotate: false
-  xy: 528, 58
+  xy: 640, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/star
   rotate: false
-  xy: 508, 58
+  xy: 620, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -314,7 +328,7 @@ player_3
   index: -1
 white
   rotate: false
-  xy: 628, 58
+  xy: 740, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

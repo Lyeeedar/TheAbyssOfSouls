@@ -139,7 +139,9 @@ open class Point : Pool.Poolable, Comparable<Point>
 	fun euclideanDist2(other: Point) = Vector2.dst2(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())
 	fun euclideanDist2(ox: Float, oy:Float) = Vector2.dst2(x.toFloat(), y.toFloat(), ox, oy)
 
-	fun liesBetween(p1: Point, p2: Point): Boolean
+	fun liesInRect(min: Point, max: Point): Boolean = x >= min.x && x <= max.x && y >= min.y&& y <= max.y
+
+	fun liesOnLine(p1: Point, p2: Point): Boolean
 	{
 		// early out
 		if (p1 == p2) return this == p1
@@ -272,7 +274,7 @@ class PointRange(override val endInclusive: Point, override val start: Point) : 
 {
 	override fun contains(value: Point): Boolean
 	{
-		return value.liesBetween(start, endInclusive)
+		return value.liesOnLine(start, endInclusive)
 	}
 
 	override fun isEmpty(): Boolean = start == endInclusive

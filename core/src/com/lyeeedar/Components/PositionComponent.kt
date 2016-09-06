@@ -14,7 +14,12 @@ import com.lyeeedar.Util.Point
 class PositionComponent: Component
 {
 	constructor()
-	constructor(point: Point) { this.position = point; this.max = point }
+	constructor(point: Point, slot: SpaceSlot = SpaceSlot.ENTITY)
+	{
+		this.position = point
+		this.max = point
+		this.slot = slot
+	}
 
 	var position: Point = Point() // bottom left pos
 		set(value)

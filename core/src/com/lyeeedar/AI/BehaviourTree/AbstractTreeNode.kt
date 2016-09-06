@@ -81,7 +81,6 @@ abstract class AbstractTreeNode()
 				"SETSTATE" -> DecoratorSetState::class.java
 
 			// Actions
-				"ATTACK" -> ActionAttack::class.java
 				"COMBO" -> ActionCombo::class.java
 				"CLEARVALUE" -> ActionClearValue::class.java
 				"CONVERTTO" -> ActionConvertTo::class.java

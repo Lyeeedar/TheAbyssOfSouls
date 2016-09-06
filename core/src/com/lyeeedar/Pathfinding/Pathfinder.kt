@@ -7,7 +7,6 @@ import com.lyeeedar.Util.Point
 
 class Pathfinder<T: PathfindingTile>(private val Grid: Array<Array<T>>, private val startx: Int, private val starty: Int, private val endx: Int, private val endy: Int, private val canMoveDiagonal: Boolean, private val size: Int, private val self: Any)
 {
-
 	fun getPath(travelType: SpaceSlot): com.badlogic.gdx.utils.Array<Point>?
 	{
 		val astar = AStarPathfind(Grid, startx, starty, endx, endy, canMoveDiagonal, false, size, travelType, self)

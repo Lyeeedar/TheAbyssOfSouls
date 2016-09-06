@@ -38,7 +38,7 @@ class DirectionalSprite
 			else -> throw NotImplementedError()
 		}
 
-		val sprite = map[anim]
+		val sprite = map[anim] ?: throw RuntimeException("Failed to find direction sprite for $anim!")
 
 		if (h == HDir.LEFT)
 		{

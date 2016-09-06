@@ -1,0 +1,23 @@
+<Entity>
+    <Name>monster</Name>
+
+    <AI>basicMonster</AI>
+
+    <Slot>Entity</Slot>
+    <Size>2</Size>
+    <CanSwap>true</CanSwap>
+
+    <Sprite RefKey="Sprite">
+        <Name>player</Name>
+        <DrawActualSize>true</DrawActualSize>
+    </Sprite>
+
+    <Statistics>
+        <Max_Health>100</Max_Health>
+        <Max_Stamina>100</Max_Stamina>
+        <Sight>10</Sight>
+    </Statistics>
+
+    <Factions>monster</Factions>
+
+</Entity>

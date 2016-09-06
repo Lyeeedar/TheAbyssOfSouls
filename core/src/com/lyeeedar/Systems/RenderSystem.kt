@@ -47,7 +47,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 	override fun addedToEngine(engine: Engine?)
 	{
-		entities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java).one(SpriteComponent::class.java, TilingSpriteComponent::class.java, EffectComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
+		entities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java).one(SpriteComponent::class.java, TilingSpriteComponent::class.java, EffectComponent::class.java, ParticleComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 	}
 
 	override fun update(deltaTime: Float)
@@ -75,6 +75,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 			val sprite = Mappers.sprite.get(entity)
 			val tilingSprite = Mappers.tilingSprite.get(entity)
 			val effect = Mappers.effect.get(entity)
+			val particle = Mappers.particle.get(entity)
 
 			if (sprite != null)
 			{
@@ -106,6 +107,11 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 				effect.sprite.rotation = effect.direction.angle
 
 				renderer.queueSprite(effect.sprite, px, py, SpaceSlot.AIR.ordinal, 0, tile.light)
+			}
+
+			if (particle != null)
+			{
+				renderer.queueParticle(particle.particleEffect, px, py, SpaceSlot.AIR.ordinal, 0, tile.light)
 			}
 		}
 
