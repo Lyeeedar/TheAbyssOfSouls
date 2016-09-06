@@ -62,7 +62,7 @@ GUI/SeperatorHorizontal
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 760, 42
+  xy: 780, 42
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
@@ -153,7 +153,7 @@ Oryx/uf_split/uf_heroes/rat_3
   index: -1
 Oryx/uf_split/uf_interface/uf_interface_681
   rotate: false
-  xy: 720, 58
+  xy: 740, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -237,7 +237,7 @@ Oryx/uf_split/uf_terrain/water_green_4
   index: -1
 Particle/droplet
   rotate: false
-  xy: 700, 58
+  xy: 720, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -273,6 +273,13 @@ Particle/plasma_2
 Particle/plasma_3
   rotate: false
   xy: 600, 58
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+Particle/slash
+  rotate: false
+  xy: 700, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -328,7 +335,7 @@ player_3
   index: -1
 white
   rotate: false
-  xy: 740, 58
+  xy: 760, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

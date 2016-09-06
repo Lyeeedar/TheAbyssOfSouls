@@ -234,7 +234,7 @@ class Particle(val emitter: Emitter)
 
 		if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL)
 		{
-			temp.set(emitter.offset)
+			temp.set(emitter.offset.valAt(0, emitter.time))
 			temp.scl(emitter.size)
 			temp.rotate(emitter.rotation)
 

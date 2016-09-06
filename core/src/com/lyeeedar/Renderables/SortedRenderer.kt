@@ -168,7 +168,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 				if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL)
 				{
-					tempVec.set(emitter.offset)
+					tempVec.set(emitter.offset.valAt(0, emitter.time))
 					tempVec.scl(emitter.size)
 					tempVec.rotate(emitter.rotation)
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Util.Array2D
+import com.lyeeedar.Util.ciel
 import com.lyeeedar.Util.vectorToAngle
 
 class Emitter
@@ -61,7 +62,7 @@ class Emitter
 	var rotation: Float = 0f
 	val size: Vector2 = Vector2(1f, 1f)
 
-	val offset = Vector2()
+	val offset = VectorTimeline()
 	lateinit var type: EmissionType
 	lateinit var simulationSpace: SimulationSpace
 	val emissionRate = LerpTimeline()
@@ -101,7 +102,7 @@ class Emitter
 			{
 				if (type == EmissionType.ABSOLUTE)
 				{
-					val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).toInt()
+					val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).ciel().toInt()
 					for (i in 1..toSpawn)
 					{
 						spawn()
@@ -149,6 +150,7 @@ class Emitter
 
 		val speed = particleSpeed.lerp(MathUtils.random())
 		val localRot = particleRotation.lerp(MathUtils.random()) + rotation
+		val offset = this.offset.valAt(0, time)
 
 		if (simulationSpace == SimulationSpace.WORLD)
 		{
@@ -283,8 +285,10 @@ class Emitter
 
 	companion object
 	{
-		fun load(xml: XmlReader.Element): Emitter
+		fun load(xml: XmlReader.Element): Emitter?
 		{
+			if (!xml.getBoolean("Enabled", true)) return null
+
 			val emitter = Emitter()
 
 			emitter.type = EmissionType.valueOf(xml.get("Type", "Absolute").toUpperCase())
@@ -300,12 +304,20 @@ class Emitter
 			emitter.gravity = xml.getFloat("Gravity", 0f)
 			emitter.isCollisionEmitter = xml.getBoolean("IsCollisionEmitter", false)
 
-			val offset = xml.get("Offset", null)
+			val offset = xml.getChildByName("Offset")
 			if (offset != null)
 			{
-				val split = offset.split(",")
-				emitter.offset.x = split[0].toFloat()
-				emitter.offset.y = split[1].toFloat()
+				emitter.offset.parse(offset, fun(off: String): Vector2 {
+					val split = off.split(",")
+					val x = split[0].toFloat()
+					val y = split[1].toFloat()
+					return Vector2(x, y)
+				})
+			}
+			else
+			{
+				emitter.offset.streams.add(Array())
+				emitter.offset.streams[0].add(Pair(0f, Vector2()))
 			}
 
 			val rateEls = xml.getChildByName("RateKeyframes")

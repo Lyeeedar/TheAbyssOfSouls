@@ -163,7 +163,7 @@ class ParticleEffect : Renderable()
 			val emitterx = emitter.position.x * tileSize + offsetx
 			val emittery = emitter.position.y * tileSize + offsety
 
-			temp.set(emitter.offset)
+			temp.set(emitter.offset.valAt(0, emitter.time))
 			temp.scl(emitter.size)
 			temp.rotate(emitter.rotation)
 
@@ -217,7 +217,7 @@ class ParticleEffect : Renderable()
 			for (i in 0..emittersEl.childCount-1)
 			{
 				val el = emittersEl.getChild(i)
-				val emitter = Emitter.load(el)
+				val emitter = Emitter.load(el) ?: continue
 				effect.emitters.add(emitter)
 			}
 

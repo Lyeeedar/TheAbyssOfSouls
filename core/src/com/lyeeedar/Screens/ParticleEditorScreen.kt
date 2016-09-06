@@ -67,6 +67,18 @@ class ParticleEditorScreen : AbstractScreen()
 
 		})
 
+		val rotationBox = SelectBox<Float>(Global.skin)
+		rotationBox.setItems(0f, 90f, 180f, 270f)
+		rotationBox.selected = 0f
+
+		rotationBox.addListener(object : ChangeListener()
+		{
+			override fun changed(event: ChangeEvent?, actor: Actor?)
+			{
+				particle.rotation = rotationBox.selected
+			}
+		})
+
 		colourButton.addClickListener {
 			colour = JColorChooser.showDialog(null, "Particle Colour", colour)
 			particle.colour.set(colour.red / 255f, colour.green / 255f, colour.blue / 255f, colour.alpha / 255f)
@@ -112,6 +124,7 @@ class ParticleEditorScreen : AbstractScreen()
 		mainTable.add(updateButton).expandY().top()
 		mainTable.add(playbackSpeedBox).expandY().top()
 		mainTable.add(colourButton).expandY().top()
+		mainTable.add(rotationBox).expandY().top()
 
 		particle = ParticleEffect()
 

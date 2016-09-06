@@ -5,6 +5,7 @@
 		<Collection Name="Emitters" MinCount="1" RefKey="Collection">
 			<Struct Name="Emitter" DescriptionChild="Name" RefKey="Struct">
 				<String Name="Name" RefKey="String" />
+				<Boolean Name="Enabled" Default="True" RefKey="Boolean" />
 				<Boolean Name="IsCollisionEmitter" RefKey="Boolean" />
 				<Enum Name="Type" EnumValues="Absolute,Accumulated" RefKey="Enum" />
 				<Enum Name="Space" EnumValues="World,Local" RefKey="Enum" />
@@ -13,7 +14,12 @@
 				<Number Name="Height" Min="0" Default="1" RefKey="Number" />
 				<Number Name="Rotation" Min="0" Max="360" RefKey="Number" />
 				<Enum Name="Area" EnumValues="Interior,Border" RefKey="Enum" />
-				<Vector Name="Offset" RefKey="Vector" />
+				<Collection Name="Offset" RefKey="Collection">
+					<Struct Name="Keyframe" Nullable="False" Collapse="True" Seperator="|" RefKey="Struct">
+						<Number Name="Time" Min="0" SkipIfDefault="False" RefKey="Number" />
+						<Vector Name="Position" SkipIfDefault="False" RefKey="Vector" />
+					</Struct>
+				</Collection>
 				<Enum Name="Direction" EnumValues="Radial,Random,Up,Down,Left,Right" RefKey="Enum" />
 				<Struct Name="ParticleSpeed" Nullable="False" Collapse="True" RefKey="Struct">
 					<Number Name="Min" SkipIfDefault="False" RefKey="Number" />

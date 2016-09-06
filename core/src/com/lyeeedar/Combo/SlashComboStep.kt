@@ -19,16 +19,14 @@ import com.lyeeedar.Util.Point
 class SlashComboStep : ComboStep()
 {
 	var range: Int = 1
-	var effect: ParticleEffect = AssetManager.loadParticleEffect("Explosion")
+	var effect: ParticleEffect = AssetManager.loadParticleEffect("slash")
 
 	override fun doActivate(entity: Entity, direction: Direction)
 	{
 		val pos = entity.pos() ?: return
 		val entityTile = entity.tile() ?: return
 
-		val minmax = getMinMax(entity, direction)
-		val min = minmax.min
-		val max = minmax.max
+		val (min, max) = getMinMax(entity, direction)
 		max.x += direction.x * range
 		max.y += direction.y * range
 
@@ -77,9 +75,7 @@ class SlashComboStep : ComboStep()
 		val entityStats = entity.stats() ?: return false
 
 		// get min and max
-		val minmax = getMinMax(entity, direction)
-		val min = minmax.min
-		val max = minmax.max
+		val (min, max) = getMinMax(entity, direction)
 
 		// check total range
 		val totalRange = range + stepsForward
