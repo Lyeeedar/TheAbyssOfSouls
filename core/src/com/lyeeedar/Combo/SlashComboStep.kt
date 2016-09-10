@@ -23,19 +23,38 @@ class SlashComboStep : ComboStep()
 
 	override fun doActivate(entity: Entity, direction: Direction)
 	{
-		val pos = entity.pos() ?: return
 		val entityTile = entity.tile() ?: return
 
 		val (min, max) = getMinMax(entity, direction)
-		max.x += direction.x * range
-		max.y += direction.y * range
+
+		if (min.x > max.x)
+		{
+			val temp = min.x
+			min.x = max.x
+			max.x = temp
+		}
+
+		if (min.y > max.y)
+		{
+			val temp = min.y
+			min.y = max.y
+			max.y = temp
+		}
+
+		if (direction.x < 0 || direction.y < 0)
+		{
+			min.x += direction.x * (range - 1)
+			min.y += direction.y * (range - 1)
+		}
+		else
+		{
+			max.x += direction.x * (range - 1)
+			max.y += direction.y * (range - 1)
+		}
 
 		val hitSet = ObjectSet<Tile>()
 
 		val e = effect.copy()
-		e.sizex = pos.size + 2f
-		e.sizey = range.toFloat()
-		e.rotation = direction.angle
 		e.collisionFun = fun (cx: Int, cy: Int) {
 			val t = entityTile.level.getTile(cx, cy) ?: return
 			if (!hitSet.contains(t))
@@ -59,11 +78,15 @@ class SlashComboStep : ComboStep()
 			}
 		}
 
-		val center = min + ((max-min) / 2)
-		val ctile = entityTile.level.getTile(center) ?: return
+		val epos = PositionComponent()
+		epos.slot = SpaceSlot.AIR
+		epos.min = entityTile.level.getTile(min)!!
+		epos.max = entityTile.level.getTile(max)!!
+		epos.facing = direction
+		epos.lockFaceing = true
 
 		val slashEntity = Entity()
-		slashEntity.add(PositionComponent(ctile, SpaceSlot.AIR))
+		slashEntity.add(epos)
 		slashEntity.add(ParticleComponent(e))
 
 		Global.engine.addEntity(slashEntity)
@@ -80,7 +103,7 @@ class SlashComboStep : ComboStep()
 		// check total range
 		val totalRange = range + stepsForward
 
-		for (i in 0..totalRange)
+		for (i in 1..totalRange)
 		{
 			for (p in min..max)
 			{
@@ -122,7 +145,7 @@ class SlashComboStep : ComboStep()
 		}
 		else if (direction == Direction.NORTH)
 		{
-			min = pos.position + Point(-1, pos.size + 1)
+			min = pos.position + Point(-1, pos.size)
 			max = min + Point(pos.size + 1, 0)
 		}
 		else if (direction == Direction.WEST)
@@ -132,7 +155,7 @@ class SlashComboStep : ComboStep()
 		}
 		else if (direction == Direction.EAST)
 		{
-			min = pos.position + Point(pos.size + 1, -1)
+			min = pos.position + Point(pos.size, -1)
 			max = min + Point(0, pos.size + 1)
 		}
 		else

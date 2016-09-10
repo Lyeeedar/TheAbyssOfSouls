@@ -16,6 +16,7 @@
     <value>
       <string>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Particles\Explosion.xml&lt;/string&gt;
   &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Particles\slash.xml&lt;/string&gt;
   &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Definitions\Particle.xmldef&lt;/string&gt;
 &lt;/ArrayOfString&gt;</string>

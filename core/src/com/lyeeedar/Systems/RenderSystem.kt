@@ -21,6 +21,7 @@ import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.DirectionalSprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.EnumBitflag
@@ -111,7 +112,20 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 			if (particle != null)
 			{
-				renderer.queueParticle(particle.particleEffect, px, py, SpaceSlot.AIR.ordinal, 0, tile.light)
+				particle.particleEffect.sizex = (pos.max.x - pos.min.x).toFloat() + 1f
+				particle.particleEffect.sizey = (pos.max.y - pos.min.y).toFloat() + 1f
+
+				particle.particleEffect.rotation = pos.facing.angle
+				particle.particleEffect.position.set(pos.min.x + particle.particleEffect.sizex * 0.5f, pos.min.y + particle.particleEffect.sizey * 0.5f)
+
+				if (pos.facing.x != 0)
+				{
+					val temp = particle.particleEffect.sizex
+					particle.particleEffect.sizex = particle.particleEffect.sizey
+					particle.particleEffect.sizey = temp
+				}
+
+				renderer.queueParticle(particle.particleEffect, 0f, 0f, SpaceSlot.AIR.ordinal, 0, tile.light)
 			}
 		}
 

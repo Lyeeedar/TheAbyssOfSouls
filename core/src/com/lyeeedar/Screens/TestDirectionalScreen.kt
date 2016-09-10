@@ -2,6 +2,8 @@ package com.lyeeedar.Screens
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.lyeeedar.Combo.ComboStep
 import com.lyeeedar.Combo.SlashComboStep
 import com.lyeeedar.Combo.WaitComboStep
@@ -16,6 +18,9 @@ import com.lyeeedar.Util.*
 
 class TestDirectionalScreen : AbstractScreen()
 {
+	lateinit var font: BitmapFont
+	lateinit var batch: SpriteBatch
+
 	override fun create()
 	{
 		Global.currentLevel = Level()
@@ -66,10 +71,45 @@ class TestDirectionalScreen : AbstractScreen()
 		combo.combos.add(step)
 
 		Global.engine.addEntity(monster)
+
+		font = Global.skin.getFont("default")
+		batch = SpriteBatch()
 	}
 
 	override fun doRender(delta: Float)
 	{
 		Global.engine.update(delta)
+
+		batch.begin()
+
+		font.draw(batch, "$mousex,$mousey", 20f, Global.resolution[ 1 ] - 20f)
+
+		batch.end()
 	}
+
+	// ----------------------------------------------------------------------
+	override fun mouseMoved( screenX: Int, screenY: Int ): Boolean
+	{
+		val player = Global.currentLevel.player
+		val playerPos = Mappers.position.get(player)
+		val playerSprite = Mappers.sprite.get(player)
+
+		var offsetx = Global.resolution[ 0 ] / 2 - playerPos.position.x * 32f - 32f / 2
+		var offsety = Global.resolution[ 1 ] / 2 - playerPos.position.y * 32f - 32f / 2
+
+		val offset = playerSprite.sprite.animation?.renderOffset()
+		if (offset != null)
+		{
+			offsetx -= offset[0] * 32f
+			offsety -= offset[1] * 32f
+		}
+
+		mousex = ((screenX - offsetx) / 32f).toInt()
+		mousey = (((Global.resolution[1] - screenY) - offsety) / 32f).toInt()
+
+		return true
+	}
+
+	var mousex: Int = 0
+	var mousey: Int = 0
 }

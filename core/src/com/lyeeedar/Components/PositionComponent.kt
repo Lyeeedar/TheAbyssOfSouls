@@ -39,6 +39,12 @@ class PositionComponent: Component
 	var canSwap: Boolean = false
 
 	var facing: Direction = Direction.SOUTH
+		set(value)
+		{
+			field = value
+			if (lockFaceing) throw RuntimeException("attempt to edit locked facing")
+		}
+	var lockFaceing = false
 
 	var turnsOnTile: Int = 0
 

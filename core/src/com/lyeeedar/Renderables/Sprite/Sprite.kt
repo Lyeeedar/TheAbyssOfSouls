@@ -318,7 +318,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 		private val tempVec = Vector3()
 		private val tempMat = Matrix3()
 
-		private fun getPositionCorrectionOffsets(x: Float, y: Float, originX: Float, originY: Float, width: Float, height: Float,
+		fun getPositionCorrectionOffsets(x: Float, y: Float, originX: Float, originY: Float, width: Float, height: Float,
 												 scaleX: Float, scaleY: Float, rotation: Float): Vector3
 		{
 			// bottom left and top right corner points relative to origin

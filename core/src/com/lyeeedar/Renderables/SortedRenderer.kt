@@ -156,7 +156,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		val x = ix * tileSize
 		val y = iy * tileSize
 
-		val scale = effect.animation?.renderScale()?.get(0) ?: 1f
+		//val scale = effect.animation?.renderScale()?.get(0) ?: 1f
 		val animCol = effect.animation?.renderColour() ?: Colour.WHITE
 
 		for (emitter in effect.emitters)
@@ -182,8 +182,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 					val col = tempCol.set(particle.colour.valAt(pdata.colStream, pdata.life))
 					col.a = particle.alpha.valAt(pdata.alphaStream, pdata.life)
 					val size = particle.size.valAt(pdata.sizeStream, pdata.life).lerp(pdata.ranVal)
-					val sizex = scale * size * width * emitter.size.x
-					val sizey = scale * size * height * emitter.size.y
+					val sizex = size * width * emitter.size.x
+					val sizey = size * height * emitter.size.y
 					val rotation = if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) pdata.rotation + emitter.rotation + emitter.emitterRotation else pdata.rotation
 
 					col.mul(colour).mul(animCol).mul(effect.colour)
@@ -197,7 +197,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 					val comparisonVal = getComparisonVal(drawx-sizex*0.5f*tileSize, drawy-sizey*0.5f*tileSize, layer, index, particle.blend)
 
-					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, ix, iy, col, sizex, sizey, rotation, particle.blend, comparisonVal )
+					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, tempVec.x, tempVec.y, col, sizex, sizey, rotation, particle.blend, comparisonVal )
 
 					heap.add( rs, rs.comparisonVal )
 				}

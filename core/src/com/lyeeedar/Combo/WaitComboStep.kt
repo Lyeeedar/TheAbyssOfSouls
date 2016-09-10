@@ -23,6 +23,5 @@ class WaitComboStep: ComboStep()
 
 	override fun doActivate(entity: Entity, direction: Direction)
 	{
-		println("doing wait")
 	}
 }
