@@ -74,7 +74,17 @@ class Particle(val emitter: Emitter)
 				}
 				else
 				{
-					val rotation = rotationSpeed.valAt(particle.rotStream, particle.life).lerp(particle.ranVal)
+					var rotation = rotationSpeed.valAt(particle.rotStream, particle.life).lerp(particle.ranVal)
+
+					if (emitter.particleEffect.flipX && emitter.particleEffect.flipY)
+					{
+
+					}
+					else if (emitter.particleEffect.flipX || emitter.particleEffect.flipY)
+					{
+						rotation *= -1f
+					}
+
 					particle.rotation += rotation * delta
 				}
 
@@ -236,6 +246,16 @@ class Particle(val emitter: Emitter)
 		{
 			temp.set(emitter.offset.valAt(0, emitter.time))
 			temp.scl(emitter.size)
+
+			if (emitter.particleEffect.flipX)
+			{
+				temp.x *= -1
+			}
+			if (emitter.particleEffect.flipY)
+			{
+				temp.y *= -1
+			}
+
 			temp.rotate(emitter.rotation)
 
 			val ex = temp.x + emitter.position.x

@@ -24,5 +24,7 @@
 		<File Name="Name" BasePath="Particles" AllowedFileTypes="xml" SkipIfDefault="False" RefKey="File" />
 		<Number Name="SpeedMultiplier" Min="0" Default="1" RefKey="Number" />
 		<Colour Name="Colour" HasAlpha="True" RefKey="Colour" />
+		<Boolean Name="FlipX" RefKey="Boolean" />
+		<Boolean Name="FlipY" RefKey="Boolean" />
 	</StructDef>
 </Definitions>

@@ -12,7 +12,7 @@ import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.ciel
 import com.lyeeedar.Util.vectorToAngle
 
-class Emitter
+class Emitter(val particleEffect: ParticleEffect)
 {
 	val MAX_DELTA = 1f / 15f // dont update faster than 15fps
 
@@ -149,8 +149,31 @@ class Emitter
 		}
 
 		val speed = particleSpeed.lerp(MathUtils.random())
-		val localRot = particleRotation.lerp(MathUtils.random()) + rotation
+		var localRot = particleRotation.lerp(MathUtils.random()) + rotation
 		val offset = this.offset.valAt(0, time)
+
+		if (particleEffect.flipX)
+		{
+			offset.x *= -1f
+			spawnPos.x *= -1f
+			velocity.x *= -1f
+		}
+
+		if (particleEffect.flipY)
+		{
+			offset.y *= -1f
+			spawnPos.y *= -1f
+			velocity.y *= -1f
+		}
+
+		if (particleEffect.flipX && particleEffect.flipY)
+		{
+
+		}
+		else if (particleEffect.flipX || particleEffect.flipY)
+		{
+			localRot *= -1f
+		}
 
 		if (simulationSpace == SimulationSpace.WORLD)
 		{
@@ -285,11 +308,11 @@ class Emitter
 
 	companion object
 	{
-		fun load(xml: XmlReader.Element): Emitter?
+		fun load(xml: XmlReader.Element, particleEffect: ParticleEffect): Emitter?
 		{
 			if (!xml.getBoolean("Enabled", true)) return null
 
-			val emitter = Emitter()
+			val emitter = Emitter(particleEffect)
 
 			emitter.type = EmissionType.valueOf(xml.get("Type", "Absolute").toUpperCase())
 			emitter.simulationSpace = SimulationSpace.valueOf(xml.get("Space", "World").toUpperCase())

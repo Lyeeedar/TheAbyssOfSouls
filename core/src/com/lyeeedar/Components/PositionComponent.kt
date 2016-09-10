@@ -79,4 +79,19 @@ class PositionComponent: Component
 
 		return false
 	}
+
+	fun isOnTile(point: Point): Boolean
+	{
+		val tile = point as? Tile? ?: return false
+
+		for (x in 0..size-1)
+		{
+			for (y in 0..size - 1)
+			{
+				val t = tile.level.getTile(tile, x, y) ?: continue
+				if (t == point) return true
+			}
+		}
+		return false
+	}
 }

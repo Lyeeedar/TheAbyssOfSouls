@@ -1,6 +1,7 @@
 package com.lyeeedar.Level
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.math.MathUtils
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Direction
 import com.lyeeedar.SpaceSlot
@@ -85,6 +86,9 @@ class Level()
 		}
 		return null
 	}
+
+	// ----------------------------------------------------------------------
+	fun getTileClamped(point: Point) = getTile(MathUtils.clamp(point.x, 0, width-1), MathUtils.clamp(point.y, 0, height-1))
 
 	// ----------------------------------------------------------------------
 	fun getTile(point: Point) = getTile(point.x, point.y)

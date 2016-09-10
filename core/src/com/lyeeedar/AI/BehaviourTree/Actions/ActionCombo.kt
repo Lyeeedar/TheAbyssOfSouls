@@ -10,6 +10,7 @@ import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.combo
 import com.lyeeedar.Components.pos
 import com.lyeeedar.Components.task
+import com.lyeeedar.Direction
 
 class ActionCombo : AbstractAction()
 {
@@ -26,12 +27,28 @@ class ActionCombo : AbstractAction()
 			throw RuntimeException("Managed to run ai whilst a combo was in process!")
 		}
 
-		val validCombos = Array<ComboStep>()
+		val validCombos = Array<Pair>()
 		for (c in combo.combos)
 		{
 			if (c.isValid(entity, pos.facing))
 			{
-				validCombos.add(c)
+				validCombos.add(Pair(c, pos.facing))
+			}
+		}
+
+		if (validCombos.size == 0)
+		{
+			for (c in combo.combos)
+			{
+				for (dir in Direction.CardinalValues)
+				{
+					if (dir == pos.facing) continue // we already checked these
+					if (c.isValid(entity, dir))
+					{
+						validCombos.add(Pair(c, dir))
+						if (dir.cardinalClockwise == pos.facing || dir.cardinalAnticlockwise == pos.facing) validCombos.add(Pair(c, dir))
+					}
+				}
 			}
 		}
 
@@ -39,13 +56,14 @@ class ActionCombo : AbstractAction()
 		{
 			val chosen = validCombos.random()
 
-			combo.currentCombo = chosen
-			val nextTask = TaskCombo(chosen)
+			pos.facing = chosen.direction
+			combo.currentCombo = chosen.comboStep
+			val nextTask = TaskCombo(chosen.comboStep)
 
 			val task = entity.task()
 			task.tasks.add(nextTask)
 
-			Mappers.directionalSprite.get(entity)?.currentAnim = chosen.anim
+			Mappers.directionalSprite.get(entity)?.currentAnim = chosen.comboStep.anim
 
 			state = ExecutionState.COMPLETED
 		}
@@ -62,4 +80,6 @@ class ActionCombo : AbstractAction()
 	{
 		// cant do anything here
 	}
+
+	data class Pair(val comboStep: ComboStep, val direction: Direction)
 }

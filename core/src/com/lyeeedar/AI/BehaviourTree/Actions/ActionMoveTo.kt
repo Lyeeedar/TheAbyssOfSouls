@@ -38,7 +38,7 @@ class ActionMoveTo(): AbstractAction()
 		}
 
 		// if we arrived at our target, succeed
-		if ( (towards && tile.taxiDist(target) <= dst) || (!towards && tile.taxiDist(target) >= dst) )
+		if ( (towards && (tile.taxiDist(target) <= dst || posData.isOnTile(target))) || (!towards && tile.taxiDist(target) >= dst) )
 		{
 			lastPos = Point.ZERO
 			state = ExecutionState.COMPLETED;

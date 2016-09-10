@@ -111,7 +111,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 			if (rs.texture != null)
 			{
-				batch.draw(rs.texture, rs.x + offsetx, rs.y + offsety, 0.5f, 0.5f, 1f, 1f, tileSize * rs.width, tileSize * rs.height, rs.rotation)
+				batch.draw(rs.texture, rs.x + offsetx, rs.y + offsety, 0.5f, 0.5f, 1f, 1f, tileSize * rs.width, tileSize * rs.height, rs.rotation, rs.flipX, rs.flipY)
 			}
 
 			rs.free()
@@ -197,7 +197,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 					val comparisonVal = getComparisonVal(drawx-sizex*0.5f*tileSize, drawy-sizey*0.5f*tileSize, layer, index, particle.blend)
 
-					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, tempVec.x, tempVec.y, col, sizex, sizey, rotation, particle.blend, comparisonVal )
+					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, tempVec.x, tempVec.y, col, sizex, sizey, rotation, effect.flipX, effect.flipY, particle.blend, comparisonVal )
 
 					heap.add( rs, rs.comparisonVal )
 				}
@@ -233,7 +233,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		val comparisonVal = getComparisonVal(x, y, layer, index, BlendMode.MULTIPLICATIVE)
 
-		val rs = RenderSprite.obtain().set( null, tilingSprite, null, x, y, ix, iy, colour, width, height, 0f, BlendMode.MULTIPLICATIVE, comparisonVal )
+		val rs = RenderSprite.obtain().set( null, tilingSprite, null, x, y, ix, iy, colour, width, height, 0f, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 
 		val point = Point.obtain().set(ix.toInt(), iy.toInt())
 		var keys = tilingMap[point]
@@ -279,7 +279,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		val comparisonVal = getComparisonVal(x, y, layer, index, BlendMode.MULTIPLICATIVE)
 
-		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, 0f, BlendMode.MULTIPLICATIVE, comparisonVal )
+		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, 0f, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 
 		heap.add( rs, rs.comparisonVal )
 	}
@@ -304,6 +304,8 @@ class RenderSprite : BinaryHeap.Node(0f)
 	var width: Float = 1f
 	var height: Float = 1f
 	var rotation: Float = 0f
+	var flipX: Boolean = false
+	var flipY: Boolean = false
 	var blend: BlendMode = BlendMode.MULTIPLICATIVE
 
 	var comparisonVal: Float = 0f
@@ -315,6 +317,7 @@ class RenderSprite : BinaryHeap.Node(0f)
 					 colour: Colour,
 					 width: Float, height: Float,
 					 rotation: Float,
+					 flipX: Boolean, flipY: Boolean,
 					 blend: BlendMode,
 					 comparisonVal: Float): RenderSprite
 	{
@@ -330,6 +333,8 @@ class RenderSprite : BinaryHeap.Node(0f)
 		this.comparisonVal = comparisonVal
 		this.blend = blend
 		this.rotation = rotation
+		this.flipX = flipX
+		this.flipY = flipY
 
 		return this
 	}

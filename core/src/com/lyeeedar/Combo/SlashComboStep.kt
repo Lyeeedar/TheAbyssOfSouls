@@ -77,11 +77,12 @@ class SlashComboStep : ComboStep()
 				}
 			}
 		}
+		//e.flipX = true
 
 		val epos = PositionComponent()
 		epos.slot = SpaceSlot.AIR
-		epos.min = entityTile.level.getTile(min)!!
-		epos.max = entityTile.level.getTile(max)!!
+		epos.min = entityTile.level.getTileClamped(min)!!
+		epos.max = entityTile.level.getTileClamped(max)!!
 		epos.facing = direction
 		epos.lockFaceing = true
 
@@ -101,9 +102,9 @@ class SlashComboStep : ComboStep()
 		val (min, max) = getMinMax(entity, direction)
 
 		// check total range
-		val totalRange = range + stepsForward
+		val totalRange = (range-1) + stepsForward
 
-		for (i in 1..totalRange)
+		for (i in 0..totalRange)
 		{
 			for (p in min..max)
 			{

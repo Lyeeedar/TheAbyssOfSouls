@@ -37,6 +37,8 @@ class ParticleEffect : Renderable()
 	var rotation: Float = 0f
 	var sizex: Float = 1f
 	var sizey: Float = 1f
+	var flipX: Boolean = false
+	var flipY: Boolean = false
 
 	var collisionGrid: Array2D<Boolean>? = null
 	var collisionFun: ((x: Int, y: Int) -> Unit)? = null
@@ -217,7 +219,7 @@ class ParticleEffect : Renderable()
 			for (i in 0..emittersEl.childCount-1)
 			{
 				val el = emittersEl.getChild(i)
-				val emitter = Emitter.load(el) ?: continue
+				val emitter = Emitter.load(el, effect) ?: continue
 				effect.emitters.add(emitter)
 			}
 
