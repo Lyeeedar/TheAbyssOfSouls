@@ -19,7 +19,7 @@ import com.lyeeedar.Util.Point
 class SlashComboStep : ComboStep()
 {
 	var range: Int = 1
-	var effect: ParticleEffect = AssetManager.loadParticleEffect("slash")
+	lateinit var effect: ParticleEffect
 
 	override fun doActivate(entity: Entity, direction: Direction)
 	{

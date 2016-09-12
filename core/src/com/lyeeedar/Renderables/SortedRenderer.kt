@@ -182,8 +182,15 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 					val col = tempCol.set(particle.colour.valAt(pdata.colStream, pdata.life))
 					col.a = particle.alpha.valAt(pdata.alphaStream, pdata.life)
 					val size = particle.size.valAt(pdata.sizeStream, pdata.life).lerp(pdata.ranVal)
-					val sizex = size * width * emitter.size.x
-					val sizey = size * height * emitter.size.y
+					var sizex = size * width
+					var sizey = size * height
+
+					if (particle.allowResize)
+					{
+						sizex *= emitter.size.x
+						sizey *= emitter.size.y
+					}
+
 					val rotation = if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) pdata.rotation + emitter.rotation + emitter.emitterRotation else pdata.rotation
 
 					col.mul(colour).mul(animCol).mul(effect.colour)

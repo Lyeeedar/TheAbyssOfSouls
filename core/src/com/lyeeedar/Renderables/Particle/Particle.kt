@@ -40,6 +40,7 @@ class Particle(val emitter: Emitter)
 
 	val particles = Array<ParticleData>(false, 16)
 
+	var allowResize: Boolean = true
 	lateinit var lifetime: Range
 	lateinit var blend: BlendMode
 	var drag = 0f
@@ -297,6 +298,7 @@ class Particle(val emitter: Emitter)
 			particle.collision = CollisionAction.valueOf(xml.get("Collision", "None").toUpperCase())
 			particle.drag = xml.getFloat("Drag", 0f)
 			particle.velocityAligned = xml.getBoolean("VelocityAligned", false)
+			particle.allowResize = xml.getBoolean("AllowResize", true)
 
 			val textureEls = xml.getChildByName("TextureKeyframes")
 			if (textureEls != null)

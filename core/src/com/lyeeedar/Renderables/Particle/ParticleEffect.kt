@@ -33,6 +33,8 @@ class ParticleEffect : Renderable()
 	private var doneWarmup = false
 	var moveSpeed: Float = 1f
 	val emitters = Array<Emitter>()
+
+	// local stuff
 	val position = Vector2()
 	var rotation: Float = 0f
 	var sizex: Float = 1f
@@ -203,6 +205,10 @@ class ParticleEffect : Renderable()
 		effect.rotation = rotation
 		effect.colour.set(colour)
 		effect.speedMultiplier = speedMultiplier
+		effect.flipX = flipX
+		effect.flipY = flipY
+		effect.sizex = sizex
+		effect.sizey = sizey
 		return effect
 	}
 

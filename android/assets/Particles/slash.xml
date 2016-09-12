@@ -70,6 +70,7 @@
 				<Particle>
 					<Lifetime>1,1</Lifetime>
 					<BlendMode>Additive</BlendMode>
+					<AllowResize>false</AllowResize>
 					<TextureKeyframes>
 						<Stream>
 							<Keyframe>0|Particle/star</Keyframe>

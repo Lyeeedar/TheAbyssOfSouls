@@ -46,6 +46,7 @@
 						<Enum Name="Collision" EnumValues="None,Slide,Bounce,Die" RefKey="Enum" />
 						<Number Name="Drag" RefKey="Number" />
 						<Boolean Name="VelocityAligned" RefKey="Boolean" />
+						<Boolean Name="AllowResize" Default="True" RefKey="Boolean" />
 						<Collection Name="TextureKeyframes" MinCount="1" RefKey="Collection">
 							<Timeline Name="Stream" TimeChild="Time" MinCount="1" RefKey="Timeline">
 								<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
