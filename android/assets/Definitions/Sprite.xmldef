@@ -27,4 +27,13 @@
 		<Boolean Name="FlipX" RefKey="Boolean" />
 		<Boolean Name="FlipY" RefKey="Boolean" />
 	</StructDef>
+	<StructDef Name="DirectionalSprite" RefKey="StructDef">
+		<Collection Name="Animations" RefKey="Collection">
+			<Struct Name="Animation" Nullable="False" ChildAsName="Name" RefKey="Struct">
+				<String Name="Name" SkipIfDefault="False" RefKey="String" />
+				<Reference Name="Up" Keys="Sprite" Nullable="False" SkipIfDefault="False" RefKey="Reference" />
+				<Reference Name="Down" Keys="Sprite" Nullable="False" SkipIfDefault="False" RefKey="Reference" />
+			</Struct>
+		</Collection>
+	</StructDef>
 </Definitions>

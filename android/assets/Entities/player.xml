@@ -1,44 +1,49 @@
 <Entity>
-    <Name>player</Name>
-
-    <AI>player</AI>
-
-    <Slot>Entity</Slot>
-    <Size>1</Size>
-    <CanSwap>true</CanSwap>
-
-    <Sprite RefKey="Sprite">
-        <Name>player</Name>
-        <DrawActualSize>true</DrawActualSize>
-    </Sprite>
-
-    <Light>
-        <Colour>255,255,255</Colour>
-        <Distance>5</Distance>
-    </Light>
-
-    <Statistics>
-        <Max_Health>100</Max_Health>
-        <Max_Stamina>100</Max_Stamina>
-        <Sight>10</Sight>
-    </Statistics>
-
-    <Factions>player</Factions>
-
-    <Inventory>
-        <Equipment>
-            <Weapon>
-                <Name>Sword</Name>
-                <HitSprite>
-                    <Name>EffectSprites/Slash/Slash</Name>
-                    <UpdateRate>0.1</UpdateRate>
-                </HitSprite>
-                <Slot>Weapon</Slot>
-                <Attack>
-                    <Physical>20</Physical>
-                </Attack>
-            </Weapon>
-        </Equipment>
-    </Inventory>
-
+	<Name>player</Name>
+	<AI>player</AI>
+	<Slot>Entity</Slot>
+	<Size>1</Size>
+	<CanSwap>true</CanSwap>
+	<Sprite RefKey="Sprite">
+		<Name>player</Name>
+		<DrawActualSize>true</DrawActualSize>
+	</Sprite>
+	<Reference6 />
+	<Combo RefKey="Combo">
+		<Steps>
+			<SlashLeft>
+				<Name>Slash Left</Name>
+				<Description>A slash to the left.</Description>
+				<Reference2 />
+				<Type>Slash</Type>
+				<CanStop>true</CanStop>
+				<CanTurn>true</CanTurn>
+				<StepsForward>1</StepsForward>
+				<Effect RefKey="ParticleEffect">
+					<Name>slash</Name>
+					<FlipX>true</FlipX>
+				</Effect>
+			</SlashLeft>
+			<SlashRight>
+				<Name>Slash Right</Name>
+				<Description>A slash to the right.</Description>
+				<Reference2 />
+				<Type>Slash</Type>
+				<CanStop>true</CanStop>
+				<CanTurn>true</CanTurn>
+				<StepsForward>1</StepsForward>
+				<Effect RefKey="ParticleEffect">
+					<Name>slash</Name>
+				</Effect>
+			</SlashRight>
+		</Steps>
+		<Tree>
+			<SlashRight>
+				<SlashLeft>
+					<SlashRight />
+				</SlashLeft>
+			</SlashRight>
+		</Tree>
+	</Combo>
+	<Factions>player</Factions>
 </Entity>

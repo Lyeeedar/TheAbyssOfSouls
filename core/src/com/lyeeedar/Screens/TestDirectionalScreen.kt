@@ -53,22 +53,8 @@ class TestDirectionalScreen : AbstractScreen()
 
 		val monster = EntityLoader.load("monster")
 
-		val dirSprite = DirectionalSprite()
-		dirSprite.upSprites["idle"] = AssetManager.loadSprite("Monster/rat_up_idle", drawActualSize = true)
-		dirSprite.downSprites["idle"] = AssetManager.loadSprite("Monster/rat_down_idle", drawActualSize = true)
-		dirSprite.upSprites["attack"] = AssetManager.loadSprite("Monster/rat_up_attack", drawActualSize = true)
-		dirSprite.downSprites["attack"] = AssetManager.loadSprite("Monster/rat_down_attack", drawActualSize = true)
-
-		monster.add(DirectionalSpriteComponent(dirSprite))
-
 		Global.currentLevel.grid[7, 7].contents[monster.pos()!!.slot] = monster
 		monster.pos()!!.position = Global.currentLevel.grid[7, 7]
-
-		val combo = ComboComponent()
-		monster.add(combo)
-		val step = WaitComboStep()
-		step.nextSteps.add(SlashComboStep())
-		combo.combos.add(step)
 
 		Global.engine.addEntity(monster)
 

@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Renderables.Animation.AbstractAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
+import com.lyeeedar.Renderables.Sprite.DirectionalSprite
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
 
@@ -366,6 +367,24 @@ class AssetManager
 		fun loadTilingSprite(xml: Element): TilingSprite
 		{
 			return TilingSprite.load(xml)
+		}
+
+		fun loadDirectionalSprite(xml: Element): DirectionalSprite
+		{
+			val directionalSprite = DirectionalSprite()
+
+			val anims = xml.getChildByName("Animations")
+			for (i in 0.. anims.childCount-1)
+			{
+				val el = anims.getChild(i)
+				val name = el.name
+				val up = AssetManager.loadSprite(el.getChildByName("Up"))
+				val down = AssetManager.loadSprite(el.getChildByName("Down"))
+
+				directionalSprite.addAnim(name, up, down)
+			}
+
+			return directionalSprite
 		}
 	}
 }

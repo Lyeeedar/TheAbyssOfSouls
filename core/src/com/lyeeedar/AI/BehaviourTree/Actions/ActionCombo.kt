@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskCombo
 import com.lyeeedar.Combo.ComboStep
+import com.lyeeedar.Combo.ComboTree
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.combo
 import com.lyeeedar.Components.pos
@@ -30,7 +31,7 @@ class ActionCombo : AbstractAction()
 		val validCombos = Array<Pair>()
 		for (c in combo.combos)
 		{
-			if (c.isValid(entity, pos.facing))
+			if (c.current.isValid(entity, pos.facing, c))
 			{
 				validCombos.add(Pair(c, pos.facing))
 			}
@@ -43,7 +44,7 @@ class ActionCombo : AbstractAction()
 				for (dir in Direction.CardinalValues)
 				{
 					if (dir == pos.facing) continue // we already checked these
-					if (c.isValid(entity, dir))
+					if (c.current.isValid(entity, dir, c))
 					{
 						validCombos.add(Pair(c, dir))
 						if (dir.cardinalClockwise == pos.facing || dir.cardinalAnticlockwise == pos.facing) validCombos.add(Pair(c, dir))
@@ -57,13 +58,13 @@ class ActionCombo : AbstractAction()
 			val chosen = validCombos.random()
 
 			pos.facing = chosen.direction
-			combo.currentCombo = chosen.comboStep
-			val nextTask = TaskCombo(chosen.comboStep)
+			combo.currentCombo = chosen.combo
+			val nextTask = TaskCombo(chosen.combo)
 
 			val task = entity.task()
 			task.tasks.add(nextTask)
 
-			Mappers.directionalSprite.get(entity)?.currentAnim = chosen.comboStep.anim
+			Mappers.directionalSprite.get(entity)?.currentAnim = chosen.combo.current.anim
 
 			state = ExecutionState.COMPLETED
 		}
@@ -81,5 +82,5 @@ class ActionCombo : AbstractAction()
 		// cant do anything here
 	}
 
-	data class Pair(val comboStep: ComboStep, val direction: Direction)
+	data class Pair(val combo: ComboTree, val direction: Direction)
 }

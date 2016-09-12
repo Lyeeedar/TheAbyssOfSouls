@@ -6,11 +6,11 @@ import com.lyeeedar.Direction
 
 class WaitComboStep: ComboStep()
 {
-	override fun isValid(entity: Entity, direction: Direction): Boolean
+	override fun isValid(entity: Entity, direction: Direction, comboTree: ComboTree): Boolean
 	{
-		for (step in nextSteps)
+		for (step in comboTree.next)
 		{
-			if (step.isValid(entity, direction)) return true
+			if (step.current.isValid(entity, direction, step)) return true
 		}
 
 		return false

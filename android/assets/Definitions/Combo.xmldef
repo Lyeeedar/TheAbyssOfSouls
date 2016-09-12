@@ -1,0 +1,20 @@
+<Definitions>
+	<StructDef Name="Combo" Nullable="False" RefKey="StructDef">
+		<Collection Name="Steps" RefKey="Collection">
+			<Struct Name="Step" ChildAsName="Key" DescriptionChild="Name" RefKey="Struct">
+				<String Name="Name" SkipIfDefault="False" RefKey="String" />
+				<String Name="Key" SkipIfDefault="False" RefKey="String" />
+				<String Name="Description" RefKey="String" />
+				<Reference Name="Icon" Keys="Sprite" RefKey="Reference" />
+				<Enum Name="Type" EnumValues="Wait,Slash" SkipIfDefault="False" RefKey="Enum" />
+				<String Name="Animation" Default="attack" RefKey="String" />
+				<Boolean Name="CanStop" RefKey="Boolean" />
+				<Boolean Name="CanTurn" RefKey="Boolean" />
+				<Number Name="StepsForward" Type="Int" Min="0" RefKey="Number" />
+				<Number Name="Range" Type="Int" Min="0" Default="1" VisibleIf="Type==Slash" RefKey="Number" />
+				<Reference Name="Effect" Keys="ParticleEffect" VisibleIf="Type==Slash" RefKey="Reference" />
+			</Struct>
+		</Collection>
+		<Tree Name="Tree" RefKey="Tree" />
+	</StructDef>
+</Definitions>

@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.*
+import com.lyeeedar.Combo.ComboTree
 import com.lyeeedar.Events.EventArgs
 import com.lyeeedar.Level.Item
 import com.lyeeedar.Level.Tile
@@ -61,7 +62,7 @@ class EntityLoader()
 
 		@JvmStatic fun load(xml: XmlReader.Element): Entity
 		{
-			val entity = if (xml.getAttribute("Extends", null) != null) load(xml.getAttribute("Extends")) else Entity()
+			val entity = if (xml.get("Extends", null) != null) load(xml.get("Extends")) else Entity()
 
 			val name = xml.get("Name", null)
 			if (name != null) entity.add(NameComponent(name))
@@ -87,6 +88,9 @@ class EntityLoader()
 			val tilingSprite = xml.getChildByName("TilingSprite")
 			if (tilingSprite != null) entity.add(TilingSpriteComponent(AssetManager.loadTilingSprite(tilingSprite)))
 
+			val directionalSprite = xml.getChildByName("DirectionalSprite")
+			if (directionalSprite != null) entity.add(DirectionalSpriteComponent(AssetManager.loadDirectionalSprite(directionalSprite)))
+
 			val light = xml.getChildByName("Light")
 			if (light != null) entity.add(LightComponent(AssetManager.loadColour(light.getChildByName("Colour")), light.getFloat("Distance")))
 
@@ -102,6 +106,17 @@ class EntityLoader()
 			}
 
 			entity.add(StatisticsComponent())
+
+			val comboEl = xml.getChildByName("Combo")
+			if (comboEl != null)
+			{
+				val trees = ComboTree.load(comboEl)
+
+				val combo = ComboComponent()
+				combo.combos.addAll(trees)
+
+				entity.add(combo)
+			}
 
 			return entity
 		}

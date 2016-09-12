@@ -93,7 +93,7 @@ class SlashComboStep : ComboStep()
 		Global.engine.addEntity(slashEntity)
 	}
 
-	override fun isValid(entity: Entity, direction: Direction): Boolean
+	override fun isValid(entity: Entity, direction: Direction, comboTree: ComboTree): Boolean
 	{
 		val entityTile = entity.tile() ?: return false
 		val entityStats = entity.stats() ?: return false
@@ -170,7 +170,7 @@ class SlashComboStep : ComboStep()
 	override fun parse(xml: XmlReader.Element)
 	{
 		range = xml.getInt("Range", 1)
-		effect = AssetManager.loadParticleEffect(xml.getChildByName("Particle"))
+		effect = AssetManager.loadParticleEffect(xml.getChildByName("Effect"))
 	}
 }
 
