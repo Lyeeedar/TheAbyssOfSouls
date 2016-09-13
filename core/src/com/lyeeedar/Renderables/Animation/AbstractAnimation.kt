@@ -11,6 +11,8 @@ import com.lyeeedar.Util.Colour
 
 abstract class AbstractAnimation
 {
+	var startDelay = 0f
+
 	abstract fun renderOffset(): FloatArray?
 	abstract fun renderScale(): FloatArray?
 	abstract fun renderColour(): Colour?

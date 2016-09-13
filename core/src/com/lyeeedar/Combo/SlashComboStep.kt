@@ -26,6 +26,7 @@ class SlashComboStep : ComboStep()
 
 	override fun doActivate(entity: Entity, direction: Direction)
 	{
+		val parentPos = entity.pos() ?: return
 		val entityTile = entity.tile() ?: return
 
 		var delay = 0f
@@ -56,7 +57,7 @@ class SlashComboStep : ComboStep()
 							if (e != null && e != entity)
 							{
 								val epos = e.pos() ?: continue
-								if (epos.size > pos.size)
+								if (epos.size > parentPos.size)
 								{
 									return false
 								}
@@ -104,7 +105,9 @@ class SlashComboStep : ComboStep()
 					}
 
 					val next = prev.level.getTile(prev, direction) ?: return
+					val oldfacing = pos.facing
 					pos.position = next
+					pos.facing = oldfacing
 
 					for (x in 0..pos.size-1)
 					{
@@ -116,7 +119,18 @@ class SlashComboStep : ComboStep()
 					}
 
 					val sprite = Mappers.sprite.get(entity)
-					sprite.sprite.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
+					val anim = MoveAnimation.obtain().set(next, prev, 0.15f)
+					sprite.sprite.animation = anim
+
+					var xDiff = pos.x - parentPos.x
+					if (xDiff > 0) xDiff -= parentPos.size - 1
+
+					var yDiff = pos.y - parentPos.y
+					if (yDiff > 0) yDiff -= parentPos.size - 1
+
+					val diff = if (xDiff != 0) xDiff else yDiff
+
+					anim.startDelay = 0.03f * Math.abs(diff)
 				}
 
 				for (e in toMove)

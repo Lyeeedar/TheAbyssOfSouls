@@ -47,7 +47,9 @@ class MoveAnimation : AbstractMoveAnimation
 
 	override fun update(delta: Float): Boolean
 	{
-		time += delta
+		if (startDelay > 0f) startDelay -= delta
+
+		if (startDelay <= 0f) time += delta
 
 		val a = MathUtils.clamp(time / duration, 0f, 1f)
 
