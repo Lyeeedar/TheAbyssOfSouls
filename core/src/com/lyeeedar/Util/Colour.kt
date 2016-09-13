@@ -96,6 +96,14 @@ class Colour()
 		a += other.a;
 	}
 
+	operator fun divAssign(value: Float)
+	{
+		r /= value
+		g /= value
+		b /= value
+		a /= value
+	}
+
 	fun lerp(target: Colour, t: Float) : Colour
 	{
 		this.r += t * (target.r - this.r)

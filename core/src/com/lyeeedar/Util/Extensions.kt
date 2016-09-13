@@ -69,7 +69,6 @@ fun Actor.addClickListener(func: () -> Unit)
 		}
 	})
 }
-
 fun <T> com.badlogic.gdx.utils.Array<T>.tryGet(i: Int): T = this[MathUtils.clamp(i, 0, this.size-1)]
 fun <T> com.badlogic.gdx.utils.Array<T>.random(ran: Random): T = this[ran.nextInt(this.size)]
 fun <T> com.badlogic.gdx.utils.Array<T>.removeRandom(ran: Random): T

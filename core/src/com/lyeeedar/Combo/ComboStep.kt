@@ -14,7 +14,6 @@ abstract class ComboStep
 	var anim: String = "attack"
 	var canTurn: Boolean = false
 	var canStop: Boolean = false
-	var stepsForward: Int = 0
 
 	fun activate(entity: Entity, comboTree: ComboTree): Boolean
 	{
@@ -62,7 +61,6 @@ abstract class ComboStep
 			step.anim = xml.get("Anim", "attack")
 			step.canStop = xml.getBoolean("CanStop", false)
 			step.canTurn = xml.getBoolean("CanTurn", false)
-			step.stepsForward = xml.getInt("Steps", 0)
 
 			step.parse(xml)
 

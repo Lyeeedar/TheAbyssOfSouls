@@ -24,21 +24,21 @@ abstract class Renderable
 				{
 					if (anim is AbstractMoveAnimation)
 					{
-						hybrid.offset = anim
+						hybrid.offsets.add(anim)
 					}
 					else if (anim is AbstractScaleAnimation)
 					{
-						hybrid.scale = anim
+						hybrid.scales.add(anim)
 					}
 					else if (anim is AbstractColourAnimation)
 					{
-						hybrid.colour = anim
+						hybrid.colours.add(anim)
 					}
 					else if (anim is HybridAnimation)
 					{
-						hybrid.offset = anim.offset
-						hybrid.scale = anim.scale
-						hybrid.colour = anim.colour
+						hybrid.offsets.addAll(anim.offsets)
+						hybrid.scales.addAll(anim.scales)
+						hybrid.colours.addAll(anim.colours)
 					}
 					else throw RuntimeException("No entry for anim type '$anim'")
 				}

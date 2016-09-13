@@ -2,8 +2,10 @@ package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Util.Colour
+import com.lyeeedar.Util.addAll
 
 /**
  * Created by Philip on 28-Apr-16.
@@ -11,24 +13,137 @@ import com.lyeeedar.Util.Colour
 
 class HybridAnimation(): AbstractAnimation()
 {
-	var offset: AbstractMoveAnimation? = null
-	var scale: AbstractScaleAnimation? = null
-	var colour: AbstractColourAnimation? = null
+	val offsets: Array<AbstractMoveAnimation> = Array()
+	val scales: Array<AbstractScaleAnimation> = Array()
+	val colours: Array<AbstractColourAnimation> = Array()
 
-	override fun duration(): Float = Math.max(Math.max(offset?.duration() ?: 0f, scale?.duration() ?: 0f), colour?.duration() ?: 0f)
-	override fun time(): Float = Math.min(Math.min(offset?.time() ?: duration(), scale?.time() ?: duration()), colour?.time() ?: duration())
+	val offsetData = FloatArray(2)
+	val scaleData = FloatArray(2)
+	val colourData = Colour()
 
-	override fun renderOffset(): FloatArray? = offset?.renderOffset() ?: scale?.renderOffset() ?: colour?.renderOffset()
-	override fun renderScale(): FloatArray? = scale?.renderScale() ?: offset?.renderScale() ?: colour?.renderScale()
-	override fun renderColour(): Colour? = colour?.renderColour() ?: offset?.renderColour() ?: scale?.renderColour()
+	override fun duration(): Float = Math.max(
+			Math.max(
+					offsets.maxBy { it.duration() }?.duration() ?: 0f,
+					scales.maxBy { it.duration() }?.duration() ?: 0f)
+			, colours.maxBy { it.duration() }?.duration() ?: 0f)
+
+	override fun time(): Float =
+			Math.min(
+					Math.min(
+							offsets.minBy { it.time() }?.time() ?: duration(),
+							scales.minBy { it.time() }?.time() ?: duration()),
+					colours.minBy { it.time() }?.time() ?: duration())
+
+	override fun renderOffset(): FloatArray?
+	{
+		if (offsets.size == 1)
+		{
+			return offsets[0].renderOffset()
+		}
+		else if (offsets.size > 0)
+		{
+			var xData = 0f
+			var yData = 0f
+
+			offsetData[0] = 0f
+			offsetData[1] = 0f
+
+			for (offset in offsets)
+			{
+				val data = offset.renderOffset() ?: continue
+				offsetData[0] += data[0]
+				offsetData[1] += data[1]
+
+				if (data[0] != 0f) xData++
+				if (data[1] != 0f) yData++
+			}
+
+			if (xData > 0f)	offsetData[0] /= xData
+			if (yData > 0f) offsetData[1] /= yData
+
+			return offsetData
+		}
+		else
+		{
+			return null
+		}
+	}
+
+	override fun renderScale(): FloatArray?
+	{
+		if (scales.size == 1)
+		{
+			return scales[0].renderScale()
+		}
+		else if (scales.size > 0)
+		{
+			scaleData[0] = 0f
+			scaleData[1] = 0f
+
+			for (scale in scales)
+			{
+				val data = scale.renderScale() ?: continue
+				scaleData[0] += data[0]
+				scaleData[1] += data[1]
+			}
+
+			scaleData[0] /= scales.size.toFloat()
+			scaleData[1] /= scales.size.toFloat()
+
+			return scaleData
+		}
+		else
+		{
+			return null
+		}
+	}
+
+	override fun renderColour(): Colour?
+	{
+		if (colours.size == 1)
+		{
+			return colours[0].renderColour()
+		}
+		else if (colours.size > 0)
+		{
+			colourData.set(0f, 0f, 0f, 0f)
+
+			for (colour in colours)
+			{
+				val data = colour.renderColour() ?: continue
+				colourData += data
+			}
+
+			colourData /= colours.size.toFloat()
+
+			return colourData
+		}
+		else
+		{
+			return null
+		}
+	}
 
 	override fun update(delta: Float): Boolean
 	{
-		if (offset?.update(delta) ?: false) { offset?.free(); offset = null }
-		if (scale?.update(delta) ?: false) { scale?.free(); scale = null }
-		if (colour?.update(delta) ?: false) { colour?.free(); colour = null }
+		fun <T: AbstractAnimation> runUpdate(itr: MutableIterator<T>)
+		{
+			while (itr.hasNext())
+			{
+				val item = itr.next()
+				if (item.update(delta))
+				{
+					itr.remove()
+					item.free()
+				}
+			}
+		}
 
-		return offset == null && scale == null && colour == null
+		runUpdate(offsets.iterator())
+		runUpdate(scales.iterator())
+		runUpdate(colours.iterator())
+
+		return offsets.size == 0 && scales.size == 0 && colours.size == 0
 	}
 
 	override fun parse(xml: XmlReader.Element)
@@ -37,23 +152,23 @@ class HybridAnimation(): AbstractAnimation()
 
 	override fun free()
 	{
-		offset?.free()
-		offset = null
+		for (offset in offsets) offset.free()
+		offsets.clear()
 
-		scale?.free()
-		scale = null
+		for (scale in scales) scale.free()
+		scales.clear()
 
-		colour?.free()
-		colour = null
+		for (colour in colours) colour.free()
+		colours.clear()
 	}
 
 	override fun copy(): AbstractAnimation
 	{
 		val anim = HybridAnimation()
 
-		anim.offset = offset?.copy() as? AbstractMoveAnimation
-		anim.scale = scale?.copy() as? AbstractScaleAnimation
-		anim.colour = colour?.copy() as? AbstractColourAnimation
+		anim.offsets.addAll(offsets.map { it.copy() as AbstractMoveAnimation }.asSequence())
+		anim.scales.addAll(scales.map { it.copy() as AbstractScaleAnimation }.asSequence())
+		anim.colours.addAll(colours.map { it.copy() as AbstractColourAnimation }.asSequence())
 
 		return anim
 	}
