@@ -60,13 +60,13 @@ class ActionProcessInput(): AbstractAction()
 			}
 		}
 
+		parent.setData( "pos", null )
 		if (targetPos != null)
 		{
 			val tile = entity.tile() ?: return state
 			if (targetPos == tile)
 			{
 				Mappers.task.get(entity).tasks.add(TaskWait())
-				parent.setData( "pos", null )
 			}
 			else
 			{

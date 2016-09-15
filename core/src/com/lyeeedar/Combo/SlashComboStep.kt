@@ -87,6 +87,37 @@ class SlashComboStep : ComboStep()
 			val toMove = Array<Entity>()
 			val canmove = canMove(entity, toMove)
 
+			val (min, max) = getMinMax(entity, direction)
+			for (p in min..max)
+			{
+				val tile = entityTile.level.getTile(p.x, p.y) ?: continue
+
+				val e = tile.contents[parentPos.slot]
+				if (e != null && e != entity)
+				{
+					val epos = e.pos() ?: continue
+					if (epos.size > parentPos.size)
+					{
+						continue
+					}
+					else
+					{
+						val canmove = canMove(e, toMove)
+						if (canmove)
+						{
+							if (!toMove.contains(e, true))
+							{
+								toMove.add(e)
+							}
+						}
+						else
+						{
+							continue
+						}
+					}
+				}
+			}
+
 			if (canmove)
 			{
 				fun doMove(entity: Entity)
@@ -145,31 +176,6 @@ class SlashComboStep : ComboStep()
 
 		val (min, max) = getMinMax(entity, direction)
 
-		if (min.x > max.x)
-		{
-			val temp = min.x
-			min.x = max.x
-			max.x = temp
-		}
-
-		if (min.y > max.y)
-		{
-			val temp = min.y
-			min.y = max.y
-			max.y = temp
-		}
-
-		if (direction.x < 0 || direction.y < 0)
-		{
-			min.x += direction.x * (range - 1)
-			min.y += direction.y * (range - 1)
-		}
-		else
-		{
-			max.x += direction.x * (range - 1)
-			max.y += direction.y * (range - 1)
-		}
-
 		val hitSet = ObjectSet<Tile>()
 
 		val e = effect.copy()
@@ -219,7 +225,7 @@ class SlashComboStep : ComboStep()
 		val (min, max) = getMinMax(entity, direction)
 
 		// check total range
-		val totalRange = (range-1) + if (stepForward) 1 else 0
+		val totalRange = if (stepForward) 1 else 0
 
 		for (i in 0..totalRange)
 		{
@@ -279,6 +285,31 @@ class SlashComboStep : ComboStep()
 		else
 		{
 			return MinMax(Point.MINUS_ONE, Point.MINUS_ONE)
+		}
+
+		if (min.x > max.x)
+		{
+			val temp = min.x
+			min.x = max.x
+			max.x = temp
+		}
+
+		if (min.y > max.y)
+		{
+			val temp = min.y
+			min.y = max.y
+			max.y = temp
+		}
+
+		if (direction.x < 0 || direction.y < 0)
+		{
+			min.x += direction.x * (range - 1)
+			min.y += direction.y * (range - 1)
+		}
+		else
+		{
+			max.x += direction.x * (range - 1)
+			max.y += direction.y * (range - 1)
 		}
 
 		return MinMax(min, max)
