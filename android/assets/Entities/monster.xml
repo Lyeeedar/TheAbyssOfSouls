@@ -33,9 +33,10 @@
 		<Steps>
 			<SlashLeft>
 				<Name>Slash Left</Name>
-				<Reference1 />
+				<Icon RefKey="Sprite">
+					<Name>white</Name>
+				</Icon>
 				<Type>Slash</Type>
-				<StepsForward>1</StepsForward>
 				<Effect RefKey="ParticleEffect">
 					<Name>slash</Name>
 					<FlipX>true</FlipX>
@@ -43,16 +44,19 @@
 			</SlashLeft>
 			<SlashRight>
 				<Name>Slash Right</Name>
-				<Reference1 />
+				<Icon RefKey="Sprite">
+					<Name>white</Name>
+				</Icon>
 				<Type>Slash</Type>
-				<StepsForward>1</StepsForward>
 				<Effect RefKey="ParticleEffect">
 					<Name>slash</Name>
 				</Effect>
 			</SlashRight>
 			<Wait>
 				<Name>Wait</Name>
-				<Reference1 />
+				<Icon RefKey="Sprite">
+					<Name>white</Name>
+				</Icon>
 				<Type>Wait</Type>
 				<CanTurn>true</CanTurn>
 			</Wait>

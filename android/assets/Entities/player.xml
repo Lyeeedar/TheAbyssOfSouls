@@ -9,41 +9,7 @@
 		<DrawActualSize>true</DrawActualSize>
 	</Sprite>
 	<Reference6 />
-	<Combo RefKey="Combo">
-		<Steps>
-			<SlashLeft>
-				<Name>Slash Left</Name>
-				<Description>A slash to the left.</Description>
-				<Reference2 />
-				<Type>Slash</Type>
-				<CanStop>true</CanStop>
-				<CanTurn>true</CanTurn>
-				<StepsForward>1</StepsForward>
-				<Effect RefKey="ParticleEffect">
-					<Name>slash</Name>
-					<FlipX>true</FlipX>
-				</Effect>
-			</SlashLeft>
-			<SlashRight>
-				<Name>Slash Right</Name>
-				<Description>A slash to the right.</Description>
-				<Reference2 />
-				<Type>Slash</Type>
-				<CanStop>true</CanStop>
-				<CanTurn>true</CanTurn>
-				<StepsForward>1</StepsForward>
-				<Effect RefKey="ParticleEffect">
-					<Name>slash</Name>
-				</Effect>
-			</SlashRight>
-		</Steps>
-		<Tree>
-			<SlashRight>
-				<SlashLeft>
-					<SlashRight />
-				</SlashLeft>
-			</SlashRight>
-		</Tree>
-	</Combo>
+	<Reference7 />
+	<Reference8 />
 	<Factions>player</Factions>
 </Entity>

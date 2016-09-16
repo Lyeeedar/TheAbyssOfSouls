@@ -153,7 +153,7 @@ Oryx/uf_split/uf_heroes/rat_3
   index: -1
 Oryx/uf_split/uf_interface/uf_interface_681
   rotate: false
-  xy: 740, 58
+  xy: 760, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -237,63 +237,63 @@ Oryx/uf_split/uf_terrain/water_green_4
   index: -1
 Particle/droplet
   rotate: false
-  xy: 720, 58
+  xy: 740, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/ember_2
   rotate: false
-  xy: 660, 58
+  xy: 680, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/glow
   rotate: false
-  xy: 680, 58
+  xy: 700, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_1
   rotate: false
-  xy: 560, 58
+  xy: 580, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_2
   rotate: false
-  xy: 580, 58
+  xy: 600, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_3
   rotate: false
-  xy: 600, 58
+  xy: 620, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/slash
   rotate: false
-  xy: 700, 58
+  xy: 720, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/spark
   rotate: false
-  xy: 640, 58
+  xy: 660, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/star
   rotate: false
-  xy: 620, 58
+  xy: 640, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -335,7 +335,7 @@ player_3
   index: -1
 white
   rotate: false
-  xy: 760, 58
+  xy: 560, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

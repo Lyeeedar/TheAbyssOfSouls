@@ -153,6 +153,23 @@ inline fun <reified T> Sequence<T>.random(num: Int): Sequence<T>
 	return outArray.asSequence()
 }
 
+fun <T> Sequence<T>.sequenceEquals(other: Sequence<T>): Boolean
+{
+	if (this.count() != other.count()) return false
+
+	for (item in this)
+	{
+		if (!other.contains(item)) return false
+	}
+
+	for (item in other)
+	{
+		if (!this.contains(item)) return false
+	}
+
+	return true
+}
+
 fun Color.toHSV(out: FloatArray? = null): FloatArray
 {
 	val max = Math.max(this.r, Math.max(this.g, this.b))

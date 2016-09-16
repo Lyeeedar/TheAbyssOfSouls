@@ -7,10 +7,16 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.pos
 import com.lyeeedar.Direction
+import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.set
 
 abstract class ComboStep
 {
+	lateinit var name: String
+	lateinit var description: String
+	lateinit var icon: Sprite
+
 	var anim: String = "attack"
 	var canTurn: Boolean = false
 	var canStop: Boolean = false
@@ -57,6 +63,10 @@ abstract class ComboStep
 				"SLASH" -> SlashComboStep()
 				else -> throw NotImplementedError("Unknown combo step type: " + xml.name.toUpperCase())
 			}
+
+			step.name = xml.get("Name", "")
+			step.description = xml.get("Description", "")
+			step.icon = AssetManager.loadSprite(xml.getChildByName("Icon"))
 
 			step.anim = xml.get("Anim", "attack")
 			step.canStop = xml.getBoolean("CanStop", false)

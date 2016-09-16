@@ -12,6 +12,7 @@ import com.lyeeedar.Events.EventActionGroup
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Pathfinding.BresenhamLine
+import com.lyeeedar.Renderables.Animation.BumpAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.SpaceSlot
@@ -202,6 +203,10 @@ class SlashComboStep : ComboStep()
 			}
 		}
 		e.renderDelay = delay
+
+		val bump = BumpAnimation.obtain().set(0.02f, direction)
+		bump.startDelay = delay
+		entity.sprite()!!.sprite.animation = bump
 
 		val epos = PositionComponent()
 		epos.slot = SpaceSlot.AIR

@@ -48,18 +48,33 @@ class HybridAnimation(): AbstractAnimation()
 			offsetData[0] = 0f
 			offsetData[1] = 0f
 
+			var extrax = 0f
+			var extray = 0f
+
 			for (offset in offsets)
 			{
-				val data = offset.renderOffset() ?: continue
-				offsetData[0] += data[0]
-				offsetData[1] += data[1]
+				if (offset is BumpAnimation)
+				{
+					val data = offset.renderOffset() ?: continue
+					extrax += data[0]
+					extray += data[1]
+				}
+				else
+				{
+					val data = offset.renderOffset() ?: continue
+					offsetData[0] += data[0]
+					offsetData[1] += data[1]
 
-				if (data[0] != 0f) xData++
-				if (data[1] != 0f) yData++
+					if (data[0] != 0f) xData++
+					if (data[1] != 0f) yData++
+				}
 			}
 
 			if (xData > 0f)	offsetData[0] /= xData
 			if (yData > 0f) offsetData[1] /= yData
+
+			offsetData[0] += extrax
+			offsetData[1] += extray
 
 			return offsetData
 		}

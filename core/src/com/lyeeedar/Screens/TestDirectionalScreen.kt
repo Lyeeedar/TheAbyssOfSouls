@@ -14,6 +14,7 @@ import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Sprite.DirectionalSprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Systems.createEngine
+import com.lyeeedar.UI.ComboSelector
 import com.lyeeedar.Util.*
 
 class TestDirectionalScreen : AbstractScreen()
@@ -60,6 +61,9 @@ class TestDirectionalScreen : AbstractScreen()
 
 		font = Global.skin.getFont("default")
 		batch = SpriteBatch()
+
+		val comboSelector = ComboSelector(monster)
+		mainTable.add(comboSelector).expand().right().bottom()
 	}
 
 	override fun doRender(delta: Float)
