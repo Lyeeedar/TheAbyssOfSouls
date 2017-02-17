@@ -3,7 +3,7 @@ package com.lyeeedar.Renderables.Particle
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
-import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
@@ -22,11 +22,19 @@ import com.lyeeedar.Util.getXml
 
 class ParticleEffect : Renderable()
 {
+	enum class MoveType
+	{
+		Linear,
+		Leap
+	}
+
 	private lateinit var loadPath: String
 
 	var colour: Colour = Colour(Color.WHITE)
 	var speedMultiplier: Float = 1f
+	var moveType: MoveType = MoveType.Linear
 
+	var loop = true
 	var completed = false
 	var killOnAnimComplete = true
 	private var warmupTime = 0f
@@ -36,11 +44,6 @@ class ParticleEffect : Renderable()
 
 	// local stuff
 	val position = Vector2()
-	var rotation: Float = 0f
-	var sizex: Float = 1f
-	var sizey: Float = 1f
-	var flipX: Boolean = false
-	var flipY: Boolean = false
 
 	var collisionGrid: Array2D<Boolean>? = null
 	var collisionFun: ((x: Int, y: Int) -> Unit)? = null
@@ -87,8 +90,8 @@ class ParticleEffect : Renderable()
 		val y = position.y + (posOffset?.get(1) ?: 0f)
 
 		val scale = animation?.renderScale()
-		val sx = sizex * (scale?.get(0) ?: 1f)
-		val sy = sizey * (scale?.get(1) ?: 1f)
+		val sx = size[0] * (scale?.get(0) ?: 1f)
+		val sy = size[1] * (scale?.get(1) ?: 1f)
 
 		for (emitter in emitters)
 		{
@@ -123,6 +126,8 @@ class ParticleEffect : Renderable()
 				for (emitter in emitters) emitter.time = 0f
 				complete = true
 				completed = true
+
+				if (!loop) stop()
 			}
 			else
 			{
@@ -140,7 +145,7 @@ class ParticleEffect : Renderable()
 		position.set(x, y)
 	}
 
-	override fun doRender(batch: HDRColourSpriteBatch, x: Float, y: Float, tileSize: Float)
+	override fun doRender(batch: Batch, x: Float, y: Float, tileSize: Float)
 	{
 
 	}
@@ -159,6 +164,8 @@ class ParticleEffect : Renderable()
 		shape.rect(worldx - 5f, worldy - 5f,10f, 10f)
 
 		val temp = Pools.obtain(Vector2::class.java)
+		val temp2 = Pools.obtain(Vector2::class.java)
+		val temp3 = Pools.obtain(Vector2::class.java)
 
 		// draw emitter volumes
 		shape.color = Color.GOLDENROD
@@ -190,25 +197,54 @@ class ParticleEffect : Renderable()
 			}
 			else if (emitter.shape == Emitter.EmissionShape.CONE)
 			{
-				val start = w + emitter.emitterRotation + emitter.rotation
-				shape.arc(ex, ey, emitter.height * tileSize, start, emitter.width)
+				val angleMin = -emitter.width*0.5f
+				val angleMax = emitter.width*.5f
+
+				val core = temp
+				val min = temp2
+				val max = temp3
+
+				core.set(ex, ey)
+
+				min.set(0f, h)
+				min.rotate(angleMin)
+				min.rotate(emitter.emitterRotation)
+				min.rotate(emitter.rotation)
+				min.add(core)
+
+				max.set(0f, h)
+				max.rotate(angleMax)
+				max.rotate(emitter.emitterRotation)
+				max.rotate(emitter.rotation)
+				max.add(core)
+
+				shape.line(core, min)
+				shape.line(core, max)
+				shape.line(min, max)
 			}
 		}
 
 		Pools.free(temp)
+		Pools.free(temp2)
+		Pools.free(temp3)
 	}
 
 	override fun copy(): ParticleEffect
 	{
 		val effect = ParticleEffect.load(loadPath)
+		effect.killOnAnimComplete = killOnAnimComplete
 		effect.setPosition(position.x, position.y)
 		effect.rotation = rotation
 		effect.colour.set(colour)
 		effect.speedMultiplier = speedMultiplier
+		effect.warmupTime = warmupTime
+		effect.moveSpeed = moveSpeed
+		effect.moveType = moveType
+		effect.loop = loop
 		effect.flipX = flipX
 		effect.flipY = flipY
-		effect.sizex = sizex
-		effect.sizey = sizey
+		effect.size[0] = size[0]
+		effect.size[1] = size[1]
 		return effect
 	}
 
@@ -220,6 +256,8 @@ class ParticleEffect : Renderable()
 
 			effect.warmupTime = xml.getFloat("Warmup", 0f)
 			effect.moveSpeed = xml.getFloat("MoveSpeed", 1f)
+			effect.moveType = MoveType.valueOf(xml.get("MoveType", "Linear"))
+			effect.loop = xml.getBoolean("Loop", true)
 
 			val emittersEl = xml.getChildByName("Emitters")
 			for (i in 0..emittersEl.childCount-1)

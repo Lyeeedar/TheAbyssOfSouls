@@ -1,5 +1,6 @@
 package com.lyeeedar.Util
 
+import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 
 /**
@@ -7,6 +8,12 @@ import com.lyeeedar.Direction
  */
 
 class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>): Sequence<T> {
+
+	val width: Int
+		get() = xSize
+
+	val height: Int
+		get() = ySize
 
 	companion object {
 
@@ -23,11 +30,15 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>): S
 		}
 	}
 
-	fun tryGet(x:Int, y:Int, fallback:T): T
+	inline fun inBounds(x: Int, y: Int) = x >= 0 && x < xSize && y >= 0 && y < ySize
+
+	inline fun tryGet(x:Int, y:Int, fallback:T?): T?
 	{
-		if (x < 0 || x >= xSize || y < 0 || y >=ySize) return fallback
+		if (!inBounds(x, y)) return fallback
 		else return this[x, y]
 	}
+
+	operator fun get(x: Int, y: Int, fallback:T?): T? = tryGet(x, y, fallback)
 
 	operator fun get(x: Int, y: Int): T {
 		return array[x][y]
@@ -97,4 +108,20 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>): S
 
 		return string
 	}
+}
+
+fun XmlReader.Element.toCharGrid(): Array2D<Char>
+{
+	val grid = Array2D<Char>(this.getChild(0).text.length, this.childCount) {x, y -> ' '}
+
+	for (y in 0..this.childCount-1)
+	{
+		val lineContents = this.getChild(y)
+		for (x in 0..lineContents.text.length-1)
+		{
+			grid[x, y] = lineContents.text[x]
+		}
+	}
+
+	return grid
 }

@@ -9,6 +9,6 @@ import com.badlogic.ashley.core.Entity
 interface IAI
 {
 	fun update(e: Entity)
-	fun cancel()
+	fun cancel(e: Entity)
 	fun setData(key: String, value: Any?)
 }

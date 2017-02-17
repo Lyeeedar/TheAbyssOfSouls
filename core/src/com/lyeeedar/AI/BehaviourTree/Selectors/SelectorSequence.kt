@@ -35,7 +35,7 @@ class SelectorSequence(): AbstractSelector()
 			i = 0;
 			while (i < nodes.size)
 			{
-				nodes.get(i).cancel();
+				nodes.get(i).cancel(entity);
 				i++
 			}
 			i = 0;
@@ -50,11 +50,11 @@ class SelectorSequence(): AbstractSelector()
 	}
 
 	//----------------------------------------------------------------------
-	override fun cancel()
+	override fun cancel(entity: Entity)
 	{
 		for (i in 0..nodes.size-1)
 		{
-			nodes.get(i).cancel();
+			nodes.get(i).cancel(entity);
 		}
 		i = 0;
 	}

@@ -7,6 +7,7 @@ import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.stats
 import com.lyeeedar.Components.tile
 import com.lyeeedar.Global
+import com.lyeeedar.Systems.level
 import com.lyeeedar.Util.Point
 import java.util.*
 
@@ -42,25 +43,25 @@ class ActionPick(): AbstractAction()
 			}
 			else
 			{
-				if (criteria.equals("random") || criteria.equals("ran") || criteria.equals("rnd"))
+				if (criteria == "random" || criteria == "ran" || criteria == "rnd")
 				{
 					val index = ran.nextInt(obj.count())
 					parent.setData(output, obj.elementAt(index))
 					state = ExecutionState.COMPLETED
 				}
-				else if (criteria.equals("distance") || criteria.equals("dist") || criteria.equals("dst"))
+				else if (criteria == "distance" || criteria == "dist" || criteria == "dst")
 				{
-					obj.sortedBy { if (it is Point) it.taxiDist(tile) else (it as? Entity)?.tile()?.taxiDist(tile) }
+					obj.sortedBy { (it as? Point)?.taxiDist(tile) ?: (it as? Entity)?.tile()?.taxiDist(tile) }
 
 					val item = if (lowest) obj.first() else obj.last()
 					parent.setData(output, item)
 					state = ExecutionState.COMPLETED
 				}
-				else if (criteria.equals("player"))
+				else if (criteria == "player")
 				{
 					for (e in obj)
 					{
-						if (e === Global.currentLevel.player)
+						if (e === Global.engine.level!!.player)
 						{
 							parent.setData(output, e)
 							state = ExecutionState.COMPLETED
@@ -79,7 +80,7 @@ class ActionPick(): AbstractAction()
 			}
 		}
 
-		return state;
+		return state
 	}
 
 	override fun parse(xml: XmlReader.Element)
@@ -90,7 +91,7 @@ class ActionPick(): AbstractAction()
 		lowest = xml.getBooleanAttribute("Lowest", true)
 	}
 
-	override fun cancel() {
+	override fun cancel(entity: Entity) {
 
 	}
 

@@ -1,17 +1,11 @@
 package com.lyeeedar.Components
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.graphics.Color
 import com.lyeeedar.Pathfinding.ShadowCastCache
 import com.lyeeedar.Util.Colour
-import com.lyeeedar.Util.Point
 import squidpony.squidgrid.FOV
 
-/**
- * Created by Philip on 21-Mar-16.
- */
-
-class LightComponent: Component
+class LightComponent : Component
 {
 	constructor(col: Colour, dist: Float)
 	{

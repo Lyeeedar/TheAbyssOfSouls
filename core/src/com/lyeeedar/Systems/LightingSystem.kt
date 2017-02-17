@@ -1,20 +1,26 @@
 package com.lyeeedar.Systems
 
-import com.badlogic.ashley.core.*
+import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Entity
+import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
-import com.badlogic.gdx.math.Vector2
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
+import com.lyeeedar.Level.Level
 import com.lyeeedar.Util.Colour
-
-/**
- * Created by Philip on 21-Mar-16.
- */
 
 class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 {
 	lateinit var posLightEntities: ImmutableArray<Entity>
 	val temp: Colour = Colour()
+
+	var level: Level? = null
+		get() = field
+		set(value)
+		{
+			field = value
+		}
 
 	override fun addedToEngine(engine: Engine?)
 	{
@@ -25,31 +31,30 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 
 	override fun update(deltaTime: Float)
 	{
-		val level = Global.currentLevel
-		for (x in 0.. level.width-1)
+		for (x in 0.. level!!.width-1)
 		{
-			for (y in 0..level.height-1)
+			for (y in 0..level!!.height-1)
 			{
-				val tile = level.getTile(x, y) ?: continue
-				tile.light.set(level.ambient)
-				tile.visible = false
+				val tile = level!!.getTile(x, y) ?: continue
+				tile.light.set(level!!.ambient)
+				tile.isVisible = false
 			}
 		}
 
 		// update visible/seen
-		var shadow = Mappers.shadow.get(level.player)
+		var shadow = Mappers.shadow.get(level!!.player)
 		if (shadow == null)
 		{
 			shadow = ShadowCastComponent()
-			level.player.add(shadow)
+			level!!.player.add(shadow)
 		}
 
 		val visible = shadow.cache.currentShadowCast
 		for (point in visible)
 		{
-			val tile = level.getTile(point) ?: continue
-			tile.visible = true
-			tile.seen = true
+			val tile = level!!.getTile(point) ?: continue
+			tile.isVisible = true
+			tile.isSeen = true
 		}
 
 		for (entity in posLightEntities)
@@ -79,7 +84,7 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 					val gx = ix + light.cache.lastx - light.cache.lastrange
 					val gy = iy + light.cache.lasty - light.cache.lastrange
 
-					val tile = level.getTile(gx, gy) ?: continue
+					val tile = level!!.getTile(gx, gy) ?: continue
 					val dst2 = tile.euclideanDist2(x.toFloat(), y.toFloat())
 
 					var alpha = 1f - dst2 / ( light.dist * light.dist )

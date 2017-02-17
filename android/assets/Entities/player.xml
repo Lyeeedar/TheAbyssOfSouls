@@ -1,15 +1,25 @@
-<Entity>
-	<Name>player</Name>
-	<AI>player</AI>
-	<Slot>Entity</Slot>
-	<Size>1</Size>
-	<CanSwap>true</CanSwap>
-	<Sprite RefKey="Sprite">
-		<Name>player</Name>
-		<DrawActualSize>true</DrawActualSize>
-	</Sprite>
-	<Reference6 />
-	<Reference7 />
-	<Reference8 />
-	<Factions>player</Factions>
+<Entity xmlns:meta="Editor">
+	<!--Components-->
+	<AI>
+		<AI>player</AI>
+	</AI>
+	<Renderable>
+		<Renderable meta:RefKey="Sprite">
+			<Name>player</Name>
+			<DrawActualSize>true</DrawActualSize>
+		</Renderable>
+	</Renderable>
+	<Position />
+	<Light>
+		<Colour>224,227,172,66</Colour>
+		<Distance>5</Distance>
+	</Light>
+	<Statistics>
+		<Faction>player</Faction>
+		<HP>10</HP>
+		<Stamina>10</Stamina>
+	</Statistics>
+	<Combo>
+		<ComboTree>Entities/TestMonsterCombo</ComboTree>
+	</Combo>
 </Entity>

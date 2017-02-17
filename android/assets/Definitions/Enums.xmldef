@@ -1,0 +1,3 @@
+<Definitions xmlns:meta="Editor">
+	<Definition Name="Elements" IsGlobal="True" meta:RefKey="EnumDef">None,Corrosion,Vorpal,Distortion,Entropic</Definition>
+</Definitions>

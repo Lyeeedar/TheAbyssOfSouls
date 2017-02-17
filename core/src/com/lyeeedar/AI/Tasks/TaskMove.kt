@@ -8,12 +8,14 @@ import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.SpaceSlot
 
-class TaskMove(var direction: Direction): AbstractTask(EventComponent.EventType.MOVE)
+class TaskMove(var direction: Direction): AbstractTask()
 {
 	override fun execute(e: Entity)
 	{
-		val pos = Mappers.position.get(e) ?: return
-		val sprite = Mappers.sprite.get(e)
+		e.directionalSprite()?.currentAnim = "move"
+
+		val pos = e.pos() ?: return
+		val renderable = e.renderable()
 
 		if (pos.position is Tile)
 		{
@@ -57,34 +59,7 @@ class TaskMove(var direction: Direction): AbstractTask(EventComponent.EventType.
 					}
 				}
 
-				sprite.sprite.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
-			}
-			else if (pos.canSwap && pos.size == 1)
-			{
-				val collisionTile = prev.level.getTile(prev, direction.x, direction.y)
-				if (collisionTile != null && collisionTile.contents.get(SpaceSlot.WALL) == null)
-				{
-					// we collided with an entity
-					val collisionEntity = collisionTile.contents.get(pos.slot)
-					if (e.isAllies(collisionEntity))
-					{
-						// if allies then we can swap
-
-						// First move us
-						val next = prev.level.getTile(prev, direction) ?: return
-						pos.position = next
-						e.tile()?.contents?.remove(pos.slot)
-						next.contents[pos.slot] = e
-						sprite.sprite.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
-
-						// Then move other
-						val opos = Mappers.position.get(collisionEntity)
-						opos.position = prev
-						prev.contents[opos.slot] = collisionEntity
-						val osprite = Mappers.sprite.get(collisionEntity)
-						osprite.sprite.animation = MoveAnimation.obtain().set(prev, next, 0.15f)
-					}
-				}
+				renderable.renderable.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
 			}
 		}
 		else

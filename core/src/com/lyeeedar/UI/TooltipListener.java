@@ -28,36 +28,33 @@ public class TooltipListener extends InputListener
 	@Override
 	public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor)
 	{
-		tooltip.show( event, x, y, false );
-		Tooltip.openTooltip = tooltip;
+		tooltip.show( event, x, y );
 	}
 
 	@Override
 	public boolean mouseMoved (InputEvent event, float x, float y)
 	{
-		tooltip.show( event, x, y, false );
-		Tooltip.openTooltip = tooltip;
+		tooltip.show( event, x, y );
 
-		return true;
+		return false;
 	}
 
 	@Override
 	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
 	{
 		tooltip.setVisible(false);
-		Tooltip.openTooltip = null;
+		if (Tooltip.openTooltip == tooltip) Tooltip.openTooltip = null;
 	}
 
 	@Override
 	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
 	{
-		return true;
+		return false;
 	}
 
 	@Override
 	public void touchUp (InputEvent event, float x, float y, int pointer, int button)
 	{
-		tooltip.show( event, x, y, false );
-		Tooltip.openTooltip = tooltip;
+
 	}
 }

@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Renderables.Animation.AbstractAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
+import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Renderables.Sprite.DirectionalSprite
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
@@ -369,7 +370,7 @@ class AssetManager
 			return TilingSprite.load(xml)
 		}
 
-		fun loadDirectionalSprite(xml: Element): DirectionalSprite
+		fun loadDirectionalSprite(xml: Element, size: Int = 1): DirectionalSprite
 		{
 			val directionalSprite = DirectionalSprite()
 
@@ -377,14 +378,33 @@ class AssetManager
 			for (i in 0.. anims.childCount-1)
 			{
 				val el = anims.getChild(i)
-				val name = el.name
+				val name = el.get("Name").toLowerCase()
 				val up = AssetManager.loadSprite(el.getChildByName("Up"))
 				val down = AssetManager.loadSprite(el.getChildByName("Down"))
+
+				up.size[0] = size
+				up.size[1] = size
+
+				down.size[0] = size
+				down.size[1] = size
 
 				directionalSprite.addAnim(name, up, down)
 			}
 
 			return directionalSprite
+		}
+
+		fun loadRenderable(xml: Element): Renderable
+		{
+			val type = xml.getAttribute("meta:RefKey", null)?.toUpperCase() ?: xml.name.toUpperCase()
+
+			return when(type)
+			{
+				"SPRITE" -> AssetManager.loadSprite(xml)
+				"PARTICLEEFFECT", "PARTICLE" -> AssetManager.loadParticleEffect(xml)
+				"TILINGSPRITE" -> AssetManager.loadTilingSprite(xml)
+				else -> throw Exception("Unknown renderable type '$type'!")
+			};
 		}
 	}
 }

@@ -1,0 +1,28 @@
+<Definitions xmlns:meta="Editor">
+	<Definition Name="SceneTimeline" meta:RefKey="Collection">
+		<Data Name="Timeline" Interpolate="False" SkipIfDefault="False" meta:RefKey="Timeline">
+			<Keyframe Name="Blocker" Background="24,186,97,158" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Data Name="BlockOnTurn" meta:RefKey="Boolean" />
+			</Keyframe>
+			<Keyframe Name="DestinationRenderable" Background="75,166,173,101" HasDuration="True" meta:RefKey="Keyframe">
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
+				<Data Name="RenderablePerTile" meta:RefKey="Boolean" />
+			</Keyframe>
+			<Keyframe Name="MovementRenderable" Background="49,181,114,94" HasDuration="True" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
+				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
+				<Data Name="UseLeap" meta:RefKey="Boolean" />
+			</Keyframe>
+			<Keyframe Name="Damage" Background="255,0,0,66" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Data Name="Amount" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+				<Data Name="Element" Key="Elements" Default="None" meta:RefKey="Enum" />
+				<Data Name="ElementalConversion" Min="0" Max="1" Default="0.5" VisibleIf="Element!=None" meta:RefKey="Number" />
+			</Keyframe>
+		</Data>
+	</Definition>
+</Definitions>

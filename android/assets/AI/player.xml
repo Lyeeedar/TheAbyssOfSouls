@@ -1,9 +1,6 @@
-<Any Reset="true">
-    <ProcessInput></ProcessInput>
-    <Priority>
-        <Until State="Running">
-            <MoveTo Key="Pos"></MoveTo>
-            <ClearValue Key="Pos"></ClearValue>
-        </Until>
-    </Priority>
-</Any>
+<AI meta:X="36" meta:Y="8" xmlns:meta="Editor">
+	<Root meta:X="240" meta:Y="8" meta:RefKey="Sequence">
+		<Action meta:RefKey="ProcessInput" />
+		<Action Key="Pos" meta:RefKey="MoveTo" />
+	</Root>
+</AI>

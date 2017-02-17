@@ -2,8 +2,10 @@ package com.lyeeedar.Renderables.Sprite
 
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.ObjectSet
+import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Util.random
-import com.lyeeedar.Util.set
+import ktx.collections.get
+import ktx.collections.set
 
 class DirectionalSprite
 {
@@ -22,6 +24,23 @@ class DirectionalSprite
 	private val upSprites = ObjectMap<String, Sprite>()
 	private val downSprites = ObjectMap<String, Sprite>()
 	private val availableAnimations = ObjectSet<String>()
+
+	var size: Int
+		get() = -1
+		set(value)
+		{
+			for (up in upSprites)
+			{
+				up.value.size[0] = value
+				up.value.size[1] = value
+			}
+
+			for (down in downSprites)
+			{
+				down.value.size[0] = value
+				down.value.size[1] = value
+			}
+		}
 
 	fun hasAnim(anim: String) = availableAnimations.contains(anim)
 
@@ -45,14 +64,7 @@ class DirectionalSprite
 
 		val sprite = map[anim] ?: throw RuntimeException("Failed to find direction sprite for $anim!")
 
-		if (h == HDir.LEFT)
-		{
-			sprite.flipX = true
-		}
-		else
-		{
-			sprite.flipX = false
-		}
+		sprite.flipX = h == HDir.LEFT
 
 		return sprite
 	}

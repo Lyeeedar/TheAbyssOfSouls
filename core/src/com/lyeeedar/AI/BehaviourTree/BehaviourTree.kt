@@ -20,9 +20,9 @@ class BehaviourTree(): IAI
 		root.evaluate(e)
 	}
 
-	override fun cancel()
+	override fun cancel(e: Entity)
 	{
-		root.cancel()
+		root.cancel(e)
 	}
 
 	companion object

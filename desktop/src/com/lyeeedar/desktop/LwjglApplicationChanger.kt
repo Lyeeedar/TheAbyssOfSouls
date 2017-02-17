@@ -26,9 +26,9 @@ class LwjglApplicationChanger : AbstractApplicationChanger(LwjglPreferences("gam
 
 		val cfg = LwjglApplicationConfiguration()
 
-		cfg.title = "MHRL"
-		cfg.width = pref.getInteger("resolutionX")
-		cfg.height = pref.getInteger("resolutionY")
+		cfg.title = "A Skin of Others"
+		cfg.width = 800
+		cfg.height = 600
 		cfg.fullscreen = pref.getBoolean("fullscreen")
 		cfg.vSyncEnabled = pref.getBoolean("vSync")
 		cfg.foregroundFPS = 0
@@ -38,8 +38,6 @@ class LwjglApplicationChanger : AbstractApplicationChanger(LwjglPreferences("gam
 		cfg.allowSoftwareMode = true
 
 		Global.fps = pref.getInteger("fps")
-		Global.resolution[0] = pref.getInteger("resolutionX").toFloat()
-		Global.resolution[1] = pref.getInteger("resolutionY").toFloat()
 
 		return LwjglApplication(game, cfg)
 	}
@@ -123,8 +121,8 @@ class LwjglApplicationChanger : AbstractApplicationChanger(LwjglPreferences("gam
 		prefs.putFloat("ambientVolume", 1f)
 		prefs.putFloat("effectVolume", 1f)
 
-		prefs.putInteger("resolutionX", 600)
-		prefs.putInteger("resolutionY", 400)
+		prefs.putInteger("resolutionX", 360)
+		prefs.putInteger("resolutionY", 640)
 		prefs.putBoolean("fullscreen", false)
 		prefs.putBoolean("borderless", false)
 		prefs.putBoolean("vSync", true)

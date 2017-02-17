@@ -1,5 +1,6 @@
 package com.lyeeedar.AI.BehaviourTree.Decorators
 
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.AbstractNodeContainer
 import com.lyeeedar.AI.BehaviourTree.AbstractTreeNode
@@ -50,9 +51,9 @@ abstract class AbstractDecorator(): AbstractNodeContainer()
 	// ----------------------------------------------------------------------
 	override fun parse( xml: XmlReader.Element)
 	{
-		val child = xml.getChild( 0 );
+		val child = xml.getChild( 0 )
 
-		val node = AbstractTreeNode.get(child.name.toUpperCase())
+		val node = AbstractTreeNode.get(child.getAttribute("meta:RefKey").toUpperCase())
 		this.node = node
 		node.parent = this
 
@@ -60,8 +61,8 @@ abstract class AbstractDecorator(): AbstractNodeContainer()
 	}
 
 	// ----------------------------------------------------------------------
-	override fun cancel()
+	override fun cancel(entity: Entity)
 	{
-		node?.cancel();
+		node?.cancel(entity);
 	}
 }

@@ -35,7 +35,7 @@ class ActionGetAllVisible(): AbstractAction()
 		{
 			cache = ShadowCastComponent()
 
-			cache.cache.getShadowCast(tile.level.grid.array, tile.x, tile.y, stats.stats.get(Statistic.SIGHT).toInt(), entity)
+			cache.cache.getShadowCast(tile.level.grid, tile.x, tile.y, stats.stats.get(Statistic.SIGHT).toInt(), entity)
 
 			entity.add(cache)
 		}
@@ -100,7 +100,7 @@ class ActionGetAllVisible(): AbstractAction()
 		}
 	}
 
-	override fun cancel() {
+	override fun cancel(entity: Entity) {
 
 	}
 

@@ -36,15 +36,6 @@ enum class Rarity
 }
 
 // ----------------------------------------------------------------------
-enum class EquipmentSlot
-{
-	WEAPON,
-	ARMOUR,
-	TRINKET,
-	POTION
-}
-
-// ----------------------------------------------------------------------
 enum class Direction private constructor(val x: Int, val y: Int, val identifier: String)
 {
 	CENTRE(0, 0, "C"),
@@ -180,19 +171,16 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 				if (dx < 0)
 				{
 					return Direction.WEST
-				}
-				else
+				} else
 				{
 					return Direction.EAST
 				}
-			}
-			else
+			} else
 			{
 				if (dy < 0)
 				{
 					return Direction.SOUTH
-				}
-				else
+				} else
 				{
 					return Direction.NORTH
 				}
@@ -396,12 +384,12 @@ enum class Statistic
 // ----------------------------------------------------------------------
 enum class ElementType
 {
-	PHYSICAL,
+	NONE,
 
-	CORRUPTION,
-	ACID,
-	SOUND,
-	VORPAL;
+	CORROSION,
+	VORPAL,
+	DISTORTION,
+	ENTROPIC;
 
 	companion object
 	{

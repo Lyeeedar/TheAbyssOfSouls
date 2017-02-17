@@ -43,9 +43,18 @@ class EquationHelper
 
 		fun setVariableValues(exp: Expression, variableMap: ObjectFloatMap<String>, prefix: String)
 		{
+			val valuesToBeSet = exp.variableNames
+
 			for (key in variableMap.keys())
 			{
 				exp.setVariable(prefix + key, variableMap.get(key, 0f).toDouble())
+
+				valuesToBeSet.remove(prefix + key)
+			}
+
+			for (variable in valuesToBeSet)
+			{
+				exp.setVariable(variable, 0.0)
 			}
 		}
 
@@ -60,40 +69,13 @@ class EquationHelper
 			return expB
 		}
 
-		fun isNumber(string: String?): Boolean
-		{
-			if (string == null || string.isEmpty())
-			{
-				return false
-			}
-			var i = 0
-			if (string[0] == '-')
-			{
-				if (string.length > 1)
-				{
-					i++
-				} else
-				{
-					return false
-				}
-			}
-			while (i < string.length)
-			{
-				if (!Character.isDigit(string[i]))
-				{
-					return false
-				}
-				i++
-			}
-			return true
-		}
-
 		fun evaluate(eqn: String, variableMap: ObjectFloatMap<String> = emptyMap, ran: Random = MathUtils.random): Float
 		{
-			if (isNumber(eqn))
+			try
 			{
-				return Integer.parseInt(eqn).toFloat()
-			} else
+				return eqn.toFloat()
+			}
+			catch (ex: Exception)
 			{
 				val expB = createEquationBuilder(eqn, ran)
 				setVariableNames(expB, variableMap, "")
@@ -102,7 +84,8 @@ class EquationHelper
 				if (exp == null)
 				{
 					return 0f
-				} else
+				}
+				else
 				{
 					setVariableValues(exp, variableMap, "")
 					val rawVal = exp.evaluate()

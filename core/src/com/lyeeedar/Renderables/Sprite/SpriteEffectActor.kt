@@ -44,6 +44,6 @@ open class SpriteEffectActor(val sprite: Sprite, val w: Float, val h: Float, val
 			}
 		}
 
-		sprite.render(batch as HDRColourSpriteBatch, x, y, w, h)
+		sprite.render(batch as SpriteBatch, x, y, w, h)
 	}
 }

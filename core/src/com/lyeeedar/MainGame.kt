@@ -9,12 +9,11 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.util.HashMap
 
-public class MainGame : Game()
+class MainGame : Game()
 {
-
 	enum class ScreenEnum
 	{
-		TEST,
+		TEST
 	}
 
 	private val screens = HashMap<ScreenEnum, AbstractScreen>()
@@ -26,13 +25,7 @@ public class MainGame : Game()
 
 		if (Global.android)
 		{
-			val sw = StringWriter()
-			val handler = Thread.UncaughtExceptionHandler { myThread, e ->
-				val exceptionAsString = sw.toString()
-				JOptionPane.showMessageDialog(null, "A fatal error occurred:\n" + exceptionAsString, "An error occurred", JOptionPane.ERROR_MESSAGE)
-			}
 
-			Thread.currentThread().uncaughtExceptionHandler = handler
 		}
 		else
 		{
@@ -54,7 +47,7 @@ public class MainGame : Game()
 			Thread.currentThread().uncaughtExceptionHandler = handler
 		}
 
-		screens[ScreenEnum.TEST] = TestDirectionalScreen()
+		screens.put(ScreenEnum.TEST, TestCombatScreen())
 
 		if (Global.PARTICLE_EDITOR)
 		{

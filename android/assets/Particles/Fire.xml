@@ -1,4 +1,4 @@
-<Effect>
+<Effect xmlns:meta="Editor">
 	<Warmup>5</Warmup>
 	<MoveSpeed>0.1</MoveSpeed>
 	<Emitters>
@@ -11,19 +11,20 @@
 			<ParticleSpeed>0.2,0.6</ParticleSpeed>
 			<ParticleRotation>0,360</ParticleRotation>
 			<RateKeyframes>
-				<Keyframe>0|400</Keyframe>
+				<Keyframe>0|50</Keyframe>
 			</RateKeyframes>
 			<Particles>
 				<Particle>
 					<Lifetime>1,1</Lifetime>
 					<BlendMode>Multiplicative</BlendMode>
 					<Collision>Slide</Collision>
+					<Drag>0.2</Drag>
 					<TextureKeyframes>
 						<Stream>
 							<Keyframe>0|Particle/ember_2</Keyframe>
 						</Stream>
 						<Stream>
-							<Keyframe>0|Particle/glow</Keyframe>
+							<Keyframe>0|Particle/plasma_2</Keyframe>
 						</Stream>
 						<Stream>
 							<Keyframe>0|Particle/plasma_1</Keyframe>
@@ -33,7 +34,7 @@
 						<Stream>
 							<Keyframe>0|0|0</Keyframe>
 							<Keyframe>0.3|0.4|0.6</Keyframe>
-							<Keyframe>1|0.1|0.3</Keyframe>
+							<Keyframe>1|0.8|1</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<RotationSpeedKeyframes>
@@ -45,16 +46,17 @@
 						<Stream>
 							<Keyframe>0|255,250,133,255</Keyframe>
 							<Keyframe>0.2|240,255,0,255</Keyframe>
-							<Keyframe>0.5|255,208,0,255</Keyframe>
-							<Keyframe>0.8|255,89,5,255</Keyframe>
-							<Keyframe>1|28,28,28,255</Keyframe>
+							<Keyframe>0.3943284|255,208,0,255</Keyframe>
+							<Keyframe>0.6015667|255,89,5,255</Keyframe>
+							<Keyframe>0.6783215|28,28,28,255</Keyframe>
+							<Keyframe>1|0,0,0,255</Keyframe>
 						</Stream>
 					</ColourKeyframes>
 					<AlphaKeyframes>
 						<Stream>
 							<Keyframe>0|0.1</Keyframe>
 							<Keyframe>0.3|0.8</Keyframe>
-							<Keyframe>0.7|0.6</Keyframe>
+							<Keyframe>0.6019004|0.6</Keyframe>
 							<Keyframe>1|0</Keyframe>
 						</Stream>
 					</AlphaKeyframes>

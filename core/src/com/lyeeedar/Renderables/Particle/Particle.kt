@@ -187,7 +187,7 @@ class Particle(val emitter: Emitter)
 		{
 			for (y in aabb.y.toInt()..(aabb.y+aabb.height).toInt())
 			{
-				if (collisionGrid.tryGet(x, y, false))
+				if (collisionGrid.tryGet(x, y, false)!!)
 				{
 					// calculate collision normal
 

@@ -6,7 +6,7 @@
     </key>
     <value>
       <string>&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\ProjectRoot.xml&lt;/string&gt;</string>
+&lt;string&gt;D:\Users\Philip\workspace\Match3 - Copy\android\assets\ProjectRoot.xml&lt;/string&gt;</string>
     </value>
   </item>
   <item>
@@ -16,13 +16,23 @@
     <value>
       <string>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Definitions\Combo.xmldef&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Definitions\Entity.xmldef&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Entities\player.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Particles\Explosion.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Particles\slash.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Definitions\Particle.xmldef&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\Match3 - Copy\android\assets\Definitions\Combo.xmldef&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\Match3 - Copy\android\assets\AI\BasicMonster.xml&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\Match3 - Copy\android\assets\Definitions\AI.xmldef&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\Match3 - Copy\android\assets\Definitions\Entity.xmldef&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\Match3 - Copy\android\assets\Entities\player.xml&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\Match3 - Copy\android\assets\Entities\TestMonster.xml&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\Match3 - Copy\android\assets\Definitions\SceneTimeline.xmldef&lt;/string&gt;
 &lt;/ArrayOfString&gt;</string>
+    </value>
+  </item>
+  <item>
+    <key>
+      <string>IgnoredFeature</string>
+    </key>
+    <value>
+      <string>&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;string&gt;1.5.0 (https://github.com/infinity8/StructuredXmlEditor/releases/download/v1.5.0/StructuredXmlEditor.exe)&lt;/string&gt;</string>
     </value>
   </item>
 </dictionary>

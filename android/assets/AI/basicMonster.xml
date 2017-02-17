@@ -1,20 +1,51 @@
-<Any>
-    <ClearValue Key="Enemy"></ClearValue>
-
-    <GetAllVisible Type="Tiles" Key="Tiles"></GetAllVisible>
-    <GetAllVisible Type="Enemies" Key="Enemies"></GetAllVisible>
-    <GetAllVisible Type="Allies" Key="Allies"></GetAllVisible>
-    <Pick Input="Enemies" Output="Enemy"></Pick>
-    <ConvertTo Input="Enemy" Output="EnemyPos" Type="Position"></ConvertTo>
-
-    <Priority>
-		<Import Path="attackClosest"></Import>
-		<Random>
-			<Wait></Wait>
-            <Wait></Wait>
-            <Wait></Wait>
-			<Import Path="wander"></Import>
-		</Random>
-    </Priority>
-
-</Any>
+<AI meta:X="49" meta:Y="18" xmlns:meta="Editor">
+	<Root meta:X="252" meta:Y="17" meta:RefKey="Any">
+		<!--Do Sight Stuff-->
+		<Action Key="Tiles" meta:RefKey="GetAllVisible" />
+		<Action Key="Enemies" SrcKey="Tiles" Type="Enemies" meta:RefKey="GetAllVisible" />
+		<Action Key="Allies" SrcKey="Tiles" Type="Allies" meta:RefKey="GetAllVisible" />
+		<!--Actual Logic-->
+		<Node meta:X="574.06585693359375" meta:Y="144.375" meta:RefKey="Priority">
+			<Node meta:X="850.44921875" meta:Y="70.375" meta:RefKey="DataScope">
+				<!--Attack Logic-->
+				<Node meta:X="1050.871826171875" meta:Y="-28.203948974609375" meta:RefKey="Until">
+					<!--Pick closest enemy-->
+					<Action Input="Enemies" Output="Enemy" meta:RefKey="Pick" />
+					<Action Input="Enemy" Output="Pos" meta:RefKey="ConvertTo" />
+					<Action Key="Enemy" meta:RefKey="ClearValue" />
+					<Node meta:X="1329.5054931640625" meta:Y="28.614233016967773" meta:RefKey="Priority">
+						<!--Attempt to attack or move to the pos-->
+						<Action Key="Pos" meta:RefKey="Combo" />
+						<Action Key="Pos" meta:RefKey="MoveTo" />
+					</Node>
+					<Action Key="Pos" meta:RefKey="ClearValue" />
+				</Node>
+			</Node>
+			<Node meta:X="851.38165283203125" meta:Y="298.743408203125" meta:RefKey="Random">
+				<!--Idle Logic-->
+				<Action meta:RefKey="Wait" />
+				<Action meta:RefKey="Wait" />
+				<Action meta:RefKey="Wait" />
+				<Action meta:RefKey="Wait" />
+				<Node meta:X="1106.1602783203125" meta:Y="398.0032958984375" meta:RefKey="DataScope">
+					<!--Wander-->
+					<Node meta:X="1277.400390625" meta:Y="412.91119384765625" meta:RefKey="Any">
+						<Node meta:X="1511.9793701171875" meta:Y="355.96380615234375" meta:RefKey="Sequence">
+							<!--Pick tile to walk to if we dont have one-->
+							<Node meta:X="1736.821533203125" meta:Y="426.27960205078125" meta:RefKey="Invert">
+								<Action Key="Pos" meta:RefKey="Conditional" />
+							</Node>
+							<Action Input="Tiles" Output="Tile" Criteria="Random" meta:RefKey="Pick" />
+							<Action Input="Tile" Output="Pos" meta:RefKey="ConvertTo" />
+						</Node>
+						<Node meta:X="1510.67041015625" meta:Y="543.91119384765625" meta:RefKey="Until">
+							<!--Walk to picked tile-->
+							<Action Key="Pos" meta:RefKey="MoveTo" />
+							<Action Key="Pos" meta:RefKey="ClearValue" />
+						</Node>
+					</Node>
+				</Node>
+			</Node>
+		</Node>
+	</Root>
+</AI>

@@ -43,10 +43,12 @@ abstract class AbstractTreeNode()
 	{
 		fun load(path: String, root: Boolean = false): AbstractTreeNode
 		{
-			val reader = XmlReader();
-			val xml = reader.parse(Gdx.files.internal("AI/$path.xml"));
+			val reader = XmlReader()
+			val xml = reader.parse(Gdx.files.internal("AI/$path.xml"))
 
-			val node = AbstractTreeNode.get(xml.name.toUpperCase())
+			val rootEl = xml.getChildByName("Root")
+
+			val node = AbstractTreeNode.get(rootEl.getAttribute("meta:RefKey").toUpperCase())
 			if (root) node.data = ObjectMap()
 
 			node.parse(xml)
@@ -85,16 +87,14 @@ abstract class AbstractTreeNode()
 				"CLEARVALUE" -> ActionClearValue::class.java
 				"CONVERTTO" -> ActionConvertTo::class.java
 				"GETALLVISIBLE" -> ActionGetAllVisible::class.java
-				"GETROOM", "GETNEIGHBOURROOM" -> ActionGetRoom::class.java
-				"MOVETO", "MOVEAWAY" -> ActionMoveTo::class.java
-				"INCREMENT", "DECREMENT" -> ActionIncrement::class.java
+				"MOVETO" -> ActionMoveTo::class.java
 				"PICK" -> ActionPick::class.java
 				"PROCESSINPUT" -> ActionProcessInput::class.java
 				"SETVALUE" -> ActionSetValue::class.java
 				"WAIT" -> ActionWait::class.java
 
 			// Conditionals
-				"CHECKVALUE" -> ConditionalCheckValue::class.java
+				"CONDITIONAL" -> ConditionalCheckValue::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid node type: $name")
@@ -107,5 +107,5 @@ abstract class AbstractTreeNode()
 	//----------------------------------------------------------------------
 	abstract fun evaluate(entity: Entity): ExecutionState
 	abstract fun parse(xml: XmlReader.Element)
-	abstract fun cancel()
+	abstract fun cancel(entity: Entity)
 }

@@ -8,8 +8,9 @@ import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
-import com.lyeeedar.Level.Level
+import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.Systems.createEngine
 import com.lyeeedar.UI.LayeredDrawable
@@ -18,6 +19,8 @@ import com.lyeeedar.UI.TabPanel
 import com.lyeeedar.UI.Tooltip
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Controls
+import com.lyeeedar.Util.Point
+import ktx.collections.set
 
 /**
  * Created by Philip on 04-Jul-16.
@@ -29,18 +32,16 @@ class Global
 	{
 		val PARTICLE_EDITOR = false
 
-		val canMoveDiagonal = false
-
 		lateinit var skin: Skin
 		var fps = 60
 		var android = false
 		var release = false
-		val resolution = floatArrayOf(600f, 400f)
 		lateinit var game: MainGame
 		lateinit var applicationChanger: AbstractApplicationChanger
-
+		var settings = Settings()
 		lateinit var engine: Engine
-		lateinit var currentLevel: Level
+
+		var resolution = Point(800, 600)
 
 		lateinit var controls: Controls
 
@@ -63,6 +64,9 @@ class Global
 
 			val titlefont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 20, Color(1f, 0.9f, 0.8f, 1f), 1, Color.BLACK, true)
 			skin.add("title", titlefont)
+
+			val popupfont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 20, Color(1f, 1f, 1f, 1f), 1, Color.DARK_GRAY, true)
+			skin.add("popup", popupfont)
 
 			val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
 			pixmap.setColor(Color.WHITE)
@@ -87,6 +91,10 @@ class Global
 			val titleLabel = Label.LabelStyle()
 			titleLabel.font = skin.getFont("title")
 			skin.add("title", titleLabel)
+
+			val popupLabel = Label.LabelStyle()
+			popupLabel.font = skin.getFont("popup")
+			skin.add("popup", popupLabel)
 
 			val checkButton = CheckBox.CheckBoxStyle()
 			checkButton.checkboxOff = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/GUI/Unchecked.png"))
@@ -197,4 +205,13 @@ class Global
 			return skin
 		}
 	}
+}
+
+class Settings
+{
+	val data = ObjectMap<String, Any>()
+
+	fun hasKey(key: String) = data.containsKey(key)
+	fun <T> get(key: String, default: T) = if (data.containsKey(key)) data[key] as T else default
+	fun set(key: String, value: Any) { data[key] = value }
 }

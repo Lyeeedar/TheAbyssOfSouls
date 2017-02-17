@@ -31,7 +31,7 @@ class ActionIncrement(): AbstractAction()
 		key = xml.getAttribute("Key").toLowerCase()
 	}
 
-	override fun cancel()
+	override fun cancel(entity: Entity)
 	{
 	}
 }

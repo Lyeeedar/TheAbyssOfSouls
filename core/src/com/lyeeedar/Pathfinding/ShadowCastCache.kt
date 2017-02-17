@@ -2,6 +2,7 @@ package com.lyeeedar.Pathfinding
 
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
 import squidpony.squidgrid.FOV
@@ -55,7 +56,7 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 		fov = FOV(fovType)
 	}
 
-	@JvmOverloads fun getShadowCast(grid: Array<Array<Tile>>, x: Int, y: Int, range: Int, caster: Any?, allowOutOfBounds: Boolean = false): com.badlogic.gdx.utils.Array<Point>
+	@JvmOverloads fun getShadowCast(grid: Array2D<Tile>, x: Int, y: Int, range: Int, caster: Any?, allowOutOfBounds: Boolean = false): com.badlogic.gdx.utils.Array<Point>
 	{
 		var recalculate = false
 
@@ -69,7 +70,7 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 		{
 			for (pos in opaqueTiles)
 			{
-				val tile = grid[pos.x][pos.y]
+				val tile = grid[pos.x, pos.y]
 				if (tile.getPassable(LightPassability, caster))
 				{
 					recalculate = true // something has moved
@@ -81,7 +82,7 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 			{
 				for (pos in clearTiles)
 				{
-					val tile = grid[pos.x][pos.y]
+					val tile = grid[pos.x, pos.y]
 					if (!tile.getPassable(LightPassability, caster))
 					{
 						recalculate = true // something has moved
@@ -105,10 +106,11 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 					val gx = ix + x - range
 					val gy = iy + y - range
 
-					if (gx >= 0 && gx < grid.size && gy >= 0 && gy < grid[0].size)
+					if (grid.inBounds(gx, gy))
 					{
-						resistanceGrid[ix][iy] = (if (grid[gx][gy].getPassable(LightPassability, caster)) 0 else 1).toDouble()
-					} else
+						resistanceGrid[ix][iy] = (if (grid[gx, gy].getPassable(LightPassability, caster)) 0 else 1).toDouble()
+					}
+					else
 					{
 						resistanceGrid[ix][iy] = 1.0
 					}
@@ -124,7 +126,7 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 					val gx = ix + x - range
 					val gy = iy + y - range
 
-					if (rawOutput!![ix][iy] > 0 && gx >= 0 && gx < grid.size && gy >= 0 && gy < grid[0].size)
+					if (rawOutput!![ix][iy] > 0 && grid.inBounds(gx, gy))
 					{
 						currentShadowCast.add(Point.obtain().set(gx, gy))
 					}
@@ -137,12 +139,12 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 
 			for (pos in currentShadowCast)
 			{
-				if (pos.x < 0 || pos.y < 0 || pos.x >= grid.size || pos.y >= grid[0].size)
+				if (pos.x < 0 || pos.y < 0 || pos.x >= grid.xSize || pos.y >= grid.ySize)
 				{
 					continue
 				}
 
-				val tile = grid[pos.x][pos.y]
+				val tile = grid[pos.x, pos.y]
 				if (!tile.getPassable(LightPassability, caster))
 				{
 					opaqueTiles.add(pos)

@@ -1,0 +1,333 @@
+package com.lyeeedar.Combo
+
+import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Direction
+import com.lyeeedar.Level.Tile
+import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.math.Matrix3
+import com.badlogic.gdx.utils.Array
+import com.lyeeedar.Components.*
+import com.lyeeedar.Global
+import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.SceneTimeline.SceneTimeline
+import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Util.Array2D
+import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.random
+import com.lyeeedar.Util.toCharGrid
+import ktx.collections.toGdxArray
+
+
+class SceneTimelineComboStep : ComboStep()
+{
+	enum class HitType
+	{
+		ALL,
+		TARGET,
+		RANDOM
+	}
+
+	val hitPoints = com.badlogic.gdx.utils.Array<Point>()
+	lateinit var hitType: HitType
+	var hitCount = 1
+	lateinit var sceneTimeline: SceneTimeline
+	var stepForward = false
+
+	fun canMove(rootEntity: Entity, entity: Entity, direction: Direction, toMove: Array<Entity>? = null): Boolean
+	{
+		val entityTile = rootEntity.tile() ?: return true
+		val parentPos = rootEntity.pos() ?: return true
+
+		val pos = entity.pos() ?: return true
+
+		for (x in 0..pos.size-1)
+		{
+			for (y in 0..pos.size-1)
+			{
+				val tile = entityTile.level.getTile(pos.position, x + direction.x, y + direction.y)
+
+				if (tile == null)
+				{
+					return false
+				}
+				else if (tile.contents[SpaceSlot.WALL] != null)
+				{
+					return false
+				}
+				else
+				{
+					val e = tile.contents[pos.slot]
+					if (e != null && e != entity)
+					{
+						val epos = e.pos() ?: continue
+						if (epos.size > parentPos.size)
+						{
+							return false
+						}
+						else
+						{
+							val canmove = canMove(rootEntity, e, direction, toMove)
+							if (canmove)
+							{
+								if (toMove != null && !toMove.contains(e, true))
+								{
+									toMove.add(e)
+								}
+							}
+							else
+							{
+								return false
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return true
+	}
+
+	fun doMove(rootEntity: Entity, entity: Entity, direction: Direction)
+	{
+		val parentPos = rootEntity.pos() ?: return
+
+		val pos = entity.pos() ?: return
+		val prev = entity.tile() ?: return
+
+		for (x in 0..pos.size-1)
+		{
+			for (y in 0..pos.size-1)
+			{
+				val tile = prev.level.getTile(prev, x, y)
+
+				if (tile?.contents?.get(pos.slot) == entity) tile?.contents?.remove(pos.slot)
+			}
+		}
+
+		val next = prev.level.getTile(prev, direction) ?: return
+		val oldfacing = pos.facing
+		pos.position = next
+		pos.facing = oldfacing
+
+		for (x in 0..pos.size-1)
+		{
+			for (y in 0..pos.size-1)
+			{
+				val tile = next.level.getTile(next, x, y)
+				tile?.contents?.put(pos.slot, entity)
+			}
+		}
+
+		val renderable = entity.renderable() ?: return
+		val anim = MoveAnimation.obtain().set(next, prev, 0.15f)
+		renderable.renderable.animation = anim
+
+		var xDiff = pos.x - parentPos.x
+		if (xDiff > 0) xDiff -= parentPos.size - 1
+
+		var yDiff = pos.y - parentPos.y
+		if (yDiff > 0) yDiff -= parentPos.size - 1
+
+		val diff = if (xDiff != 0) xDiff else yDiff
+
+		anim.startDelay = 0.03f * Math.abs(diff)
+	}
+
+	override fun activate(entity: Entity, direction: Direction, target: Point)
+	{
+		if (stepForward)
+		{
+			val toMove = Array<Entity>()
+			if (canMove(entity, entity, direction, toMove))
+			{
+				for (e in toMove)
+				{
+					doMove(entity, e, direction)
+				}
+
+				doMove(entity, entity, direction)
+			}
+		}
+
+		val source = entity.pos()!!.getEdgeTiles(direction).random()
+		val hitTiles = when (hitType)
+		{
+			HitType.ALL -> getAllValid(entity, direction).map { it as Tile }.toGdxArray()
+			HitType.TARGET -> arrayOf(source.level.getTileClamped(target)).toGdxArray()
+			HitType.RANDOM -> getAllValid(entity, direction).map { it as Tile }.asSequence().random(hitCount).asIterable().toGdxArray()
+			else -> throw Exception("Unhandled hittype '$hitType'!")
+		}
+
+		val timeline = sceneTimeline.copy()
+		timeline.sourceTile = source
+		timeline.destinationTiles.addAll(hitTiles)
+		timeline.facing = direction
+
+		for (tile in hitTiles)
+		{
+			tile.timelines.add(timeline)
+		}
+
+		val timelineEntity = Entity()
+		val component = SceneTimelineComponent(timeline)
+		timelineEntity.add(component)
+
+		Global.engine.addEntity(timelineEntity)
+	}
+
+	override fun isValid(entity: Entity, direction: Direction, target: Point): Boolean
+	{
+		var hitTiles = getAllValid(entity, direction)
+
+		if (stepForward && canMove(entity, entity, direction))
+		{
+			hitTiles = hitTiles.map { (it as Tile).level.getTile(it, direction) }.filterNotNull().toGdxArray()
+		}
+
+		return hitTiles.contains(target)
+	}
+
+	override fun getAllValid(entity: Entity, direction: Direction): Array<Point>
+	{
+		val epos = entity.pos()!!
+		val tiles = com.badlogic.gdx.utils.Array<Point>()
+
+		var xstep = 0
+		var ystep = 0
+
+		var sx = 0
+		var sy = 0
+
+		if (direction === Direction.NORTH)
+		{
+			sx = 0
+			sy = epos.size - 1
+
+			xstep = 1
+			ystep = 0
+		}
+		else if (direction === Direction.SOUTH)
+		{
+			sx = 0
+			sy = 0
+
+			xstep = 1
+			ystep = 0
+		}
+		else if (direction === Direction.EAST)
+		{
+			sx = epos.size - 1
+			sy = 0
+
+			xstep = 0
+			ystep = 1
+		}
+		else if (direction === Direction.WEST)
+		{
+			sx = 0
+			sy = 0
+
+			xstep = 0
+			ystep = 1
+		}
+
+		for (i in 0..epos.size - 1)
+		{
+			val attackerTile = epos.tile!!.level.getTile(epos.tile!!, sx + xstep * i, sy + ystep * i)!!
+
+			val mat = Matrix3()
+			mat.setToRotation(direction.angle)
+			val vec = Vector3()
+
+			for (point in hitPoints)
+			{
+				vec.set(point.x.toFloat(), point.y.toFloat(), 0f)
+				vec.mul(mat)
+
+				val dx = Math.round(vec.x)
+				val dy = Math.round(vec.y)
+
+				val tile = attackerTile.level.getTile(attackerTile, dx, dy)
+				if (tile != null) tiles.add(tile)
+			}
+		}
+
+		// restrict by visibility and remove duplicates
+		val visibleTiles = entity.shadow().cache.currentShadowCast
+
+		val itr = tiles.iterator()
+		while (itr.hasNext())
+		{
+			val pos = itr.next()
+
+			var matchFound = false
+
+			// Remove not visible
+			for (point in visibleTiles)
+			{
+				if (point.x === pos.x && point.y === pos.y)
+				{
+					matchFound = true
+					break
+				}
+			}
+
+			// Remove duplicates
+			for (i in 0..tiles.size - 1)
+			{
+				val opos = tiles[i]
+				if (opos !== pos && opos.x === pos.x && opos.y === pos.y)
+				{
+					matchFound = false
+					break
+				}
+			}
+
+			if (!matchFound)
+			{
+				itr.remove()
+			}
+		}
+
+		return tiles
+	}
+
+	override fun parse(xml: XmlReader.Element)
+	{
+		sceneTimeline = SceneTimeline.load(xml.getChildByName("SceneTimeline"))
+		hitType = HitType.valueOf(xml.get("HitType", "All").toUpperCase())
+		hitCount = xml.getInt("HitCount", 1)
+		stepForward = xml.getBoolean("StepForward", false)
+
+		val hitPointsEl = xml.getChildByName("HitPattern")
+		val grid = hitPointsEl.toCharGrid()
+		val center = Point()
+
+		outer@ for (x in 0..grid.width-1)
+		{
+			for (y in 0..grid.height-1)
+			{
+				if (grid[x, y] == '@')
+				{
+					center.set(x, y)
+					break@outer
+				}
+			}
+		}
+
+		for (x in 0..grid.width-1)
+		{
+			for (y in 0..grid.height-1)
+			{
+				if (grid[x, y] == '#')
+				{
+					val dx = x - center.x
+					val dy = center.y - y
+
+					hitPoints.add(Point(dx, dy))
+				}
+			}
+		}
+	}
+}

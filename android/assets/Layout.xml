@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LayoutRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RootPanel Orientation="Horizontal">
+    <LayoutAnchorablePane Id="ProjectViewPanel" DockWidth="180">
+      <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="ProjectView" IsSelected="True" ContentId="ProjectView" LastActivationTimeStamp="02/17/2017 21:21:59" PreviousContainerId="ProjectViewPanel" PreviousContainerIndex="0" />
+    </LayoutAnchorablePane>
+    <LayoutDocumentPane Id="DocumentPanel">
+      <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="StartPage" IsSelected="True" ContentId="StartPage" LastActivationTimeStamp="02/17/2017 21:22:04" PreviousContainerId="DocumentPanel" PreviousContainerIndex="0" />
+    </LayoutDocumentPane>
+    <LayoutAnchorablePane Id="ToolPanel" DockWidth="476">
+      <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="FocusTool" IsSelected="True" ContentId="FocusTool" LastActivationTimeStamp="02/13/2017 22:04:43" />
+      <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="UndoHistory" ContentId="UndoHistory" LastActivationTimeStamp="01/29/2017 12:57:16" PreviousContainerId="ToolPanel" PreviousContainerIndex="0" />
+    </LayoutAnchorablePane>
+  </RootPanel>
+  <TopSide />
+  <RightSide />
+  <LeftSide />
+  <BottomSide />
+  <FloatingWindows />
+  <Hidden />
+</LayoutRoot>

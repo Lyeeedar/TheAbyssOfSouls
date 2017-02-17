@@ -35,7 +35,7 @@ class ActionWait(): AbstractAction()
 		count = xml.getAttribute("Count", "1").toLowerCase()
 	}
 
-	override fun cancel() {
+	override fun cancel(entity: Entity) {
 
 	}
 

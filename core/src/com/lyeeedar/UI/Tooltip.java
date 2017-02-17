@@ -13,10 +13,13 @@ public class Tooltip extends Table
 
 	public Table Content;
 	private TooltipStyle m_style;
+	private Stage storedstage;
 
 	public Tooltip( Table Content, Skin skin, Stage stage )
 	{
 		super( skin );
+
+		this.storedstage = stage;
 
 		this.Content = Content;
 		add( Content ).expand().fill();
@@ -36,18 +39,18 @@ public class Tooltip extends Table
 		setBackground( m_style.background );
 	}
 
-	public void show( InputEvent event, float x, float y, boolean lockedMenu )
+	public void show( InputEvent event, float x, float y )
 	{
 		Vector2 tmp = new Vector2( x, y );
 		event.getListenerActor().localToStageCoordinates( tmp );
-		show( tmp.x, tmp.y, lockedMenu );
+		show( tmp.x, tmp.y );
 	}
 
-	public void show( float x, float y, boolean lockedMenu )
+	public void show( float x, float y )
 	{
 		if (getStage() == null)
 		{
-			openTooltip.getStage().addActor( this );
+			storedstage.addActor( this );
 		}
 
 		if ( openTooltip != null && openTooltip != this )
@@ -95,7 +98,7 @@ public class Tooltip extends Table
 		setPosition( tmp.x, tmp.y );
 		toFront();
 
-		if (!lockedMenu) { openTooltip = this; }
+		openTooltip = this;
 	}
 
 	public static class TooltipStyle

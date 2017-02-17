@@ -5,11 +5,6 @@ import com.badlogic.ashley.core.Entity
 import com.lyeeedar.AI.BehaviourTree.BehaviourTree
 import com.lyeeedar.AI.IAI
 import com.lyeeedar.AI.Tasks.AbstractTask
-import com.lyeeedar.Level.Tile
-
-/**
- * Created by Philip on 20-Mar-16.
- */
 
 class TaskComponent: Component
 {
@@ -24,8 +19,6 @@ class TaskComponent: Component
 	}
 
 	val ai: IAI
-	var leaderName: String? = null
-	var leader: Entity? = null
 	val tasks: com.badlogic.gdx.utils.Array<AbstractTask> = com.badlogic.gdx.utils.Array()
 	var actionDelay: Float = 0f
 }

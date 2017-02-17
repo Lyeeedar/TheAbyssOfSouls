@@ -1,161 +1,105 @@
 package com.lyeeedar.Systems
 
-import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.EntitySystem
-import com.badlogic.ashley.core.Family
+import com.badlogic.ashley.core.*
 import com.badlogic.ashley.utils.ImmutableArray
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
-import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.utils.BinaryHeap
-import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
-
 import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
-import com.lyeeedar.Level.Tile
-import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Level.Level
 import com.lyeeedar.Renderables.SortedRenderer
-import com.lyeeedar.Renderables.Sprite.DirectionalSprite
-import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Colour
-import com.lyeeedar.Util.EnumBitflag
-import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.abs
-
-/**
- * Created by Philip on 20-Mar-16.
- */
 
 class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 {
 	val batchHDRColour: HDRColourSpriteBatch = HDRColourSpriteBatch()
 	lateinit var entities: ImmutableArray<Entity>
 
-	var screenShakeRadius: Float = 0f
-	var screenShakeAccumulator: Float = 0f
-	var screenShakeSpeed: Float = 0f
-	var screenShakeAngle: Float = 0f
+	val tempCol = Colour()
 
 	val tileSize = 32f
 
-	val renderer = SortedRenderer(tileSize, 200f, 200f, SpaceSlot.Values.size)
+	lateinit var renderer: SortedRenderer// = SortedRenderer(tileSize, 200f, 200f, SpaceSlot.Values.size)
+
+	var level: Level? = null
+		get() = field
+		set(value)
+		{
+			field = value
+
+			if (value != null)
+			{
+				renderer = SortedRenderer(tileSize, value.width.toFloat(), value.height.toFloat(), SpaceSlot.Values.size)
+			}
+		}
 
 	override fun addedToEngine(engine: Engine?)
 	{
-		entities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java).one(SpriteComponent::class.java, TilingSpriteComponent::class.java, EffectComponent::class.java, ParticleComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
+		entities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java).one(RenderableComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 	}
 
 	override fun update(deltaTime: Float)
 	{
-		val player = Global.currentLevel.player
-		val playerPos = Mappers.position.get(player)
-		val playerSprite = Mappers.sprite.get(player)
+		if (level == null) return
 
-		for (entity in entities)
-		{
-			val pos = Mappers.position.get(entity) ?: continue
-			val tile = entity.tile() ?: continue
-			//if (!tile.seen) continue
+		val player = level!!.player
+		val playerPos = player.pos()
+		val playerSprite = player.renderable()
 
-			if (!tile.visible)
-			{
-				// dont draw dynamic entities on non visible tiles
-				//val task = Mappers.task.get(entity)
-				//if (task != null) continue
-			}
+		var offsetx = Global.resolution.x / 2 - playerPos.position.x * tileSize - tileSize / 2
+		var offsety = Global.resolution.y / 2 - playerPos.position.y * tileSize - tileSize / 2
 
-			val px = pos.position.x.toFloat()
-			val py = pos.position.y.toFloat()
-
-			val sprite = Mappers.sprite.get(entity)
-			val tilingSprite = Mappers.tilingSprite.get(entity)
-			val effect = Mappers.effect.get(entity)
-			val particle = Mappers.particle.get(entity)
-
-			if (sprite != null)
-			{
-				sprite.sprite.size[0] = pos.size
-				sprite.sprite.size[1] = pos.size
-
-				renderer.queueSprite(sprite.sprite, px, py, pos.slot.ordinal, 0, tile.light)
-			}
-
-			if (tilingSprite != null)
-			{
-				renderer.queueSprite(tilingSprite.sprite, px, py, pos.slot.ordinal, 0, tile.light)
-			}
-
-			if (effect != null)
-			{
-				effect.sprite.size[0] = pos.max.x - pos.min.x + 1
-				effect.sprite.size[1] = pos.max.y - pos.min.y + 1
-
-				if (effect.direction == Direction.EAST || effect.direction == Direction.WEST)
-				{
-					val temp = effect.sprite.size[0]
-					effect.sprite.size[0] = effect.sprite.size[1]
-					effect.sprite.size[1] = temp
-
-					effect.sprite.fixPosition = true
-				}
-
-				effect.sprite.rotation = effect.direction.angle
-
-				renderer.queueSprite(effect.sprite, px, py, SpaceSlot.AIR.ordinal, 0, tile.light)
-			}
-
-			if (particle != null)
-			{
-				particle.particleEffect.sizex = (pos.max.x - pos.min.x).toFloat() + 1f
-				particle.particleEffect.sizey = (pos.max.y - pos.min.y).toFloat() + 1f
-
-				particle.particleEffect.rotation = pos.facing.angle
-				particle.particleEffect.position.set(pos.min.x + particle.particleEffect.sizex * 0.5f, pos.min.y + particle.particleEffect.sizey * 0.5f)
-
-				if (pos.facing.x != 0)
-				{
-					val temp = particle.particleEffect.sizex
-					particle.particleEffect.sizex = particle.particleEffect.sizey
-					particle.particleEffect.sizey = temp
-				}
-
-				renderer.queueParticle(particle.particleEffect, 0f, 0f, SpaceSlot.AIR.ordinal, 0, tile.light)
-			}
-		}
-
-		var offsetx = Global.resolution[ 0 ] / 2 - playerPos.position.x * tileSize - tileSize / 2
-		var offsety = Global.resolution[ 1 ] / 2 - playerPos.position.y * tileSize - tileSize / 2
-
-		val offset = playerSprite.sprite.animation?.renderOffset()
+		val offset = playerSprite.renderable.animation?.renderOffset()
 		if (offset != null)
 		{
 			offsetx -= offset[0] * tileSize
 			offsety -= offset[1] * tileSize
 		}
 
-		// do screen shake
-		if ( screenShakeRadius > 2 )
+		renderer.begin(deltaTime, offsetx, offsety)
+
+		for (entity in entities)
 		{
-			screenShakeAccumulator += deltaTime
-			while ( screenShakeAccumulator >= screenShakeSpeed )
+			val pos = entity.pos() ?: continue
+			val tile = entity.tile()
+
+			val tileCol = tempCol.set(Colour.WHITE)
+
+			if (tile != null)
 			{
-				screenShakeAccumulator -= screenShakeSpeed
-				screenShakeAngle += ( 150 + MathUtils.random() * 60 )
-				screenShakeRadius *= 0.9f
+				//if (!tile.seen) continue
+
+				if (!tile.isVisible)
+				{
+					// dont draw dynamic entities on non visible tiles
+					val task = Mappers.task.get(entity)
+					if (task != null) continue
+				}
+
+				tileCol.set(tile.light)
+				if (tile.isSelectedPoint)
+				{
+					tileCol.mul(0.6f, 1.2f, 0.6f, 1.0f)
+				}
+				else
+				{
+					if (tile.isValidTarget) tileCol.mul(0.65f, 0.65f, 0.4f, 1.0f)
+					if (tile.isValidHitPoint) tileCol.mul(1.2f, 0.7f, 0.7f, 1.0f)
+				}
 			}
 
-			offsetx += Math.sin( screenShakeAngle.toDouble() ).toFloat() * screenShakeRadius
-			offsety += Math.cos( screenShakeAngle.toDouble() ).toFloat() * screenShakeRadius
+			val px = pos.position.x.toFloat()
+			val py = pos.position.y.toFloat()
+
+			val renderable = entity.renderable()
+
+			renderer.queue(renderable.renderable, px, py, pos.slot.ordinal, 0, tileCol)
 		}
 
 		batchHDRColour.begin()
-		renderer.flush(deltaTime, offsetx, offsety, batchHDRColour)
+		renderer.flush(batchHDRColour)
 		batchHDRColour.end()
 	}
 }

@@ -1,6 +1,6 @@
 package com.lyeeedar.Renderables
 
-import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.lyeeedar.Renderables.Animation.*
 
@@ -12,6 +12,13 @@ abstract class Renderable
 	var visible = true
 	var renderDelay = -1f
 	var showBeforeRender = false
+
+	val size = intArrayOf(1, 1)
+
+	var rotation: Float = 0f
+
+	var flipX: Boolean = false
+	var flipY: Boolean = false
 
 	var animation: AbstractAnimation? = null
 		set(value)
@@ -69,7 +76,7 @@ abstract class Renderable
 		return doUpdate(delta)
 	}
 
-	fun render(batch: HDRColourSpriteBatch, x: Float, y: Float, tileSize: Float)
+	fun render(batch: Batch, x: Float, y: Float, tileSize: Float)
 	{
 		if (!visible) return
 		if (renderDelay > 0 && !showBeforeRender)
@@ -81,7 +88,7 @@ abstract class Renderable
 	}
 
 	abstract fun doUpdate(delta: Float): Boolean
-	abstract fun doRender(batch: HDRColourSpriteBatch, x: Float, y: Float, tileSize: Float)
+	abstract fun doRender(batch: Batch, x: Float, y: Float, tileSize: Float)
 
 	abstract fun copy(): Renderable
 }

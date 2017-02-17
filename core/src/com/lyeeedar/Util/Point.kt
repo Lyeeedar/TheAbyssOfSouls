@@ -3,6 +3,7 @@ package com.lyeeedar.Util
 import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
@@ -82,6 +83,8 @@ open class Point : Pool.Poolable, Comparable<Point>
 		@JvmField val MAX = Point(Int.MAX_VALUE, Int.MAX_VALUE, true)
 		@JvmField val MIN = Point(-Int.MAX_VALUE, -Int.MAX_VALUE, true)
 
+		val tempPointList = Array<Point>(false, 32)
+
         private val pool: Pool<Point> = getPool()
 
         @JvmStatic fun obtain(): Point
@@ -97,6 +100,17 @@ open class Point : Pool.Poolable, Comparable<Point>
 			return point
 		}
 
+		@JvmStatic fun obtainTemp(): Point
+		{
+			val point = obtain()
+
+			//tempPointList.add(point)
+
+			return point
+		}
+
+		fun freeTemp() = { freeAll(tempPointList); tempPointList.clear() }
+
 		@JvmStatic fun freeAll(items: Iterable<Point>) = { for (item in items) item.free() }
     }
 
@@ -111,7 +125,7 @@ open class Point : Pool.Poolable, Comparable<Point>
 		return this
 	}
 
-    fun set(x: Int, y: Int): Point
+	fun set(x: Int, y: Int): Point
     {
         this.x = x
         this.y = y
@@ -125,21 +139,21 @@ open class Point : Pool.Poolable, Comparable<Point>
 		return this
 	}
 
-    fun set(other: Point) = set(other.x, other.y)
+	inline fun set(other: Point) = set(other.x, other.y)
 
-    fun copy() = Point.obtain().set(this)
+	inline fun copy() = Point.obtain().set(this)
 
-    fun free() { if (obtained) { Point.pool.free(this); obtained = false; obtainPath = "" } }
+	fun free() { if (obtained) { Point.pool.free(this); obtained = false; obtainPath = "" } }
 
-	fun taxiDist(other: Point) = Math.max( Math.abs(other.x - x), Math.abs(other.y - y) )
-	fun dist(other: Point) = Math.abs(other.x - x) + Math.abs(other.y - y)
-	fun dist(ox: Int, oy: Int) = Math.abs(ox - x) + Math.abs(oy - y)
-	fun euclideanDist(other: Point) = Vector2.dst(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())
-	fun euclideanDist(ox: Float, oy:Float) = Vector2.dst(x.toFloat(), y.toFloat(), ox, oy)
-	fun euclideanDist2(other: Point) = Vector2.dst2(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())
-	fun euclideanDist2(ox: Float, oy:Float) = Vector2.dst2(x.toFloat(), y.toFloat(), ox, oy)
+	inline fun taxiDist(other: Point) = Math.max( Math.abs(other.x - x), Math.abs(other.y - y) )
+	inline fun dist(other: Point) = Math.abs(other.x - x) + Math.abs(other.y - y)
+	inline fun dist(ox: Int, oy: Int) = Math.abs(ox - x) + Math.abs(oy - y)
+	inline fun euclideanDist(other: Point) = Vector2.dst(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())
+	inline fun euclideanDist(ox: Float, oy:Float) = Vector2.dst(x.toFloat(), y.toFloat(), ox, oy)
+	inline fun euclideanDist2(other: Point) = Vector2.dst2(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())
+	inline fun euclideanDist2(ox: Float, oy:Float) = Vector2.dst2(x.toFloat(), y.toFloat(), ox, oy)
 
-	fun liesInRect(min: Point, max: Point): Boolean = x >= min.x && x <= max.x && y >= min.y&& y <= max.y
+	inline fun liesInRect(min: Point, max: Point): Boolean = x >= min.x && x <= max.x && y >= min.y&& y <= max.y
 
 	fun liesOnLine(p1: Point, p2: Point): Boolean
 	{
@@ -192,6 +206,20 @@ open class Point : Pool.Poolable, Comparable<Point>
 
 		// failed to find
 		return false
+	}
+
+	inline fun lerp(p2: Point, alpha: Float) = obtain().set(x + ((p2.x - x) * alpha).toInt(), y + ((p2.y - y) * alpha).toInt())
+
+	inline fun getPosDiff(p: Point): kotlin.Array<Vector2> = getPosDiff(p.x, p.y)
+	inline fun getPosDiff(px: Int, py: Int): kotlin.Array<Vector2>
+	{
+		val oldPos = Vector2(px.toFloat(), py.toFloat())
+		val newPos = Vector2(x.toFloat(), y.toFloat())
+
+		val diff = newPos.sub(oldPos)
+		diff.x *= -1
+
+		return arrayOf(diff, Vector2())
 	}
 
 	operator fun times(other: Int) = obtain().set(x * other, y * other)
@@ -291,38 +319,31 @@ open class PointProgression
 
 class PointIterator(val start: Point, val end: Point): Iterator<Point>
 {
-	lateinit var xRange: MinMax
-	lateinit var yRange: MinMax
-	var x: Int = 0
-	var y: Int = 0
+	var xstep: Float = 0f
+	var ystep: Float = 0f
+	var steps: Int = 0
+	var i: Int = 0
 
 	init
 	{
-		val minx = Math.min(start.x, end.x)
-		val maxx = Math.max(start.x, end.x)
+		val xdiff = end.x - start.x
+		val ydiff = end.y - start.y
 
-		val miny = Math.min(start.y, end.y)
-		val maxy = Math.max(start.y, end.y)
+		steps = Math.max(Math.abs(xdiff), Math.abs(ydiff))
 
-		xRange = MinMax(minx, maxx)
-		x = xRange.min-1
-
-		yRange = MinMax(miny, maxy)
-		y = yRange.min
+		xstep = xdiff.toFloat() / steps.toFloat()
+		ystep = ydiff.toFloat() / steps.toFloat()
 	}
 
-	override fun hasNext(): Boolean = y <= yRange.max
+	override fun hasNext(): Boolean = i <= steps
 
 	override fun next(): Point
 	{
-		x++
-		if (x > xRange.max)
-		{
-			x = xRange.min
-			y++
-		}
+		val x = start.x + Math.round(xstep * i.toFloat()).toInt()
+		val y = start.y + Math.round(ystep * i.toFloat()).toInt()
+		i++
 
-		return Point.obtain().set(x, y)
+		return Point.obtainTemp().set(x, y)
 	}
 }
 

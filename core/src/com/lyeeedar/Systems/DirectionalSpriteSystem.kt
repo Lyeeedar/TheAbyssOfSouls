@@ -6,7 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.lyeeedar.Components.DirectionalSpriteComponent
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.PositionComponent
-import com.lyeeedar.Components.SpriteComponent
+import com.lyeeedar.Components.RenderableComponent
 import com.lyeeedar.Direction
 import com.lyeeedar.Renderables.Sprite.DirectionalSprite
 
@@ -19,11 +19,18 @@ class DirectionalSpriteSystem(): IteratingSystem(Family.all(DirectionalSpriteCom
 		val pos = Mappers.position.get(entity)
 		val dirSprite = Mappers.directionalSprite.get(entity)
 
-		var sprite = Mappers.sprite.get(entity)
-		if (sprite == null)
+		if (!dirSprite.directionalSprite.hasAnim(dirSprite.currentAnim))
 		{
-			sprite = SpriteComponent()
-			entity.add(sprite)
+			dirSprite.currentAnim = "idle"
+		}
+
+		var renderable = Mappers.renderable.get(entity)
+		if (renderable == null)
+		{
+			val chosen = dirSprite.directionalSprite.getSprite(dirSprite.currentAnim, dirSprite.lastV, dirSprite.lastH)
+
+			renderable = RenderableComponent(chosen)
+			entity.add(renderable)
 		}
 
 		if (pos.facing == Direction.SOUTH)
@@ -45,10 +52,10 @@ class DirectionalSpriteSystem(): IteratingSystem(Family.all(DirectionalSpriteCom
 
 		val chosen = dirSprite.directionalSprite.getSprite(dirSprite.currentAnim, dirSprite.lastV, dirSprite.lastH)
 
-		if (chosen != sprite.sprite)
+		if (chosen != renderable.renderable)
 		{
-			chosen.animation = sprite.sprite.animation
-			sprite.sprite = chosen
+			chosen.animation = renderable.renderable.animation
+			renderable.renderable = chosen
 		}
 	}
 }

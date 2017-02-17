@@ -3,34 +3,20 @@ package com.lyeeedar.AI.Tasks
 import com.badlogic.ashley.core.Entity
 import com.lyeeedar.Combo.ComboStep
 import com.lyeeedar.Combo.ComboTree
-import com.lyeeedar.Components.EventComponent
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.combo
+import com.lyeeedar.Components.directionalSprite
 import com.lyeeedar.Components.task
+import com.lyeeedar.Direction
+import com.lyeeedar.Util.Point
 
-class TaskCombo(val combo: ComboTree): AbstractTask(EventComponent.EventType.ATTACK)
+class TaskCombo(val combo: ComboTree, val direction: Direction, val target: Point): AbstractTask()
 {
 	override fun execute(e: Entity)
 	{
 		// do combo attack
-		val next = combo.activate(e)
+		e.directionalSprite()?.currentAnim = combo.current.anim
 
-		if (next != null)
-		{
-			val nextTask = TaskCombo(next)
-
-			val task = e.task()
-
-			task.tasks.add(nextTask)
-
-			Mappers.directionalSprite.get(e)?.currentAnim = next.current.anim
-		}
-		else
-		{
-			Mappers.directionalSprite.get(e)?.currentAnim = "idle"
-		}
-
-		val combo = e.combo()
-		combo.currentCombo = next
+		combo.current.activate(e, direction, target)
 	}
 }

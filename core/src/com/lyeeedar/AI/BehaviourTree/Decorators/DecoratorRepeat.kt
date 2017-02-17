@@ -16,7 +16,7 @@ class DecoratorRepeat(): AbstractDecorator()
 
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		val retState = node?.evaluate(entity);
+		val retState = node?.evaluate(entity)
 
 		if (until != null)
 		{
@@ -27,7 +27,7 @@ class DecoratorRepeat(): AbstractDecorator()
 			}
 		}
 
-		i++;
+		i++
 
 		if (i == repeats)
 		{
@@ -39,21 +39,21 @@ class DecoratorRepeat(): AbstractDecorator()
 		return state
 	}
 
-	override fun cancel()
+	override fun cancel(entity: Entity)
 	{
-		super.cancel()
+		super.cancel(entity)
 		i = 0
 	}
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		super.parse(xml);
+		super.parse(xml)
 
 		if (xml.getAttribute("Until", null) != null)
 		{
-			until = ExecutionState.valueOf(xml.getAttribute("State").toUpperCase());
+			until = ExecutionState.valueOf(xml.getAttribute("State").toUpperCase())
 		}
 
-		repeats = xml.getInt("Repeats", -1);
+		repeats = xml.getInt("Repeats", -1)
 	}
 }

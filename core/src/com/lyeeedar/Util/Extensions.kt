@@ -7,10 +7,16 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
+import com.lyeeedar.Global
+import com.lyeeedar.UI.Tooltip
+import com.lyeeedar.UI.TooltipListener
 import java.util.*
 
 /**
@@ -38,23 +44,25 @@ class Leap() : Interpolation()
 }
 val leap = Leap()
 
-fun XmlReader.Element.getChildrenRecursively(out: Array<XmlReader.Element> = Array()) : Array<XmlReader.Element>
+fun getXml(path: String, extension: String = "xml"): XmlReader.Element
 {
-	for (i in 0..this.childCount-1)
+	try
 	{
-		val el = getChild(i)
-		out.add(el)
-		el.getChildrenRecursively(out)
+		var filepath = path
+		if (!filepath.endsWith("." + extension))
+		{
+			filepath += "." + extension
+		}
+
+		var handle = Gdx.files.internal(filepath)
+		if (!handle.exists()) handle = Gdx.files.absolute(filepath)
+		return XmlReader().parse(handle)
 	}
-
-	return out
-}
-
-fun getXml(path: String): XmlReader.Element
-{
-	var handle = Gdx.files.internal("$path.xml")
-	if (!handle.exists()) handle = Gdx.files.absolute(path)
-	return XmlReader().parse(handle)
+	catch (ex: Exception)
+	{
+		System.err.println(ex.message)
+		throw ex
+	}
 }
 
 inline fun <reified T : Any> getPool(): Pool<T> = Pools.get(T::class.java, Int.MAX_VALUE)
@@ -69,6 +77,21 @@ fun Actor.addClickListener(func: () -> Unit)
 		}
 	})
 }
+fun Actor.addToolTip(title: String, body: String, stage: Stage)
+{
+	val titleLabel = Label(title, Global.skin, "title")
+	val bodyLabel = Label(body, Global.skin)
+
+	val table = Table()
+	table.add(titleLabel).expandX().center()
+	table.row()
+	table.add(bodyLabel).expand().fill()
+
+	val tooltip = Tooltip(table, Global.skin, stage)
+
+	this.addListener(TooltipListener(tooltip))
+}
+
 fun <T> com.badlogic.gdx.utils.Array<T>.tryGet(i: Int): T = this[MathUtils.clamp(i, 0, this.size-1)]
 fun <T> com.badlogic.gdx.utils.Array<T>.random(ran: Random): T = this[ran.nextInt(this.size)]
 fun <T> com.badlogic.gdx.utils.Array<T>.removeRandom(ran: Random): T
@@ -82,6 +105,11 @@ fun <T> com.badlogic.gdx.utils.Array<T>.removeRandom(ran: Random): T
 fun <T> com.badlogic.gdx.utils.Array<T>.addAll(collection: Sequence<T>)
 {
 	for (item in collection) this.add(item)
+}
+fun <T> Iterable<T>.asGdxArray(): com.badlogic.gdx.utils.Array<T> {
+	val array = Array<T>()
+	array.addAll(this.asSequence())
+	return array
 }
 
 fun vectorToAngle(x: Float, y: Float) : Float
@@ -127,14 +155,9 @@ fun error(message: String) { System.err.println(message) }
 fun Float.abs() = Math.abs(this)
 fun Float.ciel() = MathUtils.ceil(this)
 fun Float.floor() = MathUtils.floor(this)
+fun Float.round() = MathUtils.round(this)
 
 fun String.neaten() = this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase()
-
-operator fun <V> IntMap<V>.set(key: Int, value: V) = this.put(key, value)
-
-operator fun IntIntMap.get(key: Int) = this.get(key, 0)
-operator fun IntIntMap.set(key: Int, value: Int) = this.put(key, value)
-operator fun <K, V> ObjectMap<K, V>.set(key: K, value: V) = this.put(key, value)
 
 fun <T> Sequence<T>.random() = if (this.count() > 0) this.elementAt(MathUtils.random(this.count()-1)) else null
 fun <T> Sequence<T>.random(ran: Random) = if (this.count() > 0) this.elementAt(ran.nextInt(this.count())) else null
@@ -204,6 +227,8 @@ fun XmlReader.Element.children(): Array<XmlReader.Element>
 	return els
 }
 
+operator fun XmlReader.Element.iterator(): Iterator<XmlReader.Element> = this.children().iterator()
+
 fun XmlReader.Element.getChildrenByAttributeRecursively(attribute: String, value: String, result: Array<XmlReader.Element> = Array()): Array<XmlReader.Element>
 {
 	if (this.children().count() == 0) return result
@@ -215,4 +240,16 @@ fun XmlReader.Element.getChildrenByAttributeRecursively(attribute: String, value
 	}
 
 	return result
+}
+
+fun XmlReader.Element.getChildrenRecursively(out: Array<XmlReader.Element> = Array()) : Array<XmlReader.Element>
+{
+	for (i in 0..this.childCount-1)
+	{
+		val el = getChild(i)
+		out.add(el)
+		el.getChildrenRecursively(out)
+	}
+
+	return out
 }

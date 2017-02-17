@@ -5,7 +5,10 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskWait
 import com.lyeeedar.Components.Mappers
+import com.lyeeedar.Components.combo
+import com.lyeeedar.Components.pos
 import com.lyeeedar.Components.tile
+import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Util.Controls
 import com.lyeeedar.Util.Point
@@ -60,6 +63,52 @@ class ActionProcessInput(): AbstractAction()
 			}
 		}
 
+		val combo = entity.combo()
+		if (combo != null)
+		{
+			val tile = entity.tile()!!
+
+			// clear map states
+			for (t in tile.level.grid)
+			{
+				t.isSelectedPoint = false
+				t.isValidHitPoint = false
+				t.isValidTarget = false
+			}
+
+//			if (combo.selectedCombo != null)
+//			{
+//				val allowedDirs: Array<Direction>
+//				if (combo.currentCombo == null)
+//				{
+//					allowedDirs = Direction.CardinalValues
+//				}
+//				else if (combo.selectedCombo!!.current.canTurn)
+//				{
+//					allowedDirs = arrayOf(entity.pos().facing, entity.pos().facing.cardinalClockwise, entity.pos().facing.cardinalAnticlockwise)
+//				}
+//				else
+//				{
+//					allowedDirs = arrayOf(entity.pos().facing)
+//				}
+//
+//				for (t in tile.level.grid)
+//				{
+//					for (dir in allowedDirs)
+//					{
+//						if (combo.selectedCombo!!.current.isValidTarget(entity, dir, t))
+//						{
+//							t.isValidTarget = true
+//						}
+//						if (combo.selectedCombo!!.current.isValidHitPoint(entity, t.level.getTile(t, dir)!!, t))
+//						{
+//							t.isValidHitPoint = true
+//						}
+//					}
+//				}
+//			}
+		}
+
 		parent.setData( "pos", null )
 		if (targetPos != null)
 		{
@@ -83,7 +132,7 @@ class ActionProcessInput(): AbstractAction()
 
 	}
 
-	override fun cancel()
+	override fun cancel(entity: Entity)
 	{
 
 	}

@@ -1,21 +1,32 @@
-<Definitions>
-	<Struct Name="Entity" RefKey="Struct">
-		<String Name="Name" SkipIfDefault="False" RefKey="String" />
-		<String Name="Extends" RefKey="String" />
-		<File Name="AI" BasePath="AI" AllowedFileTypes="xml" RefKey="File" />
-		<Enum Name="Slot" EnumValues="Floor,Wall,Entity,Air" Default="Entity" SkipIfDefault="False" RefKey="Enum" />
-		<Number Name="Size" Type="Int" Min="1" Default="1" SkipIfDefault="False" RefKey="Number" />
-		<Boolean Name="CanSwap" RefKey="Boolean" />
-		<Reference Name="Sprite" Keys="Sprite" RefKey="Reference" />
-		<Reference Name="TilingSprite" Keys="TilingSprite" RefKey="Reference" />
-        <Reference Name="DirectionalSprite" Keys="DirectionalSprite" RefKey="Reference" />
-		<Struct Name="Light" RefKey="Struct">
-			<Colour Name="Colour" SkipIfDefault="False" RefKey="Colour" />
-			<Number Name="Distance" Min="0" SkipIfDefault="False" RefKey="Number" />
-		</Struct>
-		<Reference Name="Combo" Keys="Combo" RefKey="Reference" />
-		<Collection Name="Factions" Collapse="True" RefKey="Collection">
-			<String Name="Faction" SkipIfDefault="False" RefKey="String" />
-		</Collection>
-	</Struct>
+<Definitions xmlns:meta="Editor">
+	<Definition Name="Entity" meta:RefKey="Struct">
+		<Data Name="Extends" BasePath="Entities" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
+		<Data Text="Components" meta:RefKey="Comment" />
+		<Data Name="AI" meta:RefKey="Struct">
+			<Data Name="AI" BasePath="AI" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
+		</Data>
+		<Data Name="Renderable" meta:RefKey="Struct">
+			<Data Name="Renderable" Keys="Sprite,TilingSprite,ParticleEffect" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="DirectionalSprite" Extends="DirectionalSprite" meta:RefKey="Struct" />
+		<Data Name="Position" meta:RefKey="Struct">
+			<Data Name="SpaceSlot" EnumValues="Entity,Air" meta:RefKey="Enum" />
+			<Data Name="Size" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+		</Data>
+		<Data Name="Light" meta:RefKey="Struct">
+			<Data Name="Colour" meta:RefKey="Colour" />
+			<Data Name="Distance" Min="1" Default="1" meta:RefKey="Number" />
+		</Data>
+		<Data Name="Occludes" meta:RefKey="Struct">
+			<Data Name="Occludes" meta:RefKey="Boolean" />
+		</Data>
+		<Data Name="Statistics" meta:RefKey="Struct">
+			<Data Name="Faction" meta:RefKey="String" />
+			<Data Name="HP" Type="Int" Min="-999999" Default="1" meta:RefKey="Number" />
+			<Data Name="Stamina" Type="Int" Min="-999999" Default="1" meta:RefKey="Number" />
+		</Data>
+		<Data Name="Combo" meta:RefKey="Struct">
+			<Data Name="ComboTree" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
+		</Data>
+	</Definition>
 </Definitions>

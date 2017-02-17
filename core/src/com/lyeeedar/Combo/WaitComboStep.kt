@@ -1,27 +1,32 @@
 package com.lyeeedar.Combo
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Components.pos
+import com.lyeeedar.Components.tile
 import com.lyeeedar.Direction
+import com.lyeeedar.Level.Tile
+import com.lyeeedar.Util.Point
 
 class WaitComboStep: ComboStep()
 {
-	override fun isValid(entity: Entity, direction: Direction, comboTree: ComboTree): Boolean
+	override fun activate(entity: Entity, direction: Direction, target: Point)
 	{
-		for (step in comboTree.next)
-		{
-			if (step.current.isValid(entity, direction, step)) return true
-		}
 
-		return false
 	}
+
+	override fun getAllValid(entity: Entity, direction: Direction): Array<Point>
+	{
+		val out = Array<Point>()
+		out.add(entity.pos().position)
+		return out
+	}
+
+	override fun isValid(entity: Entity, direction: Direction, target: Point): Boolean = true
 
 	override fun parse(xml: XmlReader.Element)
 	{
 
-	}
-
-	override fun doActivate(entity: Entity, direction: Direction)
-	{
 	}
 }

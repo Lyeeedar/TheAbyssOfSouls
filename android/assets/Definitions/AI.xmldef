@@ -1,0 +1,119 @@
+<Definitions xmlns:meta="Editor">
+	<Definition Name="AI" AllowReferenceLinks="False" meta:RefKey="GraphStruct">
+		<Data Name="Root" DefKey="Nodes" meta:RefKey="GraphReference" />
+	</Definition>
+	<!--Reference Definitions-->
+	<Definition Name="Nodes" Keys="Selectors(Any,Priority,Random,Sequence,Until),Decorators(DataScope,Import,Invert,Repeat)" meta:RefKey="ReferenceDef" />
+	<Definition Name="Actions" Keys="Actions(Combo,MoveTo,Wait),Values(ClearValue,ConvertTo,GetAllVisible,Pick,ProcessInput,SetValue),Conditions(Conditional)" meta:RefKey="ReferenceDef" />
+	<!--Selectors-->
+	<Definition Name="Any" MinCount="1" Background="39,76,77,70" ToolTip="Runs all the children, then returns success if any completed." HasAttributes="True" meta:RefKey="GraphCollectionDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Reset" meta:RefKey="Boolean" />
+		</Attributes>
+		<Data Name="Node" DefKey="Nodes" meta:RefKey="GraphReference" />
+		<Data Name="Action" DefKey="Actions" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="Priority" MinCount="1" Background="39,76,77,70" ToolTip="Runs through each child sequentially until the first non-failed child is hit." meta:RefKey="GraphCollectionDef">
+		<Data Name="Node" DefKey="Nodes" meta:RefKey="GraphReference" />
+		<Data Name="Action" DefKey="Actions" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="Random" MinCount="1" Background="39,76,77,70" ToolTip="Randomly picks a child to run. Will keep running that child until it returns anything but Running." meta:RefKey="GraphCollectionDef">
+		<Data Name="Node" DefKey="Nodes" meta:RefKey="GraphReference" />
+		<Data Name="Action" DefKey="Actions" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="Sequence" MinCount="1" Background="39,76,77,70" ToolTip="Runs through the children sequentially until the first non-completed child. If the child returned running, attempt to continue from there next frame." HasAttributes="True" meta:RefKey="GraphCollectionDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Reset" meta:RefKey="Boolean" />
+		</Attributes>
+		<Data Name="Node" DefKey="Nodes" meta:RefKey="GraphReference" />
+		<Data Name="Action" DefKey="Actions" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="Until" MinCount="1" Background="39,76,77,70" ToolTip="Runs through the children until the specified state is hit. Runs complete if the state was found, failed otherwise." HasAttributes="True" meta:RefKey="GraphCollectionDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="State" EnumValues="Running,Failed,Completed" meta:RefKey="Enum" />
+		</Attributes>
+		<Data Name="Node" DefKey="Nodes" meta:RefKey="GraphReference" />
+		<Data Name="Action" DefKey="Actions" meta:RefKey="Reference" />
+	</Definition>
+	<!--Decorators-->
+	<Definition Name="DataScope" MaxCount="1" Background="128,46,156,24" ToolTip="Variables defined within this will not propogate out." meta:RefKey="GraphCollectionDef">
+		<Data Name="Node" DefKey="Nodes" meta:RefKey="GraphReference" />
+		<Data Name="Action" DefKey="Actions" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="Import" MaxCount="1" Background="128,46,156,24" ToolTip="Import another file." meta:RefKey="GraphCollectionDef">
+		<Data Name="File" BasePath="AI" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
+	</Definition>
+	<Definition Name="Invert" MaxCount="1" Background="128,46,156,24" ToolTip="Invert the state of the child node. Failure -&gt; Completed and vice versa." meta:RefKey="GraphCollectionDef">
+		<Data Name="Node" DefKey="Nodes" meta:RefKey="GraphReference" />
+		<Data Name="Action" DefKey="Actions" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="Repeat" MaxCount="1" Background="128,46,156,24" ToolTip="Repeat the child a number of times or until the specified state is returned." HasAttributes="True" meta:RefKey="GraphCollectionDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="UntilState" EnumValues="--,Running,Failed,Completed" meta:RefKey="Enum" />
+			<Attribute Name="Repeats" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+		</Attributes>
+		<Data Name="Node" DefKey="Nodes" meta:RefKey="GraphReference" />
+		<Data Name="Action" DefKey="Actions" meta:RefKey="Reference" />
+	</Definition>
+	<!--Actions-->
+	<Definition Name="Combo" TextColour="122,199,142" HasAttributes="True" meta:RefKey="StructDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Key" meta:RefKey="String" />
+			<Attribute Name="AutoAdvance" Default="True" meta:RefKey="Boolean" />
+		</Attributes>
+	</Definition>
+	<Definition Name="Conditional" TextColour="222,219,139" HasAttributes="True" meta:RefKey="StructDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Key" meta:RefKey="String" />
+			<Attribute Name="Success" EnumValues="Running,Failed,Completed" Default="Completed" meta:RefKey="Enum" />
+			<Attribute Name="Failed" EnumValues="Running,Failed,Completed" Default="Failed" meta:RefKey="Enum" />
+			<Attribute Name="Condition" meta:RefKey="String" />
+		</Attributes>
+	</Definition>
+	<Definition Name="ClearValue" TextColour="124,173,222" HasAttributes="True" meta:RefKey="StructDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Key" meta:RefKey="String" />
+		</Attributes>
+	</Definition>
+	<Definition Name="ConvertTo" TextColour="124,173,222" HasAttributes="True" meta:RefKey="StructDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Input" meta:RefKey="String" />
+			<Attribute Name="Output" meta:RefKey="String" />
+			<Attribute Name="Type" EnumValues="Position" meta:RefKey="Enum" />
+		</Attributes>
+	</Definition>
+	<Definition Name="GetAllVisible" TextColour="124,173,222" HasAttributes="True" meta:RefKey="StructDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Key" meta:RefKey="String" />
+			<Attribute Name="SrcKey" meta:RefKey="String" />
+			<Attribute Name="Type" EnumValues="Tiles,Allies,Enemies" meta:RefKey="Enum" />
+		</Attributes>
+	</Definition>
+	<Definition Name="MoveTo" TextColour="122,199,142" HasAttributes="True" meta:RefKey="StructDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Key" meta:RefKey="String" />
+			<Attribute Name="Towards" Default="True" meta:RefKey="Boolean" />
+			<Attribute Name="Distance" Type="Int" Min="0" meta:RefKey="Number" />
+		</Attributes>
+	</Definition>
+	<Definition Name="Pick" TextColour="124,173,222" HasAttributes="True" meta:RefKey="StructDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Input" meta:RefKey="String" />
+			<Attribute Name="Output" meta:RefKey="String" />
+			<Attribute Name="Criteria" EnumValues="Distance,Random,Player" meta:RefKey="Enum" />
+			<Attribute Name="Lowest" Default="True" meta:RefKey="Boolean" />
+		</Attributes>
+	</Definition>
+	<Definition Name="ProcessInput" TextColour="122,199,142" meta:RefKey="StructDef" />
+	<Definition Name="SetValue" TextColour="124,173,222" HasAttributes="True" meta:RefKey="StructDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Key" meta:RefKey="String" />
+			<Attribute Name="Value" meta:RefKey="String" />
+		</Attributes>
+	</Definition>
+	<Definition Name="Wait" TextColour="122,199,142" HasAttributes="True" meta:RefKey="StructDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Count" Default="1" meta:RefKey="String" />
+		</Attributes>
+	</Definition>
+</Definitions>

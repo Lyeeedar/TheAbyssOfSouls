@@ -1,39 +1,39 @@
-<Definitions>
-	<StructDef Name="Sprite" DescriptionChild="Name" RefKey="StructDef">
-		<File Name="Name" BasePath="Sprites" AllowedFileTypes="png" Default="white" SkipIfDefault="False" RefKey="File" />
-		<Boolean Name="DrawActualSize" RefKey="Boolean" />
-		<Number Name="UpdateRate" Min="0" Default="0.5" RefKey="Number" />
-		<Colour Name="Colour" HasAlpha="True" RefKey="Colour" />
-	</StructDef>
-	<StructDef Name="TilingSprite" DescriptionChild="Name" RefKey="StructDef">
-		<String Name="Name" SkipIfDefault="False" RefKey="String" />
-		<Enum Name="Mode" EnumValues="Premade,Masked" SkipIfDefault="False" RefKey="Enum" />
-		<File Name="Mask" BasePath="Sprites" AllowedFileTypes="png" VisibleIf="Mode == Masked" RefKey="File" />
-		<Reference Name="Front" Keys="Sprite" VisibleIf="Mode == Premade" RefKey="Reference" />
-		<Reference Name="Top" Keys="Sprite" VisibleIf="Mode == Premade" RefKey="Reference" />
-		<Reference Name="Overhang" Keys="Sprite" VisibleIf="Mode == Premade" RefKey="Reference" />
-	</StructDef>
-	<StructDef Name="DirectedSprite" Collapse="True" RefKey="StructDef">
-		<File Name="Path" BasePath="Sprites" AllowedFileTypes="png" SkipIfDefault="False" RefKey="File" />
-	</StructDef>
-	<StructDef Name="SpriteWrapper" RefKey="StructDef">
-		<Reference Name="Sprite" Keys="Sprite" RefKey="Reference" />
-		<Reference Name="TilingSprite" Keys="TilingSprite" RefKey="Reference" />
-	</StructDef>
-	<StructDef Name="ParticleEffect" DescriptionChild="Name" RefKey="StructDef">
-		<File Name="Name" BasePath="Particles" AllowedFileTypes="xml" SkipIfDefault="False" RefKey="File" />
-		<Number Name="SpeedMultiplier" Min="0" Default="1" RefKey="Number" />
-		<Colour Name="Colour" HasAlpha="True" RefKey="Colour" />
-		<Boolean Name="FlipX" RefKey="Boolean" />
-		<Boolean Name="FlipY" RefKey="Boolean" />
-	</StructDef>
-	<StructDef Name="DirectionalSprite" RefKey="StructDef">
-		<Collection Name="Animations" RefKey="Collection">
-			<Struct Name="Animation" Nullable="False" ChildAsName="Name" RefKey="Struct">
-				<String Name="Name" SkipIfDefault="False" RefKey="String" />
-				<Reference Name="Up" Keys="Sprite" Nullable="False" SkipIfDefault="False" RefKey="Reference" />
-				<Reference Name="Down" Keys="Sprite" Nullable="False" SkipIfDefault="False" RefKey="Reference" />
-			</Struct>
-		</Collection>
-	</StructDef>
+<Definitions xmlns:meta="Editor">
+	<Definition Name="Sprite" IsGlobal="True" meta:RefKey="StructDef">
+		<Data Name="Name" BasePath="Sprites" StripExtension="True" AllowedFileTypes="png" Default="white" SkipIfDefault="False" meta:RefKey="File" />
+		<Data Name="DrawActualSize" meta:RefKey="Boolean" />
+		<Data Name="UpdateRate" Min="0" Default="0.5" meta:RefKey="Number" />
+		<Data Name="Colour" HasAlpha="True" meta:RefKey="Colour" />
+	</Definition>
+	<Definition Name="TilingSprite" IsGlobal="True" meta:RefKey="StructDef">
+		<Data Name="Name" SkipIfDefault="False" meta:RefKey="String" />
+		<Data Name="Mode" EnumValues="Premade,Masked" SkipIfDefault="False" meta:RefKey="Enum" />
+		<Data Name="Mask" BasePath="Sprites" StripExtension="True" AllowedFileTypes="png" VisibleIf="Mode == Masked" meta:RefKey="File" />
+		<Data Name="Front" Keys="Sprite" VisibleIf="Mode == Premade" meta:RefKey="Reference" />
+		<Data Name="Top" Keys="Sprite" VisibleIf="Mode == Premade" meta:RefKey="Reference" />
+		<Data Name="Overhang" Keys="Sprite" VisibleIf="Mode == Premade" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="DirectedSprite" Collapse="True" IsGlobal="True" meta:RefKey="StructDef">
+		<Data Name="Path" BasePath="Sprites" StripExtension="True" AllowedFileTypes="png" SkipIfDefault="False" meta:RefKey="File" />
+	</Definition>
+	<Definition Name="SpriteWrapper" IsGlobal="True" meta:RefKey="StructDef">
+		<Data Name="Sprite" Keys="Sprite" meta:RefKey="Reference" />
+		<Data Name="TilingSprite" Keys="TilingSprite" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="ParticleEffect" IsGlobal="True" meta:RefKey="StructDef">
+		<Data Name="Name" BasePath="Particles" StripExtension="True" AllowedFileTypes="xml" SkipIfDefault="False" meta:RefKey="File" />
+		<Data Name="SpeedMultiplier" Min="0" Default="1" meta:RefKey="Number" />
+		<Data Name="Colour" HasAlpha="True" meta:RefKey="Colour" />
+		<Data Name="FlipX" meta:RefKey="Boolean" />
+		<Data Name="FlipY" meta:RefKey="Boolean" />
+	</Definition>
+	<Definition Name="DirectionalSprite" IsGlobal="True" meta:RefKey="StructDef">
+		<Data Name="Animations" meta:RefKey="Collection">
+			<Data Name="Animation" Nullable="False" meta:RefKey="Struct">
+				<Data Name="Name" SkipIfDefault="False" meta:RefKey="String" />
+				<Data Name="Up" Keys="Sprite" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
+				<Data Name="Down" Keys="Sprite" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
+			</Data>
+		</Data>
+	</Definition>
 </Definitions>

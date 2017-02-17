@@ -61,7 +61,7 @@ class SpriteWidget(private val drawable: Sprite, width: Float, height: Float, va
 		val scaleX = scaleX
 		val scaleY = scaleY
 
-		drawable.render(batch as HDRColourSpriteBatch, x + imageX, y + imageY, imageWidth * scaleX, imageHeight * scaleY)
+		drawable.render(batch, x + imageX, y + imageY, imageWidth * scaleX, imageHeight * scaleY)
 	}
 
 	override fun getPrefWidth(): Float

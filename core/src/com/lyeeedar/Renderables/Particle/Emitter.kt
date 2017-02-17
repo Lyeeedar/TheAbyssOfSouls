@@ -102,7 +102,7 @@ class Emitter(val particleEffect: ParticleEffect)
 			{
 				if (type == EmissionType.ABSOLUTE)
 				{
-					val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).ciel().toInt()
+					val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).ciel()
 					for (i in 1..toSpawn)
 					{
 						spawn()
@@ -124,6 +124,24 @@ class Emitter(val particleEffect: ParticleEffect)
 		for (particle in particles)
 		{
 			particle.simulate(scaledDelta, collisionGrid, gravity)
+		}
+
+		if (!stopped)
+		{
+			val duration = emissionRate.length()
+			val rate = emissionRate.valAt(0, time)
+
+			if (duration == 0f || time <= duration)
+			{
+				if (type == EmissionType.ABSOLUTE)
+				{
+					val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).ciel()
+					for (i in 1..toSpawn)
+					{
+						spawn()
+					}
+				}
+			}
 		}
 	}
 
@@ -336,6 +354,12 @@ class Emitter(val particleEffect: ParticleEffect)
 					val y = split[1].toFloat()
 					return Vector2(x, y)
 				})
+
+				if (emitter.offset.streams.size == 0)
+				{
+					emitter.offset.streams.add(Array())
+					emitter.offset.streams[0].add(Pair(0f, Vector2()))
+				}
 			}
 			else
 			{

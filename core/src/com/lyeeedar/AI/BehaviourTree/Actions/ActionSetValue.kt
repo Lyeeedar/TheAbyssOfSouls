@@ -21,7 +21,7 @@ class ActionSetValue(): AbstractAction()
 		return state;
 	}
 
-	override fun cancel()
+	override fun cancel(entity: Entity)
 	{
 
 	}

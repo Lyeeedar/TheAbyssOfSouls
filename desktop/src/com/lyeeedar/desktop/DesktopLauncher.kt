@@ -1,5 +1,7 @@
 package com.lyeeedar.desktop
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
 

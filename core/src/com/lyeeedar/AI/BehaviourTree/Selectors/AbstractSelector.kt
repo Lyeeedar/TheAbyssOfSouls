@@ -60,7 +60,7 @@ abstract class AbstractSelector(): AbstractNodeContainer()
 		{
 			val value = xml.getChild(i)
 
-			val node = AbstractTreeNode.get(value.name.toUpperCase())
+			val node = AbstractTreeNode.get(value.getAttribute("meta:RefKey").toUpperCase())
 
 			addNode( node );
 

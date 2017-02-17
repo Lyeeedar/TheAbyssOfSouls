@@ -7,69 +7,39 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.pos
 import com.lyeeedar.Direction
+import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.set
+import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.children
+import com.lyeeedar.Util.getXml
+import ktx.collections.set
 
 abstract class ComboStep
 {
 	lateinit var name: String
-	lateinit var description: String
-	lateinit var icon: Sprite
 
 	var anim: String = "attack"
 	var canTurn: Boolean = false
-	var canStop: Boolean = false
 
-	fun activate(entity: Entity, comboTree: ComboTree): Boolean
-	{
-		val pos = entity.pos() ?: return false
-
-		val validTargets = Array<Direction>()
-
-		if (isValid(entity, pos.facing, comboTree)) validTargets.add(pos.facing)
-
-		if (canTurn && validTargets.size == 0)
-		{
-			if (isValid(entity, pos.facing.cardinalClockwise, comboTree)) validTargets.add(pos.facing.cardinalClockwise)
-			if (isValid(entity, pos.facing.cardinalAnticlockwise, comboTree)) validTargets.add(pos.facing.cardinalAnticlockwise)
-		}
-
-		if (canStop && validTargets.size == 0)
-		{
-			return false
-		}
-
-		val dir = validTargets.random() ?: pos.facing
-
-		pos.facing = dir
-
-		doActivate(entity, dir)
-
-		return true
-	}
-
-	abstract fun doActivate(entity: Entity, direction: Direction)
-	abstract fun isValid(entity: Entity, direction: Direction, comboTree: ComboTree): Boolean
+	abstract fun activate(entity: Entity, direction: Direction, target: Point)
+	abstract fun getAllValid(entity: Entity, direction: Direction): Array<Point>
+	abstract fun isValid(entity: Entity, direction: Direction, target: Point): Boolean
 	abstract fun parse(xml: XmlReader.Element)
 
 	companion object
 	{
 		fun load(xml: XmlReader.Element): ComboStep
 		{
-			val step: ComboStep = when (xml.get("Type").toUpperCase())
+			val step: ComboStep = when (xml.getAttribute("meta:RefKey").toUpperCase())
 			{
 				"WAIT" -> WaitComboStep()
-				"SLASH" -> SlashComboStep()
+				"SCENE" -> SceneTimelineComboStep()
 				else -> throw NotImplementedError("Unknown combo step type: " + xml.name.toUpperCase())
 			}
 
-			step.name = xml.get("Name", "")
-			step.description = xml.get("Description", "")
-			step.icon = AssetManager.loadSprite(xml.getChildByName("Icon"))
-
+			step.name = xml.get("Name")
 			step.anim = xml.get("Anim", "attack")
-			step.canStop = xml.getBoolean("CanStop", false)
 			step.canTurn = xml.getBoolean("CanTurn", false)
 
 			step.parse(xml)
@@ -84,58 +54,54 @@ class ComboTree
 	lateinit var current: ComboStep
 	val next = Array<ComboTree>()
 
-	fun activate(entity: Entity): ComboTree?
-	{
-		val advance = current.activate(entity, this)
-
-		return if (advance) next.random() else null
-	}
-
 	companion object
 	{
-		fun load(xml: XmlReader.Element): Array<ComboTree>
+		fun load(path: String): Array<ComboTree>
 		{
-			val map = ObjectMap<String, ComboStep>()
+			val xml = getXml(path)
+			return load(xml)
+		}
 
-			val steps = xml.getChildByName("Steps")
-			for (i in 0..steps.childCount-1)
+		private fun load(xml: XmlReader.Element): Array<ComboTree>
+		{
+			val combosEl = xml.getChildByName("Combos")
+			val descMap = ObjectMap<String, ComboStep>()
+
+			for (el in combosEl.children())
 			{
-				val el = steps.getChild(i)
-				val key = el.name.toLowerCase()
-				val step = ComboStep.load(el)
-
-				map[key] = step
+				val desc = ComboStep.load(el)
+				descMap[desc.name.toUpperCase()] = desc
 			}
 
-			fun recursiveParse(xml: XmlReader.Element): ComboTree
+			val root = ComboTree()
+
+			fun recursiveParse(el: XmlReader.Element, parent: ComboTree)
 			{
-				val comboTree = ComboTree()
+				val descName = el.get("Desc")
+				val desc = descMap[descName.toUpperCase()]
 
-				val key = xml.name.toLowerCase()
-				comboTree.current = map[key]
+				val current = ComboTree()
+				current.current = desc
 
-				for (i in 0..xml.childCount-1)
+				parent.next.add(current)
+
+				val nodesEl = el.getChildByName("Nodes")
+				if (nodesEl != null)
 				{
-					val el = xml.getChild(i)
-					val child = recursiveParse(el)
-					comboTree.next.add(child)
+					for (child in nodesEl.children())
+					{
+						recursiveParse(child, current)
+					}
 				}
-
-				return comboTree
 			}
 
-			val trees = Array<ComboTree>()
-
-			val tree = xml.getChildByName("Tree")
-			for (i in 0..tree.childCount-1)
+			val rootEl = xml.getChildByName("Root")
+			for (el in rootEl.children())
 			{
-				val el = tree.getChild(i)
-				val ctree = recursiveParse(el)
-
-				trees.add(ctree)
+				recursiveParse(el, root)
 			}
 
-			return trees
+			return root.next
 		}
 	}
 }

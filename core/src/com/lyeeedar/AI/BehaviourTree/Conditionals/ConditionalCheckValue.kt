@@ -78,7 +78,7 @@ class ConditionalCheckValue(): AbstractConditional()
 	}
 
 	//----------------------------------------------------------------------
-	override fun cancel()
+	override fun cancel(entity: Entity)
 	{
 
 	}

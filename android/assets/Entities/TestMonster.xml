@@ -1,0 +1,43 @@
+<Entity xmlns:meta="Editor">
+	<!--Components-->
+	<AI>
+		<AI>BasicMonster</AI>
+	</AI>
+	<DirectionalSprite>
+		<Animations>
+			<Animation>
+				<Name>idle</Name>
+				<Up meta:RefKey="Sprite">
+					<Name>Directional/rat_up_idle</Name>
+					<DrawActualSize>true</DrawActualSize>
+				</Up>
+				<Down meta:RefKey="Sprite">
+					<Name>Directional/rat_down_idle</Name>
+					<DrawActualSize>true</DrawActualSize>
+				</Down>
+			</Animation>
+			<Animation>
+				<Name>attack</Name>
+				<Up meta:RefKey="Sprite">
+					<Name>Directional/rat_up_attack</Name>
+					<DrawActualSize>true</DrawActualSize>
+				</Up>
+				<Down meta:RefKey="Sprite">
+					<Name>Directional/rat_down_attack</Name>
+					<DrawActualSize>true</DrawActualSize>
+				</Down>
+			</Animation>
+		</Animations>
+	</DirectionalSprite>
+	<Position>
+		<Size>2</Size>
+	</Position>
+	<Statistics>
+		<Faction>Monster</Faction>
+		<HP>10</HP>
+		<Stamina>10</Stamina>
+	</Statistics>
+	<Combo>
+		<ComboTree>Entities/TestMonsterCombo</ComboTree>
+	</Combo>
+</Entity>

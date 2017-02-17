@@ -15,17 +15,17 @@ class DecoratorImport(): AbstractDecorator()
 {
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		return node?.evaluate(entity) ?: ExecutionState.FAILED;
+		return node?.evaluate(entity) ?: ExecutionState.FAILED
 	}
 
-	override fun cancel()
+	override fun cancel(entity: Entity)
 	{
-		node?.cancel();
+		node?.cancel(entity)
 	}
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		val path = xml.getAttribute("Path");
+		val path = xml.getAttribute("Path")
 
 		this.node = AbstractTreeNode.load(path)
 		this.node?.parent = this

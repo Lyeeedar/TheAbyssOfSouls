@@ -8,7 +8,6 @@ import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.backends.android.AndroidPreferences
 import com.lyeeedar.AbstractApplicationChanger
 import com.lyeeedar.Global
-import com.lyeeedar.MainGame
 
 import java.util.ArrayList
 import java.util.Collections

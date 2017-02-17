@@ -13,7 +13,12 @@ class ExpandAnimation() : AbstractScaleAnimation()
 {
 	private var duration: Float = 0f
 	private var time: Float = 0f
+
+	private var startScale = FloatArray(2)
+	private var endScale = FloatArray(2)
+
 	private val scale = FloatArray(2)
+	private var oneway = true
 
 	override fun duration(): Float = duration
 	override fun time(): Float = time
@@ -23,10 +28,16 @@ class ExpandAnimation() : AbstractScaleAnimation()
 	{
 		time += delta
 
-		val alpha = MathUtils.clamp(time / duration, 0f, 1f)
+		var alpha = MathUtils.clamp(time / duration, 0f, 1f)
 
-		scale[0] = alpha
-		scale[1] = alpha
+		if (!oneway)
+		{
+			alpha = (alpha - 0.5f) / 0.5f
+			alpha = Math.sqrt((1 - alpha * alpha).toDouble()).toFloat()
+		}
+
+		scale[0] = startScale[0] + alpha * (endScale[0] - startScale[0])
+		scale[1] = startScale[1] + alpha * (endScale[1] - startScale[1])
 
 		if (time >= duration)
 		{
@@ -42,6 +53,29 @@ class ExpandAnimation() : AbstractScaleAnimation()
 
 	fun set(duration: Float): ExpandAnimation
 	{
+		startScale[0] = 0f
+		startScale[1] = 0f
+
+		endScale[0] = 1f
+		endScale[1] = 1f
+
+		oneway = true
+
+		this.duration = duration
+		this.time = 0f
+		return this
+	}
+
+	fun set(duration: Float, start: Float, end: Float, oneway: Boolean = true): ExpandAnimation
+	{
+		startScale[0] = start
+		startScale[1] = start
+
+		endScale[0] = end
+		endScale[1] = end
+
+		this.oneway = oneway
+
 		this.duration = duration
 		this.time = 0f
 		return this

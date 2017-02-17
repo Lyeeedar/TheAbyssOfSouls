@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
+import com.lyeeedar.Renderables.Sprite.DirectedSprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.ImageUtils
@@ -48,19 +49,6 @@ class AtlasCreator
 
 		findFilesRecursive(File("").absoluteFile)
 		parseCodeFilesRecursive(File("../../core/src").absoluteFile)
-
-		// pack default stuff
-
-		// pack GUI
-//		val guiDir = File("Sprites/GUI")
-//		val guiFiles = guiDir.listFiles()
-//		for (file in guiFiles)
-//		{
-//			if (file.path.endsWith(".png"))
-//			{
-//				packer.addImage(file)
-//			}
-//		}
 
 		val outDir = File("Atlases")
 		val contents = outDir.listFiles()
@@ -176,6 +164,7 @@ class AtlasCreator
 
 		val spriteElements = Array<XmlReader.Element>()
 
+		spriteElements.addAll(xml.getChildrenByAttributeRecursively("meta:RefKey", "Sprite"))
 		spriteElements.addAll(xml.getChildrenByAttributeRecursively("RefKey", "Sprite"))
 
 		for (el in spriteElements)
@@ -187,7 +176,8 @@ class AtlasCreator
 			}
 		}
 
-		val tilingSpriteElements = xml.getChildrenByAttributeRecursively("RefKey", "TilingSprite")
+		val tilingSpriteElements = xml.getChildrenByAttributeRecursively("meta:RefKey", "TilingSprite")
+		tilingSpriteElements.addAll(xml.getChildrenByAttributeRecursively("RefKey", "TilingSprite"))
 
 		for (el in tilingSpriteElements)
 		{
@@ -195,6 +185,18 @@ class AtlasCreator
 			if (!succeed)
 			{
 				throw RuntimeException("Failed to process tiling sprite in file: " + file)
+			}
+		}
+
+		val directedSpriteElements = xml.getChildrenByAttributeRecursively("meta:RefKey", "DirectedSprite")
+		directedSpriteElements.addAll(xml.getChildrenByAttributeRecursively("RefKey", "DirectedSprite"))
+
+		for (el in directedSpriteElements)
+		{
+			val succeed = processDirectedSprite(el)
+			if (!succeed)
+			{
+				throw RuntimeException("Failed to process directed sprite in file: " + file)
 			}
 		}
 
@@ -250,6 +252,23 @@ class AtlasCreator
 		}
 
 		return true
+	}
+
+	private fun processDirectedSprite(spriteElement: XmlReader.Element): Boolean
+	{
+		var found = false
+
+		val name = spriteElement.text
+
+		for (dir in DirectedSprite.allDirs)
+		{
+			val path = name + "_" + dir
+			val done = processSprite(path)
+
+			if (done) found = true
+		}
+
+		return found
 	}
 
 	private fun processTilingSprite(spriteElement: XmlReader.Element): Boolean

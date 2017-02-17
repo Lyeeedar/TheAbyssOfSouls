@@ -2,6 +2,7 @@ package com.lyeeedar.Renderables.Sprite
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Colors
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
@@ -174,7 +175,7 @@ class TilingSprite() : Renderable()
 		return complete
 	}
 
-	override fun doRender(batch: HDRColourSpriteBatch, x: Float, y: Float, tileSize: Float)
+	override fun doRender(batch: Batch, x: Float, y: Float, tileSize: Float)
 	{
 
 	}

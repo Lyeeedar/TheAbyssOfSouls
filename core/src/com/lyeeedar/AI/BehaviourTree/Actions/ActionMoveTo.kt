@@ -25,7 +25,7 @@ class ActionMoveTo(): AbstractAction()
 
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		val target = getData( key, null ) as? Point;
+		val target = getData( key, null ) as? Point
 		val posData = Mappers.position.get(entity)
 		val taskData = Mappers.task.get(entity)
 		val tile = posData.position as? Tile
@@ -45,7 +45,7 @@ class ActionMoveTo(): AbstractAction()
 			return state;
 		}
 
-		val pathFinder = Pathfinder(tile.level.grid.array, tile.x, tile.y, target.x, target.y, Global.canMoveDiagonal, posData.size, entity)
+		val pathFinder = Pathfinder(tile.level.grid, tile.x, tile.y, target.x, target.y, posData.size, entity)
 		val path = pathFinder.getPath( posData.slot )
 
 		if (path == null)
@@ -125,24 +125,15 @@ class ActionMoveTo(): AbstractAction()
 		return state;
 	}
 
-	override fun cancel()
+	override fun cancel(entity: Entity)
 	{
 		lastPos = Point.ZERO
 	}
 
 	override fun parse( xml: XmlReader.Element)
 	{
-		if (xml.name.equals("MoveTo"))
-		{
-			dst = Integer.parseInt( xml.getAttribute( "Distance", "0" ) );
-			towards = true;
-
-		}
-		else
-		{
-			dst = Integer.parseInt( xml.getAttribute( "Distance", "500" ) );
-			towards = false;
-		}
+		dst = xml.getIntAttribute("Distance", 0)
+		towards = xml.getBooleanAttribute("Towards", true)
 		key = xml.getAttribute( "Key" ).toLowerCase()
 	}
 }

@@ -1,32 +1,32 @@
 buildscript {
-    ext.kotlin_version = '1.0.3'
-
+    ext.kotlin_version = '1.0.6'
     repositories {
         mavenCentral()
+        jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.android.tools.build:gradle:2.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 allprojects {
-    apply plugin: "idea"
     apply plugin: "eclipse"
+    apply plugin: "idea"
 
     version = '1.0'
     ext {
-        appName = 'MHRL'
-        gdxVersion = '1.9.3'
+        appName = 'Match3'
+        gdxVersion = '1.9.5'
         roboVMVersion = '1.3.0'
         aiVersion = '1.8.0'
-        kotlinVersion = '1.0.3'
-        exp4jVersion = '0.4.7'
-        kryoVersion = '3.0.3'
+        kotlinVersion = '1.0.6'
+        exp4jVersion = '0.4.8'
+        kryoVersion = '4.0.0'
+        ktxVersion = '1.9.5-b1'
         squidlibVersion = '3.0.0-b3'
-        ashleyVersion = '1.7.0'
+        ashleyVersion = '1.7.3'
     }
 
     repositories {
@@ -68,7 +68,6 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
-        compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
     }
 }
 
@@ -83,6 +82,10 @@ project(":core") {
         compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
         compile "com.esotericsoftware:kryo:$kryoVersion"
         compile "net.objecthunter:exp4j:$exp4jVersion"
+        compile "com.github.czyzby:ktx-scene2d:$ktxVersion"
+        compile "com.github.czyzby:ktx-math:$ktxVersion"
+        compile "com.github.czyzby:ktx-collections:$ktxVersion"
+        compile "com.github.czyzby:ktx-actors:$ktxVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.squidpony:squidlib-util:$squidlibVersion"
     }
