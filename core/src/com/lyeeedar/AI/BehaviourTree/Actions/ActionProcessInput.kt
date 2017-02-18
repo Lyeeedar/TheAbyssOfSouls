@@ -10,6 +10,8 @@ import com.lyeeedar.Components.pos
 import com.lyeeedar.Components.tile
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
+import com.lyeeedar.MainGame
+import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.Util.Controls
 import com.lyeeedar.Util.Point
 
@@ -21,6 +23,8 @@ class ActionProcessInput(): AbstractAction()
 {
 	override fun evaluate(entity: Entity): ExecutionState
 	{
+		if ((Global.game.screen as AbstractScreen).debugConsole.isVisible) return ExecutionState.FAILED
+
 		var targetPos = getData( "clickpos", null ) as? Point
 
 		if ( targetPos != null )

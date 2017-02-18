@@ -1,9 +1,6 @@
 package com.lyeeedar.Screens
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.InputMultiplexer
-import com.badlogic.gdx.InputProcessor
-import com.badlogic.gdx.Screen
+import com.badlogic.gdx.*
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
@@ -15,8 +12,11 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.lyeeedar.Global
+import com.lyeeedar.UI.DebugConsole
+import com.lyeeedar.UI.ensureOnScreen
 import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Point
+import ktx.actors.setKeyboardFocus
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -94,7 +94,18 @@ abstract class AbstractScreen() : Screen, InputProcessor
     //region InputProcessor
 
     // ----------------------------------------------------------------------
-    override fun keyDown( keycode: Int ) = false
+    override fun keyDown( keycode: Int ): Boolean
+	{
+		if (keycode == Input.Keys.GRAVE)
+		{
+			debugConsole.isVisible = !debugConsole.isVisible
+			debugConsole.text.setKeyboardFocus(true)
+
+			return true
+		}
+
+		return false
+	}
 
     // ----------------------------------------------------------------------
     override fun keyUp( keycode: Int ) = false
@@ -124,11 +135,20 @@ abstract class AbstractScreen() : Screen, InputProcessor
     // ----------------------------------------------------------------------
     fun baseCreate()
 	{
-        stage = Stage(ScalingViewport(Scaling.fit, Global.resolution.x.toFloat(), Global.resolution.y.toFloat()), HDRColourSpriteBatch())
+        stage = Stage(ScalingViewport(Scaling.fit, Global.resolution.x.toFloat(), Global.resolution.y.toFloat()), SpriteBatch())
 
         mainTable = Table()
         mainTable.setFillParent(true)
         stage.addActor(mainTable)
+
+		val debugConsoleTable = Table()
+		debugConsoleTable.setFillParent(true)
+		stage.addActor(debugConsoleTable)
+
+		debugConsole = DebugConsole()
+		debugConsoleTable.add(debugConsole).width(300f).expand().left().top().pad(5f)
+
+		debugConsole.isVisible = false
 
         inputMultiplexer = InputMultiplexer()
 
@@ -181,7 +201,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
     var start: Long = System.currentTimeMillis()
 	var frametime: Float = -1f
 
-	var debugAccumulator: Float = 0f
+	lateinit var debugConsole: DebugConsole
 
     //endregion
     //############################################################################

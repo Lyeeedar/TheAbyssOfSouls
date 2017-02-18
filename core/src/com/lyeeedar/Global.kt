@@ -1,6 +1,7 @@
 package com.lyeeedar
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
@@ -11,6 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.ObjectMap
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.io.Input
+import com.esotericsoftware.kryo.io.Output
 import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.Systems.createEngine
 import com.lyeeedar.UI.LayeredDrawable
@@ -21,6 +25,8 @@ import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Controls
 import com.lyeeedar.Util.Point
 import ktx.collections.set
+import java.util.zip.GZIPInputStream
+import java.util.zip.GZIPOutputStream
 
 /**
  * Created by Philip on 04-Jul-16.
@@ -38,7 +44,7 @@ class Global
 		var release = false
 		lateinit var game: MainGame
 		lateinit var applicationChanger: AbstractApplicationChanger
-		var settings = Settings()
+		lateinit var settings: Settings
 		lateinit var engine: Engine
 
 		var resolution = Point(800, 600)
@@ -53,6 +59,7 @@ class Global
 			skin = loadSkin()
 			engine = createEngine()
 			controls = Controls()
+			settings = Settings()
 		}
 
 		private fun loadSkin(): Skin
@@ -67,6 +74,9 @@ class Global
 
 			val popupfont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 20, Color(1f, 1f, 1f, 1f), 1, Color.DARK_GRAY, true)
 			skin.add("popup", popupfont)
+
+			val consolefont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 8, Color(0.9f, 0.9f, 0.9f, 1f), 0, Color.BLACK, false)
+			skin.add("console", consolefont)
 
 			val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
 			pixmap.setColor(Color.WHITE)
@@ -83,6 +93,19 @@ class Global
 			textField.cursor = skin.newDrawable("white", Color.WHITE)
 			textField.selection = skin.newDrawable("white", Color.LIGHT_GRAY)
 			skin.add("default", textField)
+
+			val consoleText = TextField.TextFieldStyle()
+			consoleText.fontColor = Color.WHITE
+			consoleText.font = skin.getFont("console")
+			consoleText.background = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/white.png")).tint(Color(0.1f, 0.1f, 0.1f, 0.6f))
+			consoleText.focusedBackground = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/white.png")).tint(Color(0.3f, 0.3f, 0.3f, 0.6f))
+			consoleText.cursor = skin.newDrawable("white", Color.WHITE)
+			consoleText.selection = skin.newDrawable("white", Color.LIGHT_GRAY)
+			skin.add("console", consoleText)
+
+			val consolelabel = Label.LabelStyle()
+			consolelabel.font = skin.getFont("console")
+			skin.add("console", consolelabel)
 
 			val label = Label.LabelStyle()
 			label.font = skin.getFont("default")
@@ -209,9 +232,60 @@ class Global
 
 class Settings
 {
+	val kryo = Kryo()
+
 	val data = ObjectMap<String, Any>()
 
 	fun hasKey(key: String) = data.containsKey(key)
 	fun <T> get(key: String, default: T) = if (data.containsKey(key)) data[key] as T else default
-	fun set(key: String, value: Any) { data[key] = value }
+	fun set(key: String, value: Any) { data[key] = value; save() }
+
+	init
+	{
+		load()
+	}
+
+	fun save()
+	{
+		val outputFile = Gdx.files.local("settings.dat")
+
+		var output: Output? = null
+		try
+		{
+			output = Output(GZIPOutputStream(outputFile.write(false)))
+		}
+		catch (e: Exception)
+		{
+			e.printStackTrace()
+			return
+		}
+
+		kryo.writeObject(output, data)
+
+		output.close()
+	}
+
+	fun load()
+	{
+		var input: Input? = null
+
+		try
+		{
+			input = Input(GZIPInputStream(Gdx.files.local("settings.dat").read()))
+			val newData = kryo.readObject(input, ObjectMap::class.java)
+
+			for (pair in newData)
+			{
+				data[pair.key as String] = pair.value
+			}
+		}
+		catch (e: Exception)
+		{
+			e.printStackTrace()
+		}
+		finally
+		{
+			input?.close()
+		}
+	}
 }
