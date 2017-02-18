@@ -9,6 +9,7 @@ import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Systems.level
+import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Colour
@@ -17,6 +18,8 @@ class TestCombatScreen : AbstractScreen()
 {
 	lateinit var font: BitmapFont
 	lateinit var batch: SpriteBatch
+
+	var timeMultiplier = 1f
 
 	override fun create()
 	{
@@ -62,13 +65,48 @@ class TestCombatScreen : AbstractScreen()
 
 	override fun doRender(delta: Float)
 	{
-		Global.engine.update(delta)
+		Global.engine.update(delta * timeMultiplier)
 
 		batch.begin()
 
 		font.draw(batch, "$mousex,$mousey", 20f, Global.resolution.y - 20f)
 
 		batch.end()
+	}
+
+	override fun show()
+	{
+		DebugConsole.register("TimeMultiplier", "'TimeMultiplier speed' to enable, 'TimeMultiplier false' to disable", fun (args, console): Boolean {
+			if (args[0] == "false")
+			{
+				timeMultiplier = 1f
+				return true
+			}
+			else
+			{
+				try
+				{
+					val speed = args[0].toFloat()
+					timeMultiplier = speed
+
+					return true
+				}
+				catch (ex: Exception)
+				{
+					console.error(ex.message!!)
+					return false
+				}
+			}
+		})
+
+		super.show()
+	}
+
+	override fun hide()
+	{
+		DebugConsole.unregister("TimeMultiplier")
+
+		super.hide()
 	}
 
 	// ----------------------------------------------------------------------

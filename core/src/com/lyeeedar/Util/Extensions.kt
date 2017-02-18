@@ -175,6 +175,20 @@ inline fun <reified T> Sequence<T>.random(num: Int): Sequence<T>
 
 	return outArray.asSequence()
 }
+inline fun <reified T> Sequence<T>.random(num: Int, ran: Random): Sequence<T>
+{
+	val array = Array<T>()
+	for (item in this) array.add(item)
+
+	val outArray = Array<T>()
+	for (i in 0..num-1)
+	{
+		if (array.size == 0) break
+		outArray.add(array.removeRandom(ran))
+	}
+
+	return outArray.asSequence()
+}
 
 fun <T> Sequence<T>.sequenceEquals(other: Sequence<T>): Boolean
 {

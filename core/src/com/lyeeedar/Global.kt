@@ -44,7 +44,7 @@ class Global
 		var release = false
 		lateinit var game: MainGame
 		lateinit var applicationChanger: AbstractApplicationChanger
-		lateinit var settings: Settings
+		val settings: Settings by lazy { Settings() }
 		lateinit var engine: Engine
 
 		var resolution = Point(800, 600)
@@ -59,7 +59,6 @@ class Global
 			skin = loadSkin()
 			engine = createEngine()
 			controls = Controls()
-			settings = Settings()
 		}
 
 		private fun loadSkin(): Skin

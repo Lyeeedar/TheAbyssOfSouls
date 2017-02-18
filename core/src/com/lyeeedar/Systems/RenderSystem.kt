@@ -10,6 +10,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Colour
 
 class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
@@ -34,6 +35,33 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 				renderer = SortedRenderer(tileSize, value.width.toFloat(), value.height.toFloat(), SpaceSlot.Values.size)
 			}
 		}
+
+	init
+	{
+		DebugConsole.register("DebugDraw", "'DebugDraw speed' to enable, 'DebugDraw false' to disable", fun (args, console): Boolean {
+			if (args[0] == "false")
+			{
+				renderer.debugDraw = false
+				return true
+			}
+			else
+			{
+				try
+				{
+					val speed = args[0].toFloat()
+					renderer.debugDraw = true
+					renderer.debugDrawSpeed = speed
+
+					return true
+				}
+				catch (ex: Exception)
+				{
+					console.error(ex.message!!)
+					return false
+				}
+			}
+		})
+	}
 
 	override fun addedToEngine(engine: Engine?)
 	{

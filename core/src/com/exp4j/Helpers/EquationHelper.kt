@@ -18,21 +18,6 @@ class EquationHelper
 {
 	companion object
 	{
-		private val emptyMap = Statistic.emptyMap
-
-		fun tryBuild(expB: ExpressionBuilder): Expression?
-		{
-			var exp: Expression?
-
-			// try
-			// {
-			exp = expB.build()
-			// }
-			// catch (Exception e) { }
-
-			return exp
-		}
-
 		fun setVariableNames(expB: ExpressionBuilder, variableMap: ObjectFloatMap<String>, prefix: String)
 		{
 			for (key in variableMap.keys())
@@ -69,7 +54,7 @@ class EquationHelper
 			return expB
 		}
 
-		fun evaluate(eqn: String, variableMap: ObjectFloatMap<String> = emptyMap, ran: Random = MathUtils.random): Float
+		fun evaluate(eqn: String, variableMap: ObjectFloatMap<String> = ObjectFloatMap(), ran: Random = MathUtils.random): Float
 		{
 			try
 			{
@@ -79,7 +64,7 @@ class EquationHelper
 			{
 				val expB = createEquationBuilder(eqn, ran)
 				setVariableNames(expB, variableMap, "")
-				val exp = tryBuild(expB)
+				val exp = expB.build()
 
 				if (exp == null)
 				{
@@ -96,3 +81,5 @@ class EquationHelper
 		}
 	}
 }
+
+fun String.evaluate(variableMap: ObjectFloatMap<String> = ObjectFloatMap(), ran: Random = MathUtils.random): Float = EquationHelper.evaluate(this, variableMap, ran)

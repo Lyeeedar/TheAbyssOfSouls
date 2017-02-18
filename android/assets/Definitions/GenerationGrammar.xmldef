@@ -1,0 +1,89 @@
+<Definitions xmlns:meta="Editor">
+	<Definition Name="GenerationGrammar" AllowCircularLinks="True" FlattenData="True" NodeStoreName="Rules" meta:RefKey="GraphStruct">
+		<Data Name="Width" Default="100" meta:RefKey="String" />
+		<Data Name="Height" Default="100" meta:RefKey="String" />
+		<Data Name="Root" Keys="Node" meta:RefKey="GraphReference" />
+	</Definition>
+	<Definition Name="Node" MinCount="1" meta:RefKey="GraphCollectionDef">
+		<Data Name="Rule" DefKey="Rules" meta:RefKey="Reference" />
+	</Definition>
+	<!--Rule Types-->
+	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Divide,Condition,Select,Filter),Symbol(Symbol,Prefab,Fill)" meta:RefKey="ReferenceDef" />
+	<!--Data Rules-->
+	<Definition Name="DataScope" meta:RefKey="StructDef">
+		<Data Name="Defines" Default="True" meta:RefKey="Boolean" />
+		<Data Name="Variables" Default="True" meta:RefKey="Boolean" />
+		<Data Name="Symbols" Default="True" meta:RefKey="Boolean" />
+		<Data Name="Area" Default="True" meta:RefKey="Boolean" />
+		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+	</Definition>
+	<Definition Name="Define" meta:RefKey="StructDef">
+		<Data Name="Key" meta:RefKey="String" />
+		<Data Name="Value" meta:RefKey="String" />
+	</Definition>
+	<!--Area Rules-->
+	<Definition Name="Flip" meta:RefKey="StructDef">
+		<Data Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
+	</Definition>
+	<Definition Name="Rotate" meta:RefKey="StructDef">
+		<Data Name="Degrees" meta:RefKey="Number" />
+	</Definition>
+	<Definition Name="Scale" meta:RefKey="StructDef">
+		<Data Name="Mode" EnumValues="Additive,Multiplicative" meta:RefKey="Enum" />
+		<Data Name="X" meta:RefKey="Number" />
+		<Data Name="Y" meta:RefKey="Number" />
+	</Definition>
+	<Definition Name="Translate" meta:RefKey="StructDef">
+		<Data Name="X" Type="Int" meta:RefKey="Number" />
+		<Data Name="Y" Type="Int" meta:RefKey="Number" />
+	</Definition>
+	<!--Chain Rules-->
+	<Definition Name="Condition" MinCount="1" meta:RefKey="CollectionDef">
+		<Data Name="Condition" Description="{Condition}" meta:RefKey="Struct">
+			<Data Name="Condition" meta:RefKey="String" />
+			<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+		</Data>
+	</Definition>
+	<Definition Name="Divide" MinCount="1" HasAttributes="True" meta:RefKey="CollectionDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
+		</Attributes>
+		<Data Name="Division" Description="{Size}" meta:RefKey="Struct">
+			<Data Name="Size" meta:RefKey="String" />
+			<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+		</Data>
+	</Definition>
+	<Definition Name="Filter" Description="{Mode}" meta:RefKey="StructDef">
+		<Data Name="Mode" EnumValues="NotWall,NotEntity" meta:RefKey="Enum" />
+		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+	</Definition>
+	<Definition Name="Repeat" meta:RefKey="StructDef">
+		<Data Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
+		<Data Name="Size" meta:RefKey="String" />
+		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+		<Data Name="Remainder" Keys="Node" meta:RefKey="GraphReference" />
+	</Definition>
+	<Definition Name="Select" Description="{Mode} ({Count})" meta:RefKey="StructDef">
+		<Data Name="Mode" EnumValues="Random,Edge,Corner,Center" meta:RefKey="Enum" />
+		<Data Name="Count" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+		<Data Name="Dist" Type="Int" Min="1" Default="2" VisibleIf="Mode==Center" meta:RefKey="Number" />
+		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+	</Definition>
+	<!--Symbol Rules-->
+	<Definition Name="Fill" meta:RefKey="StructDef">
+		<Data Name="Character" MaxLength="1" Default="." meta:RefKey="String" />
+	</Definition>
+	<Definition Name="Prefab" meta:RefKey="StructDef">
+		<Data Name="Symbols" meta:RefKey="Collection">
+			<Data Name="Symbol" Keys="Symbol" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="Prefab" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
+	</Definition>
+	<Definition Name="Symbol" meta:RefKey="StructDef">
+		<Data Name="Character" MaxLength="1" Default="." meta:RefKey="String" />
+		<Data Name="Extends" MaxLength="1" meta:RefKey="String" />
+		<Data Name="Floor" Extends="Entity" meta:RefKey="Struct" />
+		<Data Name="Entity" Extends="Entity" meta:RefKey="Struct" />
+		<Data Name="Air" Extends="Entity" meta:RefKey="Struct" />
+	</Definition>
+</Definitions>

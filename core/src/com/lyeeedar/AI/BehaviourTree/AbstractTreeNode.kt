@@ -58,50 +58,43 @@ abstract class AbstractTreeNode()
 
 		fun get(name: String): AbstractTreeNode
 		{
-			val uname = name.toUpperCase()
-			val c = getClass(uname)
-			val instance = ClassReflection.newInstance(c)
+			val node = when(name.toUpperCase()) {
 
-			return instance
-		}
-
-		fun getClass(name: String): Class<out AbstractTreeNode>
-		{
-			val type = when(name) {
 			// Selectors
-				"ANY" -> SelectorAny::class.java
-				"PRIORITY" -> SelectorPriority::class.java
-				"RANDOM" -> SelectorRandom::class.java
-				"SEQUENCE" -> SelectorSequence::class.java
-				"UNTIL" -> SelectorUntil::class.java
+				"ANY" -> SelectorAny()
+				"PRIORITY" -> SelectorPriority()
+				"RANDOM" -> SelectorRandom()
+				"SEQUENCE" -> SelectorSequence()
+				"UNTIL" -> SelectorUntil()
 
 			// Decorators
-				"DATASCOPE" -> DecoratorDataScope::class.java
-				"IMPORT" -> DecoratorImport::class.java
-				"INVERT" -> DecoratorInvert::class.java
-				"REPEAT" -> DecoratorRepeat::class.java
-				"SETSTATE" -> DecoratorSetState::class.java
+				"DATASCOPE" -> DecoratorDataScope()
+				"IMPORT" -> DecoratorImport()
+				"INVERT" -> DecoratorInvert()
+				"REPEAT" -> DecoratorRepeat()
+				"SETSTATE" -> DecoratorSetState()
 
 			// Actions
-				"COMBO" -> ActionCombo::class.java
-				"CLEARVALUE" -> ActionClearValue::class.java
-				"CONVERTTO" -> ActionConvertTo::class.java
-				"GETALLVISIBLE" -> ActionGetAllVisible::class.java
-				"MOVETO" -> ActionMoveTo::class.java
-				"PICK" -> ActionPick::class.java
-				"PROCESSINPUT" -> ActionProcessInput::class.java
-				"SETVALUE" -> ActionSetValue::class.java
-				"WAIT" -> ActionWait::class.java
+				"COMBO" -> ActionCombo()
+				"CLEARVALUE" -> ActionClearValue()
+				"CONVERTTO" -> ActionConvertTo()
+				"GETALLVISIBLE" -> ActionGetAllVisible()
+				"MOVETO" -> ActionMoveTo()
+				"PICK" -> ActionPick()
+				"PROCESSINPUT" -> ActionProcessInput()
+				"SETVALUE" -> ActionSetValue()
+				"WAIT" -> ActionWait()
 
 			// Conditionals
-				"CONDITIONAL" -> ConditionalCheckValue::class.java
+				"CONDITIONAL" -> ConditionalCheckValue()
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid node type: $name")
 			}
 
-			return type
+			return node
 		}
+
 	}
 
 	//----------------------------------------------------------------------
