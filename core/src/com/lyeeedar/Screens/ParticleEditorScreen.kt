@@ -28,6 +28,7 @@ import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Util.*
+import com.lyeeedar.UI.addClickListener
 import javax.swing.JColorChooser
 import javax.swing.JFileChooser
 import ktx.collections.get

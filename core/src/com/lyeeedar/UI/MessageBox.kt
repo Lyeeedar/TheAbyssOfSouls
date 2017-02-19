@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.lyeeedar.Global
 import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.addClickListener
+import com.lyeeedar.UI.addClickListener
 
 /**
  * Created by Philip on 03-Aug-16.

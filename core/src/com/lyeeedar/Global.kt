@@ -21,9 +21,7 @@ import com.lyeeedar.UI.LayeredDrawable
 import com.lyeeedar.UI.Seperator
 import com.lyeeedar.UI.TabPanel
 import com.lyeeedar.UI.Tooltip
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.Controls
-import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.*
 import ktx.collections.set
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
@@ -231,7 +229,17 @@ class Global
 
 class Settings
 {
-	val kryo = Kryo()
+	val kryo: Kryo by lazy { initKryo() }
+	fun initKryo(): Kryo
+	{
+		val kryo = Kryo()
+		kryo.isRegistrationRequired = false
+
+		kryo.registerGdxSerialisers()
+		kryo.registerLyeeedarSerialisers()
+
+		return kryo
+	}
 
 	val data = ObjectMap<String, Any>()
 
