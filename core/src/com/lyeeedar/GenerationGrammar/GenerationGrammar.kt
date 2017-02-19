@@ -1,13 +1,12 @@
 package com.lyeeedar.GenerationGrammar
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
-import com.lyeeedar.Components.EntityLoader
-import com.lyeeedar.Components.PositionComponent
-import com.lyeeedar.Components.pos
+import com.lyeeedar.Components.*
 import com.lyeeedar.GenerationGrammar.Rules.AbstractGrammarRule
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
@@ -71,6 +70,11 @@ class GenerationGrammar
 				}
 			}
 		}
+
+		val namedEntities = engine.getEntitiesFor(Family.one(NameComponent::class.java).get())
+		val player = namedEntities.firstOrNull { it.name()!!.isPlayer } ?: throw Exception("No player on level!")
+
+		level.player = player
 
 		return level
 	}

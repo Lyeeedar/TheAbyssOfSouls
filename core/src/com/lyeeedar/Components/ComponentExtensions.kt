@@ -24,11 +24,13 @@ fun Entity.combo() = Mappers.combo.get(this)
 fun Entity.sceneTimeline() = Mappers.sceneTimeline.get(this)
 fun Entity.shadow() = Mappers.shadow.get(this)
 fun Entity.directionalSprite() = Mappers.directionalSprite.get(this)
+fun Entity.name() = Mappers.name.get(this)
 
 class Mappers
 {
 	companion object
 	{
+		val name: ComponentMapper<NameComponent> = ComponentMapper.getFor(NameComponent::class.java)
 		val position: ComponentMapper<PositionComponent> = ComponentMapper.getFor(PositionComponent::class.java)
 		val renderable: ComponentMapper<RenderableComponent> = ComponentMapper.getFor(RenderableComponent::class.java)
 		val task: ComponentMapper<TaskComponent> = ComponentMapper.getFor(TaskComponent::class.java)
@@ -74,6 +76,13 @@ class EntityLoader()
 		@JvmStatic fun load(xml: XmlReader.Element): Entity
 		{
 			val entity = if (xml.get("Extends", null) != null) load(xml.get("Extends")) else Entity()
+
+			if (xml.getBoolean("IsPlayer", false))
+			{
+				val name = entity.name() ?: NameComponent("player")
+				name.isPlayer = true
+				entity.add(name)
+			}
 
 			val ai = xml.getChildByName("AI")?.get("AI", null)
 			if (ai != null) entity.add(TaskComponent(ai))

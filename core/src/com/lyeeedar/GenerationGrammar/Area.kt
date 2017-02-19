@@ -131,8 +131,8 @@ class Area
 
 	fun localToWorld(x: Int, y: Int): Pos
 	{
-		val cx = x + width/2
-		val cy = y + height/2
+		val cx = this.x + width/2
+		val cy = this.y + height/2
 
 		val lx = x - width/2
 		val ly = y - height/2

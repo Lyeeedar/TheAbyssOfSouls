@@ -60,6 +60,12 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 		for (entity in posLightEntities)
 		{
 			val pos = Mappers.position.get(entity)
+
+			if (pos.position.taxiDist(level!!.player.tile()!!) > 100)
+			{
+				continue
+			}
+
 			val light = Mappers.light.get(entity)
 			val offset = entity.renderOffset()
 
@@ -96,7 +102,7 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 					//temp *= lightVal.toFloat()
 					temp.a = 1f
 
-					//tile.light += temp
+					tile.light += temp
 					tile.light.a = 1f
 				}
 			}

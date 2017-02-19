@@ -61,6 +61,13 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 					{
 						if (entity != player)
 						{
+							val pos = entity.pos()
+							if (pos != null)
+							{
+								// skip far away entities
+								if (pos.position.taxiDist(player.tile()!!) > 100) continue
+							}
+
 							val task = Mappers.task.get(entity)
 							task.actionDelay -= playerTask.actionDelay
 

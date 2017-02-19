@@ -1,0 +1,121 @@
+<GenerationGrammar meta:X="35" meta:Y="19" GUID="ab4f5e8c-8fe7-4708-bc53-cafdcae905f9" xmlns:meta="Editor">
+	<Width>300</Width>
+	<Height>30</Height>
+	<Root meta:RefKey="Node">9f7e0b6b-b265-4dfb-9d73-9a7aee0d2127</Root>
+	<Rules>
+		<Node meta:X="301.11666870117188" meta:Y="77" GUID="9f7e0b6b-b265-4dfb-9d73-9a7aee0d2127">
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">08da0883-ec09-4a90-8d93-98879b772ace</Rule>
+			</Rule>
+			<Rule Axis="Y" meta:RefKey="Divide">
+				<Division>
+					<Size>(size-4) / 2</Size>
+					<Rule meta:RefKey="Node">2a7fa959-4e24-443b-8d69-07bffefb43de</Rule>
+				</Division>
+				<Division>
+					<Size>4</Size>
+					<Rule meta:RefKey="Node">c3436c7f-60e9-423e-a3e7-893833bc73f4</Rule>
+				</Division>
+				<Division>
+					<Size>(size-4) / 2</Size>
+					<Rule meta:RefKey="Node">a80bc7c2-9a74-454b-bf36-36e04498e771</Rule>
+				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="540.92669677734375" meta:Y="-30" GUID="08da0883-ec09-4a90-8d93-98879b772ace">
+			<!--Define base symbols-->
+			<Rule meta:RefKey="Symbol">
+				<Character>.</Character>
+				<Floor>
+					<!--Components-->
+					<Renderable>
+						<Renderable meta:RefKey="Sprite">
+							<Name>Oryx/uf_split/uf_terrain/ground_crusted_1</Name>
+						</Renderable>
+					</Renderable>
+				</Floor>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>~</Character>
+				<Floor>
+					<!--Components-->
+					<Renderable>
+						<Renderable meta:RefKey="Sprite">
+							<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+						</Renderable>
+					</Renderable>
+				</Floor>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>#</Character>
+				<Wall>
+					<!--Components-->
+					<Renderable>
+						<Renderable meta:RefKey="Sprite">
+							<Name>Oryx/Custom/terrain/tree4</Name>
+							<DrawActualSize>true</DrawActualSize>
+						</Renderable>
+					</Renderable>
+				</Wall>
+			</Rule>
+		</Node>
+		<Node meta:X="981.143310546875" meta:Y="86" GUID="2a7fa959-4e24-443b-8d69-07bffefb43de">
+			<!--Banks-->
+			<Rule meta:RefKey="Fill">
+				<Character>.</Character>
+			</Rule>
+			<Rule meta:RefKey="Select">
+				<Count>10%</Count>
+				<Rule meta:RefKey="Node">91b30dda-58c1-44c5-99d9-18d8ab57cf89</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1247.3800048828125" meta:Y="85" GUID="91b30dda-58c1-44c5-99d9-18d8ab57cf89">
+			<Rule meta:RefKey="Fill">
+				<Character>#</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="525.92669677734375" meta:Y="401" GUID="c3436c7f-60e9-423e-a3e7-893833bc73f4">
+			<!--River-->
+			<Rule meta:RefKey="Fill">
+				<Character>~</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="721.92669677734375" meta:Y="268" GUID="a80bc7c2-9a74-454b-bf36-36e04498e771">
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">2a7fa959-4e24-443b-8d69-07bffefb43de</Rule>
+			</Rule>
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">a6ea73d0-e7ce-422a-baf1-0c3b5c79f4c9</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="997.21331787109375" meta:Y="316" GUID="a6ea73d0-e7ce-422a-baf1-0c3b5c79f4c9">
+			<Rule meta:RefKey="Filter">
+				<Rule meta:RefKey="Node">9ab601eb-c253-4764-8c20-a4bfb819696a</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1213.13671875" meta:Y="313" GUID="9ab601eb-c253-4764-8c20-a4bfb819696a">
+			<Rule meta:RefKey="Select">
+				<Count>1</Count>
+				<Rule meta:RefKey="Node">491eda3c-d3cd-4500-95b4-8868688193a7</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1462.0833740234375" meta:Y="313" GUID="491eda3c-d3cd-4500-95b4-8868688193a7">
+			<Rule meta:RefKey="DataScope">
+				<Rule meta:RefKey="Node">6467e352-55db-44a9-8d48-457400e1d580</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1765.6700439453125" meta:Y="313" GUID="6467e352-55db-44a9-8d48-457400e1d580">
+			<Rule meta:RefKey="Symbol">
+				<Character>@</Character>
+				<Entity>
+					<Extends>player</Extends>
+					<IsPlayer>true</IsPlayer>
+					<!--Components-->
+				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>@</Character>
+			</Rule>
+		</Node>
+	</Rules>
+</GenerationGrammar>

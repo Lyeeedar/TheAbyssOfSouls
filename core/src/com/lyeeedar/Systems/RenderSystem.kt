@@ -75,6 +75,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 		val player = level!!.player
 		val playerPos = player.pos()
 		val playerSprite = player.renderable()
+		renderer.update(playerSprite.renderable, deltaTime)
 
 		var offsetx = Global.resolution.x / 2 - playerPos.position.x * tileSize - tileSize / 2
 		var offsety = Global.resolution.y / 2 - playerPos.position.y * tileSize - tileSize / 2

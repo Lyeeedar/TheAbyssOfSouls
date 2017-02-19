@@ -35,6 +35,7 @@ var Engine.level: Level?
 		this.render().level = value
 		this.task().level = value
 		this.lighting().level = value
+		this.shadowCast().level = value
 	}
 
 fun Engine.render() = this.getSystem(RenderSystem::class.java)

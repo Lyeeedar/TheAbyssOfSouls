@@ -1,7 +1,7 @@
 <Definitions xmlns:meta="Editor">
 	<Definition Name="Entity" meta:RefKey="Struct">
 		<Data Name="Extends" BasePath="Entities" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
-		<Data Text="Components" meta:RefKey="Comment" />
+		<Data Name="IsPlayer" meta:RefKey="Boolean" />
 		<Data Name="AI" meta:RefKey="Struct">
 			<Data Name="AI" BasePath="AI" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
 		</Data>

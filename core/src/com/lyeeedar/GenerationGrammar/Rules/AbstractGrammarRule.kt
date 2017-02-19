@@ -16,7 +16,7 @@ abstract class AbstractGrammarRule
 	{
 		fun load(xml: XmlReader.Element): AbstractGrammarRule
 		{
-			val rule: AbstractGrammarRule = when (xml.getAttribute("meta:RefKey").toUpperCase())
+			val rule: AbstractGrammarRule = if (xml.name == "Node") GrammarRuleNode() else when (xml.getAttribute("meta:RefKey").toUpperCase())
 			{
 				"CONDITION" -> GrammarRuleCondition()
 				"DATASCOPE" -> GrammarRuleDataScope()

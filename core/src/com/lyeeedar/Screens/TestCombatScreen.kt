@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.lyeeedar.Components.*
+import com.lyeeedar.GenerationGrammar.GenerationGrammar
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
@@ -23,41 +24,12 @@ class TestCombatScreen : AbstractScreen()
 
 	override fun create()
 	{
-		val level = Level()
+		val grammar = GenerationGrammar.load("Test")
+
+		val level = grammar.generate(10, Global.engine)
 		Global.engine.level = level
 		level.ambient.set(Colour.WHITE)
 
-		level.grid = Array2D(10, 10) { x, y -> Tile() }
-		for (tile in level.grid)
-		{
-			val e = Entity()
-			val sprite = RenderableComponent(AssetManager.loadSprite("Oryx/uf_split/uf_terrain/ground_grass_1"))
-			e.add(sprite)
-
-			val pos = PositionComponent()
-			e.add(pos)
-			pos.position = tile
-			pos.slot = SpaceSlot.FLOOR
-
-			tile.contents[SpaceSlot.FLOOR] = e
-
-			Global.engine.addEntity(e)
-		}
-
-		val player = EntityLoader.load("player")
-
-		level.player = player
-		level.grid[2, 2].contents[player.pos()!!.slot] = player
-		player.pos()!!.position = level.grid[2, 2]
-
-		Global.engine.addEntity(player)
-
-		val monster = EntityLoader.load("testmonster")
-
-		level.grid[7, 7].contents[monster.pos()!!.slot] = monster
-		monster.pos()!!.position = level.grid[7, 7]
-
-		Global.engine.addEntity(monster)
 
 		font = Global.skin.getFont("default")
 		batch = SpriteBatch()

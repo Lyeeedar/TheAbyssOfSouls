@@ -227,9 +227,16 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
+	fun update(renderable: Renderable, deltaTime: Float? = null)
+	{
+		if (renderable.batchID != batchID) renderable.update(deltaTime ?: delta)
+		renderable.batchID = batchID
+	}
+
+	// ----------------------------------------------------------------------
 	fun queue(renderable: Renderable, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, width: Float = 1f, height: Float = 1f)
 	{
-		if (renderable is Sprite) queueSprite(renderable, ix, iy, layer, index, colour, true, width, height)
+		if (renderable is Sprite) queueSprite(renderable, ix, iy, layer, index, colour, width, height)
 		else if (renderable is TilingSprite) queueSprite(renderable, ix, iy, layer, index, colour, width, height)
 		else if (renderable is ParticleEffect) queueParticle(renderable, ix, iy, layer, index, colour, width, height)
 		else throw Exception("Unknown renderable type! " + renderable.javaClass)
@@ -242,8 +249,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		if (debugDraw && inDebugFrame) return
 
-		if (effect.batchID != batchID) effect.update(delta)
-		effect.batchID = batchID
+		update(effect)
 
 		if (!effect.visible) return
 		if (effect.renderDelay > 0 && !effect.showBeforeRender)
@@ -324,8 +330,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		if (debugDraw && inDebugFrame) return
 
-		if (tilingSprite.batchID != batchID) tilingSprite.update(delta)
-		tilingSprite.batchID = batchID
+		update(tilingSprite)
 
 		if (!tilingSprite.visible) return
 		if (tilingSprite.renderDelay > 0 && !tilingSprite.showBeforeRender)
@@ -375,17 +380,13 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, update: Boolean = true, width: Float = 1f, height: Float = 1f, scaleX: Float = 1f, scaleY: Float = 1f)
+	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, width: Float = 1f, height: Float = 1f, scaleX: Float = 1f, scaleY: Float = 1f)
 	{
 		if (!inBegin) throw Exception("Queue called before begin!")
 
 		if (debugDraw && inDebugFrame) return
 
-		if (update)
-		{
-			if (sprite.batchID != batchID) sprite.update(delta)
-		}
-		sprite.batchID = batchID
+		update(sprite)
 
 		if (!sprite.visible) return
 		if (sprite.renderDelay > 0 && !sprite.showBeforeRender)
@@ -421,7 +422,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		}
 
 		// check if onscreen
-		if (!isSpriteOnscreen(sprite, x, y, width, height)) return
+		if (!isSpriteOnscreen(sprite, x, y, width, height, scaleX, scaleY)) return
 
 		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
 
@@ -431,15 +432,15 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
-	fun isSpriteOnscreen(sprite: Sprite, x: Float, y: Float, width: Float, height: Float): Boolean
+	fun isSpriteOnscreen(sprite: Sprite, x: Float, y: Float, width: Float, height: Float, scaleX: Float = 1f, scaleY: Float = 1f): Boolean
 	{
 		var localx = x + offsetx
 		var localy = y + offsety
 		var localw = width * tileSize * sprite.size[0]
 		var localh = height * tileSize * sprite.size[1]
 
-		var scaleX = sprite.baseScale[0]
-		var scaleY = sprite.baseScale[1]
+		var scaleX = sprite.baseScale[0] * scaleX
+		var scaleY = sprite.baseScale[1] * scaleY
 
 		if (sprite.animation != null)
 		{
@@ -455,8 +456,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		{
 			val texture = sprite.textures.items[sprite.animationState.texIndex]
 
-			val widthRatio = width / 32f
-			val heightRatio = height / 32f
+			val widthRatio = localw / 32f
+			val heightRatio = localh / 32f
 
 			val regionWidth = sprite.referenceSize ?: texture.regionWidth.toFloat()
 			val regionHeight = sprite.referenceSize ?: texture.regionHeight.toFloat()
@@ -464,7 +465,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			val trueWidth = regionWidth * widthRatio
 			val trueHeight = regionHeight * heightRatio
 
-			val widthOffset = (trueWidth - width) / 2
+			val widthOffset = (trueWidth - localw) / 2f
 
 			localx -= widthOffset
 			localw = trueWidth
@@ -473,7 +474,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		if (sprite.rotation != 0f && sprite.fixPosition)
 		{
-			val offset = Sprite.getPositionCorrectionOffsets(x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, sprite.rotation)
+			val offset = Sprite.getPositionCorrectionOffsets(x, y, localw / 2.0f, localh / 2.0f, localw, localh, scaleX, scaleY, sprite.rotation)
 			localx -= offset.x
 			localy -= offset.y
 		}

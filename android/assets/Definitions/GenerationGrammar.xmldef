@@ -8,7 +8,7 @@
 		<Data Name="Rule" DefKey="Rules" meta:RefKey="Reference" />
 	</Definition>
 	<!--Rule Types-->
-	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Divide,Condition,Select,Filter),Symbol(Symbol,Prefab,Fill)" meta:RefKey="ReferenceDef" />
+	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Divide,Filter,Repeat,Rule,Select),Symbol(Fill,Prefab,Symbol)" meta:RefKey="ReferenceDef" />
 	<!--Data Rules-->
 	<Definition Name="DataScope" meta:RefKey="StructDef">
 		<Data Name="Defines" Default="True" meta:RefKey="Boolean" />
@@ -26,7 +26,7 @@
 		<Data Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
 	</Definition>
 	<Definition Name="Rotate" meta:RefKey="StructDef">
-		<Data Name="Degrees" meta:RefKey="Number" />
+		<Data Name="Degrees" SkipIfDefault="False" meta:RefKey="Number" />
 	</Definition>
 	<Definition Name="Scale" meta:RefKey="StructDef">
 		<Data Name="Mode" EnumValues="Additive,Multiplicative" meta:RefKey="Enum" />
@@ -63,15 +63,18 @@
 		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
 		<Data Name="Remainder" Keys="Node" meta:RefKey="GraphReference" />
 	</Definition>
+	<Definition Name="Rule" meta:RefKey="StructDef">
+		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+	</Definition>
 	<Definition Name="Select" Description="{Mode} ({Count})" meta:RefKey="StructDef">
 		<Data Name="Mode" EnumValues="Random,Edge,Corner,Center" meta:RefKey="Enum" />
-		<Data Name="Count" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+		<Data Name="Count" Default="1" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Dist" Type="Int" Min="1" Default="2" VisibleIf="Mode==Center" meta:RefKey="Number" />
 		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
 	</Definition>
 	<!--Symbol Rules-->
 	<Definition Name="Fill" meta:RefKey="StructDef">
-		<Data Name="Character" MaxLength="1" Default="." meta:RefKey="String" />
+		<Data Name="Character" MaxLength="1" Default="." SkipIfDefault="False" meta:RefKey="String" />
 	</Definition>
 	<Definition Name="Prefab" meta:RefKey="StructDef">
 		<Data Name="Symbols" meta:RefKey="Collection">
@@ -79,10 +82,11 @@
 		</Data>
 		<Data Name="Prefab" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
 	</Definition>
-	<Definition Name="Symbol" meta:RefKey="StructDef">
-		<Data Name="Character" MaxLength="1" Default="." meta:RefKey="String" />
+	<Definition Name="Symbol" Description="{Character}" meta:RefKey="StructDef">
+		<Data Name="Character" MaxLength="1" Default="." SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Extends" MaxLength="1" meta:RefKey="String" />
 		<Data Name="Floor" Extends="Entity" meta:RefKey="Struct" />
+		<Data Name="Wall" Extends="Entity" meta:RefKey="Struct" />
 		<Data Name="Entity" Extends="Entity" meta:RefKey="Struct" />
 		<Data Name="Air" Extends="Entity" meta:RefKey="Struct" />
 	</Definition>
