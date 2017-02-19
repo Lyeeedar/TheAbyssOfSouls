@@ -70,7 +70,7 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 	override fun parse(xml: XmlReader.Element)
 	{
 		onX = xml.get("Axis", "X") == "X"
-		size = xml.get("Size")
+		size = xml.get("Size").replace("%", "#size")
 		rule = xml.get("Rule")
 		remainder = xml.get("Remainder", "")
 	}

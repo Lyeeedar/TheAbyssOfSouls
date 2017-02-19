@@ -51,7 +51,7 @@ class GrammarRuleDivide : AbstractGrammarRule()
 
 		for (el in xml.children())
 		{
-			val size = el.get("Size").toLowerCase()
+			val size = el.get("Size").toLowerCase().replace("%", "#size")
 			val rule = el.get("Rule", "")
 
 			divisions.add(Division(size, rule))

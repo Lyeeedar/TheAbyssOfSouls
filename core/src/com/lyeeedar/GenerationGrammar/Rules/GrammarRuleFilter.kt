@@ -34,7 +34,7 @@ class GrammarRuleFilter : AbstractGrammarRule()
 
 		for (point in newArea.points.toList())
 		{
-			val symbol = newArea[point]
+			val symbol = newArea[point.x - newArea.x, point.y - newArea.y]
 
 			if (symbol == null || !condition.invoke(symbol)) newArea.points.removeValue(point, true)
 		}

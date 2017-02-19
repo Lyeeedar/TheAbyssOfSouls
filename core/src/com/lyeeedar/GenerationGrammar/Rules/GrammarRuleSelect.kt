@@ -129,7 +129,7 @@ class GrammarRuleSelect : AbstractGrammarRule()
 	override fun parse(xml: XmlReader.Element)
 	{
 		mode = Mode.valueOf(xml.get("Mode", "RANDOM").toUpperCase())
-		count = xml.get("Count")
+		count = xml.get("Count").toLowerCase().replace("%", "#count")
 		centerDist = xml.getInt("Dist")
 		rule = xml.get("Rule")
 	}
