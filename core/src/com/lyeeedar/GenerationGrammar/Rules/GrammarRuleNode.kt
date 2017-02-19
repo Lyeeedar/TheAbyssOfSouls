@@ -13,11 +13,11 @@ class GrammarRuleNode : AbstractGrammarRule()
 {
 	val rules = Array<AbstractGrammarRule>()
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random)
+	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
-		for (rule in rules)
+		for (i in 0..rules.size-1)
 		{
-			rule.execute(area, ruleTable, defines, variables, symbolTable, ran)
+			rules[i].execute(area, ruleTable, defines, variables, symbolTable, ran, deferredRules)
 		}
 	}
 

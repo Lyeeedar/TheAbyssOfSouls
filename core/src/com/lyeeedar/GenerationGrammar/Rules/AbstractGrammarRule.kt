@@ -1,5 +1,6 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
@@ -9,7 +10,7 @@ import java.util.*
 
 abstract class AbstractGrammarRule
 {
-	abstract fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random)
+	abstract fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	abstract fun parse(xml: XmlReader.Element)
 
 	companion object
@@ -21,6 +22,7 @@ abstract class AbstractGrammarRule
 				"CONDITION" -> GrammarRuleCondition()
 				"DATASCOPE" -> GrammarRuleDataScope()
 				"DEFINE" -> GrammarRuleDefine()
+				"DEFER" -> GrammarRuleDefer()
 				"DIVIDE" -> GrammarRuleDivide()
 				"FILL" -> GrammarRuleFill()
 				"FILTER" -> GrammarRuleFilter()

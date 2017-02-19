@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Combo.ComboTree
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.children
@@ -49,6 +50,8 @@ class EntityLoader()
 {
 	companion object
 	{
+		val sharedRenderableMap = ObjectMap<Int, Renderable>()
+
 		val files: ObjectMap<String, FileHandle> by lazy { loadFiles() }
 
 		private fun loadFiles(): ObjectMap<String, FileHandle>
@@ -119,7 +122,9 @@ class EntityLoader()
 			val renderableCompEl = xml.getChildByName("Renderable")
 			if (renderableCompEl != null)
 			{
-				for (renderableEl in renderableCompEl.children())
+				val renderableEl = renderableCompEl.getChildByName("Renderable")
+
+				fun loadRenderable(): Renderable
 				{
 					val renderable = when (renderableEl.getAttribute("meta:RefKey"))
 					{
@@ -135,6 +140,23 @@ class EntityLoader()
 						renderable.size[0] = pos.size
 						renderable.size[1] = pos.size
 					}
+
+					return renderable
+				}
+
+				if (renderableCompEl.getBoolean("IsShared", false))
+				{
+					val key = renderableCompEl.toString().hashCode()
+					if (!sharedRenderableMap.containsKey(key))
+					{
+						sharedRenderableMap[key] = loadRenderable()
+					}
+
+					entity.add(RenderableComponent(sharedRenderableMap[key]))
+				}
+				else
+				{
+					val renderable = loadRenderable()
 
 					entity.add(RenderableComponent(renderable))
 				}

@@ -17,14 +17,14 @@ class GrammarRulePrefab : AbstractGrammarRule()
 	val symbols = Array<GrammarRuleSymbol>()
 	lateinit var prefab: Array2D<Char>
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random)
+	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
 		val newSymbols = ObjectMap<Char, GrammarSymbol>()
 		symbolTable.forEach { newSymbols.put(it.key, it.value.copy()) }
 
 		for (symbol in symbols)
 		{
-			symbol.execute(area, ruleTable, defines, variables, newSymbols, ran)
+			symbol.execute(area, ruleTable, defines, variables, newSymbols, ran, deferredRules)
 		}
 
 		val newArea = area.copy()

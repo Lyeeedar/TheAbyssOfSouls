@@ -1,5 +1,6 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
@@ -16,17 +17,16 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 	lateinit var rule: String
 	lateinit var remainder: String
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random)
+	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
 		area.xMode = onX
-
-		variables.put("size", area.size.toFloat())
 
 		var current = 0
 		val totalSize = area.size
 
 		while (current < totalSize)
 		{
+			area.writeVariables(variables)
 			val size = size.evaluate(variables, ran).round()
 
 			val newArea = area.copy()
@@ -41,7 +41,7 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 				if (newArea.hasContents)
 				{
 					val rule = ruleTable[rule]
-					rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran)
+					rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
 				}
 			}
 			else
@@ -54,7 +54,7 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 					if (newArea.hasContents)
 					{
 						val rule = ruleTable[remainder]
-						rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran)
+						rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
 					}
 				}
 
@@ -63,8 +63,6 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 
 			current += size
 		}
-
-		variables.remove("size", 0f)
 	}
 
 	override fun parse(xml: XmlReader.Element)

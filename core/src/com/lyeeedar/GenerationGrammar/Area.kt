@@ -3,14 +3,39 @@ package com.lyeeedar.GenerationGrammar
 import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectFloatMap
 import com.lyeeedar.Util.Array2D
 
 class Area
 {
 	var x: Int = 0
+		set(value)
+		{
+			field = value
+			if (value < 0 || value >= grid.width) throw Exception("Invalid area x '$value'!")
+		}
+
 	var y: Int = 0
+		set(value)
+		{
+			field = value
+			if (value < 0 || value >= grid.height) throw Exception("Invalid area y '$value'!")
+		}
+
 	var width: Int = 0
+		set(value)
+		{
+			field = value
+			if (value < 0) throw Exception("Invalid area width '$value'!")
+		}
+
 	var height: Int = 0
+		set(value)
+		{
+			field = value
+			if (value < 0) throw Exception("Invalid area height '$value'!")
+		}
+
 	lateinit var grid: Array2D<GrammarSymbol>
 
 	var isPoints = false
@@ -69,6 +94,21 @@ class Area
 			return true
 		}
 
+	fun writeVariables(variables: ObjectFloatMap<String>)
+	{
+		variables.put("x", x.toFloat())
+		variables.put("y", y.toFloat())
+		variables.put("width", width.toFloat())
+		variables.put("height", height.toFloat())
+		variables.put("size", size.toFloat())
+		variables.put("pos", pos.toFloat())
+
+		if (isPoints)
+		{
+			variables.put("count", points.size.toFloat())
+		}
+	}
+
 	fun convertToPoints()
 	{
 		points.addAll(getAllPoints())
@@ -108,11 +148,11 @@ class Area
 	fun copy(): Area
 	{
 		val area = Area()
+		area.grid = grid
 		area.x = x
 		area.y = y
 		area.width = width
 		area.height = height
-		area.grid = grid
 		area.flipX = flipX
 		area.flipY = flipY
 		area.orientation = orientation

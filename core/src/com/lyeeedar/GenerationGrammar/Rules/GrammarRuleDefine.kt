@@ -1,5 +1,6 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
@@ -14,7 +15,7 @@ class GrammarRuleDefine : AbstractGrammarRule()
 	lateinit var key: String
 	lateinit var value: String
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random)
+	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
 		var expanded = value
 		for (def in defines)
@@ -26,6 +27,8 @@ class GrammarRuleDefine : AbstractGrammarRule()
 
 		try
 		{
+			area.writeVariables(variables)
+
 			val value = expanded.toLowerCase().evaluate(variables, ran)
 			variables.put(key.toLowerCase(), value)
 		}
@@ -40,6 +43,9 @@ class GrammarRuleDefine : AbstractGrammarRule()
 		key = xml.get("Key")
 		value = xml.get("Value")
 
-		if (key.toLowerCase() == "size" || key.toLowerCase() == "count") throw UnsupportedOperationException("Define is using reserved name '$key'!")
+		when (key)
+		{
+			"size", "pos", "count", "x", "y", "width", "height" -> throw UnsupportedOperationException("Define is using reserved name '$key'!")
+		}
 	}
 }

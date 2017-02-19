@@ -91,23 +91,34 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 		for (entity in entities)
 		{
+			val renderable = entity.renderable()
 			val pos = entity.pos() ?: continue
 			val tile = entity.tile()
+
+			if (pos.position.taxiDist(level!!.player.tile()!!) > 100)
+			{
+				renderer.update(renderable.renderable)
+
+				continue
+			}
 
 			val tileCol = tempCol.set(Colour.WHITE)
 
 			if (tile != null)
 			{
-				//if (!tile.seen) continue
+				if (!tile.isSeen) continue
+
+				tileCol.set(tile.light)
 
 				if (!tile.isVisible)
 				{
 					// dont draw dynamic entities on non visible tiles
 					val task = Mappers.task.get(entity)
 					if (task != null) continue
+
+					tileCol.mul(0.6f, 0.4f, 0.8f, 1.0f)
 				}
 
-				tileCol.set(tile.light)
 				if (tile.isSelectedPoint)
 				{
 					tileCol.mul(0.6f, 1.2f, 0.6f, 1.0f)
@@ -121,8 +132,6 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 			val px = pos.position.x.toFloat()
 			val py = pos.position.y.toFloat()
-
-			val renderable = entity.renderable()
 
 			renderer.queue(renderable.renderable, px, py, pos.slot.ordinal, 0, tileCol)
 		}

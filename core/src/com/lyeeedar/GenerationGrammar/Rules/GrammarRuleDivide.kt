@@ -16,16 +16,17 @@ class GrammarRuleDivide : AbstractGrammarRule()
 	val divisions = Array<Division>()
 	var onX = true
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random)
+	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
 		area.xMode = onX
 
-		variables.put("size", area.size.toFloat())
-
 		var current = 0
-		for (division in divisions)
+		for (i in 0..divisions.size-1)
 		{
-			val size = if (division.size == "remainder") area.size - current else division.size.evaluate(variables, ran).round()
+			val division = divisions[i]
+
+			area.writeVariables(variables)
+			val size = if (division.size == "remainder") area.size - current else Math.min(area.size - current, division.size.evaluate(variables, ran).round())
 			val newArea = area.copy()
 			newArea.pos = area.pos + current
 			newArea.size = size
@@ -36,13 +37,12 @@ class GrammarRuleDivide : AbstractGrammarRule()
 				newArea.addPointsWithin(area)
 
 				val rule = ruleTable[division.rule]
-				rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran)
+				rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
 			}
 
 			current += size
+			if (current == area.size) break
 		}
-
-		variables.remove("size", 0f)
 	}
 
 	override fun parse(xml: XmlReader.Element)

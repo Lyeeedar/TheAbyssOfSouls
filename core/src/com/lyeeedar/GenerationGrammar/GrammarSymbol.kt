@@ -19,8 +19,13 @@ class GrammarSymbol(var char: Char)
 		}
 	}
 
-	fun write(data: GrammarSymbol)
+	fun write(data: GrammarSymbol, overwrite: Boolean = false)
 	{
+		if (overwrite)
+		{
+			contents.clear()
+		}
+
 		write(data.contents)
 		char = data.char
 	}

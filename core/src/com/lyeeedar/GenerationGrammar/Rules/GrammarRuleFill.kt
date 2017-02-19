@@ -1,5 +1,6 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
@@ -11,8 +12,9 @@ import java.util.*
 class GrammarRuleFill : AbstractGrammarRule()
 {
 	var char: Char = ' '
+	var overwrite = false
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random)
+	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
 		val symbolToWrite = symbolTable[char]
 
@@ -20,13 +22,14 @@ class GrammarRuleFill : AbstractGrammarRule()
 		{
 			val symbol = area[pos.x - area.x, pos.y - area.y] ?: continue
 
-			symbol.write(symbolToWrite)
+			symbol.write(symbolToWrite, overwrite)
 		}
 	}
 
 	override fun parse(xml: XmlReader.Element)
 	{
 		char = xml.get("Character")[0]
+		overwrite = xml.getBoolean("Overwrite", false)
 	}
 
 }

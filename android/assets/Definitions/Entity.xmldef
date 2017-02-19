@@ -6,6 +6,7 @@
 			<Data Name="AI" BasePath="AI" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
 		</Data>
 		<Data Name="Renderable" meta:RefKey="Struct">
+			<Data Name="IsShared" meta:RefKey="Boolean" />
 			<Data Name="Renderable" Keys="Sprite,TilingSprite,ParticleEffect" meta:RefKey="Reference" />
 		</Data>
 		<Data Name="DirectionalSprite" Extends="DirectionalSprite" meta:RefKey="Struct" />

@@ -1,14 +1,14 @@
 <Definitions xmlns:meta="Editor">
 	<Definition Name="GenerationGrammar" AllowCircularLinks="True" FlattenData="True" NodeStoreName="Rules" meta:RefKey="GraphStruct">
-		<Data Name="Width" Default="100" meta:RefKey="String" />
-		<Data Name="Height" Default="100" meta:RefKey="String" />
+		<Data Name="Width" Default="100" SkipIfDefault="False" meta:RefKey="String" />
+		<Data Name="Height" Default="100" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Root" Keys="Node" meta:RefKey="GraphReference" />
 	</Definition>
 	<Definition Name="Node" MinCount="1" meta:RefKey="GraphCollectionDef">
 		<Data Name="Rule" DefKey="Rules" meta:RefKey="Reference" />
 	</Definition>
 	<!--Rule Types-->
-	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Divide,Filter,Repeat,Rule,Select),Symbol(Fill,Prefab,Symbol)" meta:RefKey="ReferenceDef" />
+	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Defer,Divide,Filter,Repeat,Rule,Select),Symbol(Fill,Prefab,Symbol)" meta:RefKey="ReferenceDef" />
 	<!--Data Rules-->
 	<Definition Name="DataScope" meta:RefKey="StructDef">
 		<Data Name="Defines" Default="True" meta:RefKey="Boolean" />
@@ -44,6 +44,9 @@
 			<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
 		</Data>
 	</Definition>
+	<Definition Name="Defer" meta:RefKey="StructDef">
+		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+	</Definition>
 	<Definition Name="Divide" MinCount="1" HasAttributes="True" meta:RefKey="CollectionDef">
 		<Attributes meta:RefKey="Attributes">
 			<Attribute Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
@@ -54,7 +57,8 @@
 		</Data>
 	</Definition>
 	<Definition Name="Filter" Description="{Mode}" meta:RefKey="StructDef">
-		<Data Name="Mode" EnumValues="NotWall,NotEntity" meta:RefKey="Enum" />
+		<Data Name="Mode" EnumValues="NotWall,NotEntity,Character" meta:RefKey="Enum" />
+		<Data Name="Character" MaxLength="1" VisibleIf="Mode==Character" meta:RefKey="String" />
 		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
 	</Definition>
 	<Definition Name="Repeat" meta:RefKey="StructDef">
@@ -75,6 +79,7 @@
 	<!--Symbol Rules-->
 	<Definition Name="Fill" meta:RefKey="StructDef">
 		<Data Name="Character" MaxLength="1" Default="." SkipIfDefault="False" meta:RefKey="String" />
+		<Data Name="Overwrite" meta:RefKey="Boolean" />
 	</Definition>
 	<Definition Name="Prefab" meta:RefKey="StructDef">
 		<Data Name="Symbols" meta:RefKey="Collection">
@@ -86,7 +91,9 @@
 		<Data Name="Character" MaxLength="1" Default="." SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Extends" MaxLength="1" meta:RefKey="String" />
 		<Data Name="Floor" Extends="Entity" meta:RefKey="Struct" />
+		<Data Name="FloorDetail" Extends="Entity" meta:RefKey="Struct" />
 		<Data Name="Wall" Extends="Entity" meta:RefKey="Struct" />
+		<Data Name="WallDetail" Extends="Entity" meta:RefKey="Struct" />
 		<Data Name="Entity" Extends="Entity" meta:RefKey="Struct" />
 		<Data Name="Air" Extends="Entity" meta:RefKey="Struct" />
 	</Definition>

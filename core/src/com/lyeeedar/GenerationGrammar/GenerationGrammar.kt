@@ -2,12 +2,14 @@ package com.lyeeedar.GenerationGrammar
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Family
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
 import com.lyeeedar.Components.*
 import com.lyeeedar.GenerationGrammar.Rules.AbstractGrammarRule
+import com.lyeeedar.GenerationGrammar.Rules.DeferredRule
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
@@ -38,7 +40,22 @@ class GenerationGrammar
 		area.grid = symbolGrid
 
 		val rule = ruleTable[rootRule]
-		rule.execute(area, ruleTable, ObjectMap(), ObjectFloatMap(), ObjectMap(), ran)
+
+		var deferred = Array<DeferredRule>()
+		DeferredRule.reset()
+
+		rule.execute(area, ruleTable, ObjectMap(), ObjectFloatMap(), ObjectMap(), ran, deferred)
+
+		while (deferred.size > 0)
+		{
+			val newDeferred = Array<DeferredRule>()
+			for (deferredRule in deferred)
+			{
+				deferredRule.execute(ruleTable, ran, newDeferred)
+			}
+
+			deferred = newDeferred
+		}
 
 		val level = Level()
 		level.grid = Array2D(width, height) { x, y -> Tile() }

@@ -428,7 +428,9 @@ enum class ElementType
 enum class SpaceSlot
 {
 	FLOOR,
+	FLOORDETAIL,
 	WALL,
+	WALLDETAIL,
 	ENTITY,
 	AIR;
 
@@ -437,7 +439,7 @@ enum class SpaceSlot
 	{
 
 		val Values = SpaceSlot.values()
-		val BasicValues = arrayOf(FLOOR, WALL)
+		val BasicValues = arrayOf(FLOOR, FLOORDETAIL, WALL, WALLDETAIL)
 		val InterestingValues = arrayOf(ENTITY, AIR)
 	}
 }

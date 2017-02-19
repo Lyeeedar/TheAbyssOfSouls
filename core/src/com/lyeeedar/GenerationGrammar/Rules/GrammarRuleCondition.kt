@@ -14,16 +14,19 @@ class GrammarRuleCondition : AbstractGrammarRule()
 {
 	val conditions = Array<Condition>()
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random)
+	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
-		for (condition in conditions)
+		for (i in 0..conditions.size-1)
 		{
+			val condition = conditions[i]
+
+			area.writeVariables(variables)
 			if (condition.condition == "else" || condition.condition.evaluate(variables, ran) > 0)
 			{
 				if (!condition.rule.isNullOrBlank())
 				{
 					val rule = ruleTable[condition.rule]
-					rule.execute(area, ruleTable, defines, variables, symbolTable, ran)
+					rule.execute(area, ruleTable, defines, variables, symbolTable, ran, deferredRules)
 				}
 
 				break
@@ -35,8 +38,8 @@ class GrammarRuleCondition : AbstractGrammarRule()
 	{
 		for (el in xml.children())
 		{
-			val condition = xml.get("Condition").toLowerCase()
-			val rule = xml.get("Rule", "")
+			val condition = el.get("Condition").toLowerCase().replace("%", "#size")
+			val rule = el.get("Rule", "")
 
 			conditions.add(Condition(condition, rule))
 		}

@@ -27,7 +27,7 @@ class GrammarRuleSelect : AbstractGrammarRule()
 	var centerDist = 2
 	lateinit var rule: String
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random)
+	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
 		val valid = Array<Pos>()
 		valid.addAll(area.getAllPoints())
@@ -107,11 +107,10 @@ class GrammarRuleSelect : AbstractGrammarRule()
 
 		if (valid.size == 0) return
 
+		area.writeVariables(variables)
 		variables.put("count", valid.size.toFloat())
 
 		val count = count.evaluate(variables, ran).round()
-
-		variables.remove("count", 0f)
 
 		if (count == 0) return
 
@@ -123,7 +122,7 @@ class GrammarRuleSelect : AbstractGrammarRule()
 		newArea.points.addAll(finalPoints)
 
 		val rule = ruleTable[rule]
-		rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran)
+		rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
 	}
 
 	override fun parse(xml: XmlReader.Element)
