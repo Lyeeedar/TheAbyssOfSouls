@@ -3,32 +3,19 @@ package com.lyeeedar.Components
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.OrderedSet
-import com.lyeeedar.ElementType
-import com.lyeeedar.Statistic
-import com.lyeeedar.Util.FastEnumMap
 
 class StatisticsComponent: Component
 {
-	constructor()
-
-	val stats: FastEnumMap<Statistic, Float> = Statistic.getStatisticsBlock(10f)
-
-	val variableMap: ObjectFloatMap<String> = ObjectFloatMap()
-		get()
-		{
-			return field
-		}
-
 	val factions: OrderedSet<String> = OrderedSet()
 
-	var hp: Float
-		get() = stats.get(Statistic.HEALTH)
+	var hp: Float = 0f
+		get() = field
 		set(value)
 		{
 			val v = Math.min(value, maxHP)
 
 			val diff = v - hp
-			stats[Statistic.HEALTH] = v
+			field = v
 
 			if (diff < 0)
 			{
@@ -42,23 +29,23 @@ class StatisticsComponent: Component
 
 	var bonusHP: Float = 0f
 
-	var maxHP: Float
-		get() = stats[Statistic.MAX_HEALTH]
+	var maxHP: Float = 0f
+		get() = field
 		set(value)
 		{
-			stats[Statistic.MAX_HEALTH] = value
+			field = value
 
 			if (hp < value) hp = value
 		}
 
-	var stamina: Float
-		get() = stats[Statistic.STAMINA]
+	var stamina: Float = 0f
+		get() = field
 		set(value)
 		{
 			val v = Math.min(maxStamina, value)
 
 			val diff = v - stamina
-			stats[Statistic.STAMINA] = v
+			field = v
 			if (diff < 0)
 			{
 				staminaReduced = true
@@ -66,14 +53,38 @@ class StatisticsComponent: Component
 		}
 	var staminaReduced: Boolean = false
 
-	var maxStamina: Float
-		get() = stats[Statistic.MAX_STAMINA]
+	var maxStamina: Float = 0f
+		get() = field
 		set(value)
 		{
-			stats[Statistic.MAX_STAMINA] = value
+			field = value
 
 			if (stamina < value) stamina = value
 		}
+
+	var sight: Float = 0f
+
+	operator fun get(key: String, fallback: Float? = null): Float
+	{
+		return when (key.toLowerCase())
+		{
+			"hp" -> hp
+			"maxhp" -> maxHP
+			"stamina" -> stamina
+			"maxstamina" -> maxStamina
+			else -> fallback ?: throw Exception("Unknown statistic '$key'!")
+		}
+	}
+
+	fun write(variableMap: ObjectFloatMap<String>): ObjectFloatMap<String>
+	{
+		variableMap.put("hp", hp)
+		variableMap.put("maxhp", maxHP)
+		variableMap.put("stamina", stamina)
+		variableMap.put("maxstamina", maxStamina)
+
+		return variableMap
+	}
 }
 
 fun OrderedSet<String>.isAllies(other: OrderedSet<String>): Boolean

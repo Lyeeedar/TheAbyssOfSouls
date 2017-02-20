@@ -7,7 +7,6 @@ import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.ShadowCastComponent
 import com.lyeeedar.Components.isAllies
 import com.lyeeedar.Level.Tile
-import com.lyeeedar.Statistic
 import com.lyeeedar.Util.Point
 
 /**
@@ -35,7 +34,7 @@ class ActionGetAllVisible(): AbstractAction()
 		{
 			cache = ShadowCastComponent()
 
-			cache.cache.getShadowCast(tile.level.grid, tile.x, tile.y, stats.stats.get(Statistic.SIGHT).toInt(), entity)
+			cache.cache.getShadowCast(tile.level.grid, tile.x, tile.y, stats.sight.toInt(), entity)
 
 			entity.add(cache)
 		}

@@ -21,9 +21,9 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 	val tempCol = Colour()
 
-	val tileSize = 32f
+	val tileSize = 40f
 
-	lateinit var renderer: SortedRenderer// = SortedRenderer(tileSize, 200f, 200f, SpaceSlot.Values.size)
+	lateinit var renderer: SortedRenderer
 
 	var level: Level? = null
 		get() = field

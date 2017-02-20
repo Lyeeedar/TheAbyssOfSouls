@@ -1,43 +1,45 @@
 <Entity xmlns:meta="Editor">
-	<!--Components-->
-	<AI>
-		<AI>BasicMonster</AI>
-	</AI>
-	<DirectionalSprite>
-		<Animations>
-			<Animation>
-				<Name>idle</Name>
-				<Up meta:RefKey="Sprite">
-					<Name>Directional/rat_up_idle</Name>
-					<DrawActualSize>true</DrawActualSize>
-				</Up>
-				<Down meta:RefKey="Sprite">
-					<Name>Directional/rat_down_idle</Name>
-					<DrawActualSize>true</DrawActualSize>
-				</Down>
-			</Animation>
-			<Animation>
-				<Name>attack</Name>
-				<Up meta:RefKey="Sprite">
-					<Name>Directional/rat_up_attack</Name>
-					<DrawActualSize>true</DrawActualSize>
-				</Up>
-				<Down meta:RefKey="Sprite">
-					<Name>Directional/rat_down_attack</Name>
-					<DrawActualSize>true</DrawActualSize>
-				</Down>
-			</Animation>
-		</Animations>
-	</DirectionalSprite>
-	<Position>
-		<Size>2</Size>
-	</Position>
-	<Statistics>
-		<Faction>Monster</Faction>
-		<HP>10</HP>
-		<Stamina>10</Stamina>
-	</Statistics>
-	<Combo>
-		<ComboTree>Entities/TestMonsterCombo</ComboTree>
-	</Combo>
+	<Components>
+		<Position>
+			<Size>2</Size>
+		</Position>
+		<AI>
+			<AI>BasicMonster</AI>
+		</AI>
+		<Statistics>
+			<Faction>monster</Faction>
+			<HP>10</HP>
+			<Stamina>10</Stamina>
+			<Sight>5</Sight>
+		</Statistics>
+		<Combo>
+			<ComboTree>Entities/TestMonsterCombo</ComboTree>
+		</Combo>
+		<DirectionalSprite>
+			<Animations>
+				<Animation>
+					<Name>idle</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Directional/rat_up_idle_1</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Directional/rat_down_idle_1</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+				<Animation>
+					<Name>attack</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Directional/rat_up_attack_1</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Directional/rat_down_attack_1</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+			</Animations>
+		</DirectionalSprite>
+	</Components>
 </Entity>

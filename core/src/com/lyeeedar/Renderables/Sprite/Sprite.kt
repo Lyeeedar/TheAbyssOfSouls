@@ -283,98 +283,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			   width: Float, height: Float, scaleX: Float, scaleY: Float,
 			   rotation: Float, flipX: Boolean, flipY: Boolean)
 	{
-		// bottom left and top right corner points relative to origin
-		val worldOriginX = x + originX
-		val worldOriginY = y + originY
-		var fx = -originX
-		var fy = -originY
-		var fx2 = width - originX
-		var fy2 = height - originY
-
-		// scale
-		if (scaleX != 1f || scaleY != 1f)
-		{
-			fx *= scaleX
-			fy *= scaleY
-			fx2 *= scaleX
-			fy2 *= scaleY
-		}
-
-		// construct corner points, start from top left and go counter clockwise
-		val p1x = fx
-		val p1y = fy
-		val p2x = fx
-		val p2y = fy2
-		val p3x = fx2
-		val p3y = fy2
-		val p4x = fx2
-		val p4y = fy
-
-		var x1: Float
-		var y1: Float
-		var x2: Float
-		var y2: Float
-		var x3: Float
-		var y3: Float
-		var x4: Float
-		var y4: Float
-
-		// rotate
-		if (rotation != 0f)
-		{
-			val cos = MathUtils.cosDeg(rotation)
-			val sin = MathUtils.sinDeg(rotation)
-
-			x1 = cos * p1x - sin * p1y
-			y1 = sin * p1x + cos * p1y
-
-			x2 = cos * p2x - sin * p2y
-			y2 = sin * p2x + cos * p2y
-
-			x3 = cos * p3x - sin * p3y
-			y3 = sin * p3x + cos * p3y
-
-			x4 = x1 + (x3 - x2)
-			y4 = y3 - (y2 - y1)
-		}
-		else
-		{
-			x1 = p1x
-			y1 = p1y
-
-			x2 = p2x
-			y2 = p2y
-
-			x3 = p3x
-			y3 = p3y
-
-			x4 = p4x
-			y4 = p4y
-		}
-
-		x1 += worldOriginX
-		y1 += worldOriginY
-		x2 += worldOriginX
-		y2 += worldOriginY
-		x3 += worldOriginX
-		y3 += worldOriginY
-		x4 += worldOriginX
-		y4 += worldOriginY
-
-		val u = if (flipX) region.u2 else region.u
-		var v = if (flipY) region.v else region.v2
-		val u2 = if (flipX) region.u else region.u2
-		val v2 = if (flipY) region.v2 else region.v
-
-		if (removeAmount > 0f)
-		{
-			val yMove = (y1-y2) * removeAmount
-			y1 -= yMove
-			y4 -= yMove
-
-			val vMove = (v-v2) * removeAmount
-			v -= vMove
-		}
+		val (x1, x2, x3, x4, y1, y2, y3, y4, u, u2, v, v2) = calculateVertexData(region, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY)
 
 		val vertices = verticesSpriteBatch
 		vertices[0] = x1
@@ -408,6 +317,53 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			   x: Float, y: Float, originX: Float, originY: Float,
 			   width: Float, height: Float, scaleX: Float, scaleY: Float,
 			   rotation: Float, flipX: Boolean, flipY: Boolean)
+	{
+		val (x1, x2, x3, x4, y1, y2, y3, y4, u, u2, v, v2) = calculateVertexData(region, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY)
+
+		val vertices = verticesHdrBatchBatch
+		vertices[0] = x1
+		vertices[1] = y1
+		vertices[2] = colour.r
+		vertices[3] = colour.g
+		vertices[4] = colour.b
+		vertices[5] = colour.a
+		vertices[6] = u
+		vertices[7] = v
+
+		vertices[8] = x2
+		vertices[9] = y2
+		vertices[10] = colour.r
+		vertices[11] = colour.g
+		vertices[12] = colour.b
+		vertices[13] = colour.a
+		vertices[14] = u
+		vertices[15] = v2
+
+		vertices[16] = x3
+		vertices[17] = y3
+		vertices[18] = colour.r
+		vertices[19] = colour.g
+		vertices[20] = colour.b
+		vertices[21] = colour.a
+		vertices[22] = u2
+		vertices[23] = v2
+
+		vertices[24] = x4
+		vertices[25] = y4
+		vertices[26] = colour.r
+		vertices[27] = colour.g
+		vertices[28] = colour.b
+		vertices[29] = colour.a
+		vertices[30] = u2
+		vertices[31] = v
+
+		batch.draw(region.texture, vertices, 0, 32)
+	}
+
+	inline fun calculateVertexData(region: TextureRegion,
+							x: Float, y: Float, originX: Float, originY: Float,
+							width: Float, height: Float, scaleX: Float, scaleY: Float,
+							rotation: Float, flipX: Boolean, flipY: Boolean): VertexData
 	{
 		// bottom left and top right corner points relative to origin
 		val worldOriginX = x + originX
@@ -495,53 +451,22 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 		if (removeAmount > 0f)
 		{
 			val yMove = (y1-y2) * removeAmount
-			y1 -= yMove
-			y4 -= yMove
+			y1 -= yMove / 2f
+			y4 -= yMove / 2f
+
+			y2 += yMove / 2f
+			y3 += yMove / 2f
 
 			val vMove = (v-v2) * removeAmount
 			v -= vMove
 		}
 
-		val vertices = verticesHdrBatchBatch
-		var idx = 0
-		vertices[idx++] = x1
-		vertices[idx++] = y1
-		vertices[idx++] = colour.r
-		vertices[idx++] = colour.g
-		vertices[idx++] = colour.b
-		vertices[idx++] = colour.a
-		vertices[idx++] = u
-		vertices[idx++] = v
-
-		vertices[idx++] = x2
-		vertices[idx++] = y2
-		vertices[idx++] = colour.r
-		vertices[idx++] = colour.g
-		vertices[idx++] = colour.b
-		vertices[idx++] = colour.a
-		vertices[idx++] = u
-		vertices[idx++] = v2
-
-		vertices[idx++] = x3
-		vertices[idx++] = y3
-		vertices[idx++] = colour.r
-		vertices[idx++] = colour.g
-		vertices[idx++] = colour.b
-		vertices[idx++] = colour.a
-		vertices[idx++] = u2
-		vertices[idx++] = v2
-
-		vertices[idx++] = x4
-		vertices[idx++] = y4
-		vertices[idx++] = colour.r
-		vertices[idx++] = colour.g
-		vertices[idx++] = colour.b
-		vertices[idx++] = colour.a
-		vertices[idx++] = u2
-		vertices[idx++] = v
-
-		batch.draw(region.texture, vertices, 0, vertices.size)
+		return VertexData(x1, x2, x3, x4, y1, y2, y3, y4, u, u2, v, v2)
 	}
+	data class VertexData(
+			val x1: Float, val x2: Float, val x3: Float, val x4: Float,
+			val y1: Float, val y2: Float, val y3: Float, val y4: Float,
+			val u: Float, val u2: Float, val v: Float, val v2: Float)
 
 	val currentTexture: TextureRegion
 		get() = textures.get(animationState.texIndex)

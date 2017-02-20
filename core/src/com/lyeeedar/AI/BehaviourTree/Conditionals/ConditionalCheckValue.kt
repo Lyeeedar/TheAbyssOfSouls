@@ -1,6 +1,7 @@
 package com.lyeeedar.AI.BehaviourTree.Conditionals
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.EquationHelper
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
@@ -19,6 +20,7 @@ class ConditionalCheckValue(): AbstractConditional()
 	lateinit var reliesOn: Array<String>
 	var succeed: ExecutionState = ExecutionState.COMPLETED
 	var fail: ExecutionState = ExecutionState.FAILED
+	val variableMap: ObjectFloatMap<String> = ObjectFloatMap()
 
 	//----------------------------------------------------------------------
 	override fun evaluate(entity: Entity): ExecutionState
@@ -57,7 +59,8 @@ class ConditionalCheckValue(): AbstractConditional()
 		}
 
 		val stats = entity.stats()
-		val variableMap = stats.variableMap;
+		stats.write(variableMap)
+
 		if (k != null)
 		{
 			variableMap.put( k.toLowerCase(), keyVal );

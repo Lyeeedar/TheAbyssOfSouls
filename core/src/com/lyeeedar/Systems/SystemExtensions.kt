@@ -8,6 +8,7 @@ import kotlin.reflect.KClass
 
 val systemList: Array<KClass<out EntitySystem>> = arrayOf(
 		TaskProcessorSystem::class,
+		TileSystem::class,
 		DirectionalSpriteSystem::class,
 		ShadowCastSystem::class,
 		LightingSystem::class,
@@ -36,9 +37,11 @@ var Engine.level: Level?
 		this.task().level = value
 		this.lighting().level = value
 		this.shadowCast().level = value
+		this.tile().level = value
 	}
 
 fun Engine.render() = this.getSystem(RenderSystem::class.java)
 fun Engine.task() = this.getSystem(TaskProcessorSystem::class.java)
 fun Engine.lighting() = this.getSystem(LightingSystem::class.java)
 fun Engine.shadowCast() = this.getSystem(ShadowCastSystem::class.java)
+fun Engine.tile() = this.getSystem(TileSystem::class.java)

@@ -26,6 +26,7 @@ fun Entity.sceneTimeline() = Mappers.sceneTimeline.get(this)
 fun Entity.shadow() = Mappers.shadow.get(this)
 fun Entity.directionalSprite() = Mappers.directionalSprite.get(this)
 fun Entity.name() = Mappers.name.get(this)
+fun Entity.water() = Mappers.water.get(this)
 
 class Mappers
 {
@@ -43,6 +44,7 @@ class Mappers
 		val combo: ComponentMapper<ComboComponent> = ComponentMapper.getFor(ComboComponent::class.java)
 		val sceneTimeline: ComponentMapper<SceneTimelineComponent> = ComponentMapper.getFor(SceneTimelineComponent::class.java)
 		val directionalSprite: ComponentMapper<DirectionalSpriteComponent> = ComponentMapper.getFor(DirectionalSpriteComponent::class.java)
+		val water: ComponentMapper<WaterComponent> = ComponentMapper.getFor(WaterComponent::class.java)
 	}
 }
 
@@ -87,10 +89,12 @@ class EntityLoader()
 				entity.add(name)
 			}
 
-			val ai = xml.getChildByName("AI")?.get("AI", null)
+			val componentsEl = xml.getChildByName("Components") ?: return entity
+
+			val ai = componentsEl.getChildByName("AI")?.get("AI", null)
 			if (ai != null) entity.add(TaskComponent(ai))
 
-			val posEl = xml.getChildByName("Position")
+			val posEl = componentsEl.getChildByName("Position")
 			if (posEl != null)
 			{
 				val pos = entity.pos() ?: PositionComponent()
@@ -119,7 +123,7 @@ class EntityLoader()
 				}
 			}
 
-			val renderableCompEl = xml.getChildByName("Renderable")
+			val renderableCompEl = componentsEl.getChildByName("Renderable")
 			if (renderableCompEl != null)
 			{
 				val renderableEl = renderableCompEl.getChildByName("Renderable")
@@ -162,16 +166,16 @@ class EntityLoader()
 				}
 			}
 
-			val directionalSprite = xml.getChildByName("DirectionalSprite")
+			val directionalSprite = componentsEl.getChildByName("DirectionalSprite")
 			if (directionalSprite != null) entity.add(DirectionalSpriteComponent(AssetManager.loadDirectionalSprite(directionalSprite, entity.pos()?.size ?: 1)))
 
-			val light = xml.getChildByName("Light")
+			val light = componentsEl.getChildByName("Light")
 			if (light != null) entity.add(LightComponent(AssetManager.loadColour(light.getChildByName("Colour")), light.getFloat("Distance")))
 
-			val occludes = xml.getChildByName("Occludes") != null
+			val occludes = componentsEl.getChildByName("Occludes") != null
 			if (occludes) entity.add(OccluderComponent())
 
-			val statsEl = xml.getChildByName("Statistics")
+			val statsEl = componentsEl.getChildByName("Statistics")
 			if (statsEl != null)
 			{
 				val stats = entity.stats() ?: StatisticsComponent()
@@ -179,11 +183,12 @@ class EntityLoader()
 				stats.factions.addAll(statsEl.get("Faction").split(",").toGdxArray())
 				stats.maxHP += statsEl.getInt("HP")
 				stats.maxStamina += statsEl.getInt("Stamina")
+				stats.sight += statsEl.getInt("Sight")
 
 				entity.add(stats)
 			}
 
-			val comboEl = xml.getChildByName("Combo")
+			val comboEl = componentsEl.getChildByName("Combo")
 			if (comboEl != null)
 			{
 				val combo = ComboComponent()
@@ -195,6 +200,14 @@ class EntityLoader()
 				}
 
 				entity.add(combo)
+			}
+
+			val waterEl = componentsEl.getChildByName("Water")
+			if (waterEl != null)
+			{
+				val water = WaterComponent()
+
+				entity.add(water)
 			}
 
 			return entity
