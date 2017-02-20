@@ -60,6 +60,8 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 	var completionCallback: (() -> Unit)? = null
 
+	var removeAmount: Float = 0.0f
+
 	init
 	{
 		animationState = AnimationState()
@@ -263,14 +265,282 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			y -= offset.y
 		}
 
-		if (batch is HDRColourSpriteBatch)
+		if (batch is SpriteBatch)
 		{
-			batch.draw(texture, x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation, flipX, flipY)
+			doDraw(batch, texture, batch.packedColor, x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation, flipX, flipY)
+		}
+		else if (batch is HDRColourSpriteBatch)
+		{
+			doDraw(batch, texture, batch.colour, x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation, flipX, flipY)
+		}
+	}
+
+	// 4 vertices of order x, y, colour, u, v
+	val verticesSpriteBatch: FloatArray by lazy { FloatArray(4 * 5) }
+	val verticesHdrBatchBatch: FloatArray by lazy { FloatArray(4 * 8) }
+	fun doDraw(batch: SpriteBatch, region: TextureRegion, packedColor: Float,
+			   x: Float, y: Float, originX: Float, originY: Float,
+			   width: Float, height: Float, scaleX: Float, scaleY: Float,
+			   rotation: Float, flipX: Boolean, flipY: Boolean)
+	{
+		// bottom left and top right corner points relative to origin
+		val worldOriginX = x + originX
+		val worldOriginY = y + originY
+		var fx = -originX
+		var fy = -originY
+		var fx2 = width - originX
+		var fy2 = height - originY
+
+		// scale
+		if (scaleX != 1f || scaleY != 1f)
+		{
+			fx *= scaleX
+			fy *= scaleY
+			fx2 *= scaleX
+			fy2 *= scaleY
+		}
+
+		// construct corner points, start from top left and go counter clockwise
+		val p1x = fx
+		val p1y = fy
+		val p2x = fx
+		val p2y = fy2
+		val p3x = fx2
+		val p3y = fy2
+		val p4x = fx2
+		val p4y = fy
+
+		var x1: Float
+		var y1: Float
+		var x2: Float
+		var y2: Float
+		var x3: Float
+		var y3: Float
+		var x4: Float
+		var y4: Float
+
+		// rotate
+		if (rotation != 0f)
+		{
+			val cos = MathUtils.cosDeg(rotation)
+			val sin = MathUtils.sinDeg(rotation)
+
+			x1 = cos * p1x - sin * p1y
+			y1 = sin * p1x + cos * p1y
+
+			x2 = cos * p2x - sin * p2y
+			y2 = sin * p2x + cos * p2y
+
+			x3 = cos * p3x - sin * p3y
+			y3 = sin * p3x + cos * p3y
+
+			x4 = x1 + (x3 - x2)
+			y4 = y3 - (y2 - y1)
 		}
 		else
 		{
-			batch.draw(texture, x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation)
+			x1 = p1x
+			y1 = p1y
+
+			x2 = p2x
+			y2 = p2y
+
+			x3 = p3x
+			y3 = p3y
+
+			x4 = p4x
+			y4 = p4y
 		}
+
+		x1 += worldOriginX
+		y1 += worldOriginY
+		x2 += worldOriginX
+		y2 += worldOriginY
+		x3 += worldOriginX
+		y3 += worldOriginY
+		x4 += worldOriginX
+		y4 += worldOriginY
+
+		val u = if (flipX) region.u2 else region.u
+		var v = if (flipY) region.v else region.v2
+		val u2 = if (flipX) region.u else region.u2
+		val v2 = if (flipY) region.v2 else region.v
+
+		if (removeAmount > 0f)
+		{
+			val yMove = (y1-y2) * removeAmount
+			y1 -= yMove
+			y4 -= yMove
+
+			val vMove = (v-v2) * removeAmount
+			v -= vMove
+		}
+
+		val vertices = verticesSpriteBatch
+		vertices[0] = x1
+		vertices[1] = y1
+		vertices[2] = packedColor
+		vertices[3] = u
+		vertices[4] = v
+
+		vertices[5] = x2
+		vertices[6] = y2
+		vertices[7] = packedColor
+		vertices[8] = u
+		vertices[9] = v2
+
+		vertices[10] = x3
+		vertices[11] = y3
+		vertices[12] = packedColor
+		vertices[13] = u2
+		vertices[14] = v2
+
+		vertices[15] = x4
+		vertices[16] = y4
+		vertices[17] = packedColor
+		vertices[18] = u2
+		vertices[19] = v
+
+		batch.draw(region.texture, vertices, 0, 20)
+	}
+
+	fun doDraw(batch: HDRColourSpriteBatch, region: TextureRegion, colour: Colour,
+			   x: Float, y: Float, originX: Float, originY: Float,
+			   width: Float, height: Float, scaleX: Float, scaleY: Float,
+			   rotation: Float, flipX: Boolean, flipY: Boolean)
+	{
+		// bottom left and top right corner points relative to origin
+		val worldOriginX = x + originX
+		val worldOriginY = y + originY
+		var fx = -originX
+		var fy = -originY
+		var fx2 = width - originX
+		var fy2 = height - originY
+
+		// scale
+		if (scaleX != 1f || scaleY != 1f)
+		{
+			fx *= scaleX
+			fy *= scaleY
+			fx2 *= scaleX
+			fy2 *= scaleY
+		}
+
+		// construct corner points, start from top left and go counter clockwise
+		val p1x = fx
+		val p1y = fy
+		val p2x = fx
+		val p2y = fy2
+		val p3x = fx2
+		val p3y = fy2
+		val p4x = fx2
+		val p4y = fy
+
+		var x1: Float
+		var y1: Float
+		var x2: Float
+		var y2: Float
+		var x3: Float
+		var y3: Float
+		var x4: Float
+		var y4: Float
+
+		// rotate
+		if (rotation != 0f)
+		{
+			val cos = MathUtils.cosDeg(rotation)
+			val sin = MathUtils.sinDeg(rotation)
+
+			x1 = cos * p1x - sin * p1y
+			y1 = sin * p1x + cos * p1y
+
+			x2 = cos * p2x - sin * p2y
+			y2 = sin * p2x + cos * p2y
+
+			x3 = cos * p3x - sin * p3y
+			y3 = sin * p3x + cos * p3y
+
+			x4 = x1 + (x3 - x2)
+			y4 = y3 - (y2 - y1)
+		}
+		else
+		{
+			x1 = p1x
+			y1 = p1y
+
+			x2 = p2x
+			y2 = p2y
+
+			x3 = p3x
+			y3 = p3y
+
+			x4 = p4x
+			y4 = p4y
+		}
+
+		x1 += worldOriginX
+		y1 += worldOriginY
+		x2 += worldOriginX
+		y2 += worldOriginY
+		x3 += worldOriginX
+		y3 += worldOriginY
+		x4 += worldOriginX
+		y4 += worldOriginY
+
+		val u = if (flipX) region.u2 else region.u
+		var v = if (flipY) region.v else region.v2
+		val u2 = if (flipX) region.u else region.u2
+		val v2 = if (flipY) region.v2 else region.v
+
+		if (removeAmount > 0f)
+		{
+			val yMove = (y1-y2) * removeAmount
+			y1 -= yMove
+			y4 -= yMove
+
+			val vMove = (v-v2) * removeAmount
+			v -= vMove
+		}
+
+		val vertices = verticesHdrBatchBatch
+		var idx = 0
+		vertices[idx++] = x1
+		vertices[idx++] = y1
+		vertices[idx++] = colour.r
+		vertices[idx++] = colour.g
+		vertices[idx++] = colour.b
+		vertices[idx++] = colour.a
+		vertices[idx++] = u
+		vertices[idx++] = v
+
+		vertices[idx++] = x2
+		vertices[idx++] = y2
+		vertices[idx++] = colour.r
+		vertices[idx++] = colour.g
+		vertices[idx++] = colour.b
+		vertices[idx++] = colour.a
+		vertices[idx++] = u
+		vertices[idx++] = v2
+
+		vertices[idx++] = x3
+		vertices[idx++] = y3
+		vertices[idx++] = colour.r
+		vertices[idx++] = colour.g
+		vertices[idx++] = colour.b
+		vertices[idx++] = colour.a
+		vertices[idx++] = u2
+		vertices[idx++] = v2
+
+		vertices[idx++] = x4
+		vertices[idx++] = y4
+		vertices[idx++] = colour.r
+		vertices[idx++] = colour.g
+		vertices[idx++] = colour.b
+		vertices[idx++] = colour.a
+		vertices[idx++] = u2
+		vertices[idx++] = v
+
+		batch.draw(region.texture, vertices, 0, vertices.size)
 	}
 
 	val currentTexture: TextureRegion
@@ -379,7 +649,8 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 				x4 = x1 + (x3 - x2)
 				y4 = y3 - (y2 - y1)
-			} else
+			}
+			else
 			{
 				x1 = p1x
 				y1 = p1y

@@ -42,6 +42,7 @@ class GrammarRuleSymbol : AbstractGrammarRule()
 		for (el in xml.children())
 		{
 			if (el.name == "Character") continue
+			if (el.name == "Extends") continue
 
 			val slot = SpaceSlot.valueOf(el.name.toUpperCase())
 			contents[slot] = el

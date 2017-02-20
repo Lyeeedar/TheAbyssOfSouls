@@ -9,6 +9,7 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Renderables.SortedRenderer
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Colour
