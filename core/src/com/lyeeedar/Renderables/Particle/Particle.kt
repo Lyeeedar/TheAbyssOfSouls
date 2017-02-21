@@ -46,6 +46,7 @@ class Particle(val emitter: Emitter)
 	var drag = 0f
 	var velocityAligned = false
 	lateinit var collision: CollisionAction
+	var blendKeyframes = false
 	val texture = StepTimeline<TextureRegion>()
 	val colour = ColourTimeline()
 	val alpha = LerpTimeline()
@@ -237,8 +238,8 @@ class Particle(val emitter: Emitter)
 		val sx = scale * emitter.size.x
 		val sy = scale * emitter.size.y
 
-		val x = if (overridePos == null) particle.position.x else overridePos.x
-		val y = if (overridePos == null) particle.position.y else overridePos.y
+		val x = overridePos?.x ?: particle.position.x
+		val y = overridePos?.y ?: particle.position.y
 
 		var actualx = x
 		var actualy = y
@@ -276,7 +277,7 @@ class Particle(val emitter: Emitter)
 	{
 		val particle = ParticleData.obtain().set(
 				position, velocity,
-				rotation, lifetime.v1 * MathUtils.random(),
+				rotation, (lifetime.v2 - lifetime.v1) * MathUtils.random(),
 				MathUtils.random(texture.streams.size-1),
 				MathUtils.random(colour.streams.size-1),
 				MathUtils.random(alpha.streams.size-1),
@@ -299,6 +300,8 @@ class Particle(val emitter: Emitter)
 			particle.drag = xml.getFloat("Drag", 0f)
 			particle.velocityAligned = xml.getBoolean("VelocityAligned", false)
 			particle.allowResize = xml.getBoolean("AllowResize", true)
+
+			particle.blendKeyframes = xml.getBoolean("BlendKeyframes", false)
 
 			val textureEls = xml.getChildByName("TextureKeyframes")
 			if (textureEls != null)

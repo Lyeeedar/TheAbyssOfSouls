@@ -19,6 +19,7 @@ fun Entity.pos() = Mappers.position.get(this)
 fun Entity.tile() = Mappers.position.get(this).position as? Tile
 fun Entity.stats() = Mappers.stats.get(this)
 fun Entity.renderable() = Mappers.renderable.get(this)
+fun Entity.additionalRenderable() = Mappers.additionalRenderable.get(this)
 fun Entity.renderOffset() = this.renderable()?.renderable?.animation?.renderOffset()
 fun Entity.task() = Mappers.task.get(this)
 fun Entity.combo() = Mappers.combo.get(this)
@@ -35,6 +36,7 @@ class Mappers
 		val name: ComponentMapper<NameComponent> = ComponentMapper.getFor(NameComponent::class.java)
 		val position: ComponentMapper<PositionComponent> = ComponentMapper.getFor(PositionComponent::class.java)
 		val renderable: ComponentMapper<RenderableComponent> = ComponentMapper.getFor(RenderableComponent::class.java)
+		val additionalRenderable: ComponentMapper<AdditionalRenderableComponent> = ComponentMapper.getFor(AdditionalRenderableComponent::class.java)
 		val task: ComponentMapper<TaskComponent> = ComponentMapper.getFor(TaskComponent::class.java)
 		val light: ComponentMapper<LightComponent> = ComponentMapper.getFor(LightComponent::class.java)
 		val occluder: ComponentMapper<OccluderComponent> = ComponentMapper.getFor(OccluderComponent::class.java)
@@ -206,6 +208,7 @@ class EntityLoader()
 			if (waterEl != null)
 			{
 				val water = WaterComponent()
+				water.depth = waterEl.getFloat("Depth", 0.3f)
 
 				entity.add(water)
 			}

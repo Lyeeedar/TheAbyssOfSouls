@@ -70,6 +70,7 @@
 						</Renderable>
 						<Water>
 							<Direction>1,0</Direction>
+							<Depth>0.5</Depth>
 						</Water>
 					</Components>
 				</Floor>

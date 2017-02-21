@@ -33,6 +33,7 @@
 			</Data>
 			<Data Name="Water" meta:RefKey="Struct">
 				<Data Name="Direction" meta:RefKey="Vector" />
+				<Data Name="Depth" Min="0" Max="1" Default="0.2" SkipIfDefault="False" meta:RefKey="Number" />
 			</Data>
 		</Data>
 	</Definition>

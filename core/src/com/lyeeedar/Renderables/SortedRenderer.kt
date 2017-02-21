@@ -37,6 +37,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	val tempVec = Vector2()
 	val tempPoint = Point()
 	val tempCol = Colour()
+	val tempCol2 = Colour()
 	val bitflag = EnumBitflag<Direction>()
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap()
 	var tilingMap: ObjectMap<Point, ObjectSet<Long>> = ObjectMap()
@@ -138,13 +139,13 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 			if (rs.texture != null)
 			{
-				if (batch is HDRColourSpriteBatch)
+				if (rs.nextTexture != null)
 				{
-					batch.draw(rs.texture, localx, localy, 0.5f, 0.5f, 1f, 1f, localw * rs.scaleX, localh * rs.scaleY, rs.rotation, rs.flipX, rs.flipY)
+					drawBlend(batch, rs.texture!!, rs.nextTexture!!, rs.blendAlpha, localx, localy, 0.5f, 0.5f, 1f, 1f, localw * rs.scaleX, localh * rs.scaleY, rs.rotation, rs.flipX, rs.flipY, 0f)
 				}
 				else
 				{
-					batch.draw(rs.texture, localx, localy, 0.5f, 0.5f, 1f, 1f, localw * rs.scaleX, localh * rs.scaleY, rs.rotation)
+					com.lyeeedar.Util.draw(batch, rs.texture!!, localx, localy, 0.5f, 0.5f, 1f, 1f, localw * rs.scaleX, localh * rs.scaleY, rs.rotation, rs.flipX, rs.flipY, 0f)
 				}
 			}
 		}
@@ -249,6 +250,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		if (debugDraw && inDebugFrame) return
 
+		effect.setPosition(ix, iy)
 		update(effect)
 
 		if (!effect.visible) return
@@ -267,8 +269,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		{
 			for (particle in emitter.particles)
 			{
-				var offsetx = x
-				var offsety = y
+				var px = 0f
+				var py = 0f
 
 				if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL)
 				{
@@ -276,13 +278,13 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 					tempVec.scl(emitter.size)
 					tempVec.rotate(emitter.rotation)
 
-					offsetx += (emitter.position.x + tempVec.x)
-					offsety += (emitter.position.y + tempVec.y)
+					px += (emitter.position.x + tempVec.x)
+					py += (emitter.position.y + tempVec.y)
 				}
 
 				for (pdata in particle.particles)
 				{
-					val tex = particle.texture.valAt(pdata.texStream, pdata.life)
+					val texWindow = particle.texture.valAround(pdata.texStream, pdata.life)
 					val col = tempCol.set(particle.colour.valAt(pdata.colStream, pdata.life))
 					col.a = particle.alpha.valAt(pdata.alphaStream, pdata.life)
 					val size = particle.size.valAt(pdata.sizeStream, pdata.life).lerp(pdata.ranVal)
@@ -303,8 +305,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 					if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) tempVec.scl(emitter.size).rotate(emitter.rotation + emitter.emitterRotation)
 
-					val drawx = tempVec.x  + offsetx
-					val drawy = tempVec.y + offsety
+					val drawx = tempVec.x + px
+					val drawy = tempVec.y + py
 
 					val localx = drawx * tileSize + offsetx
 					val localy = drawy * tileSize + offsety
@@ -315,7 +317,13 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 					val comparisonVal = getComparisonVal((drawx-sizex*0.5f).toInt(), (drawy-sizey*0.5f).toInt(), layer, index, particle.blend)
 
-					val rs = RenderSprite.obtain().set( null, null, tex, drawx * tileSize, drawy * tileSize, tempVec.x, tempVec.y, col, sizex, sizey, rotation, 1f, 1f, effect.flipX, effect.flipY, particle.blend, comparisonVal )
+					val rs = RenderSprite.obtain().set( null, null, texWindow.v1, drawx * tileSize, drawy * tileSize, tempVec.x, tempVec.y, col, sizex, sizey, rotation, 1f, 1f, effect.flipX, effect.flipY, particle.blend, comparisonVal )
+
+					if (particle.blendKeyframes)
+					{
+						rs.nextTexture = texWindow.v2
+						rs.blendAlpha = texWindow.alpha
+					}
 
 					heap.add( rs, rs.comparisonVal )
 				}
@@ -529,6 +537,8 @@ class RenderSprite : BinaryHeap.Node(0f)
 	var sprite: Sprite? = null
 	var tilingSprite: TilingSprite? = null
 	var texture: TextureRegion? = null
+	var nextTexture: TextureRegion? = null
+	var blendAlpha = 0f
 	var x: Float = 0f
 	var y: Float = 0f
 	var width: Float = 1f
@@ -574,6 +584,8 @@ class RenderSprite : BinaryHeap.Node(0f)
 		this.scaleY = scaleY
 		this.flipX = flipX
 		this.flipY = flipY
+
+		nextTexture = null
 
 		return this
 	}

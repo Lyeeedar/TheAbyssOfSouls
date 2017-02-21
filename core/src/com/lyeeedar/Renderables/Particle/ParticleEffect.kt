@@ -138,7 +138,7 @@ class ParticleEffect : Renderable()
 		return complete
 	}
 
-	fun complete() = emitters.firstOrNull{ !it.complete() } == null
+	fun complete() = emitters.all{ it.complete() }
 
 	fun setPosition(x: Float, y: Float)
 	{
@@ -150,7 +150,7 @@ class ParticleEffect : Renderable()
 
 	}
 
-	fun debug(shape: ShapeRenderer, offsetx: Float, offsety: Float, tileSize: Float)
+	fun debug(shape: ShapeRenderer, offsetx: Float, offsety: Float, tileSize: Float, drawEmitter: Boolean, drawParticles: Boolean)
 	{
 		val posOffset = animation?.renderOffset()
 		val x = position.x + (posOffset?.get(0) ?: 0f)
@@ -187,7 +187,11 @@ class ParticleEffect : Renderable()
 			val w2 = w * 0.5f
 			val h2 = h * 0.5f
 
-			if (emitter.shape == Emitter.EmissionShape.BOX)
+			if (!drawEmitter)
+			{
+
+			}
+			else if (emitter.shape == Emitter.EmissionShape.BOX)
 			{
 				shape.rect(ex-w2, ey-h2, w2, h2, w, h, 1f, 1f, emitter.emitterRotation + rotation)
 			}
@@ -221,6 +225,56 @@ class ParticleEffect : Renderable()
 				shape.line(core, min)
 				shape.line(core, max)
 				shape.line(min, max)
+			}
+			else
+			{
+				throw Exception("Unhandled emitter type '${emitter.shape}'!")
+			}
+
+			if (drawParticles)
+			{
+				for (particle in emitter.particles)
+				{
+					var px = 0f
+					var py = 0f
+
+					if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL)
+					{
+						temp.set(emitter.offset.valAt(0, emitter.time))
+						temp.scl(emitter.size)
+						temp.rotate(emitter.rotation)
+
+						px += (emitter.position.x + temp.x)
+						py += (emitter.position.y + temp.y)
+					}
+
+					for (pdata in particle.particles)
+					{
+						val size = particle.size.valAt(pdata.sizeStream, pdata.life).lerp(pdata.ranVal)
+						var sizex = size
+						var sizey = size
+
+						if (particle.allowResize)
+						{
+							sizex *= emitter.size.x
+							sizey *= emitter.size.y
+						}
+
+						sizex *= tileSize
+						sizey *= tileSize
+
+						val rotation = if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) pdata.rotation + emitter.rotation + emitter.emitterRotation else pdata.rotation
+
+						temp.set(pdata.position)
+
+						if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) temp.scl(emitter.size).rotate(emitter.rotation + emitter.emitterRotation)
+
+						val drawx = (temp.x + px) * tileSize + offsetx
+						val drawy = (temp.y + py) * tileSize + offsety
+
+						shape.rect(drawx - sizex / 2f, drawy - sizey / 2f, sizex / 2f, sizey / 2f, sizex, sizey, 1f, 1f, rotation)
+					}
+				}
 			}
 		}
 

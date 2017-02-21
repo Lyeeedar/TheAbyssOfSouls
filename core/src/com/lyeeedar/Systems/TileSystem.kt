@@ -1,13 +1,15 @@
 package com.lyeeedar.Systems
 
+import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
-import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.renderable
-import com.lyeeedar.Components.water
+import com.lyeeedar.Components.*
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Util.AssetManager
+import ktx.collections.set
 
 class TileSystem : EntitySystem(systemList.indexOf(TileSystem::class))
 {
@@ -35,13 +37,56 @@ class TileSystem : EntitySystem(systemList.indexOf(TileSystem::class))
 
 		if (water == null)
 		{
+			val additional = entity.additionalRenderable()
+			if (additional != null)
+			{
+				val ripple = additional.below["WaterRipple", null] as? ParticleEffect
+
+				if (ripple != null)
+				{
+					additional.below.remove("WaterRipple")
+
+					ripple.stop()
+
+					val rippleEnt = Entity()
+					rippleEnt.add(RenderableComponent(ripple))
+
+					val entPos = PositionComponent()
+					entPos.position = entity.pos()!!.position
+					entPos.slot = entity.pos()!!.slot
+
+					rippleEnt.add(entPos)
+
+					engine.addEntity(rippleEnt)
+				}
+			}
+
 			sprite.removeAmount = 0.0f
 			return
 		}
 
 		if (sprite.animation == null)
 		{
-			sprite.removeAmount = 0.3f
+			if (sprite.removeAmount == 0f)
+			{
+				sprite.removeAmount = water.depth
+
+				if (water.depth > 0.4f)
+				{
+					val additional = entity.additionalRenderable() ?: AdditionalRenderableComponent()
+
+					if (!additional.below.containsKey("WaterRipple"))
+					{
+						val ripple = AssetManager.loadParticleEffect("WaterRipple")
+						ripple.size[0] = entity.pos()!!.size
+						ripple.size[1] = entity.pos()!!.size
+
+						additional.below["WaterRipple"] = ripple
+					}
+
+					entity.add(additional)
+				}
+			}
 		}
 	}
 }

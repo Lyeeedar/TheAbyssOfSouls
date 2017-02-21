@@ -180,7 +180,7 @@ class ParticleEditorScreen : AbstractScreen()
 		shape.setAutoShapeType(true)
 		shape.begin()
 
-		particle.debug(shape, 0f, 0f, tileSize)
+		particle.debug(shape, 0f, 0f, tileSize, true, true)
 
 		shape.end()
 	}

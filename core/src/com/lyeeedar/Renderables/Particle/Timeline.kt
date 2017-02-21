@@ -31,9 +31,15 @@ abstract class Timeline<T>
 
 	fun valAt(stream: Int, time: Float): T
 	{
+		val window = valAround(stream, time)
+		return lerpValue(window.v1, window.v2, window.alpha)
+	}
+
+	fun valAround(stream: Int, time: Float): ValOutput<T>
+	{
 		val keyframes = streams[stream]
 
-		if (keyframes.size == 1) return keyframes[0].second
+		if (keyframes.size == 1) return ValOutput(keyframes[0].second, keyframes[0].second, 0f)
 
 		var prev: Pair<Float, T> = keyframes[0]
 		var next: Pair<Float, T> = keyframes[0]
@@ -46,9 +52,9 @@ abstract class Timeline<T>
 		}
 
 		val alpha = (time - prev.first) / (next.first - prev.first)
-		val out = lerpValue(prev.second, next.second, alpha)
-		return out
+		return ValOutput(prev.second, next.second, alpha)
 	}
+	data class ValOutput<out T>(val v1: T, val v2: T, val alpha: Float)
 
 	abstract fun lerpValue(prev: T, next: T, alpha: Float): T
 

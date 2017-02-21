@@ -41,14 +41,15 @@
 				<Data Name="Particles" MinCount="1" meta:RefKey="Collection">
 					<Data Name="Particle" meta:RefKey="Struct">
 						<Data Name="Lifetime" Nullable="False" Collapse="True" SkipIfDefault="False" meta:RefKey="Struct">
-							<Data Name="Offset" Min="0" Default="1" SkipIfDefault="False" meta:RefKey="Number" />
-							<Data Name="Lifetime" Min="0" Default="1" SkipIfDefault="False" meta:RefKey="Number" />
+							<Data Name="Min" Min="0" Default="1" SkipIfDefault="False" meta:RefKey="Number" />
+							<Data Name="Max" Min="0" Default="1" SkipIfDefault="False" meta:RefKey="Number" />
 						</Data>
 						<Data Name="BlendMode" EnumValues="Additive,Multiplicative" SkipIfDefault="False" meta:RefKey="Enum" />
 						<Data Name="Collision" EnumValues="None,Slide,Bounce,Die" meta:RefKey="Enum" />
 						<Data Name="Drag" meta:RefKey="Number" />
 						<Data Name="VelocityAligned" meta:RefKey="Boolean" />
 						<Data Name="AllowResize" Default="True" meta:RefKey="Boolean" />
+						<Data Name="BlendKeyframes" meta:RefKey="Boolean" />
 						<Data Name="TextureKeyframes" MinCount="1" meta:RefKey="Collection">
 							<Data Name="Stream" MinCount="1" meta:RefKey="Timeline">
 								<Keyframe Name="Keyframe" Collapse="True" Seperator="|" meta:RefKey="Keyframe">

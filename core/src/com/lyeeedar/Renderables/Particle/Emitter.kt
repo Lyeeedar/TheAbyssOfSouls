@@ -83,7 +83,7 @@ class Emitter(val particleEffect: ParticleEffect)
 	var stopped = false
 
 	fun lifetime() = emissionRate.length().toFloat() + particles.maxBy { it.lifetime.v2 }!!.lifetime.v2
-	fun complete() = time > emissionRate.length() && particles.firstOrNull{ !it.complete() } == null
+	fun complete() = (time >= emissionRate.length() || stopped) && particles.all{ it.complete() }
 	fun stop() { stopped = true }
 	fun start() { stopped = false }
 

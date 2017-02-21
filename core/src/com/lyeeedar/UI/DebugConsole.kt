@@ -280,7 +280,16 @@ class ConsoleCommand(val text: String, val help: String, val callback: (args: ko
 				args = argText.split(' ').toTypedArray()
 			}
 
-			return callback.invoke(args, console)
+			try
+			{
+				return callback.invoke(args, console)
+			}
+			catch (ex: Exception)
+			{
+				console.error(ex.message!!)
+
+				return false
+			}
 		}
 	}
 }

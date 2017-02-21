@@ -3,11 +3,14 @@ package com.lyeeedar.Systems
 import com.badlogic.ashley.core.*
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Level
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
@@ -16,6 +19,12 @@ import com.lyeeedar.Util.Colour
 
 class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 {
+	val shape: ShapeRenderer by lazy { ShapeRenderer() }
+	var drawParticleDebug = false
+	var drawEmitters = false
+	var drawParticles = false
+	val particles = Array<ParticleEffect>()
+
 	val batchHDRColour: HDRColourSpriteBatch = HDRColourSpriteBatch()
 	lateinit var entities: ImmutableArray<Entity>
 
@@ -42,6 +51,8 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 		DebugConsole.register("DebugDraw", "'DebugDraw speed' to enable, 'DebugDraw false' to disable", fun (args, console): Boolean {
 			if (args[0] == "false")
 			{
+				console.write("Debug draw disabled")
+
 				renderer.debugDraw = false
 				return true
 			}
@@ -53,6 +64,8 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 					renderer.debugDraw = true
 					renderer.debugDrawSpeed = speed
 
+					console.write("Debug draw enabled")
+
 					return true
 				}
 				catch (ex: Exception)
@@ -60,6 +73,46 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 					console.error(ex.message!!)
 					return false
 				}
+			}
+		})
+
+		DebugConsole.register("ParticleDebug", "'ParticleDebug (Emitter|Particle) true' to enable, 'ParticleDebug (Emitter|Particle) false' to disable", fun (args, console): Boolean {
+			if (args[0] == "false" && args.size == 1)
+			{
+				console.write("Particle debug draw disabled")
+
+				drawEmitters = false
+				drawParticles = false
+				drawParticleDebug = false
+				return true
+			}
+			else if (args[0] == "true" && args.size == 1)
+			{
+				console.write("Particle debug draw enabled")
+
+				drawEmitters = true
+				drawParticles = true
+				drawParticleDebug = true
+				return true
+			}
+			else
+			{
+				val changingEmitter = args.contains("emitter")
+				val changingParticle = args.contains("particle")
+
+				val isTrue = args.contains("true")
+				val isFalse = args.contains("false")
+
+				if (isTrue == isFalse || !(changingEmitter || changingParticle))
+				{
+					return false
+				}
+
+				if (changingEmitter) drawEmitters = isTrue
+				if (changingParticle) drawParticles = isTrue
+
+				console.write("Enable particle debug")
+				return true
 			}
 		})
 	}
@@ -103,6 +156,15 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 				continue
 			}
 
+			if (renderable.renderable is ParticleEffect)
+			{
+				val effect = renderable.renderable as ParticleEffect
+				if (effect.complete() && entity.components.size() == 2)
+				{
+					engine.removeEntity(entity)
+				}
+			}
+
 			val tileCol = tempCol.set(Colour.WHITE)
 
 			if (tile != null)
@@ -135,10 +197,67 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 			val py = pos.position.y.toFloat()
 
 			renderer.queue(renderable.renderable, px, py, pos.slot.ordinal, 0, tileCol)
+
+			if (drawParticleDebug && renderable.renderable is ParticleEffect)
+			{
+				particles.add(renderable.renderable as ParticleEffect)
+			}
+
+			val additional = entity.additionalRenderable()
+			if (additional != null)
+			{
+				val offset = renderable.renderable.animation?.renderOffset()
+
+				var ax = px
+				var ay = py
+
+				if (offset != null)
+				{
+					ax += offset[0]
+					ay += offset[1]
+				}
+
+				for (below in additional.below.values())
+				{
+					renderer.queue(below, ax, ay, pos.slot.ordinal, -1, tileCol)
+
+					if (drawParticleDebug && below is ParticleEffect)
+					{
+						particles.add(below)
+					}
+
+				}
+
+				for (above in additional.above.values())
+				{
+					renderer.queue(above, ax, ay, pos.slot.ordinal, 1, tileCol)
+
+					if (drawParticleDebug && above is ParticleEffect)
+					{
+						particles.add(above)
+					}
+				}
+			}
 		}
 
 		batchHDRColour.begin()
 		renderer.flush(batchHDRColour)
 		batchHDRColour.end()
+
+		if (drawParticleDebug)
+		{
+			shape.projectionMatrix = Global.stage.camera.combined
+			shape.setAutoShapeType(true)
+			shape.begin()
+
+			for (particle in particles)
+			{
+				particle.debug(shape, offsetx, offsety, tileSize, drawEmitters, drawParticles)
+			}
+
+			shape.end()
+
+			particles.clear()
+		}
 	}
 }
