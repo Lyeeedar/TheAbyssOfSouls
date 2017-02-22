@@ -46,6 +46,8 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 			}
 		}
 
+	var processDuration: Float = 0f
+
 	init
 	{
 		DebugConsole.register("DebugDraw", "'DebugDraw speed' to enable, 'DebugDraw false' to disable", fun (args, console): Boolean {
@@ -124,6 +126,8 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 	override fun update(deltaTime: Float)
 	{
+		val start = System.nanoTime()
+
 		if (level == null) return
 
 		val player = level!!.player
@@ -169,7 +173,10 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 			if (tile != null)
 			{
-				if (!tile.isSeen) continue
+				if (!tile.isSeen)
+				{
+					renderable.renderable.animation = null
+				}
 
 				tileCol.set(tile.light)
 
@@ -177,7 +184,11 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 				{
 					// dont draw dynamic entities on non visible tiles
 					val task = Mappers.task.get(entity)
-					if (task != null) continue
+					if (task != null)
+					{
+						renderable.renderable.animation = null
+						continue
+					}
 
 					tileCol.mul(0.6f, 0.4f, 0.8f, 1.0f)
 				}
@@ -259,5 +270,10 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 			particles.clear()
 		}
+
+		val end = System.nanoTime()
+		val diff = (end - start) / 1000000000f
+
+		processDuration = (processDuration + diff) / 2f
 	}
 }

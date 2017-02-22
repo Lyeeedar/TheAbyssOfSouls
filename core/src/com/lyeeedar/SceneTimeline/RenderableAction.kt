@@ -4,10 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Components.NameComponent
-import com.lyeeedar.Components.PositionComponent
-import com.lyeeedar.Components.RenderableComponent
-import com.lyeeedar.Components.pos
+import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
@@ -26,6 +23,7 @@ class DestinationRenderableAction() : AbstractTimelineAction()
 	lateinit var renderable: Renderable
 	lateinit var slot: SpaceSlot
 	var entityPerTile = false
+	var killOnEnd = true
 
 	val entities = Array<Entity>()
 
@@ -90,7 +88,22 @@ class DestinationRenderableAction() : AbstractTimelineAction()
 
 	override fun exit()
 	{
-		for (entity in entities) Global.engine.removeEntity(entity)
+		for (entity in entities)
+		{
+			val renderable = entity.renderable()!!.renderable
+			if (renderable is ParticleEffect)
+			{
+				if (killOnEnd) Global.engine.removeEntity(entity)
+				else
+				{
+					renderable.stop()
+				}
+			}
+			else
+			{
+				Global.engine.removeEntity(entity)
+			}
+		}
 		entities.clear()
 	}
 
@@ -110,6 +123,7 @@ class DestinationRenderableAction() : AbstractTimelineAction()
 		slot = SpaceSlot.valueOf(xml.get("Slot", "Entity").toUpperCase())
 		renderable = AssetManager.loadRenderable(xml.getChildByName("Renderable"))
 		entityPerTile = xml.getBoolean("RenderablePerTile", false)
+		killOnEnd = xml.getBoolean("KillOnEnd", true)
 	}
 }
 

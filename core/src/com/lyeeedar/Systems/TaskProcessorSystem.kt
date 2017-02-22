@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
 import com.lyeeedar.Components.*
 import com.lyeeedar.Level.Level
+import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Event0Arg
 
 /**
@@ -29,6 +30,62 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 			field = value
 		}
 
+	var processDuration: Float = 0f
+
+	init
+	{
+		DebugConsole.register("spawn", "spawn entity x,y to spawn an entity at the given x,y pos relative to the player", fun (args, console): Boolean {
+			if (args.size != 2)
+			{
+				console.error("Invalid number of args!")
+				return false
+			}
+
+			val entity = EntityLoader.load(args[0])
+
+			val split = args[1].split(',')
+			val offsetx = split[0].toInt()
+			val offsety = split[1].toInt()
+
+			val player = level!!.player
+			val playerPos = player.tile()!!
+
+			for (x in 0..entity.pos()!!.size-1)
+			{
+				for (y in 0..entity.pos()!!.size-1)
+				{
+					val t = playerPos.level.getTile(playerPos, offsetx + x, offsety + y)
+					if (t == null)
+					{
+						console.error("Pos out of bounds!")
+						return false
+					}
+					if (t.contents.containsKey(entity.pos()!!.slot))
+					{
+						console.error("Tile already full!")
+						return false
+					}
+				}
+			}
+
+			val entityTile = playerPos.level.getTile(playerPos, offsetx, offsety)!!
+			entity.pos().tile = entityTile
+
+			for (x in 0..entity.pos()!!.size-1)
+			{
+				for (y in 0..entity.pos()!!.size - 1)
+				{
+					val t = playerPos.level.getTile(playerPos, offsetx + x, offsety + y)!!
+					t.contents[entity.pos()!!.slot] = entity
+				}
+			}
+
+			engine.addEntity(entity)
+
+			return true
+		})
+	}
+
 	override fun addedToEngine(engine: Engine?)
 	{
 		entities = engine?.getEntitiesFor(Family.all(TaskComponent::class.java, StatisticsComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
@@ -38,6 +95,8 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 
 	override fun update(deltaTime: Float)
 	{
+		val start = System.nanoTime()
+
 		var hasEffects = renderables.any { it.renderable()!!.renderable.animation != null }
 
 		if (!hasEffects)
@@ -96,6 +155,11 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 				}
 			}
 		}
+
+		val end = System.nanoTime()
+		val diff = (end - start) / 1000000000f
+
+		processDuration = (processDuration + diff) / 2f
 	}
 
 	fun processEntityStats(e: Entity)

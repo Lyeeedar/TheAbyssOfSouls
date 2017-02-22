@@ -20,17 +20,28 @@ class TileSystem : EntitySystem(systemList.indexOf(TileSystem::class))
 			field = value
 		}
 
+	var processDuration: Float = 0f
+
 	override fun update(deltaTime: Float)
 	{
+		val start = System.nanoTime()
+
 		for (tile in level!!.grid)
 		{
 			processWater(tile)
 		}
+
+		val end = System.nanoTime()
+		val diff = (end - start) / 1000000000f
+
+		processDuration = (processDuration + diff) / 2f
 	}
 
 	fun processWater(tile: Tile)
 	{
 		val entity = tile.contents[SpaceSlot.ENTITY] ?: return
+		val pos = entity.pos() ?: return
+
 		val sprite = entity.renderable()?.renderable as? Sprite ?: return
 
 		val water = tile.contents[SpaceSlot.FLOOR]?.water()
@@ -52,8 +63,8 @@ class TileSystem : EntitySystem(systemList.indexOf(TileSystem::class))
 					rippleEnt.add(RenderableComponent(ripple))
 
 					val entPos = PositionComponent()
-					entPos.position = entity.pos()!!.position
-					entPos.slot = entity.pos()!!.slot
+					entPos.position = pos.position
+					entPos.slot = pos.slot
 
 					rippleEnt.add(entPos)
 
@@ -69,7 +80,7 @@ class TileSystem : EntitySystem(systemList.indexOf(TileSystem::class))
 		{
 			if (sprite.removeAmount == 0f)
 			{
-				sprite.removeAmount = water.depth
+				sprite.removeAmount = water.depth / pos.size
 
 				if (water.depth > 0.4f)
 				{
@@ -78,8 +89,8 @@ class TileSystem : EntitySystem(systemList.indexOf(TileSystem::class))
 					if (!additional.below.containsKey("WaterRipple"))
 					{
 						val ripple = AssetManager.loadParticleEffect("WaterRipple")
-						ripple.size[0] = entity.pos()!!.size
-						ripple.size[1] = entity.pos()!!.size
+						ripple.size[0] = pos.size
+						ripple.size[1] = pos.size
 
 						additional.below["WaterRipple"] = ripple
 					}

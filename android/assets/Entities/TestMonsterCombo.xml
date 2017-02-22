@@ -52,6 +52,7 @@
 						<Renderable meta:RefKey="ParticleEffect">
 							<Name>slash</Name>
 						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
 				</Timeline>
 				<Timeline>
@@ -77,6 +78,7 @@
 							<Name>slash</Name>
 							<FlipX>true</FlipX>
 						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
 				</Timeline>
 				<Timeline>

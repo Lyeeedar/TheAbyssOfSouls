@@ -37,11 +37,24 @@ var Engine.level: Level?
 		this.task().level = value
 		this.lighting().level = value
 		this.shadowCast().level = value
+		this.sceneTimeline().level = value
 		this.tile().level = value
+	}
+
+val EntitySystem.systemProcessingTime: Float
+	get()
+	{
+		if (this is RenderSystem) return this.processDuration
+		if (this is TaskProcessorSystem) return this.processDuration
+		if (this is LightingSystem) return this.processDuration
+		if (this is ShadowCastSystem) return this.processDuration
+		if (this is TileSystem) return this.processDuration
+		else return 0f
 	}
 
 fun Engine.render() = this.getSystem(RenderSystem::class.java)
 fun Engine.task() = this.getSystem(TaskProcessorSystem::class.java)
 fun Engine.lighting() = this.getSystem(LightingSystem::class.java)
 fun Engine.shadowCast() = this.getSystem(ShadowCastSystem::class.java)
+fun Engine.sceneTimeline() = this.getSystem(SceneTimelineSystem::class.java)
 fun Engine.tile() = this.getSystem(TileSystem::class.java)

@@ -61,6 +61,8 @@ abstract class AbstractScreen() : Screen, InputProcessor
     // ----------------------------------------------------------------------
     override fun render(delta: Float)
 	{
+		val start = System.nanoTime()
+
         stage.act()
 		Future.update(delta)
 
@@ -72,6 +74,19 @@ abstract class AbstractScreen() : Screen, InputProcessor
         stage.draw()
 
 		Point.freeTemp()
+
+		val end = System.nanoTime()
+
+		val diff = (end - start) / 1000000000f
+		frameDuration = (frameDuration + diff) / 2f
+
+		fpsAccumulator += delta
+		if (fpsAccumulator > 0.5f)
+		{
+			fpsAccumulator = 0f
+
+			fps = (1f / frameDuration).toInt()
+		}
 
         // limit fps
         sleep()
@@ -200,6 +215,9 @@ abstract class AbstractScreen() : Screen, InputProcessor
     var diff: Long = 0
     var start: Long = System.currentTimeMillis()
 	var frametime: Float = -1f
+	var frameDuration: Float = 0f
+	var fps: Int = 0
+	var fpsAccumulator: Float = 0f
 
 	lateinit var debugConsole: DebugConsole
 

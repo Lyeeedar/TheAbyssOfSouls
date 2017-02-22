@@ -22,6 +22,8 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 			field = value
 		}
 
+	var processDuration: Float = 0f
+
 	override fun addedToEngine(engine: Engine?)
 	{
 		val posLight = Family.all(PositionComponent::class.java, LightComponent::class.java).get()
@@ -31,6 +33,8 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 
 	override fun update(deltaTime: Float)
 	{
+		val start = System.nanoTime()
+
 		for (x in 0.. level!!.width-1)
 		{
 			for (y in 0..level!!.height-1)
@@ -107,5 +111,10 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 				}
 			}
 		}
+
+		val end = System.nanoTime()
+		val diff = (end - start) / 1000000000f
+
+		processDuration = (processDuration + diff) / 2f
 	}
 }

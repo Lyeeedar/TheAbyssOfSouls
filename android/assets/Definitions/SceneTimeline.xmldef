@@ -6,14 +6,15 @@
 				<Data Name="BlockOnTurn" meta:RefKey="Boolean" />
 			</Keyframe>
 			<Keyframe Name="DestinationRenderable" Background="75,166,173,101" HasDuration="True" meta:RefKey="Keyframe">
-				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="RenderablePerTile" meta:RefKey="Boolean" />
+				<Data Name="KillOnEnd" Default="True" meta:RefKey="Boolean" />
 			</Keyframe>
 			<Keyframe Name="MovementRenderable" Background="49,181,114,94" HasDuration="True" meta:RefKey="Keyframe">
-				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="UseLeap" meta:RefKey="Boolean" />
 			</Keyframe>

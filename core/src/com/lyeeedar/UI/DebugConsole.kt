@@ -30,6 +30,7 @@ class DebugConsole() : Table()
 	var typedText = ""
 	var tabIndex = 0
 	var historyIndex = -1
+	var showingHistory = false
 
 	init
 	{
@@ -74,10 +75,14 @@ class DebugConsole() : Table()
 							{
 								historyIndex = history.size-1
 							}
-							else
+							else if (showingHistory)
 							{
 								historyIndex--
 								if (historyIndex < 0) historyIndex = 0
+							}
+							else
+							{
+								showingHistory = true
 							}
 
 							obj.setText(history[historyIndex])
@@ -148,6 +153,7 @@ class DebugConsole() : Table()
 
 				typedText = ""
 				text.text = ""
+				showingHistory = false
 			}
 			else if (key == '\t')
 			{
