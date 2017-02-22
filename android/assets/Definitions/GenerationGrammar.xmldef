@@ -75,6 +75,7 @@
 		<Data Name="Count" Default="1" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Dist" Type="Int" Min="1" Default="2" VisibleIf="Mode==Center" meta:RefKey="Number" />
 		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+		<Data Name="Remainder" Keys="Node" meta:RefKey="GraphReference" />
 	</Definition>
 	<!--Symbol Rules-->
 	<Definition Name="Fill" meta:RefKey="StructDef">

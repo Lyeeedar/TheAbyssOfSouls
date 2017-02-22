@@ -7,6 +7,7 @@ import com.lyeeedar.Level.Tile
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Animation.MoveAnimation
@@ -180,18 +181,22 @@ class SceneTimelineComboStep : ComboStep()
 	{
 		var hitTiles = getAllValid(entity, direction)
 
+		if (hitTiles.contains(target)) return true
+
 		if (stepForward && canMove(entity, entity, direction))
 		{
 			hitTiles = hitTiles.map { (it as Tile).level.getTile(it, direction) }.filterNotNull().toGdxArray()
+
+			return hitTiles.contains(target)
 		}
 
-		return hitTiles.contains(target)
+		return false
 	}
 
 	override fun getAllValid(entity: Entity, direction: Direction): Array<Point>
 	{
 		val epos = entity.pos()!!
-		val tiles = com.badlogic.gdx.utils.Array<Point>()
+		val tiles = com.badlogic.gdx.utils.Array<Point>(false, 16)
 
 		var xstep = 0
 		var ystep = 0
@@ -254,43 +259,22 @@ class SceneTimelineComboStep : ComboStep()
 		}
 
 		// restrict by visibility and remove duplicates
-		val visibleTiles = entity.shadow().cache.currentShadowCast
+		val visibleTiles = entity.shadow().cache.currentShadowCastSet
+		val existingSet = ObjectSet<Point>()
 
 		val itr = tiles.iterator()
 		while (itr.hasNext())
 		{
 			val pos = itr.next()
 
-			var matchFound = false
-
-			// Remove not visible
-			for (point in visibleTiles)
+			// Remove not visible and duplicates
+			if (visibleTiles.contains(pos))
 			{
-				if (point.x === pos.x && point.y === pos.y)
-				{
-					matchFound = true
-					break
-				}
-			}
-
-			// Remove duplicates
-			for (i in 0..tiles.size - 1)
-			{
-				val opos = tiles[i]
-				if (opos !== pos && opos.x === pos.x && opos.y === pos.y)
-				{
-					matchFound = false
-					break
-				}
-			}
-
-			if (!matchFound)
-			{
-				itr.remove()
+				existingSet.add(pos)
 			}
 		}
 
-		return tiles
+		return existingSet.toGdxArray(false)
 	}
 
 	override fun parse(xml: XmlReader.Element)

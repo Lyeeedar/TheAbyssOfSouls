@@ -1,8 +1,13 @@
 package com.lyeeedar.SceneTimeline
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Components.renderable
 import com.lyeeedar.Components.stats
 import com.lyeeedar.ElementType
+import com.lyeeedar.Renderables.Animation.BlinkAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Util.Colour
 
 class DamageAction() : AbstractTimelineAction()
 {
@@ -18,6 +23,9 @@ class DamageAction() : AbstractTimelineAction()
 			{
 				val stats = entity.stats() ?: continue
 				//stats.dealDamage(amount, element, elementalConversion)
+
+				val sprite = entity.renderable()?.renderable as? Sprite ?: continue
+				sprite.colourAnimation = BlinkAnimation.obtain().set(Colour(1f, 0.5f, 0.5f, 1f), sprite.colour, 0.15f, true)
 			}
 		}
 	}

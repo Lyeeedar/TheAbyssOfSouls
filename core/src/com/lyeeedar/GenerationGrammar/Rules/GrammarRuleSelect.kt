@@ -8,6 +8,7 @@ import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.GenerationGrammar.Pos
 import com.lyeeedar.Util.random
+import com.lyeeedar.Util.removeRandom
 import com.lyeeedar.Util.round
 import ktx.collections.toGdxArray
 import java.util.*
@@ -26,10 +27,11 @@ class GrammarRuleSelect : AbstractGrammarRule()
 	lateinit var count: String
 	var centerDist = 2
 	lateinit var rule: String
+	lateinit var remainder: String
 
 	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
-		val valid = Array<Pos>()
+		val valid = Array<Pos>(false, if (area.isPoints) area.points.size else area.width * area.height)
 		valid.addAll(area.getAllPoints())
 
 		if (mode == Mode.EDGE)
@@ -112,17 +114,35 @@ class GrammarRuleSelect : AbstractGrammarRule()
 
 		val count = count.evaluate(variables, ran).round()
 
-		if (count == 0) return
+		var newArea: Area? = null
+		if (count > 0)
+		{
+			val finalPoints = Array<Pos>()
 
-		val finalPoints = valid.asSequence().random(count, ran).asIterable().toGdxArray()
+			for (i in 0..count - 1)
+			{
+				finalPoints.add(valid.removeRandom(ran))
+			}
 
-		val newArea = area.copy()
-		if (!newArea.isPoints) newArea.convertToPoints()
-		newArea.points.clear()
-		newArea.points.addAll(finalPoints)
+			newArea = area.copy()
+			if (!newArea.isPoints) newArea.convertToPoints()
+			newArea.points.clear()
+			newArea.points.addAll(finalPoints)
 
-		val rule = ruleTable[rule]
-		rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+			val rule = ruleTable[rule]
+			rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+		}
+
+		if (!remainder.isNullOrBlank() && valid.size > 0)
+		{
+			val remainderArea = newArea?.copy() ?: area.copy()
+			if (!remainderArea.isPoints) remainderArea.convertToPoints()
+			remainderArea.points.clear()
+			remainderArea.points.addAll(valid)
+
+			val remainder = ruleTable[remainder]
+			remainder.execute(remainderArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+		}
 	}
 
 	override fun parse(xml: XmlReader.Element)
@@ -131,6 +151,7 @@ class GrammarRuleSelect : AbstractGrammarRule()
 		count = xml.get("Count", "1").toLowerCase().replace("%", "#count")
 		centerDist = xml.getInt("Dist", 2)
 		rule = xml.get("Rule")
+		remainder = xml.get("Remainder", "")
 	}
 
 }

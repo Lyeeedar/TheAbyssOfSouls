@@ -5,7 +5,7 @@
 			<Width>0.01</Width>
 			<Height>0.01</Height>
 			<Offset>
-				<Keyframe>0|0.5,0.5</Keyframe>
+				<Keyframe>0|0,0</Keyframe>
 			</Offset>
 			<ParticleSpeed>0,0</ParticleSpeed>
 			<ParticleRotation>0,0</ParticleRotation>

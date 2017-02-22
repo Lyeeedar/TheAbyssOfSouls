@@ -70,7 +70,7 @@ class DestinationRenderableAction() : AbstractTimelineAction()
 			if (r is ParticleEffect)
 			{
 				r.rotation = pos.facing.angle
-				r.position.set(r.size[0].toFloat() * 0.5f, r.size[1].toFloat() * 0.5f)
+				r.facing = pos.facing
 
 				if (pos.facing.x != 0)
 				{

@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Direction
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Colour
@@ -44,6 +45,7 @@ class ParticleEffect : Renderable()
 
 	// local stuff
 	val position = Vector2()
+	var facing: Direction = Direction.NORTH
 
 	var collisionGrid: Array2D<Boolean>? = null
 	var collisionFun: ((x: Int, y: Int) -> Unit)? = null

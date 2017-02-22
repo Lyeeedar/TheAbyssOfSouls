@@ -31,6 +31,7 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		}
 
 	var processDuration: Float = 0f
+	var lastState = "---"
 
 	init
 	{
@@ -84,6 +85,12 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 
 			return true
 		})
+
+		DebugConsole.register("TaskSystemLastState", "", fun (args, console): Boolean {
+			console.write(lastState)
+
+			return true
+		})
 	}
 
 	override fun addedToEngine(engine: Engine?)
@@ -97,17 +104,20 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 	{
 		val start = System.nanoTime()
 
-		var hasEffects = renderables.any { it.renderable()!!.renderable.animation != null }
+		val hasEffects = renderables.any { it.renderable()!!.renderable.animation != null }
+		var hasTimelines = false
 
 		if (!hasEffects)
 		{
-			hasEffects = timelines.any{ it.sceneTimeline()!!.sceneTimeline.isRunning }
+			hasTimelines = timelines.any{ it.sceneTimeline()!!.sceneTimeline.isRunning }
 		}
 
-		if (!hasEffects)
+		if (!hasEffects && !hasTimelines)
 		{
 			if (entitiesToBeProcessed.size == 0)
 			{
+				lastState = "Waiting on player"
+
 				// process player
 				val player = level!!.player
 
@@ -145,6 +155,8 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 
 			for (i in 0..entitiesToBeProcessed.size-1)
 			{
+				lastState = "Processing entities"
+
 				if (entitiesToBeProcessed.size > 0)
 				{
 					val entity = entitiesToBeProcessed[0]
@@ -154,6 +166,14 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 					if (!finished) entitiesToBeProcessed.add(entity)
 				}
 			}
+		}
+		else if (hasEffects)
+		{
+			lastState = "Waiting on effects"
+		}
+		else if (hasTimelines)
+		{
+			lastState = "Waiting on timelines"
 		}
 
 		val end = System.nanoTime()

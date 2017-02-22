@@ -1,5 +1,6 @@
 package com.lyeeedar.Pathfinding
 
+import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
@@ -48,6 +49,7 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 	private val opaqueTiles = com.badlogic.gdx.utils.Array<Point>()
 	private val clearTiles = com.badlogic.gdx.utils.Array<Point>()
 	val currentShadowCast = com.badlogic.gdx.utils.Array<Point>()
+	val currentShadowCastSet = ObjectSet<Point>()
 	var rawOutput: Array<DoubleArray>? = null
 		private set
 
@@ -96,6 +98,7 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 		{
 			Point.freeAll(currentShadowCast)
 			currentShadowCast.clear()
+			currentShadowCastSet.clear()
 
 			// build grid
 			val resistanceGrid = Array(range * 2) { DoubleArray(range * 2) }
@@ -128,7 +131,9 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 
 					if (rawOutput!![ix][iy] > 0 && grid.inBounds(gx, gy))
 					{
-						currentShadowCast.add(Point.obtain().set(gx, gy))
+						val point = Point.obtain().set(gx, gy)
+						currentShadowCast.add(point)
+						currentShadowCastSet.add(point)
 					}
 				}
 			}
