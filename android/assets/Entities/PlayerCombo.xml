@@ -1,0 +1,138 @@
+<Combo meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<NextMode>Keybinding</NextMode>
+	<Combos>
+		<Combo meta:RefKey="Wait">
+			<Name>Wait</Name>
+			<Animation>idle</Animation>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashLeft</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashRight</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+							<FlipX>true</FlipX>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+	</Combos>
+	<Keybinding>
+		<AttackNormal meta:X="291.95001220703125" meta:Y="-1.1336711645126343" meta:RefKey="ComboNode">
+			<Desc>SlashLeft</Desc>
+			<Cost>5</Cost>
+			<Keybinding>
+				<AttackNormal meta:X="680.72003173828125" meta:Y="-80" GUID="5217ff07-8239-40ab-99f0-18bff5d1080f" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<Cost>5</Cost>
+					<Keybinding>
+						<AttackNormal meta:X="1083.232666015625" meta:Y="-95.333320617675781" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>5</Cost>
+						</AttackNormal>
+						<AttackSpecial meta:X="1083.232666015625" meta:Y="-95.333320617675781" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>5</Cost>
+						</AttackSpecial>
+						<Defense meta:X="1146.933837890625" meta:Y="347.906494140625" GUID="a7486078-f2d9-4499-b3c8-ea9f86858990" meta:RefKey="ComboNode">
+							<Desc>Dodge</Desc>
+							<Cost>5</Cost>
+						</Defense>
+						<Direction meta:X="1083.232666015625" meta:Y="-95.333320617675781" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>5</Cost>
+						</Direction>
+					</Keybinding>
+				</AttackNormal>
+				<AttackSpecial meta:X="680.72003173828125" meta:Y="-80" GUID="5217ff07-8239-40ab-99f0-18bff5d1080f" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<Cost>5</Cost>
+					<Keybinding>
+						<AttackNormal meta:X="1083.232666015625" meta:Y="-95.333320617675781" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>5</Cost>
+						</AttackNormal>
+						<AttackSpecial meta:X="1083.232666015625" meta:Y="-95.333320617675781" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>5</Cost>
+						</AttackSpecial>
+						<Defense meta:X="1146.933837890625" meta:Y="347.906494140625" GUID="a7486078-f2d9-4499-b3c8-ea9f86858990" meta:RefKey="ComboNode">
+							<Desc>Dodge</Desc>
+							<Cost>5</Cost>
+						</Defense>
+						<Direction meta:X="1083.232666015625" meta:Y="-95.333320617675781" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>5</Cost>
+						</Direction>
+					</Keybinding>
+				</AttackSpecial>
+				<Defense meta:X="1146.933837890625" meta:Y="347.906494140625" GUID="a7486078-f2d9-4499-b3c8-ea9f86858990" meta:RefKey="ComboNode">
+					<Desc>Dodge</Desc>
+					<Cost>5</Cost>
+				</Defense>
+				<Direction meta:X="680.72003173828125" meta:Y="-80" GUID="5217ff07-8239-40ab-99f0-18bff5d1080f" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<Cost>5</Cost>
+					<Keybinding>
+						<AttackNormal meta:X="1083.232666015625" meta:Y="-95.333320617675781" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>5</Cost>
+						</AttackNormal>
+						<AttackSpecial meta:X="1083.232666015625" meta:Y="-95.333320617675781" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>5</Cost>
+						</AttackSpecial>
+						<Defense meta:X="1146.933837890625" meta:Y="347.906494140625" GUID="a7486078-f2d9-4499-b3c8-ea9f86858990" meta:RefKey="ComboNode">
+							<Desc>Dodge</Desc>
+							<Cost>5</Cost>
+						</Defense>
+						<Direction meta:X="1083.232666015625" meta:Y="-95.333320617675781" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>5</Cost>
+						</Direction>
+					</Keybinding>
+				</Direction>
+			</Keybinding>
+		</AttackNormal>
+	</Keybinding>
+</Combo>

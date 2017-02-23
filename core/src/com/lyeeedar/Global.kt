@@ -17,6 +17,7 @@ import com.esotericsoftware.kryo.io.Input
 import com.esotericsoftware.kryo.io.Output
 import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.Systems.createEngine
+import com.lyeeedar.Systems.render
 import com.lyeeedar.UI.LayeredDrawable
 import com.lyeeedar.UI.Seperator
 import com.lyeeedar.UI.TabPanel
@@ -44,6 +45,9 @@ class Global
 		lateinit var applicationChanger: AbstractApplicationChanger
 		val settings: Settings by lazy { Settings() }
 		lateinit var engine: Engine
+
+		val tilesize: Float
+			get() = engine.render().tileSize
 
 		var resolution = Point(800, 600)
 

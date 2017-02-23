@@ -9,10 +9,7 @@ import com.lyeeedar.Components.pos
 import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Sprite.Sprite
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.children
-import com.lyeeedar.Util.getXml
+import com.lyeeedar.Util.*
 import ktx.collections.set
 
 abstract class ComboStep
@@ -51,19 +48,31 @@ abstract class ComboStep
 
 class ComboTree
 {
+	enum class ComboKey
+	{
+		ATTACKNORMAL,
+		ATTACKSPECIAL,
+		DEFENSE,
+		DIRECTION
+	}
+
 	lateinit var current: ComboStep
-	val next = Array<ComboTree>()
+	val random = Array<ComboTree>()
+	var cost = 0
+	val keybinding = FastEnumMap<ComboKey, ComboTree>(ComboKey::class.java)
 
 	companion object
 	{
-		fun load(path: String): Array<ComboTree>
+		fun load(path: String): ComboTree
 		{
 			val xml = getXml(path)
 			return load(xml)
 		}
 
-		private fun load(xml: XmlReader.Element): Array<ComboTree>
+		private fun load(xml: XmlReader.Element): ComboTree
 		{
+			val isKeyBinding = xml.get("NextMode", "Random").toUpperCase() == "KEYBINDING"
+
 			val combosEl = xml.getChildByName("Combos")
 			val descMap = ObjectMap<String, ComboStep>()
 
@@ -75,33 +84,48 @@ class ComboTree
 
 			val root = ComboTree()
 
-			fun recursiveParse(el: XmlReader.Element, parent: ComboTree)
+			fun recursiveParse(el: XmlReader.Element): ComboTree
 			{
-				val descName = el.get("Desc")
-				val desc = descMap[descName.toUpperCase()]
+				val descName = el.get("Desc", null)
+				val desc = if (descName != null) descMap[descName.toUpperCase()] else null
+
+				val cost = el.getInt("Cost", 0)
 
 				val current = ComboTree()
-				current.current = desc
+				if (desc != null) current.current = desc
+				current.cost = cost
 
-				parent.next.add(current)
-
-				val nodesEl = el.getChildByName("Nodes")
-				if (nodesEl != null)
+				if (isKeyBinding)
 				{
-					for (child in nodesEl.children())
+					val nodesEl = el.getChildByName("Keybinding")
+					if (nodesEl != null)
 					{
-						recursiveParse(child, current)
+						for (childEl in nodesEl.children())
+						{
+							val child = recursiveParse(childEl)
+
+							val key = ComboKey.valueOf(childEl.name.toUpperCase())
+							current.keybinding[key] = child
+						}
 					}
 				}
+				else
+				{
+					val nodesEl = el.getChildByName("Random")
+					if (nodesEl != null)
+					{
+						for (childEl in nodesEl.children())
+						{
+							val child = recursiveParse(childEl)
+							current.random.add(child)
+						}
+					}
+				}
+
+				return current
 			}
 
-			val rootEl = xml.getChildByName("Root")
-			for (el in rootEl.children())
-			{
-				recursiveParse(el, root)
-			}
-
-			return root.next
+			return recursiveParse(xml)
 		}
 	}
 }

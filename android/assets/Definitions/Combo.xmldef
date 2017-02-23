@@ -1,24 +1,36 @@
 <Definitions xmlns:meta="Editor">
 	<Definition Name="Combo" AllowReferenceLinks="False" meta:RefKey="GraphStruct">
-		<Data Name="Root" meta:RefKey="Collection">
-			<Data Name="Combo" Keys="ComboNode" meta:RefKey="GraphReference" />
-		</Data>
+		<Data Name="NextMode" EnumValues="Random,Keybinding" meta:RefKey="Enum" />
 		<Data Name="Combos" meta:RefKey="Collection">
 			<Data Name="Combo" Keys="Wait,Scene" meta:RefKey="Reference" />
 		</Data>
-	</Definition>
-	<Definition Name="ComboNode" meta:RefKey="GraphStructDef">
-		<Data Name="Desc" TextColour="44,209,47" meta:RefKey="String" />
-		<Data Name="Condition" TextColour="194,178,63" meta:RefKey="String" />
-		<Data Name="Nodes" meta:RefKey="Collection">
+		<Data Name="Random" VisibleIf="NextMode==Random" meta:RefKey="Collection">
 			<Data Name="Node" Keys="ComboNode" meta:RefKey="GraphReference" />
+		</Data>
+		<Data Name="Keybinding" VisibleIf="NextMode==Keybinding" meta:RefKey="Struct">
+			<Data Name="AttackNormal" Keys="ComboNode" meta:RefKey="GraphReference" />
+			<Data Name="AttackSpecial" Keys="ComboNode" meta:RefKey="GraphReference" />
+			<Data Name="Defense" Keys="ComboNode" meta:RefKey="GraphReference" />
+		</Data>
+	</Definition>
+	<Definition Name="ComboNode" Description="{Desc}" TextColour="44,209,47" meta:RefKey="GraphStructDef">
+		<Data Name="Desc" TextColour="209,179,44" meta:RefKey="String" />
+		<Data Name="Cost" Type="Int" Min="0" VisibleIf="Root.NextMode==Keybinding" meta:RefKey="Number" />
+		<Data Name="Random" VisibleIf="Root.NextMode==Random" meta:RefKey="Collection">
+			<Data Name="Node" Keys="ComboNode" meta:RefKey="GraphReference" />
+		</Data>
+		<Data Name="Keybinding" VisibleIf="Root.NextMode==Keybinding" meta:RefKey="Struct">
+			<Data Name="AttackNormal" Keys="ComboNode" meta:RefKey="GraphReference" />
+			<Data Name="AttackSpecial" Keys="ComboNode" meta:RefKey="GraphReference" />
+			<Data Name="Defense" Keys="ComboNode" meta:RefKey="GraphReference" />
+			<Data Name="Direction" Keys="ComboNode" meta:RefKey="GraphReference" />
 		</Data>
 	</Definition>
 	<!--Base Def-->
 	<Definition Name="ComboDesc" meta:RefKey="StructDef">
 		<Data Name="Name" meta:RefKey="String" />
 		<Data Name="Animation" meta:RefKey="String" />
-		<Data Name="CanTurn" meta:RefKey="Boolean" />
+		<Data Name="CanTurn" VisibleIf="Root.NextMode==Random" meta:RefKey="Boolean" />
 	</Definition>
 	<!--Combo Defs-->
 	<Definition Name="Wait" Extends="ComboDesc" meta:RefKey="StructDef" />

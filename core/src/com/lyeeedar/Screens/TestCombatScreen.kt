@@ -16,6 +16,7 @@ import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Colour
+import com.lyeeedar.Util.Point
 
 class TestCombatScreen : AbstractScreen()
 {
@@ -163,25 +164,37 @@ class TestCombatScreen : AbstractScreen()
 	// ----------------------------------------------------------------------
 	override fun mouseMoved( screenX: Int, screenY: Int ): Boolean
 	{
+		updateMousePos(screenX, screenY)
+
+		return true
+	}
+
+	override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean
+	{
+		updateMousePos(screenX, screenY)
+
+		return super.touchDown(screenX, screenY, pointer, button)
+	}
+
+	fun updateMousePos(screenX: Int, screenY: Int)
+	{
 		val level = Global.engine.level!!
 		val player = level.player
 		val playerPos = player.pos()!!
 		val playerSprite = player.renderable()!!
 
-		var offsetx = Global.resolution.x / 2 - playerPos.position.x * 32f - 32f / 2
-		var offsety = Global.resolution.y / 2 - playerPos.position.y * 32f - 32f / 2
+		var offsetx = Global.resolution.x / 2 - playerPos.position.x * Global.tilesize - Global.tilesize / 2
+		var offsety = Global.resolution.y / 2 - playerPos.position.y * Global.tilesize - Global.tilesize / 2
 
 		val offset = playerSprite.renderable.animation?.renderOffset()
 		if (offset != null)
 		{
-			offsetx -= offset[0] * 32f
-			offsety -= offset[1] * 32f
+			offsetx -= offset[0] * Global.tilesize
+			offsety -= offset[1] * Global.tilesize
 		}
 
 		mousex = ((screenX - offsetx) / 32f).toInt()
-		mousey = (((Global.resolution[1] - screenY) - offsety) / 32f).toInt()
-
-		return true
+		mousey = (((Global.resolution[1] - screenY) - offsety) / Global.tilesize).toInt()
 	}
 
 	var mousex: Int = 0

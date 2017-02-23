@@ -193,14 +193,7 @@ class EntityLoader()
 			val comboEl = componentsEl.getChildByName("Combo")
 			if (comboEl != null)
 			{
-				val combo = ComboComponent()
-
-				val trees = ComboTree.load(comboEl.get("ComboTree"))
-				for (tree in trees)
-				{
-					combo.combos.add(tree)
-				}
-
+				val combo = ComboComponent(ComboTree.load(comboEl.get("ComboTree")))
 				entity.add(combo)
 			}
 

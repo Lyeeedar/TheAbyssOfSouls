@@ -73,7 +73,7 @@ class ActionCombo : AbstractAction()
 
 			if (autoAdvanceCombo)
 			{
-				combo.currentCombo = combo.currentCombo!!.next.random()
+				combo.currentCombo = combo.currentCombo!!.random.random()
 			}
 
 			state = if (combo.currentCombo != null) ExecutionState.RUNNING else ExecutionState.COMPLETED
@@ -82,7 +82,7 @@ class ActionCombo : AbstractAction()
 		{
 			// start new
 			val validCombos = Array<Pair>()
-			for (c in combo.combos)
+			for (c in combo.combos.random)
 			{
 				if (c.current.isValid(entity, pos.facing, target))
 				{
@@ -92,7 +92,7 @@ class ActionCombo : AbstractAction()
 
 			if (validCombos.size == 0)
 			{
-				for (c in combo.combos)
+				for (c in combo.combos.random)
 				{
 					for (dir in Direction.CardinalValues)
 					{
@@ -119,7 +119,7 @@ class ActionCombo : AbstractAction()
 
 				if (autoAdvanceCombo)
 				{
-					combo.currentCombo = combo.currentCombo!!.next.random()
+					combo.currentCombo = combo.currentCombo!!.random.random()
 				}
 
 				state = ExecutionState.RUNNING
@@ -137,8 +137,7 @@ class ActionCombo : AbstractAction()
 
 	override fun cancel(entity: Entity)
 	{
-		val combo = entity.combo()
-		combo.currentCombo = null
+
 	}
 
 	data class Pair(val combo: ComboTree, val direction: Direction)

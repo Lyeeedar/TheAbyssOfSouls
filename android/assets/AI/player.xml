@@ -1,5 +1,5 @@
 <AI meta:X="36" meta:Y="8" xmlns:meta="Editor">
-	<Root meta:X="240" meta:Y="8" meta:RefKey="Sequence">
+	<Root meta:X="252" meta:Y="16" meta:RefKey="Sequence">
 		<Action meta:RefKey="ProcessInput" />
 		<Action Key="Pos" meta:RefKey="MoveTo" />
 	</Root>

@@ -22,7 +22,7 @@
 			<Sight>12</Sight>
 		</Statistics>
 		<Combo>
-			<ComboTree>Entities/TestMonsterCombo</ComboTree>
+			<ComboTree>Entities/PlayerCombo</ComboTree>
 		</Combo>
 	</Components>
 </Entity>

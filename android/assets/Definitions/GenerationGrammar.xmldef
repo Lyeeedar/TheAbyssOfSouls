@@ -53,7 +53,7 @@
 		</Attributes>
 		<Data Name="Division" Description="{Size}" meta:RefKey="Struct">
 			<Data Name="Size" meta:RefKey="String" />
-			<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+			<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 		</Data>
 	</Definition>
 	<Definition Name="Filter" Description="{Mode}" meta:RefKey="StructDef">
@@ -74,7 +74,7 @@
 		<Data Name="Mode" EnumValues="Random,Edge,Corner,Center" meta:RefKey="Enum" />
 		<Data Name="Count" Default="1" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Dist" Type="Int" Min="1" Default="2" VisibleIf="Mode==Center" meta:RefKey="Number" />
-		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 		<Data Name="Remainder" Keys="Node" meta:RefKey="GraphReference" />
 	</Definition>
 	<!--Symbol Rules-->
