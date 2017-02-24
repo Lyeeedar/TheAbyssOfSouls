@@ -10,9 +10,17 @@ import com.lyeeedar.Components.RenderableComponent
 import com.lyeeedar.Direction
 import com.lyeeedar.Renderables.Sprite.DirectionalSprite
 
-class DirectionalSpriteSystem(): IteratingSystem(Family.all(DirectionalSpriteComponent::class.java, PositionComponent::class.java).get(), systemList.indexOf(DirectionalSpriteSystem::class))
+class DirectionalSpriteSystem(): AbstractSystem(Family.all(DirectionalSpriteComponent::class.java, PositionComponent::class.java).get())
 {
-	override fun processEntity(entity: Entity?, deltaTime: Float)
+	override fun doUpdate(deltaTime: Float)
+	{
+		for (entity in entities)
+		{
+			processEntity(entity, deltaTime)
+		}
+	}
+
+	fun processEntity(entity: Entity?, deltaTime: Float)
 	{
 		if (entity == null) return
 

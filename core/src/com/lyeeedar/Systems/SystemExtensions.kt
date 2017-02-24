@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.lyeeedar.Level.Level
 import kotlin.reflect.KClass
 
-val systemList: Array<KClass<out EntitySystem>> = arrayOf(
+val systemList: Array<KClass<out AbstractSystem>> = arrayOf(
 		TaskProcessorSystem::class,
 		TileSystem::class,
 		DirectionalSpriteSystem::class,
@@ -33,23 +33,10 @@ var Engine.level: Level?
 	get() = this.render().level
 	set(value)
 	{
-		this.render().level = value
-		this.task().level = value
-		this.lighting().level = value
-		this.shadowCast().level = value
-		this.sceneTimeline().level = value
-		this.tile().level = value
-	}
-
-val EntitySystem.systemProcessingTime: Float
-	get()
-	{
-		if (this is RenderSystem) return this.processDuration
-		if (this is TaskProcessorSystem) return this.processDuration
-		if (this is LightingSystem) return this.processDuration
-		if (this is ShadowCastSystem) return this.processDuration
-		if (this is TileSystem) return this.processDuration
-		else return 0f
+		for (system in systemList)
+		{
+			this.getSystem(system.java).level = value
+		}
 	}
 
 fun Engine.render() = this.getSystem(RenderSystem::class.java)

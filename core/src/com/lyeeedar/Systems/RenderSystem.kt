@@ -17,7 +17,7 @@ import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Colour
 
-class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
+class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).one(RenderableComponent::class.java).get())
 {
 	val shape: ShapeRenderer by lazy { ShapeRenderer() }
 	var drawParticleDebug = false
@@ -26,27 +26,12 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 	val particles = Array<ParticleEffect>()
 
 	val batchHDRColour: HDRColourSpriteBatch = HDRColourSpriteBatch()
-	lateinit var entities: ImmutableArray<Entity>
 
 	val tempCol = Colour()
 
 	val tileSize = 40f
 
 	lateinit var renderer: SortedRenderer
-
-	var level: Level? = null
-		get() = field
-		set(value)
-		{
-			field = value
-
-			if (value != null)
-			{
-				renderer = SortedRenderer(tileSize, value.width.toFloat(), value.height.toFloat(), SpaceSlot.Values.size)
-			}
-		}
-
-	var processDuration: Float = 0f
 
 	init
 	{
@@ -119,26 +104,27 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 		})
 	}
 
-	override fun addedToEngine(engine: Engine?)
+	override fun onLevelChanged()
 	{
-		entities = engine?.getEntitiesFor(Family.all(PositionComponent::class.java).one(RenderableComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
+		if (level != null)
+		{
+			renderer = SortedRenderer(tileSize, level!!.width.toFloat(), level!!.height.toFloat(), SpaceSlot.Values.size)
+		}
 	}
 
-	override fun update(deltaTime: Float)
+	override fun doUpdate(deltaTime: Float)
 	{
-		val start = System.nanoTime()
-
 		if (level == null) return
 
 		val player = level!!.player
 		val playerPos = player.pos()
-		val playerSprite = player.renderable()
-		renderer.update(playerSprite.renderable, deltaTime)
+		val playerSprite = player.renderable().renderable ?: return
+		renderer.update(playerSprite, deltaTime)
 
 		var offsetx = Global.resolution.x / 2 - playerPos.position.x * tileSize - tileSize / 2
 		var offsety = Global.resolution.y / 2 - playerPos.position.y * tileSize - tileSize / 2
 
-		val offset = playerSprite.renderable.animation?.renderOffset()
+		val offset = playerSprite.animation?.renderOffset()
 		if (offset != null)
 		{
 			offsetx -= offset[0] * tileSize
@@ -149,20 +135,20 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 		for (entity in entities)
 		{
-			val renderable = entity.renderable()
+			val renderable = entity.renderable().renderable ?: continue
 			val pos = entity.pos() ?: continue
 			val tile = entity.tile()
 
 			if (pos.position.taxiDist(level!!.player.tile()!!) > 100)
 			{
-				renderer.update(renderable.renderable)
+				renderer.update(renderable)
 
 				continue
 			}
 
-			if (renderable.renderable is ParticleEffect)
+			if (renderable is ParticleEffect)
 			{
-				val effect = renderable.renderable as ParticleEffect
+				val effect = renderable as ParticleEffect
 				if (effect.complete() && entity.components.size() == 2)
 				{
 					engine.removeEntity(entity)
@@ -175,7 +161,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 			{
 				if (!tile.isSeen)
 				{
-					renderable.renderable.animation = null
+					renderable.animation = null
 				}
 
 				tileCol.set(tile.light)
@@ -186,7 +172,7 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 					val task = Mappers.task.get(entity)
 					if (task != null)
 					{
-						renderable.renderable.animation = null
+						renderable.animation = null
 						continue
 					}
 
@@ -207,17 +193,17 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 			val px = pos.position.x.toFloat()
 			val py = pos.position.y.toFloat()
 
-			renderer.queue(renderable.renderable, px, py, pos.slot.ordinal, 0, tileCol)
+			renderer.queue(renderable, px, py, pos.slot.ordinal, 0, tileCol)
 
-			if (drawParticleDebug && renderable.renderable is ParticleEffect)
+			if (drawParticleDebug && renderable is ParticleEffect)
 			{
-				particles.add(renderable.renderable as ParticleEffect)
+				particles.add(renderable)
 			}
 
 			val additional = entity.additionalRenderable()
 			if (additional != null)
 			{
-				val offset = renderable.renderable.animation?.renderOffset()
+				val offset = renderable.animation?.renderOffset()
 
 				var ax = px
 				var ay = py
@@ -270,10 +256,5 @@ class RenderSystem(): EntitySystem(systemList.indexOf(RenderSystem::class))
 
 			particles.clear()
 		}
-
-		val end = System.nanoTime()
-		val diff = (end - start) / 1000000000f
-
-		processDuration = (processDuration + diff) / 2f
 	}
 }

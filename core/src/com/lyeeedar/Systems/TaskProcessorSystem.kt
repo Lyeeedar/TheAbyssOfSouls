@@ -14,23 +14,14 @@ import com.lyeeedar.Util.Event0Arg
  * Created by Philip on 20-Mar-16.
  */
 
-class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem::class))
+class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java, StatisticsComponent::class.java).get())
 {
-	lateinit var entities: ImmutableArray<Entity>
 	lateinit var renderables: ImmutableArray<Entity>
 	lateinit var timelines: ImmutableArray<Entity>
 	val entitiesToBeProcessed: com.badlogic.gdx.utils.Array<Entity> = com.badlogic.gdx.utils.Array<Entity>(false, 32)
 
 	val onTurn = Event0Arg()
 
-	var level: Level? = null
-		get() = field
-		set(value)
-		{
-			field = value
-		}
-
-	var processDuration: Float = 0f
 	var lastState = "---"
 
 	init
@@ -100,10 +91,8 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		timelines = engine?.getEntitiesFor(Family.all(SceneTimelineComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 	}
 
-	override fun update(deltaTime: Float)
+	override fun doUpdate(deltaTime: Float)
 	{
-		val start = System.nanoTime()
-
 		val hasEffects = renderables.any { it.renderable()!!.renderable.animation != null }
 		var hasTimelines = false
 
@@ -175,11 +164,6 @@ class TaskProcessorSystem(): EntitySystem(systemList.indexOf(TaskProcessorSystem
 		{
 			lastState = "Waiting on timelines"
 		}
-
-		val end = System.nanoTime()
-		val diff = (end - start) / 1000000000f
-
-		processDuration = (processDuration + diff) / 2f
 	}
 
 	fun processEntityStats(e: Entity)

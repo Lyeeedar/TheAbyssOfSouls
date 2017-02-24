@@ -2,12 +2,34 @@
 	<IsPlayer>true</IsPlayer>
 	<Components>
 		<Position />
-		<Renderable>
-			<Renderable meta:RefKey="Sprite">
-				<Name>player</Name>
-				<DrawActualSize>true</DrawActualSize>
-			</Renderable>
-		</Renderable>
+		<DirectionalSprite>
+			<Animations>
+				<Animation>
+					<Name>idle</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>player</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>player</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+				<Animation>
+					<Name>attack</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>player</Name>
+						<DrawActualSize>true</DrawActualSize>
+						<Colour>250,144,144,255</Colour>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>player</Name>
+						<DrawActualSize>true</DrawActualSize>
+						<Colour>250,144,144,255</Colour>
+					</Down>
+				</Animation>
+			</Animations>
+		</DirectionalSprite>
 		<AI>
 			<AI>player</AI>
 		</AI>

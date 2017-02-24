@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector3
 import com.lyeeedar.AI.Tasks.TaskCombo
 import com.lyeeedar.Combo.ComboTree
 import com.lyeeedar.Components.*
+import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.isDown
 
 
@@ -141,6 +142,11 @@ class ActionProcessInput(): AbstractAction()
 
 					entity.task().tasks.add(TaskCombo(next, entity.pos().facing, tile))
 
+					if (combo.currentCombo == null)
+					{
+						Future.call({ entity.directionalSprite()?.currentAnim = "idle" }, 0.5f)
+					}
+
 					targetPos = null
 				}
 
@@ -174,6 +180,8 @@ class ActionProcessInput(): AbstractAction()
 			else
 			{
 				val first = combo.combos
+
+				entity.directionalSprite()?.currentAnim = "idle"
 
 				fun tryDoAttack(key: ComboTree.ComboKey)
 				{

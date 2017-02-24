@@ -8,16 +8,17 @@ import com.lyeeedar.Global
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
 
-class SceneTimelineSystem(): IteratingSystem(Family.all(SceneTimelineComponent::class.java).get(), systemList.indexOf(SceneTimelineSystem::class))
+class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::class.java).get())
 {
-	var level: Level? = null
-		get() = field
-		set(value)
+	override fun doUpdate(deltaTime: Float)
+	{
+		for (entity in entities)
 		{
-			field = value
+			processEntity(entity, deltaTime)
 		}
+	}
 
-	override fun processEntity(entity: Entity?, deltaTime: Float)
+	fun processEntity(entity: Entity?, deltaTime: Float)
 	{
 		val timeline = entity!!.sceneTimeline() ?: return
 

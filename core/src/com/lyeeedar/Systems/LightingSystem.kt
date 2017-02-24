@@ -10,31 +10,12 @@ import com.lyeeedar.Global
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Util.Colour
 
-class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
+class LightingSystem(): AbstractSystem(Family.all(PositionComponent::class.java, LightComponent::class.java).get())
 {
-	lateinit var posLightEntities: ImmutableArray<Entity>
 	val temp: Colour = Colour()
 
-	var level: Level? = null
-		get() = field
-		set(value)
-		{
-			field = value
-		}
-
-	var processDuration: Float = 0f
-
-	override fun addedToEngine(engine: Engine?)
+	override fun doUpdate(deltaTime: Float)
 	{
-		val posLight = Family.all(PositionComponent::class.java, LightComponent::class.java).get()
-
-		posLightEntities = engine?.getEntitiesFor(posLight) ?: throw RuntimeException("Engine is null!")
-	}
-
-	override fun update(deltaTime: Float)
-	{
-		val start = System.nanoTime()
-
 		for (x in 0.. level!!.width-1)
 		{
 			for (y in 0..level!!.height-1)
@@ -61,7 +42,7 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 			tile.isSeen = true
 		}
 
-		for (entity in posLightEntities)
+		for (entity in entities)
 		{
 			val pos = Mappers.position.get(entity)
 
@@ -111,10 +92,5 @@ class LightingSystem(): EntitySystem(systemList.indexOf(LightingSystem::class))
 				}
 			}
 		}
-
-		val end = System.nanoTime()
-		val diff = (end - start) / 1000000000f
-
-		processDuration = (processDuration + diff) / 2f
 	}
 }

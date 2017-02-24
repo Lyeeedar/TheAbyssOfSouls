@@ -11,30 +11,14 @@ import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.AssetManager
 import ktx.collections.set
 
-class TileSystem : EntitySystem(systemList.indexOf(TileSystem::class))
+class TileSystem : AbstractSystem()
 {
-	var level: Level? = null
-		get() = field
-		set(value)
-		{
-			field = value
-		}
-
-	var processDuration: Float = 0f
-
-	override fun update(deltaTime: Float)
+	override fun doUpdate(deltaTime: Float)
 	{
-		val start = System.nanoTime()
-
 		for (tile in level!!.grid)
 		{
 			processWater(tile)
 		}
-
-		val end = System.nanoTime()
-		val diff = (end - start) / 1000000000f
-
-		processDuration = (processDuration + diff) / 2f
 	}
 
 	fun processWater(tile: Tile)

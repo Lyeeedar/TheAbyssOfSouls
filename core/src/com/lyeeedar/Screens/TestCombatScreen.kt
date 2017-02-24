@@ -11,7 +11,6 @@ import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Systems.level
 import com.lyeeedar.Systems.systemList
-import com.lyeeedar.Systems.systemProcessingTime
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.AssetManager
@@ -26,8 +25,8 @@ class TestCombatScreen : AbstractScreen()
 	var timeMultiplier = 1f
 	var showFPS = true
 
-	data class SystemPair(val name: String, var time: Float)
-	val systemTimes: Array<SystemPair> by lazy { Array<SystemPair>(systemList.size) { i -> SystemPair(systemList[i].java.simpleName.replace("System", ""), 0f) } }
+	data class SystemData(val name: String, var time: Float, var entities: String)
+	val systemTimes: Array<SystemData> by lazy { Array<SystemData>(systemList.size) { i -> SystemData(systemList[i].java.simpleName.replace("System", ""), 0f, "--") } }
 	var totalSystemTime: Float = 0f
 	var drawSystemTime = false
 
@@ -56,9 +55,11 @@ class TestCombatScreen : AbstractScreen()
 
 			for (i in 0..systemTimes.size-1)
 			{
-				val time = Global.engine.getSystem(systemList[i].java).systemProcessingTime
+				val system = Global.engine.getSystem(systemList[i].java)
+				val time = system.processDuration
 				val perc = (time / frameDuration) * 100f
 				systemTimes[i].time = perc
+				systemTimes[i].entities = if (system.family != null) system.entities.size().toString() else "-"
 
 				totalTime += perc
 			}
@@ -85,7 +86,7 @@ class TestCombatScreen : AbstractScreen()
 
 			for (pair in systemTimes.sortedByDescending { it.time })
 			{
-				font.draw(batch, pair.name, x, y)
+				font.draw(batch, pair.name + " (" + pair.entities + ")", x, y)
 				font.draw(batch, " - ${pair.time}%", x + 15 * 10, y)
 				y -= 20f
 			}
@@ -181,7 +182,7 @@ class TestCombatScreen : AbstractScreen()
 		val level = Global.engine.level!!
 		val player = level.player
 		val playerPos = player.pos()!!
-		val playerSprite = player.renderable()!!
+		val playerSprite = player.renderable() ?: return
 
 		var offsetx = Global.resolution.x / 2 - playerPos.position.x * Global.tilesize - Global.tilesize / 2
 		var offsety = Global.resolution.y / 2 - playerPos.position.y * Global.tilesize - Global.tilesize / 2
