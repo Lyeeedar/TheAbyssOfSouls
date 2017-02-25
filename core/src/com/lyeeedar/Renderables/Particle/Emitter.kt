@@ -66,6 +66,7 @@ class Emitter(val particleEffect: ParticleEffect)
 	lateinit var type: EmissionType
 	lateinit var simulationSpace: SimulationSpace
 	val emissionRate = LerpTimeline()
+	var singleBurst = false
 	lateinit var particleSpeed: Range
 	lateinit var particleRotation: Range
 	lateinit var shape: EmissionShape
@@ -78,8 +79,15 @@ class Emitter(val particleEffect: ParticleEffect)
 	var isCollisionEmitter: Boolean = false
 
 	var time: Float = 0f
+		set(value)
+		{
+			field = value
+			if (value == 0f) emitted = false
+		}
+
 	var emissionAccumulator: Float = 0f
 
+	var emitted = false
 	var stopped = false
 
 	fun lifetime() = emissionRate.length().toFloat() + particles.maxBy { it.lifetime.v2 }!!.lifetime.v2
@@ -100,12 +108,28 @@ class Emitter(val particleEffect: ParticleEffect)
 
 			if (duration == 0f || time <= duration)
 			{
-				if (type == EmissionType.ABSOLUTE)
+				if (type == EmissionType.ABSOLUTE || singleBurst)
 				{
-					val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).ciel()
-					for (i in 1..toSpawn)
+					if (singleBurst)
 					{
-						spawn()
+						if (!emitted)
+						{
+							emitted = true
+
+							val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).ciel()
+							for (i in 1..toSpawn)
+							{
+								spawn()
+							}
+						}
+					}
+					else
+					{
+						val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).ciel()
+						for (i in 1..toSpawn)
+						{
+							spawn()
+						}
 					}
 				}
 				else
@@ -133,7 +157,7 @@ class Emitter(val particleEffect: ParticleEffect)
 
 			if (duration == 0f || time <= duration)
 			{
-				if (type == EmissionType.ABSOLUTE)
+				if (type == EmissionType.ABSOLUTE && !singleBurst)
 				{
 					val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).ciel()
 					for (i in 1..toSpawn)
@@ -336,7 +360,9 @@ class Emitter(val particleEffect: ParticleEffect)
 			emitter.simulationSpace = SimulationSpace.valueOf(xml.get("Space", "World").toUpperCase())
 			emitter.shape = EmissionShape.valueOf(xml.get("Shape", "Box").toUpperCase())
 			emitter.width = xml.getFloat("Width", 1f)
+			if (emitter.width == 0f) emitter.width = 0.001f
 			emitter.height = xml.getFloat("Height", 1f)
+			if (emitter.height == 0f) emitter.height = 0.001f
 			emitter.emitterRotation = xml.getFloat("Rotation", 0f)
 			emitter.area = EmissionArea.valueOf(xml.get("Area", "Interior").toUpperCase())
 			emitter.dir = EmissionDirection.valueOf(xml.get("Direction", "Radial").toUpperCase())
@@ -369,6 +395,7 @@ class Emitter(val particleEffect: ParticleEffect)
 
 			val rateEls = xml.getChildByName("RateKeyframes")
 			emitter.emissionRate.parse(rateEls, { it.toFloat() })
+			emitter.singleBurst = xml.getBoolean("SingleBurst", false)
 
 			val particlesEl = xml.getChildByName("Particles")
 			for (i in 0..particlesEl.childCount-1)

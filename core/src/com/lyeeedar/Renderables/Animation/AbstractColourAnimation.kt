@@ -10,4 +10,5 @@ abstract class AbstractColourAnimation() : AbstractAnimation()
 
 	override fun renderScale(): FloatArray? = null
 	override fun renderOffset(): FloatArray? = null
+	override fun renderRotation(): Float? = null
 }

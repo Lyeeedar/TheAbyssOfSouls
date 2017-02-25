@@ -23,24 +23,15 @@ import com.lyeeedar.Util.getXml
 
 class ParticleEffect : Renderable()
 {
-	enum class MoveType
-	{
-		Linear,
-		Leap
-	}
-
 	private lateinit var loadPath: String
 
 	var colour: Colour = Colour(Color.WHITE)
-	var speedMultiplier: Float = 1f
-	var moveType: MoveType = MoveType.Linear
 
 	var loop = true
 	var completed = false
 	var killOnAnimComplete = true
 	private var warmupTime = 0f
 	private var doneWarmup = false
-	var moveSpeed: Float = 1f
 	val emitters = Array<Emitter>()
 
 	// local stuff
@@ -51,7 +42,7 @@ class ParticleEffect : Renderable()
 	var collisionFun: ((x: Int, y: Int) -> Unit)? = null
 
 	val lifetime: Float
-		get() = (animation?.duration() ?: emitters.maxBy { it.lifetime() }!!.lifetime()) * (1f / speedMultiplier)
+		get() = (animation?.duration() ?: emitters.maxBy { it.lifetime() }!!.lifetime())
 
 	fun start()
 	{
@@ -71,20 +62,12 @@ class ParticleEffect : Renderable()
 	{
 		var complete = false
 
-		if (moveSpeed == 0f)
+		complete = animation?.update(delta) ?: false
+		if (complete)
 		{
+			if (killOnAnimComplete) stop()
 			animation?.free()
 			animation = null
-		}
-		else
-		{
-			complete = animation?.update(delta * speedMultiplier) ?: false
-			if (complete)
-			{
-				if (killOnAnimComplete) stop()
-				animation?.free()
-				animation = null
-			}
 		}
 
 		val posOffset = animation?.renderOffset()
@@ -114,7 +97,7 @@ class ParticleEffect : Renderable()
 			}
 		}
 
-		for (emitter in emitters) emitter.update(delta * speedMultiplier, collisionGrid)
+		for (emitter in emitters) emitter.update(delta, collisionGrid)
 
 		if (collisionFun != null)
 		{
@@ -292,10 +275,7 @@ class ParticleEffect : Renderable()
 		effect.setPosition(position.x, position.y)
 		effect.rotation = rotation
 		effect.colour.set(colour)
-		effect.speedMultiplier = speedMultiplier
 		effect.warmupTime = warmupTime
-		effect.moveSpeed = moveSpeed
-		effect.moveType = moveType
 		effect.loop = loop
 		effect.flipX = flipX
 		effect.flipY = flipY
@@ -311,8 +291,6 @@ class ParticleEffect : Renderable()
 			val effect = ParticleEffect()
 
 			effect.warmupTime = xml.getFloat("Warmup", 0f)
-			effect.moveSpeed = xml.getFloat("MoveSpeed", 1f)
-			effect.moveType = MoveType.valueOf(xml.get("MoveType", "Linear"))
 			effect.loop = xml.getBoolean("Loop", true)
 
 			val emittersEl = xml.getChildByName("Emitters")

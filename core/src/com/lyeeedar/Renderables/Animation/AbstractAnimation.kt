@@ -16,6 +16,7 @@ abstract class AbstractAnimation
 	abstract fun renderOffset(): FloatArray?
 	abstract fun renderScale(): FloatArray?
 	abstract fun renderColour(): Colour?
+	abstract fun renderRotation(): Float?
 
 	abstract fun duration(): Float
 	abstract fun time(): Float

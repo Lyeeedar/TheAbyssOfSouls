@@ -63,6 +63,7 @@ class DirectionalSpriteSystem(): AbstractSystem(Family.all(DirectionalSpriteComp
 		if (chosen != renderable.renderable)
 		{
 			chosen.animation = renderable.renderable.animation
+			renderable.renderable.animation = null
 			renderable.renderable = chosen
 		}
 	}

@@ -21,7 +21,7 @@ abstract class ComboStep
 
 	abstract fun activate(entity: Entity, direction: Direction, target: Point)
 	abstract fun getAllValid(entity: Entity, direction: Direction): Array<Point>
-	abstract fun isValid(entity: Entity, direction: Direction, target: Point): Boolean
+	abstract fun isValid(entity: Entity, direction: Direction, target: Point, tree: ComboTree): Boolean
 	abstract fun parse(xml: XmlReader.Element)
 
 	companion object
@@ -32,6 +32,7 @@ abstract class ComboStep
 			{
 				"WAIT" -> WaitComboStep()
 				"SCENE" -> SceneTimelineComboStep()
+				"CHARGE" -> ChargeComboStep()
 				else -> throw NotImplementedError("Unknown combo step type: " + xml.name.toUpperCase())
 			}
 
@@ -56,9 +57,10 @@ class ComboTree
 		DIRECTION
 	}
 
-	lateinit var current: ComboStep
+	lateinit var comboStep: ComboStep
 	val random = Array<ComboTree>()
 	var cost = 0
+	var weight = 1
 	val keybinding = FastEnumMap<ComboKey, ComboTree>(ComboKey::class.java)
 
 	companion object
@@ -82,18 +84,15 @@ class ComboTree
 				descMap[desc.name.toUpperCase()] = desc
 			}
 
-			val root = ComboTree()
-
 			fun recursiveParse(el: XmlReader.Element): ComboTree
 			{
 				val descName = el.get("Desc", null)
 				val desc = if (descName != null) descMap[descName.toUpperCase()] else null
 
-				val cost = el.getInt("Cost", 0)
-
 				val current = ComboTree()
-				if (desc != null) current.current = desc
-				current.cost = cost
+				if (desc != null) current.comboStep = desc
+				current.cost = el.getInt("Cost", 0)
+				current.weight = el.getInt("Weight", 1)
 
 				if (isKeyBinding)
 				{

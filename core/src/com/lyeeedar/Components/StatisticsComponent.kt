@@ -2,7 +2,11 @@ package com.lyeeedar.Components
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.ObjectFloatMap
+import com.badlogic.gdx.utils.ObjectIntMap
 import com.badlogic.gdx.utils.OrderedSet
+import com.lyeeedar.ElementType
+import com.lyeeedar.Util.FastEnumMap
+import com.lyeeedar.Util.ciel
 
 class StatisticsComponent: Component
 {
@@ -12,9 +16,26 @@ class StatisticsComponent: Component
 		get() = field
 		set(value)
 		{
-			val v = Math.min(value, maxHP)
+			var v = Math.min(value, maxHP)
 
-			val diff = v - hp
+			var diff = v - hp
+			if (diff < 0)
+			{
+				if (invulnerable) return
+				if (blocking)
+				{
+					stamina += diff
+					if (stamina < 0)
+					{
+						blocking = false
+						v = hp + stamina
+						diff = stamina
+
+						// play effect here too
+					}
+				}
+			}
+
 			field = v
 
 			if (diff < 0)
@@ -43,15 +64,8 @@ class StatisticsComponent: Component
 		set(value)
 		{
 			val v = Math.min(maxStamina, value)
-
-			val diff = v - stamina
 			field = v
-			if (diff < 0)
-			{
-				staminaReduced = true
-			}
 		}
-	var staminaReduced: Boolean = false
 
 	var maxStamina: Float = 0f
 		get() = field
@@ -62,7 +76,25 @@ class StatisticsComponent: Component
 			if (stamina < value) stamina = value
 		}
 
+	val resistances = FastEnumMap<ElementType, Int>(ElementType::class.java)
+
 	var sight: Float = 0f
+
+	var blocking = false
+	var invulnerable = false
+
+	fun dealDamage(amount: Int, element: ElementType, elementalConversion: Float)
+	{
+		var elementalDam = (amount * elementalConversion).ciel()
+		val baseDam = amount - elementalDam
+
+		hp -= baseDam
+
+		val resistance = resistances[element] ?: 0
+		elementalDam += (elementalDam.toFloat() * 0.25f * resistance.toFloat()).ciel()
+
+		hp -= elementalDam
+	}
 
 	operator fun get(key: String, fallback: Float? = null): Float
 	{

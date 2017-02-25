@@ -59,7 +59,6 @@
 	<Definition Name="Combo" TextColour="122,199,142" HasAttributes="True" meta:RefKey="StructDef">
 		<Attributes meta:RefKey="Attributes">
 			<Attribute Name="Key" meta:RefKey="String" />
-			<Attribute Name="AutoAdvance" Default="True" meta:RefKey="Boolean" />
 		</Attributes>
 	</Definition>
 	<Definition Name="Conditional" TextColour="222,219,139" HasAttributes="True" meta:RefKey="StructDef">

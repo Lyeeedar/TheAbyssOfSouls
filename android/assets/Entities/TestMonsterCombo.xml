@@ -1,41 +1,16 @@
 <Combo meta:X="68" meta:Y="28" xmlns:meta="Editor">
-	<Random>
-		<Node meta:X="339.47369384765625" meta:Y="10.526315689086914" meta:RefKey="ComboNode">
-			<Desc>SlashLeft</Desc>
-			<Random>
-				<Node meta:X="642.29669189453125" meta:Y="7" meta:RefKey="ComboNode">
-					<Desc>SlashRight</Desc>
-					<Random>
-						<Node meta:X="1193.3736572265625" meta:Y="26.736841201782227" GUID="27b208b0-220d-467a-9e42-85ecb1a0ffea" meta:RefKey="ComboNode">
-							<Desc>SlashLeft</Desc>
-							<Random>
-								<Node meta:X="1421.7203369140625" meta:Y="26.736841201782227" meta:RefKey="ComboNode">
-									<Desc>Wait</Desc>
-								</Node>
-							</Random>
-						</Node>
-						<Node meta:X="898.8443603515625" meta:Y="230.6842041015625" meta:RefKey="ComboNode">
-							<Desc>WaitTurn</Desc>
-							<Random>
-								<Node meta:X="1193.3736572265625" meta:Y="26.736841201782227" GUID="27b208b0-220d-467a-9e42-85ecb1a0ffea" meta:RefKey="ComboNode">
-									<Desc>SlashLeft</Desc>
-									<Random>
-										<Node meta:X="1421.7203369140625" meta:Y="26.736841201782227" meta:RefKey="ComboNode">
-											<Desc>Wait</Desc>
-										</Node>
-									</Random>
-								</Node>
-							</Random>
-						</Node>
-					</Random>
-				</Node>
-			</Random>
-		</Node>
-	</Random>
 	<Combos>
 		<Combo meta:RefKey="Wait">
 			<Name>Wait</Name>
 			<Animation>idle</Animation>
+		</Combo>
+		<Combo meta:RefKey="Wait">
+			<Name>WaitShout</Name>
+			<Animation>attack</Animation>
+			<Particle>
+				<Name>Shout</Name>
+				<Colour>245,165,165,255</Colour>
+			</Particle>
 		</Combo>
 		<Combo meta:RefKey="Wait">
 			<Name>WaitTurn</Name>
@@ -93,5 +68,85 @@
 			</HitPattern>
 			<StepForward>true</StepForward>
 		</Combo>
+		<Combo meta:RefKey="Charge">
+			<Name>Charge1</Name>
+			<Animation>attack</Animation>
+			<Distance>1</Distance>
+			<Damage>2</Damage>
+		</Combo>
+		<Combo meta:RefKey="Charge">
+			<Name>Charge2</Name>
+			<Animation>attack</Animation>
+			<Distance>2</Distance>
+			<Damage>5</Damage>
+			<KnockbackDist>2</KnockbackDist>
+		</Combo>
 	</Combos>
+	<Random>
+		<Node meta:X="343.22556362413957" meta:Y="11.526315689086914" meta:RefKey="ComboNode">
+			<Desc>SlashLeft</Desc>
+			<Weight>4</Weight>
+			<Random>
+				<Node meta:X="642.29669189453125" meta:Y="7" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<Random>
+						<Node meta:X="1193.3736572265625" meta:Y="26.736841201782227" GUID="27b208b0-220d-467a-9e42-85ecb1a0ffea" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Random>
+								<Node meta:X="1421.7203369140625" meta:Y="26.736841201782227" meta:RefKey="ComboNode">
+									<Desc>Wait</Desc>
+								</Node>
+							</Random>
+						</Node>
+						<Node meta:X="911.32566258672932" meta:Y="177.01460449034474" meta:RefKey="ComboNode">
+							<Desc>WaitTurn</Desc>
+							<Random>
+								<Node meta:X="1193.3736572265625" meta:Y="26.736841201782227" GUID="27b208b0-220d-467a-9e42-85ecb1a0ffea" meta:RefKey="ComboNode">
+									<Desc>SlashLeft</Desc>
+									<Random>
+										<Node meta:X="1421.7203369140625" meta:Y="26.736841201782227" meta:RefKey="ComboNode">
+											<Desc>Wait</Desc>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+		<Node meta:X="372.72853525268789" meta:Y="437.88326589710323" meta:RefKey="ComboNode">
+			<Desc>WaitShout</Desc>
+			<Random>
+				<Node meta:X="561.045426766387" meta:Y="434.97926881709969" meta:RefKey="ComboNode">
+					<Desc>Charge1</Desc>
+					<Random>
+						<Node meta:X="756.33556011452913" meta:Y="436.02884290706777" meta:RefKey="ComboNode">
+							<Desc>Charge1</Desc>
+							<Random>
+								<Node meta:X="943.0598830797602" meta:Y="437.81192277747465" meta:RefKey="ComboNode">
+									<Desc>Charge2</Desc>
+									<Random>
+										<Node meta:X="1120.323502381503" meta:Y="440.41352865662509" meta:RefKey="ComboNode">
+											<Desc>Charge2</Desc>
+											<Random>
+												<Node meta:X="1293.4776157461365" meta:Y="441.57494332963495" meta:RefKey="ComboNode">
+													<Desc>Wait</Desc>
+													<Random>
+														<Node meta:X="1464.3824568360733" meta:Y="443.11584484014929" meta:RefKey="ComboNode">
+															<Desc>Wait</Desc>
+														</Node>
+													</Random>
+												</Node>
+											</Random>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+	</Random>
 </Combo>

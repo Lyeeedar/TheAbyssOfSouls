@@ -22,7 +22,7 @@ class DamageAction() : AbstractTimelineAction()
 			for (entity in tile.contents)
 			{
 				val stats = entity.stats() ?: continue
-				//stats.dealDamage(amount, element, elementalConversion)
+				stats.dealDamage(amount, element, elementalConversion)
 
 				val sprite = entity.renderable()?.renderable as? Sprite ?: continue
 				sprite.colourAnimation = BlinkAnimation.obtain().set(Colour(1f, 0.5f, 0.5f, 1f), sprite.colour, 0.15f, true)

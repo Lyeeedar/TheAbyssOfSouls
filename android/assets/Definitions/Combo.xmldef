@@ -2,7 +2,7 @@
 	<Definition Name="Combo" AllowReferenceLinks="False" meta:RefKey="GraphStruct">
 		<Data Name="NextMode" EnumValues="Random,Keybinding" meta:RefKey="Enum" />
 		<Data Name="Combos" meta:RefKey="Collection">
-			<Data Name="Combo" Keys="Wait,Scene" meta:RefKey="Reference" />
+			<Data Name="Combo" Keys="Wait,Scene,Charge" meta:RefKey="Reference" />
 		</Data>
 		<Data Name="Random" VisibleIf="NextMode==Random" meta:RefKey="Collection">
 			<Data Name="Node" Keys="ComboNode" meta:RefKey="GraphReference" />
@@ -16,6 +16,7 @@
 	<Definition Name="ComboNode" Description="{Desc}" TextColour="44,209,47" meta:RefKey="GraphStructDef">
 		<Data Name="Desc" TextColour="209,179,44" meta:RefKey="String" />
 		<Data Name="Cost" Type="Int" Min="0" VisibleIf="Root.NextMode==Keybinding" meta:RefKey="Number" />
+		<Data Name="Weight" Min="0" Max="999999" Default="1" VisibleIf="Root.NextMode==Random" meta:RefKey="Number" />
 		<Data Name="Random" VisibleIf="Root.NextMode==Random" meta:RefKey="Collection">
 			<Data Name="Node" Keys="ComboNode" meta:RefKey="GraphReference" />
 		</Data>
@@ -33,7 +34,14 @@
 		<Data Name="CanTurn" VisibleIf="Root.NextMode==Random" meta:RefKey="Boolean" />
 	</Definition>
 	<!--Combo Defs-->
-	<Definition Name="Wait" Extends="ComboDesc" meta:RefKey="StructDef" />
+	<Definition Name="Wait" Extends="ComboDesc" meta:RefKey="StructDef">
+		<Data Name="Particle" Extends="ParticleEffect" meta:RefKey="Struct" />
+	</Definition>
+	<Definition Name="Charge" Extends="ComboDesc" meta:RefKey="StructDef">
+		<Data Name="Distance" Type="Int" Min="1" Default="1" SkipIfDefault="False" meta:RefKey="Number" />
+		<Data Name="Damage" Type="Int" Min="0" meta:RefKey="Number" />
+		<Data Name="KnockbackDist" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+	</Definition>
 	<Definition Name="Scene" Extends="ComboDesc" ExtendsAfter="CanTurn" meta:RefKey="StructDef">
 		<Data Name="SceneTimeline" Keys="SceneTimeline" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
 		<Data Name="HitPattern" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />

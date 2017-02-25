@@ -28,6 +28,17 @@ fun Entity.shadow() = Mappers.shadow.get(this)
 fun Entity.directionalSprite() = Mappers.directionalSprite.get(this)
 fun Entity.name() = Mappers.name.get(this)
 fun Entity.water() = Mappers.water.get(this)
+fun Entity.event(): EventComponent
+{
+	var event = Mappers.event.get(this)
+	if (event == null)
+	{
+		event = EventComponent()
+		this.add(event)
+	}
+
+	return event
+}
 
 class Mappers
 {
@@ -47,6 +58,7 @@ class Mappers
 		val sceneTimeline: ComponentMapper<SceneTimelineComponent> = ComponentMapper.getFor(SceneTimelineComponent::class.java)
 		val directionalSprite: ComponentMapper<DirectionalSpriteComponent> = ComponentMapper.getFor(DirectionalSpriteComponent::class.java)
 		val water: ComponentMapper<WaterComponent> = ComponentMapper.getFor(WaterComponent::class.java)
+		val event: ComponentMapper<EventComponent> = ComponentMapper.getFor(EventComponent::class.java)
 	}
 }
 
@@ -77,7 +89,11 @@ class EntityLoader()
 		@JvmStatic fun load(path: String): Entity
 		{
 			val xml = XmlReader().parse(files[path.toUpperCase()])
-			return load(xml)
+			val entity = load(xml)
+
+			if (entity.name() == null) entity.add(NameComponent(path))
+
+			return entity
 		}
 
 		@JvmStatic fun load(xml: XmlReader.Element): Entity

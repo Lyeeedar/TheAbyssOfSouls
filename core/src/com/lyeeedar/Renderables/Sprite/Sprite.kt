@@ -184,10 +184,10 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			}
 		}
 
-		render(batch, x, y, size, size, scaleX, scaleY, animationState)
+		render(batch, x, y, size, size, scaleX, scaleY, animationState, rotation)
 	}
 
-	fun render(batch: Batch, x: Float, y: Float, width: Float, height: Float, scaleX: Float = 1f, scaleY: Float = 1f)
+	fun render(batch: Batch, x: Float, y: Float, width: Float, height: Float, scaleX: Float = 1f, scaleY: Float = 1f, rotation: Float = 0f)
 	{
 		var scaleX = baseScale[0] * scaleX
 		var scaleY = baseScale[1] * scaleY
@@ -202,10 +202,10 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			}
 		}
 
-		render(batch, x, y, width, height, scaleX, scaleY, animationState)
+		render(batch, x, y, width, height, scaleX, scaleY, animationState, rotation + this.rotation)
 	}
 
-	private fun render(batch: Batch, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
+	private fun render(batch: Batch, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState, rotation: Float)
 	{
 		val colour = if (colourAnimation != null) colourAnimation!!.renderColour()!! else if (animation?.renderColour() != null) animation!!.renderColour()!! else this.colour
 
@@ -216,7 +216,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 		if (colour == Colour.WHITE)
 		{
-			drawTexture(batch, animationState.texIndex, x, y, width, height, scaleX, scaleY)
+			drawTexture(batch, animationState.texIndex, x, y, width, height, scaleX, scaleY, rotation)
 		}
 		else
 		{
@@ -227,13 +227,13 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			col *= colour
 			(batch as? HDRColourSpriteBatch)?.setColor(col) ?: batch.setColor(col.toFloatBits())
 
-			drawTexture(batch, animationState.texIndex, x, y, width, height, scaleX, scaleY)
+			drawTexture(batch, animationState.texIndex, x, y, width, height, scaleX, scaleY, rotation)
 
 			(batch as? HDRColourSpriteBatch)?.setColor(oldCol) ?: batch.setColor(oldCol.toFloatBits())
 		}
 	}
 
-	private fun drawTexture(batch: Batch, textureIndex: Int, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float)
+	private fun drawTexture(batch: Batch, textureIndex: Int, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, rotation: Float)
 	{
 		var x = x
 		var y = y

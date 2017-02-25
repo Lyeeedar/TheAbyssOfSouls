@@ -167,8 +167,6 @@ class AssetManager
 
 			effect.colour.set(colour)
 
-			effect.speedMultiplier = xml.getFloat("SpeedMultiplier", 1f)
-
 			effect.flipX = xml.getBoolean("FlipX", false)
 			effect.flipY = xml.getBoolean("FlipY", false)
 

@@ -15,6 +15,7 @@ import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.DebugConsole
+import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Colour
 
 class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).one(RenderableComponent::class.java).get())
@@ -27,9 +28,13 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 
 	val batchHDRColour: HDRColourSpriteBatch = HDRColourSpriteBatch()
 
-	val tempCol = Colour()
+	val tileCol = Colour()
+	val hpBarCol = Colour()
 
 	val tileSize = 40f
+
+	val hpbarBack = AssetManager.loadTextureRegion("Sprites/GUI/HpBarBack.png")!!
+	val hpbarBar = AssetManager.loadTextureRegion("Sprites/GUI/HpBarFront.png")!!
 
 	lateinit var renderer: SortedRenderer
 
@@ -148,14 +153,14 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 
 			if (renderable is ParticleEffect)
 			{
-				val effect = renderable as ParticleEffect
-				if (effect.complete() && entity.components.size() == 2)
+				val effect = renderable
+				if (effect.completed && effect.complete() && entity.components.size() == 2)
 				{
 					engine.removeEntity(entity)
 				}
 			}
 
-			val tileCol = tempCol.set(Colour.WHITE)
+			tileCol.set(Colour.WHITE)
 
 			if (tile != null)
 			{
@@ -200,20 +205,20 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				particles.add(renderable)
 			}
 
+			val offset = renderable.animation?.renderOffset()
+
+			var ax = px
+			var ay = py
+
+			if (offset != null)
+			{
+				ax += offset[0]
+				ay += offset[1]
+			}
+
 			val additional = entity.additionalRenderable()
 			if (additional != null)
 			{
-				val offset = renderable.animation?.renderOffset()
-
-				var ax = px
-				var ay = py
-
-				if (offset != null)
-				{
-					ax += offset[0]
-					ay += offset[1]
-				}
-
 				for (below in additional.below.values())
 				{
 					renderer.queue(below, ax, ay, pos.slot.ordinal, -1, tileCol)
@@ -234,6 +239,27 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 						particles.add(above)
 					}
 				}
+			}
+
+			if (entity.stats() != null)
+			{
+				val stats = entity.stats()
+				val totalWidth = pos.size.toFloat()
+
+				renderer.queueTexture(hpbarBack, ax + totalWidth / 2f, ay + 0.1f, pos.slot.ordinal, 1, tileCol, totalWidth, 0.15f)
+
+				val perc = stats.hp / stats.maxHP
+				var col = Colour.GREEN
+				if (perc < 0.4) col = Colour.ORANGE
+				if (perc < 0.2) col = Colour.RED
+
+				val extraPerc = (stats.hp + stats.bonusHP) / stats.maxHP
+
+				val hpWidth = totalWidth * perc
+				renderer.queueTexture(hpbarBar, ax + hpWidth / 2f, ay + 0.1f, pos.slot.ordinal, 2, hpBarCol.set(Colour.LIGHT_GRAY).mul(tileCol), hpWidth, 0.15f)
+
+				val extraWidth = totalWidth * extraPerc
+				renderer.queueTexture(hpbarBar, ax + extraWidth / 2f, ay + 0.1f, pos.slot.ordinal, 3, hpBarCol.set(col).mul(tileCol), extraWidth, 0.15f)
 			}
 		}
 

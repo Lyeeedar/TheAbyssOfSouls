@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="squidlib-util-3.0.0-b3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squidpony/squidlib-util/3.0.0-b3/5c7ac6fca634aaaba1e6a282006127d84a69e77b/squidlib-util-3.0.0-b3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squidpony/squidlib-util/3.0.0-b3/562c3ed42f379e9d32e630a8d2c7868e7bfd0da1/squidlib-util-3.0.0-b3-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squidpony/squidlib-util/3.0.0-b3/562c3ed42f379e9d32e630a8d2c7868e7bfd0da1/squidlib-util-3.0.0-b3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

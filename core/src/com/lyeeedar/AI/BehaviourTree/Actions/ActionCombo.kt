@@ -12,11 +12,11 @@ import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.weightedRandom
 
 class ActionCombo : AbstractAction()
 {
 	lateinit var key: String
-	var autoAdvanceCombo = true
 
 	override fun evaluate(entity: Entity): ExecutionState
 	{
@@ -32,16 +32,16 @@ class ActionCombo : AbstractAction()
 
 		if (combo.currentCombo != null)
 		{
-			// continue current
-			val current = combo.currentCombo!!.current
+			// continue comboStep
+			val current = combo.currentCombo!!.comboStep
 
 			val validTargets = Array<Direction>()
-			if (current.isValid(entity, pos.facing, target)) validTargets.add(pos.facing)
+			if (current.isValid(entity, pos.facing, target, combo.currentCombo!!)) validTargets.add(pos.facing)
 
 			if (current.canTurn && validTargets.size == 0)
 			{
-				if (current.isValid(entity, pos.facing.cardinalClockwise, target)) validTargets.add(pos.facing.cardinalClockwise)
-				if (current.isValid(entity, pos.facing.cardinalAnticlockwise, target)) validTargets.add(pos.facing.cardinalAnticlockwise)
+				if (current.isValid(entity, pos.facing.cardinalClockwise, target, combo.currentCombo!!)) validTargets.add(pos.facing.cardinalClockwise)
+				if (current.isValid(entity, pos.facing.cardinalAnticlockwise, target, combo.currentCombo!!)) validTargets.add(pos.facing.cardinalAnticlockwise)
 			}
 
 			if (validTargets.size != 0)
@@ -71,10 +71,7 @@ class ActionCombo : AbstractAction()
 				}
 			}
 
-			if (autoAdvanceCombo)
-			{
-				combo.currentCombo = combo.currentCombo!!.random.random()
-			}
+			combo.currentCombo = combo.currentCombo!!.random.asSequence().weightedRandom(fun (c) = c.weight)
 
 			state = if (combo.currentCombo != null) ExecutionState.RUNNING else ExecutionState.COMPLETED
 		}
@@ -84,7 +81,7 @@ class ActionCombo : AbstractAction()
 			val validCombos = Array<Pair>()
 			for (c in combo.combos.random)
 			{
-				if (c.current.isValid(entity, pos.facing, target))
+				if (c.comboStep.isValid(entity, pos.facing, target, c))
 				{
 					validCombos.add(Pair(c, pos.facing))
 				}
@@ -97,7 +94,7 @@ class ActionCombo : AbstractAction()
 					for (dir in Direction.CardinalValues)
 					{
 						if (dir == pos.facing) continue // we already checked these
-						if (c.current.isValid(entity, dir, target))
+						if (c.comboStep.isValid(entity, dir, target, c))
 						{
 							validCombos.add(Pair(c, dir))
 							if (dir.cardinalClockwise == pos.facing || dir.cardinalAnticlockwise == pos.facing) validCombos.add(Pair(c, dir))
@@ -108,21 +105,21 @@ class ActionCombo : AbstractAction()
 
 			if (validCombos.size > 0)
 			{
-				val chosen = validCombos.random()
+				val chosen = validCombos.asSequence().weightedRandom(fun (c) = c.combo.weight)
 
-				pos.facing = chosen.direction
-				combo.currentCombo = chosen.combo
-				val nextTask = TaskCombo(chosen.combo, pos.facing, target)
-
-				val task = entity.task()
-				task.tasks.add(nextTask)
-
-				if (autoAdvanceCombo)
+				if (chosen != null)
 				{
-					combo.currentCombo = combo.currentCombo!!.random.random()
-				}
+					pos.facing = chosen.direction
+					combo.currentCombo = chosen.combo
+					val nextTask = TaskCombo(chosen.combo, pos.facing, target)
 
-				state = ExecutionState.RUNNING
+					val task = entity.task()
+					task.tasks.add(nextTask)
+
+					combo.currentCombo = combo.currentCombo!!.random.asSequence().weightedRandom(fun(c) = c.weight)
+
+					state = ExecutionState.RUNNING
+				}
 			}
 		}
 
@@ -132,7 +129,6 @@ class ActionCombo : AbstractAction()
 	override fun parse(xml: XmlReader.Element)
 	{
 		key = xml.getAttribute("Key").toLowerCase()
-		autoAdvanceCombo = xml.getBooleanAttribute("AutoAdvance", true)
 	}
 
 	override fun cancel(entity: Entity)

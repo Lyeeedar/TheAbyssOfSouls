@@ -243,6 +243,9 @@ class Colour()
 		val LIGHT_GRAY = Colour(Color.LIGHT_GRAY)
 		val DARK_GRAY = Colour(Color.DARK_GRAY)
 		val GOLD = Colour(Color.GOLD)
+		val GREEN = Colour(Color.GREEN)
+		val RED = Colour(Color.RED)
+		val ORANGE = Colour(Color.ORANGE)
 
 		fun random(s: Float = 0.9f, l: Float = 0.7f): Colour
 		{

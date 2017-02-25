@@ -1,8 +1,6 @@
 <Definitions xmlns:meta="Editor">
 	<Definition Name="Effect" meta:RefKey="Struct">
 		<Data Name="Warmup" Min="0" meta:RefKey="Number" />
-		<Data Name="MoveSpeed" Min="0" Default="1" meta:RefKey="Number" />
-		<Data Name="MoveType" EnumValues="Linear,Leap" meta:RefKey="Enum" />
 		<Data Name="Loop" Default="True" meta:RefKey="Boolean" />
 		<Data Name="Emitters" MinCount="1" meta:RefKey="Collection">
 			<Data Name="Emitter" meta:RefKey="Struct">
@@ -38,6 +36,7 @@
 						<Data Name="Rate" Min="0" Default="1" SkipIfDefault="False" meta:RefKey="Number" />
 					</Keyframe>
 				</Data>
+				<Data Name="SingleBurst" meta:RefKey="Boolean" />
 				<Data Name="Particles" MinCount="1" meta:RefKey="Collection">
 					<Data Name="Particle" meta:RefKey="Struct">
 						<Data Name="Lifetime" Nullable="False" Collapse="True" SkipIfDefault="False" meta:RefKey="Struct">

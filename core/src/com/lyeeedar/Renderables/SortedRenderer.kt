@@ -117,7 +117,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			if (batch is HDRColourSpriteBatch) batch.setColor(rs.colour)
 			else batch.setColor(rs.colour.toFloatBits())
 
-			rs.sprite?.render(batch, localx, localy, localw, localh, rs.scaleX, rs.scaleY )
+			rs.sprite?.render(batch, localx, localy, localw, localh, rs.scaleX, rs.scaleY, rs.rotation)
 
 			if (rs.tilingSprite != null)
 			{
@@ -416,6 +416,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		var x = ix * tileSize
 		var y = iy * tileSize
 
+		var rotation = 0f
+
 		if ( sprite.animation != null )
 		{
 			val offset = sprite.animation?.renderOffset()
@@ -428,6 +430,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 				lx += offset[0]
 				ly += offset[1]
 			}
+
+			rotation = sprite.animation?.renderRotation() ?: 0f
 		}
 
 		if (sprite.faceInMoveDirection)
@@ -442,7 +446,36 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
 
-		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, 0f, scaleX, scaleY, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
+		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, rotation, scaleX, scaleY, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
+
+		heap.add( rs, rs.comparisonVal )
+	}
+
+	// ----------------------------------------------------------------------
+	fun queueTexture(texture: TextureRegion, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, width: Float = 1f, height: Float = 1f, scaleX: Float = 1f, scaleY: Float = 1f)
+	{
+		if (!inBegin) throw Exception("Queue called before begin!")
+
+		if (debugDraw && inDebugFrame) return
+
+		val lx = ix - width
+		val ly = iy - height
+
+		val x = ix * tileSize
+		val y = iy * tileSize
+
+		// check if onscreen
+
+		val localx = x + offsetx
+		val localy = y + offsety
+		val localw = width * tileSize
+		val localh = height * tileSize
+
+		if (localx + localw < 0 || localx > Global.stage.width || localy + localh < 0 || localy > Global.stage.height) return
+
+		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
+
+		val rs = RenderSprite.obtain().set( null, null, texture, x, y, ix, iy, colour, width, height, 0f, scaleX, scaleY, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 
 		heap.add( rs, rs.comparisonVal )
 	}

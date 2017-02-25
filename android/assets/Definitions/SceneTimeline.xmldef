@@ -5,6 +5,7 @@
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="BlockOnTurn" meta:RefKey="Boolean" />
 			</Keyframe>
+			<!--Renderable-->
 			<Keyframe Name="DestinationRenderable" Background="75,166,173,101" HasDuration="True" meta:RefKey="Keyframe">
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
@@ -18,11 +19,28 @@
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="UseLeap" meta:RefKey="Boolean" />
 			</Keyframe>
+			<!--Effect-->
 			<Keyframe Name="Damage" Background="255,0,0,66" meta:RefKey="Keyframe">
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="Amount" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
 				<Data Name="Element" Key="Elements" Default="None" meta:RefKey="Enum" />
 				<Data Name="ElementalConversion" Min="0" Max="1" Default="0.5" VisibleIf="Element!=None" meta:RefKey="Number" />
+			</Keyframe>
+			<Keyframe Name="Block" Background="204,204,204,68" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+			</Keyframe>
+			<Keyframe Name="Invincible" Background="227,225,225,98" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+			</Keyframe>
+			<!--Movement-->
+			<Keyframe Name="MoveSource" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Data Name="MoveType" EnumValues="Move,Leap,Charge,Roll,Teleport" meta:RefKey="Enum" />
+			</Keyframe>
+			<Keyframe Name="MoveTarget" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Data Name="MoveType" EnumValues="Move,Leap,Charge,Roll,Teleport" meta:RefKey="Enum" />
+				<Data Name="Direction" EnumValues="Towards,Away" meta:RefKey="Enum" />
 			</Keyframe>
 		</Data>
 	</Definition>

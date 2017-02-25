@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pools
 
+fun max(vararg floats: Float): Float = floats.max()!!
+fun min(vararg floats: Float): Float = floats.min()!!
 
 class Smoothstep() : Interpolation()
 {

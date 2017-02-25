@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.addAll
+import com.lyeeedar.Util.max
+import com.lyeeedar.Util.min
 
 /**
  * Created by Philip on 28-Apr-16.
@@ -13,26 +15,27 @@ import com.lyeeedar.Util.addAll
 
 class HybridAnimation(): AbstractAnimation()
 {
-	val offsets: Array<AbstractMoveAnimation> = Array()
-	val scales: Array<AbstractScaleAnimation> = Array()
-	val colours: Array<AbstractColourAnimation> = Array()
+	val offsets: Array<AbstractMoveAnimation> = Array(false, 2)
+	val scales: Array<AbstractScaleAnimation> = Array(false, 2)
+	val colours: Array<AbstractColourAnimation> = Array(false, 2)
+	val rotations: Array<AbstractRotationAnimation> = Array(false, 2)
 
 	val offsetData = FloatArray(2)
 	val scaleData = FloatArray(2)
 	val colourData = Colour()
+	var rotationData = 0f
 
-	override fun duration(): Float = Math.max(
-			Math.max(
-					offsets.maxBy { it.duration() }?.duration() ?: 0f,
-					scales.maxBy { it.duration() }?.duration() ?: 0f)
-			, colours.maxBy { it.duration() }?.duration() ?: 0f)
+	override fun duration(): Float = max(
+			offsets.maxBy { it.duration() }?.duration() ?: 0f,
+			scales.maxBy { it.duration() }?.duration() ?: 0f,
+			colours.maxBy { it.duration() }?.duration() ?: 0f,
+			rotations.maxBy { it.duration() }?.duration() ?: 0f)
 
-	override fun time(): Float =
-			Math.min(
-					Math.min(
-							offsets.minBy { it.time() }?.time() ?: duration(),
-							scales.minBy { it.time() }?.time() ?: duration()),
-					colours.minBy { it.time() }?.time() ?: duration())
+	override fun time(): Float = min(
+			offsets.minBy { it.time() }?.time() ?: duration(),
+			scales.minBy { it.time() }?.time() ?: duration(),
+			colours.minBy { it.time() }?.time() ?: duration(),
+			rotations.minBy { it.time() }?.time() ?: duration())
 
 	override fun renderOffset(): FloatArray?
 	{
@@ -139,6 +142,21 @@ class HybridAnimation(): AbstractAnimation()
 		}
 	}
 
+	override fun renderRotation(): Float?
+	{
+		if (rotations.size > 0)
+		{
+			var rot = 0f
+			for (r in rotations) rot += r.renderRotation() ?: 0f
+
+			return rot
+		}
+		else
+		{
+			return null
+		}
+	}
+
 	override fun update(delta: Float): Boolean
 	{
 		fun <T: AbstractAnimation> runUpdate(itr: MutableIterator<T>)
@@ -157,8 +175,9 @@ class HybridAnimation(): AbstractAnimation()
 		runUpdate(offsets.iterator())
 		runUpdate(scales.iterator())
 		runUpdate(colours.iterator())
+		runUpdate(rotations.iterator())
 
-		return offsets.size == 0 && scales.size == 0 && colours.size == 0
+		return offsets.size == 0 && scales.size == 0 && colours.size == 0 && rotations.size == 0
 	}
 
 	override fun parse(xml: XmlReader.Element)
@@ -175,6 +194,9 @@ class HybridAnimation(): AbstractAnimation()
 
 		for (colour in colours) colour.free()
 		colours.clear()
+
+		for (rotation in rotations) rotation.free()
+		rotations.clear()
 	}
 
 	override fun copy(): AbstractAnimation
@@ -184,6 +206,7 @@ class HybridAnimation(): AbstractAnimation()
 		anim.offsets.addAll(offsets.map { it.copy() as AbstractMoveAnimation }.asSequence())
 		anim.scales.addAll(scales.map { it.copy() as AbstractScaleAnimation }.asSequence())
 		anim.colours.addAll(colours.map { it.copy() as AbstractColourAnimation }.asSequence())
+		anim.rotations.addAll(rotations.map { it.copy() as AbstractRotationAnimation }.asSequence())
 
 		return anim
 	}

@@ -185,6 +185,9 @@ class ActionProcessInput(): AbstractAction()
 
 				fun tryDoAttack(key: ComboTree.ComboKey)
 				{
+					val next = first.keybinding[key]
+					if (entity.stats().stamina < next.cost) return
+
 					if (Global.controls.isDirectionDown())
 					{
 						val up = Controls.Keys.UP.isDown()
@@ -197,15 +200,13 @@ class ActionProcessInput(): AbstractAction()
 						else if (left) entity.pos().facing = Direction.WEST
 						else if (right) entity.pos().facing = Direction.EAST
 
-						val next = first.keybinding[key]
 						combo.currentCombo = if (next.keybinding.size > 0) next else null
 
 						entity.task().tasks.add(TaskCombo(next, entity.pos().facing, tile))
 					}
 					else
 					{
-						val next = first.keybinding[key]
-						entity.directionalSprite()?.currentAnim = next.current.anim
+						entity.directionalSprite()?.currentAnim = next.comboStep.anim
 					}
 
 					targetPos = null
@@ -224,6 +225,12 @@ class ActionProcessInput(): AbstractAction()
 					tryDoAttack(ComboTree.ComboKey.DEFENSE)
 				}
 			}
+		}
+
+		if (combo.currentCombo == null && entity.stats().stamina < 0)
+		{
+			entity.task().tasks.add(TaskWait())
+			return ExecutionState.COMPLETED;
 		}
 
 		parent.setData( "pos", null )

@@ -177,7 +177,7 @@ class SceneTimelineComboStep : ComboStep()
 		Global.engine.addEntity(timelineEntity)
 	}
 
-	override fun isValid(entity: Entity, direction: Direction, target: Point): Boolean
+	override fun isValid(entity: Entity, direction: Direction, target: Point, tree: ComboTree): Boolean
 	{
 		var hitTiles = getAllValid(entity, direction)
 

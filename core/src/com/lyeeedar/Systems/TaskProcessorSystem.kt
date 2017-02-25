@@ -18,11 +18,11 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 {
 	lateinit var renderables: ImmutableArray<Entity>
 	lateinit var timelines: ImmutableArray<Entity>
-	val entitiesToBeProcessed: com.badlogic.gdx.utils.Array<Entity> = com.badlogic.gdx.utils.Array<Entity>(false, 32)
 
 	val onTurn = Event0Arg()
 
 	var lastState = "---"
+	var printTasks = false
 
 	init
 	{
@@ -82,6 +82,26 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 
 			return true
 		})
+
+		DebugConsole.register("PrintTasks", "", fun (args, console): Boolean {
+			if (args[0] == "true" || args[0] == "false") printTasks = args[0] == "true"
+			else
+			{
+				return false
+			}
+
+			return true
+		})
+
+		DebugConsole.register("god", "", fun (args, console): Boolean {
+			if (args[0] == "true" || args[0] == "false") level!!.player.stats().invulnerable = args[0] == "true"
+			else
+			{
+				return false
+			}
+
+			return true
+		})
 	}
 
 	override fun addedToEngine(engine: Engine?)
@@ -103,57 +123,31 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 
 		if (!hasEffects && !hasTimelines)
 		{
-			if (entitiesToBeProcessed.size == 0)
+			lastState = "Waiting on player"
+
+			// process player
+			val player = level!!.player
+
+			val tookTurn = processEntity(player)
+
+			if (tookTurn)
 			{
-				lastState = "Waiting on player"
-
-				// process player
-				val player = level!!.player
-
-				processEntity(player)
-
-				val playerTask = Mappers.task.get(player)
-				if (playerTask.actionDelay < 0)
+				for (entity in entities)
 				{
-					for (entity in entities)
+					if (entity != player)
 					{
-						if (entity != player)
+						val pos = entity.pos()
+						if (pos != null)
 						{
-							val pos = entity.pos()
-							if (pos != null)
-							{
-								// skip far away entities
-								if (pos.position.taxiDist(player.tile()!!) > 100) continue
-							}
-
-							val task = Mappers.task.get(entity)
-							task.actionDelay -= playerTask.actionDelay
-
-							if (task.actionDelay >= 0)
-							{
-								entitiesToBeProcessed.add(entity)
-							}
+							// skip far away entities
+							if (pos.position.taxiDist(player.tile()!!) > 100) continue
 						}
+
+						processEntity(entity)
 					}
-
-					playerTask.actionDelay = 0f
-
-					onTurn()
 				}
-			}
 
-			for (i in 0..entitiesToBeProcessed.size-1)
-			{
-				lastState = "Processing entities"
-
-				if (entitiesToBeProcessed.size > 0)
-				{
-					val entity = entitiesToBeProcessed[0]
-					entitiesToBeProcessed.removeIndex(0)
-					val finished = processEntity(entity)
-
-					if (!finished) entitiesToBeProcessed.add(entity)
-				}
+				onTurn()
 			}
 		}
 		else if (hasEffects)
@@ -178,46 +172,43 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 		{
 			stats.hp += Math.max(stats.bonusHP, 10f)
 		}
-
-		if (!stats.staminaReduced && stats.stamina < stats.maxStamina)
-		{
-			stats.stamina += 10f
-		}
 	}
 
 	fun processEntity(e: Entity): Boolean
 	{
-		val task = e.task() ?: return true
-		val stats = e.stats() ?: return true
+		val task = e.task() ?: return false
+		val stats = e.stats() ?: return false
 
-		if (stats.hp <= 0) return true
+		if (stats.hp <= 0) return false
 
-		stats.staminaReduced = false
-
-		if (task.actionDelay >= 0)
+		if (task.tasks.size == 0)
 		{
-			if (task.tasks.size == 0)
-			{
-				task.ai.update(e)
-			}
-
-			if (task.tasks.size > 0)
-			{
-				val t = task.tasks.removeIndex(0)
-
-				t.execute(e)
-				task.actionDelay -= 1f
-
-				e.pos().turnsOnTile++
-				processEntityStats(e)
-			}
-			else
-			{
-				task.actionDelay = 0f
-				return true
-			}
+			task.ai.update(e)
 		}
 
-		return task.actionDelay < 0
+		if (task.tasks.size > 0)
+		{
+			if (stats.bonusHP > 0)
+			{
+				stats.hp += Math.min(stats.bonusHP, 5f)
+			}
+			e.event().onTurn()
+
+			val t = task.tasks.removeIndex(0)
+
+			if (printTasks)
+			{
+				println("Entity '" + e.name().name + "' doing task '" + t.javaClass.simpleName + "'")
+			}
+
+			t.execute(e)
+
+			e.pos().turnsOnTile++
+			processEntityStats(e)
+
+			return true
+		}
+
+		return false
 	}
 }

@@ -67,5 +67,7 @@ class TaskMove(var direction: Direction): AbstractTask()
 			pos.position.x += direction.x;
 			pos.position.y += direction.y;
 		}
+
+		e.stats().stamina += 2
 	}
 }

@@ -54,6 +54,30 @@ inline fun <reified T> Sequence<T>.random(num: Int, ran: Random): Sequence<T>
 
 	return outArray.asSequence()
 }
+inline fun <reified T> Sequence<T>.weightedRandom(weightFun: (T) -> Int, ran: Random = MathUtils.random): T?
+{
+	if (this.count() == 0) return null
+
+	val totalWeight = this.sumBy { weightFun(it) }
+
+	if (totalWeight == 0) return null
+
+	val chosen = ran.nextInt(totalWeight)
+
+	var current = 0
+	for (e in this)
+	{
+		val weight = weightFun(e)
+		if (weight > 0 && chosen - current < weight)
+		{
+			return e
+		}
+
+		current += weight
+	}
+
+	return lastOrNull()
+}
 
 fun <T> Sequence<T>.sequenceEquals(other: Sequence<T>): Boolean
 {

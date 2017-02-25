@@ -50,6 +50,7 @@ class ParticleEditorScreen : AbstractScreen()
 	val shape = ShapeRenderer()
 	var colour: java.awt.Color = java.awt.Color.WHITE
 	val crossedTiles = ObjectSet<Point>()
+	var moveSpeed = 1f
 
 	override fun create()
 	{
@@ -65,7 +66,7 @@ class ParticleEditorScreen : AbstractScreen()
 		{
 			override fun changed(event: ChangeEvent?, actor: Actor?)
 			{
-				particle.speedMultiplier = playbackSpeedBox.selected
+				moveSpeed = playbackSpeedBox.selected
 			}
 
 		})
@@ -91,7 +92,6 @@ class ParticleEditorScreen : AbstractScreen()
 				nparticle.killOnAnimComplete = false
 				nparticle.setPosition(particle.position.x, particle.position.y)
 				nparticle.rotation = particle.rotation
-				nparticle.speedMultiplier = playbackSpeedBox.selected
 				nparticle.colour.set(colour.red / 255f, colour.green / 255f, colour.blue / 255f, colour.alpha / 255f)
 				particle = nparticle
 			}
@@ -103,7 +103,6 @@ class ParticleEditorScreen : AbstractScreen()
 			nparticle.killOnAnimComplete = false
 			nparticle.setPosition(particle.position.x, particle.position.y)
 			nparticle.rotation = particle.rotation
-			nparticle.speedMultiplier = playbackSpeedBox.selected
 			nparticle.colour.set(colour.red / 255f, colour.green / 255f, colour.blue / 255f, colour.alpha / 255f)
 			particle = nparticle
 		}
@@ -145,7 +144,7 @@ class ParticleEditorScreen : AbstractScreen()
 	{
 		particle.collisionGrid = collision
 
-		spriteRender.begin(delta, 0f, 0f)
+		spriteRender.begin(delta * moveSpeed, 0f, 0f)
 
 		for (x in 0..background.xSize-1)
 		{
@@ -194,8 +193,8 @@ class ParticleEditorScreen : AbstractScreen()
 
 		val dist = p1.dst(p2)
 
-		particle.animation = MoveAnimation.obtain().set(dist * particle.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
-		if (particle.moveSpeed > 0f) particle.rotation = getRotation(p1, p2)
+		particle.animation = MoveAnimation.obtain().set(dist, arrayOf(p1, p2), Interpolation.linear)
+		particle.rotation = getRotation(p1, p2)
 
 		Point.freeAll(crossedTiles)
 		crossedTiles.clear()

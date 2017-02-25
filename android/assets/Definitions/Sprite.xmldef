@@ -22,7 +22,6 @@
 	</Definition>
 	<Definition Name="ParticleEffect" IsGlobal="True" meta:RefKey="StructDef">
 		<Data Name="Name" BasePath="Particles" StripExtension="True" AllowedFileTypes="xml" SkipIfDefault="False" meta:RefKey="File" />
-		<Data Name="SpeedMultiplier" Min="0" Default="1" meta:RefKey="Number" />
 		<Data Name="Colour" HasAlpha="True" meta:RefKey="Colour" />
 		<Data Name="FlipX" meta:RefKey="Boolean" />
 		<Data Name="FlipY" meta:RefKey="Boolean" />
