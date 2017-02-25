@@ -204,14 +204,16 @@ abstract class AbstractTimelineAction()
 class BlockerAction() : AbstractTimelineAction()
 {
 	var blockOnTurn = false
-	val attachedFun: (() -> Unit) = { exit() }
 	var isBlocked = false
 
 	override fun enter()
 	{
 		if (blockOnTurn)
 		{
-			Global.engine.task().onTurn += attachedFun
+			Global.engine.task().onTurn += fun(): Boolean {
+				exit()
+				return true
+			}
 		}
 
 		isBlocked = true
@@ -220,11 +222,6 @@ class BlockerAction() : AbstractTimelineAction()
 	override fun exit()
 	{
 		isBlocked = true
-
-		if (blockOnTurn)
-		{
-			Global.engine.task().onTurn -= attachedFun
-		}
 	}
 
 	override fun copy(parent: SceneTimeline): AbstractTimelineAction

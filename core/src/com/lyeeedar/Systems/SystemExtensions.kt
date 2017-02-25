@@ -8,6 +8,7 @@ import kotlin.reflect.KClass
 
 val systemList: Array<KClass<out AbstractSystem>> = arrayOf(
 		TaskProcessorSystem::class,
+		StatisticsSystem::class,
 		TileSystem::class,
 		DirectionalSpriteSystem::class,
 		ShadowCastSystem::class,

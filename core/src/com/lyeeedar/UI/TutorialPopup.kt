@@ -20,7 +20,7 @@ class TutorialPopup(val text: String, val pos: Vector2, val key: String) : Table
 {
 	init
 	{
-		background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24)).tint(Color(1f,1f,1f,0.7f))
+		background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24)).tint(Color(1f, 1f, 1f, 0.7f))
 		touchable = Touchable.enabled
 
 		val label = Label(text, Global.skin)

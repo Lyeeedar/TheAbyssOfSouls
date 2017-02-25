@@ -3,6 +3,7 @@ package com.lyeeedar.Systems
 import com.badlogic.ashley.core.*
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
+import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
@@ -33,7 +34,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 
 	val tileSize = 40f
 
-	val hpbarBack = AssetManager.loadTextureRegion("Sprites/GUI/HpBarBack.png")!!
+	val hpbarBack = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarBack.png")!!, 4, 4, 4, 4)
 	val hpbarBar = AssetManager.loadTextureRegion("Sprites/GUI/HpBarFront.png")!!
 
 	lateinit var renderer: SortedRenderer
@@ -246,7 +247,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				val stats = entity.stats()
 				val totalWidth = pos.size.toFloat()
 
-				renderer.queueTexture(hpbarBack, ax + totalWidth / 2f, ay + 0.1f, pos.slot.ordinal, 1, tileCol, totalWidth, 0.15f)
+				renderer.queueNinepatch(hpbarBack, ax + totalWidth / 2f, ay + 0.1f, pos.slot.ordinal, 1, tileCol, totalWidth, 0.15f)
 
 				val perc = stats.hp / stats.maxHP
 				var col = Colour.GREEN
@@ -256,10 +257,27 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				val extraPerc = (stats.hp + stats.bonusHP) / stats.maxHP
 
 				val hpWidth = totalWidth * perc
-				renderer.queueTexture(hpbarBar, ax + hpWidth / 2f, ay + 0.1f, pos.slot.ordinal, 2, hpBarCol.set(Colour.LIGHT_GRAY).mul(tileCol), hpWidth, 0.15f)
+				renderer.queueTexture(hpbarBar, ax + hpWidth / 2f, ay + 0.1f, pos.slot.ordinal, 2, hpBarCol.set(Colour.LIGHT_GRAY).mul(tileCol), hpWidth, 0.1f)
 
 				val extraWidth = totalWidth * extraPerc
-				renderer.queueTexture(hpbarBar, ax + extraWidth / 2f, ay + 0.1f, pos.slot.ordinal, 3, hpBarCol.set(col).mul(tileCol), extraWidth, 0.15f)
+				renderer.queueTexture(hpbarBar, ax + extraWidth / 2f, ay + 0.1f, pos.slot.ordinal, 3, hpBarCol.set(col).mul(tileCol), extraWidth, 0.1f)
+
+				if (entity == player)
+				{
+					val c = hpBarCol.set(tileCol)
+					if (entity.stats().insufficientStamina > 0f)
+					{
+						entity.stats().insufficientStamina -= deltaTime
+						c.mul(Colour.RED)
+					}
+
+					renderer.queueNinepatch(hpbarBack, ax + totalWidth / 2f, ay, pos.slot.ordinal, 4, c, totalWidth, 0.15f)
+
+					val perc = stats.stamina / stats.maxStamina
+
+					val hpWidth = Math.max(totalWidth * perc, 0f)
+					renderer.queueTexture(hpbarBar, ax + hpWidth / 2f, ay, pos.slot.ordinal, 5, hpBarCol.set(Colour.YELLOW).mul(tileCol), hpWidth, 0.1f)
+				}
 			}
 		}
 

@@ -32,6 +32,8 @@ class ChargeComboStep : ComboStep()
 		val pos = entity.pos()!!
 		val start = pos.tile!!
 
+		val faceTiles = pos.getEdgeTiles(direction)
+
 		val hitEntities = ObjectSet<Entity>()
 
 		fun flingEntity(e: Entity)
@@ -48,6 +50,11 @@ class ChargeComboStep : ComboStep()
 					for (iy in 0..e.pos().size-1)
 					{
 						val t = etile.level.getTile(tile, ix, iy) ?: return false
+						for (face in faceTiles)
+						{
+							if (t.x == face.x) return false
+							if (t.y == face.y) return false
+						}
 						if (t.contents.containsKey(SpaceSlot.ENTITY) || t.contents.containsKey(SpaceSlot.WALL)) return false
 					}
 				}
@@ -85,6 +92,7 @@ class ChargeComboStep : ComboStep()
 			e.renderable().renderable.animation = SpinAnimation.obtain().set(0.3f, 360f)
 		}
 
+		var prev = pos.tile!!
 		var current = pos.tile!!
 		outer@for (i in 0..dist)
 		{
@@ -124,6 +132,7 @@ class ChargeComboStep : ComboStep()
 				}
 			}
 
+			prev = current
 			current = current.level.getTile(current, direction) ?: break
 		}
 
@@ -136,13 +145,13 @@ class ChargeComboStep : ComboStep()
 			}
 		}
 
-		pos.position = current
+		pos.position = prev
 
 		for (x in 0..pos.size-1)
 		{
 			for (y in 0..pos.size-1)
 			{
-				val tile = current.level.getTile(current, x, y) ?: continue
+				val tile = prev.level.getTile(prev, x, y) ?: continue
 
 				if (tile.contents.containsKey(pos.slot))
 				{
@@ -153,7 +162,7 @@ class ChargeComboStep : ComboStep()
 			}
 		}
 
-		entity.renderable().renderable.animation = MoveAnimation.obtain().set(current, start, 0.15f)
+		entity.renderable().renderable.animation = MoveAnimation.obtain().set(prev, start, 0.15f)
 	}
 
 	override fun getAllValid(entity: Entity, direction: Direction): Array<Point>

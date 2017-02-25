@@ -94,7 +94,7 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 		})
 
 		DebugConsole.register("god", "", fun (args, console): Boolean {
-			if (args[0] == "true" || args[0] == "false") level!!.player.stats().invulnerable = args[0] == "true"
+			if (args[0] == "true" || args[0] == "false") level!!.player.stats().godMode = args[0] == "true"
 			else
 			{
 				return false

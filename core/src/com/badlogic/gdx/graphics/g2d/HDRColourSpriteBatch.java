@@ -59,6 +59,8 @@ public class HDRColourSpriteBatch implements Batch {
 	private Colour colour = new Colour( 1f);
 	private final Color tempcolor = new Color(  );
 
+	private final float[] tempVertexBuffer = new float[8];
+
 	/** Number of render calls since the last {@link #begin()}. **/
 	public int renderCalls = 0;
 
@@ -636,6 +638,66 @@ public class HDRColourSpriteBatch implements Batch {
 	{
 		if (!drawing) throw new IllegalStateException("SpriteBatch.begin must be called before draw.");
 
+		if (count % 8 == 0)
+		{
+			int verticesLength = vertices.length;
+			int remainingVertices = verticesLength;
+			if ( texture != lastTexture )
+				switchTexture( texture );
+			else
+			{
+				remainingVertices -= idx;
+				if ( remainingVertices == 0 )
+				{
+					flush();
+					remainingVertices = verticesLength;
+				}
+			}
+			int copyCount = Math.min( remainingVertices, count );
+
+			System.arraycopy( spriteVertices, offset, vertices, idx, copyCount );
+			idx += copyCount;
+			count -= copyCount;
+			while ( count > 0 )
+			{
+				offset += copyCount;
+				flush();
+				copyCount = Math.min( verticesLength, count );
+				System.arraycopy( spriteVertices, offset, vertices, 0, copyCount );
+				idx += copyCount;
+				count -= copyCount;
+			}
+		}
+		else
+		{
+			// decompose and extract vertices
+			for (int i = offset; i < offset + count; i += 5)
+			{
+				float x = spriteVertices[i + 0];
+				float y = spriteVertices[i + 1];
+				float u = spriteVertices[i + 3];
+				float v = spriteVertices[i + 4];
+
+				tempVertexBuffer[0] = x;
+				tempVertexBuffer[1] = y;
+
+				tempVertexBuffer[2] = colour.r;
+				tempVertexBuffer[3] = colour.g;
+				tempVertexBuffer[4] = colour.b;
+				tempVertexBuffer[5] = colour.a;
+
+				tempVertexBuffer[6] = u;
+				tempVertexBuffer[7] = v;
+
+				draw( texture, tempVertexBuffer, 0, 8 );
+			}
+		}
+	}
+
+	public void drawVertices( Texture texture, float[] spriteVertices, int offset, int count )
+	{
+		if (!drawing) throw new IllegalStateException("SpriteBatch.begin must be called before draw.");
+
 		int verticesLength = vertices.length;
 		int remainingVertices = verticesLength;
 		if (texture != lastTexture)
@@ -993,13 +1055,13 @@ public class HDRColourSpriteBatch implements Batch {
 	@Override
 	public void draw( TextureRegion region, float x, float y, float originX, float originY, float width, float height, float scaleX, float scaleY, float rotation, boolean clockwise )
 	{
-
+		throw new RuntimeException( "Unimplemented draw method in HDRSpriteBatch!" );
 	}
 
 	@Override
 	public void draw( TextureRegion region, float width, float height, Affine2 transform )
 	{
-
+		throw new RuntimeException( "Unimplemented draw method in HDRSpriteBatch!" );
 	}
 
 	@Override

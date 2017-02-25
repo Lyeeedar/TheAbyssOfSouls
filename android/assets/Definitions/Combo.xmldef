@@ -2,7 +2,7 @@
 	<Definition Name="Combo" AllowReferenceLinks="False" meta:RefKey="GraphStruct">
 		<Data Name="NextMode" EnumValues="Random,Keybinding" meta:RefKey="Enum" />
 		<Data Name="Combos" meta:RefKey="Collection">
-			<Data Name="Combo" Keys="Wait,Scene,Charge" meta:RefKey="Reference" />
+			<Data Name="Combo" Keys="Wait,Scene,Charge,Defense" meta:RefKey="Reference" />
 		</Data>
 		<Data Name="Random" VisibleIf="NextMode==Random" meta:RefKey="Collection">
 			<Data Name="Node" Keys="ComboNode" meta:RefKey="GraphReference" />
@@ -48,5 +48,11 @@
 		<Data Name="HitType" EnumValues="All,Target,Random" meta:RefKey="Enum" />
 		<Data Name="Count" Type="Int" Min="1" Default="1" VisibleIf="HitType!=All" meta:RefKey="Number" />
 		<Data Name="StepForward" meta:RefKey="Boolean" />
+	</Definition>
+	<Definition Name="Defense" Extends="ComboDesc" ExtendsAfter="CanTurn" meta:RefKey="StructDef">
+		<Data Name="Type" EnumValues="Block,Invulnerable" meta:RefKey="Enum" />
+		<Data Name="Move" Type="Int" Min="0" meta:RefKey="Number" />
+		<Data Name="Direction" EnumValues="Same,Opposite" VisibleIf="Move&gt;0" meta:RefKey="Enum" />
+		<Data Name="Animation" EnumValues="Leap,Roll" VisibleIf="Move&gt;0" meta:RefKey="Enum" />
 	</Definition>
 </Definitions>

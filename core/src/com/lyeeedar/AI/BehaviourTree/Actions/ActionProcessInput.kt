@@ -8,15 +8,12 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
 import com.lyeeedar.Screens.AbstractScreen
-import com.lyeeedar.Util.Controls
-import com.lyeeedar.Util.Point
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector3
 import com.lyeeedar.AI.Tasks.TaskCombo
 import com.lyeeedar.Combo.ComboTree
 import com.lyeeedar.Components.*
-import com.lyeeedar.Util.Future
-import com.lyeeedar.Util.isDown
+import com.lyeeedar.Util.*
 
 
 /**
@@ -99,7 +96,7 @@ class ActionProcessInput(): AbstractAction()
 			val down = Controls.Keys.DOWN.isDown()
 			val left = Controls.Keys.LEFT.isDown()
 			val right = Controls.Keys.RIGHT.isDown()
-			val space = Controls.Keys.DEFENSE.isDown()
+			val space = Controls.Keys.WAIT.consumePress()
 
 			var x = 0
 			var y = 0
@@ -146,28 +143,26 @@ class ActionProcessInput(): AbstractAction()
 					{
 						Future.call({ entity.directionalSprite()?.currentAnim = "idle" }, 0.5f)
 					}
-
-					targetPos = null
 				}
 
-				if (Controls.Keys.ATTACKNORMAL.isDown() && current.keybinding.containsKey(ComboTree.ComboKey.ATTACKNORMAL))
+				if (Controls.Keys.ATTACKNORMAL.consumePress() && current.keybinding.containsKey(ComboTree.ComboKey.ATTACKNORMAL))
 				{
 					tryDoAttack(ComboTree.ComboKey.ATTACKNORMAL)
 				}
-				else if (Controls.Keys.ATTACKSPECIAL.isDown() && current.keybinding.containsKey(ComboTree.ComboKey.ATTACKSPECIAL))
+				else if (Controls.Keys.ATTACKSPECIAL.consumePress() && current.keybinding.containsKey(ComboTree.ComboKey.ATTACKSPECIAL))
 				{
 					tryDoAttack(ComboTree.ComboKey.ATTACKSPECIAL)
 				}
-				else if (Controls.Keys.DEFENSE.isDown() && current.keybinding.containsKey(ComboTree.ComboKey.DEFENSE))
+				else if (Controls.Keys.DEFENSE.consumePress() && current.keybinding.containsKey(ComboTree.ComboKey.DEFENSE))
 				{
 					tryDoAttack(ComboTree.ComboKey.DEFENSE)
 				}
-				else if (Global.controls.isDirectionDown() && current.keybinding.containsKey(ComboTree.ComboKey.DIRECTION))
+				else if (Global.controls.isDirectionDownAndNotConsumed() && current.keybinding.containsKey(ComboTree.ComboKey.DIRECTION))
 				{
-					val up = Controls.Keys.UP.isDown()
-					val down = Controls.Keys.DOWN.isDown()
-					val left = Controls.Keys.LEFT.isDown()
-					val right = Controls.Keys.RIGHT.isDown()
+					val up = Controls.Keys.UP.consumePress()
+					val down = Controls.Keys.DOWN.consumePress()
+					val left = Controls.Keys.LEFT.consumePress()
+					val right = Controls.Keys.RIGHT.consumePress()
 
 					if (up) entity.pos().facing = Direction.NORTH
 					else if (down) entity.pos().facing = Direction.SOUTH
@@ -176,6 +171,8 @@ class ActionProcessInput(): AbstractAction()
 
 					tryDoAttack(ComboTree.ComboKey.DIRECTION)
 				}
+
+				targetPos = null
 			}
 			else
 			{
@@ -186,14 +183,22 @@ class ActionProcessInput(): AbstractAction()
 				fun tryDoAttack(key: ComboTree.ComboKey)
 				{
 					val next = first.keybinding[key]
-					if (entity.stats().stamina < next.cost) return
-
-					if (Global.controls.isDirectionDown())
+					if (entity.stats().stamina < next.cost)
 					{
-						val up = Controls.Keys.UP.isDown()
-						val down = Controls.Keys.DOWN.isDown()
-						val left = Controls.Keys.LEFT.isDown()
-						val right = Controls.Keys.RIGHT.isDown()
+						entity.stats().insufficientStamina = 0.5f
+						return
+					}
+
+					if (Global.controls.isDirectionDownAndNotConsumed())
+					{
+						val up = Controls.Keys.UP.consumePress()
+						val down = Controls.Keys.DOWN.consumePress()
+						val left = Controls.Keys.LEFT.consumePress()
+						val right = Controls.Keys.RIGHT.consumePress()
+
+						Controls.Keys.ATTACKNORMAL.consumePress()
+						Controls.Keys.ATTACKSPECIAL.consumePress()
+						Controls.Keys.DEFENSE.consumePress()
 
 						if (up) entity.pos().facing = Direction.NORTH
 						else if (down) entity.pos().facing = Direction.SOUTH
@@ -212,25 +217,19 @@ class ActionProcessInput(): AbstractAction()
 					targetPos = null
 				}
 
-				if (Controls.Keys.ATTACKNORMAL.isDown() && first.keybinding.containsKey(ComboTree.ComboKey.ATTACKNORMAL))
+				if (Controls.Keys.ATTACKNORMAL.isDownAndNotConsumed() && first.keybinding.containsKey(ComboTree.ComboKey.ATTACKNORMAL))
 				{
 					tryDoAttack(ComboTree.ComboKey.ATTACKNORMAL)
 				}
-				else if (Controls.Keys.ATTACKSPECIAL.isDown() && first.keybinding.containsKey(ComboTree.ComboKey.ATTACKSPECIAL))
+				else if (Controls.Keys.ATTACKSPECIAL.isDownAndNotConsumed() && first.keybinding.containsKey(ComboTree.ComboKey.ATTACKSPECIAL))
 				{
 					tryDoAttack(ComboTree.ComboKey.ATTACKSPECIAL)
 				}
-				else if (Controls.Keys.DEFENSE.isDown() && first.keybinding.containsKey(ComboTree.ComboKey.DEFENSE))
+				else if (Controls.Keys.DEFENSE.isDownAndNotConsumed() && first.keybinding.containsKey(ComboTree.ComboKey.DEFENSE))
 				{
 					tryDoAttack(ComboTree.ComboKey.DEFENSE)
 				}
 			}
-		}
-
-		if (combo.currentCombo == null && entity.stats().stamina < 0)
-		{
-			entity.task().tasks.add(TaskWait())
-			return ExecutionState.COMPLETED;
 		}
 
 		parent.setData( "pos", null )

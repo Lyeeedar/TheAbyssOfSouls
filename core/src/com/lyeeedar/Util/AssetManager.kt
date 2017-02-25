@@ -108,7 +108,7 @@ class AssetManager
 			}
 
 			var atlasName = path
-			atlasName = atlasName.replaceFirst("Sprites/".toRegex(), "")
+			if (atlasName.startsWith("Sprites/")) atlasName = atlasName.replaceFirst("Sprites/".toRegex(), "")
 			atlasName = atlasName.replace(".png", "")
 
 			val region = prepackedAtlas.findRegion(atlasName)
@@ -117,7 +117,8 @@ class AssetManager
 				val textureRegion = TextureRegion(region)
 				loadedTextureRegions.put(path, textureRegion)
 				return textureRegion
-			} else
+			}
+			else
 			{
 				loadedTextureRegions.put(path, null)
 				return null

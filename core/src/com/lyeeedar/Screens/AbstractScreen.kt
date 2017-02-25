@@ -118,12 +118,21 @@ abstract class AbstractScreen() : Screen, InputProcessor
 
 			return true
 		}
+		else
+		{
+			Global.controls.keyPressed(keycode)
+		}
 
 		return false
 	}
 
     // ----------------------------------------------------------------------
-    override fun keyUp( keycode: Int ) = false
+    override fun keyUp( keycode: Int ): Boolean
+	{
+		Global.controls.keyReleased(keycode)
+
+		return false
+	}
 
     // ----------------------------------------------------------------------
     override fun keyTyped( character: Char ) = false

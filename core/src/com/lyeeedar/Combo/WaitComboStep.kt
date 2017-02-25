@@ -53,7 +53,7 @@ class WaitComboStep: ComboStep()
 			if (child.comboStep.isValid(entity, direction, target, child)) return true
 		}
 
-		return false
+		return tree.random.size == 0
 	}
 
 	override fun parse(xml: XmlReader.Element)

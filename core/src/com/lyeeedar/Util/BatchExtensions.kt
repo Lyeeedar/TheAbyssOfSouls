@@ -1,9 +1,6 @@
 package com.lyeeedar.Util
 
-import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.math.MathUtils
 
 inline fun draw(batch: Batch, region: TextureRegion,
@@ -148,7 +145,7 @@ inline fun doDraw(batch: HDRColourSpriteBatch, region: TextureRegion, colour: Co
 	vertices[30] = u2
 	vertices[31] = v
 
-	batch.draw(region.texture, vertices, 0, 32)
+	batch.drawVertices(region.texture, vertices, 0, 32)
 }
 
 inline fun calculateVertexData(region: TextureRegion,

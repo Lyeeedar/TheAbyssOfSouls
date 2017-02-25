@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.*
@@ -50,7 +47,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	var screenShakeAngle: Float = 0f
 
 	val BLENDMODES = BlendMode.values().size
-	val MAX_INDEX = 3 * BLENDMODES
+	val MAX_INDEX = 6 * BLENDMODES
 	val X_BLOCK_SIZE = layers * MAX_INDEX
 	val Y_BLOCK_SIZE = X_BLOCK_SIZE * width
 	val MAX_Y_BLOCK_SIZE = Y_BLOCK_SIZE * height
@@ -147,6 +144,14 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 				{
 					com.lyeeedar.Util.draw(batch, rs.texture!!, localx, localy, 0.5f, 0.5f, 1f, 1f, localw * rs.scaleX, localh * rs.scaleY, rs.rotation, rs.flipX, rs.flipY, 0f)
 				}
+			}
+
+			if (rs.ninePatch != null)
+			{
+				val w = localw * rs.scaleX
+				val h = localh * rs.scaleY
+
+				rs.ninePatch!!.draw(batch, localx - w/2f, localy - h/2f, 0.5f, 0.5f, w, h, 1f, 1f, rs.rotation)
 			}
 		}
 
@@ -325,7 +330,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 					val comparisonVal = getComparisonVal((drawx-sizex*0.5f).toInt(), (drawy-sizey*0.5f).toInt(), layer, index, particle.blend)
 
-					val rs = RenderSprite.obtain().set( null, null, texWindow.v1, drawx * tileSize, drawy * tileSize, tempVec.x, tempVec.y, col, sizex, sizey, rotation, 1f, 1f, effect.flipX, effect.flipY, particle.blend, comparisonVal )
+					val rs = RenderSprite.obtain().set( null, null, texWindow.v1, null, drawx * tileSize, drawy * tileSize, tempVec.x, tempVec.y, col, sizex, sizey, rotation, 1f, 1f, effect.flipX, effect.flipY, particle.blend, comparisonVal )
 
 					if (particle.blendKeyframes)
 					{
@@ -390,7 +395,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
 
-		val rs = RenderSprite.obtain().set( null, tilingSprite, null, x, y, ix, iy, colour, width, height, 0f, 1f, 1f, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
+		val rs = RenderSprite.obtain().set( null, tilingSprite, null, null, x, y, ix, iy, colour, width, height, 0f, 1f, 1f, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 
 		heap.add( rs, rs.comparisonVal )
 	}
@@ -446,7 +451,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
 
-		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, rotation, scaleX, scaleY, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
+		val rs = RenderSprite.obtain().set( sprite, null, null, null, x, y, ix, iy, colour, width, height, rotation, scaleX, scaleY, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 
 		heap.add( rs, rs.comparisonVal )
 	}
@@ -475,10 +480,40 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
 
-		val rs = RenderSprite.obtain().set( null, null, texture, x, y, ix, iy, colour, width, height, 0f, scaleX, scaleY, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
+		val rs = RenderSprite.obtain().set( null, null, texture, null, x, y, ix, iy, colour, width, height, 0f, scaleX, scaleY, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 
 		heap.add( rs, rs.comparisonVal )
 	}
+
+	// ----------------------------------------------------------------------
+	fun queueNinepatch(ninePatch: NinePatch, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, width: Float = 1f, height: Float = 1f, scaleX: Float = 1f, scaleY: Float = 1f)
+	{
+		if (!inBegin) throw Exception("Queue called before begin!")
+
+		if (debugDraw && inDebugFrame) return
+
+		val lx = ix - width/2
+		val ly = iy - height/2
+
+		val x = ix * tileSize
+		val y = iy * tileSize
+
+		// check if onscreen
+
+		val localx = x + offsetx
+		val localy = y + offsety
+		val localw = width * tileSize
+		val localh = height * tileSize
+
+		if (localx + localw < 0 || localx > Global.stage.width || localy + localh < 0 || localy > Global.stage.height) return
+
+		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
+
+		val rs = RenderSprite.obtain().set( null, null, null, ninePatch, x, y, ix, iy, colour, width, height, 0f, scaleX, scaleY, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
+
+		heap.add( rs, rs.comparisonVal )
+	}
+
 
 	// ----------------------------------------------------------------------
 	fun isSpriteOnscreen(sprite: Sprite, x: Float, y: Float, width: Float, height: Float, scaleX: Float = 1f, scaleY: Float = 1f): Boolean
@@ -579,6 +614,7 @@ class RenderSprite : BinaryHeap.Node(0f)
 	var tilingSprite: TilingSprite? = null
 	var texture: TextureRegion? = null
 	var nextTexture: TextureRegion? = null
+	var ninePatch: NinePatch? = null
 	var blendAlpha = 0f
 	var x: Float = 0f
 	var y: Float = 0f
@@ -594,7 +630,7 @@ class RenderSprite : BinaryHeap.Node(0f)
 	var comparisonVal: Float = 0f
 
 	// ----------------------------------------------------------------------
-	operator fun set(sprite: Sprite?, tilingSprite: TilingSprite?, texture: TextureRegion?,
+	operator fun set(sprite: Sprite?, tilingSprite: TilingSprite?, texture: TextureRegion?, ninePatch: NinePatch?,
 					 x: Float, y: Float,
 					 ix: Float, iy: Float,
 					 colour: Colour,
@@ -614,6 +650,7 @@ class RenderSprite : BinaryHeap.Node(0f)
 		this.sprite = sprite
 		this.tilingSprite = tilingSprite
 		this.texture = texture
+		this.ninePatch = ninePatch
 		this.x = x
 		this.y = y
 		this.width = width

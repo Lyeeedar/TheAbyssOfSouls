@@ -33,7 +33,8 @@ abstract class ComboStep
 				"WAIT" -> WaitComboStep()
 				"SCENE" -> SceneTimelineComboStep()
 				"CHARGE" -> ChargeComboStep()
-				else -> throw NotImplementedError("Unknown combo step type: " + xml.name.toUpperCase())
+				"DEFENSE" -> DefenseComboStep()
+				else -> throw NotImplementedError("Unknown combo step type: " + xml.getAttribute("meta:RefKey").toUpperCase())
 			}
 
 			step.name = xml.get("Name")

@@ -196,6 +196,7 @@ class SceneTimelineComboStep : ComboStep()
 	override fun getAllValid(entity: Entity, direction: Direction): Array<Point>
 	{
 		val epos = entity.pos()!!
+		val etile = entity.tile()!!
 		val tiles = com.badlogic.gdx.utils.Array<Point>(false, 16)
 
 		var xstep = 0
@@ -239,7 +240,7 @@ class SceneTimelineComboStep : ComboStep()
 
 		for (i in 0..epos.size - 1)
 		{
-			val attackerTile = epos.tile!!.level.getTile(epos.tile!!, sx + xstep * i, sy + ystep * i)!!
+			val attackerTile = etile.level.getTile(etile, sx + xstep * i, sy + ystep * i)!!
 
 			val mat = Matrix3()
 			mat.setToRotation(direction.angle)

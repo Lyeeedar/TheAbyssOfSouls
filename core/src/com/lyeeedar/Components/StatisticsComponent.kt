@@ -21,8 +21,12 @@ class StatisticsComponent: Component
 			var diff = v - hp
 			if (diff < 0)
 			{
-				if (invulnerable) return
-				if (blocking)
+				if (invulnerable)
+				{
+					blockedDamage = true
+					return
+				}
+				else if (blocking)
 				{
 					stamina += diff
 					if (stamina < 0)
@@ -31,12 +35,18 @@ class StatisticsComponent: Component
 						v = hp + stamina
 						diff = stamina
 
-						// play effect here too
+						blockedDamage = false
+						blockBroken = true
+					}
+					else
+					{
+						blockedDamage = true
 					}
 				}
 			}
 
 			field = v
+			if (godMode && field < 1) field = 1f
 
 			if (diff < 0)
 			{
@@ -82,6 +92,11 @@ class StatisticsComponent: Component
 
 	var blocking = false
 	var invulnerable = false
+	var godMode = false
+
+	var blockedDamage = false
+	var blockBroken = false
+	var insufficientStamina = 0f
 
 	fun dealDamage(amount: Int, element: ElementType, elementalConversion: Float)
 	{
