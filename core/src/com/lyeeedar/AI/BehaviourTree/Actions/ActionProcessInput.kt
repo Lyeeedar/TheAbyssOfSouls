@@ -32,7 +32,7 @@ class ActionProcessInput(): AbstractAction()
 
 		if (targetPos != null)
 		{
-			setData( "clickpos", null )
+			parent.setData( "clickpos", null )
 		}
 		else if ( Gdx.input.isTouched( 0 ) )
 		{
@@ -145,34 +145,53 @@ class ActionProcessInput(): AbstractAction()
 					}
 				}
 
-				if (Controls.Keys.ATTACKNORMAL.consumePress() && current.keybinding.containsKey(ComboTree.ComboKey.ATTACKNORMAL))
+				if (Controls.Keys.ATTACKNORMAL.consumePress())
 				{
-					tryDoAttack(ComboTree.ComboKey.ATTACKNORMAL)
+					if (current.keybinding.containsKey(ComboTree.ComboKey.ATTACKNORMAL))
+					{
+						tryDoAttack(ComboTree.ComboKey.ATTACKNORMAL)
+					}
 				}
-				else if (Controls.Keys.ATTACKSPECIAL.consumePress() && current.keybinding.containsKey(ComboTree.ComboKey.ATTACKSPECIAL))
+				else if (Controls.Keys.ATTACKSPECIAL.consumePress())
 				{
-					tryDoAttack(ComboTree.ComboKey.ATTACKSPECIAL)
+					if (current.keybinding.containsKey(ComboTree.ComboKey.ATTACKSPECIAL))
+					{
+						tryDoAttack(ComboTree.ComboKey.ATTACKSPECIAL)
+					}
 				}
-				else if (Controls.Keys.DEFENSE.consumePress() && current.keybinding.containsKey(ComboTree.ComboKey.DEFENSE))
+				else if (Controls.Keys.DEFENSE.consumePress())
 				{
-					tryDoAttack(ComboTree.ComboKey.DEFENSE)
+					if (current.keybinding.containsKey(ComboTree.ComboKey.DEFENSE))
+					{
+						tryDoAttack(ComboTree.ComboKey.DEFENSE)
+					}
 				}
-				else if (Global.controls.isDirectionDownAndNotConsumed() && current.keybinding.containsKey(ComboTree.ComboKey.DIRECTION))
+				else if (Global.controls.isDirectionDownAndNotConsumed())
 				{
-					val up = Controls.Keys.UP.consumePress()
-					val down = Controls.Keys.DOWN.consumePress()
-					val left = Controls.Keys.LEFT.consumePress()
-					val right = Controls.Keys.RIGHT.consumePress()
+					if (current.keybinding.containsKey(ComboTree.ComboKey.DIRECTION))
+					{
+						val up = Controls.Keys.UP.consumePress()
+						val down = Controls.Keys.DOWN.consumePress()
+						val left = Controls.Keys.LEFT.consumePress()
+						val right = Controls.Keys.RIGHT.consumePress()
 
-					if (up) entity.pos().facing = Direction.NORTH
-					else if (down) entity.pos().facing = Direction.SOUTH
-					else if (left) entity.pos().facing = Direction.WEST
-					else if (right) entity.pos().facing = Direction.EAST
+						if (up) entity.pos().facing = Direction.NORTH
+						else if (down) entity.pos().facing = Direction.SOUTH
+						else if (left) entity.pos().facing = Direction.WEST
+						else if (right) entity.pos().facing = Direction.EAST
 
-					tryDoAttack(ComboTree.ComboKey.DIRECTION)
+						tryDoAttack(ComboTree.ComboKey.DIRECTION)
+					}
+					else
+					{
+						combo.currentCombo = null
+					}
 				}
 
-				targetPos = null
+				if (combo.currentCombo != null || entity.task().tasks.size > 0)
+				{
+					targetPos = null
+				}
 			}
 			else
 			{

@@ -13,10 +13,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.SceneTimeline.SceneTimeline
 import com.lyeeedar.SpaceSlot
-import com.lyeeedar.Util.Array2D
-import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.random
-import com.lyeeedar.Util.toCharGrid
+import com.lyeeedar.Util.*
 import ktx.collections.toGdxArray
 
 
@@ -286,33 +283,6 @@ class SceneTimelineComboStep : ComboStep()
 		stepForward = xml.getBoolean("StepForward", false)
 
 		val hitPointsEl = xml.getChildByName("HitPattern")
-		val grid = hitPointsEl.toCharGrid()
-		val center = Point()
-
-		outer@ for (x in 0..grid.width-1)
-		{
-			for (y in 0..grid.height-1)
-			{
-				if (grid[x, y] == '@')
-				{
-					center.set(x, y)
-					break@outer
-				}
-			}
-		}
-
-		for (x in 0..grid.width-1)
-		{
-			for (y in 0..grid.height-1)
-			{
-				if (grid[x, y] == '#')
-				{
-					val dx = x - center.x
-					val dy = center.y - y
-
-					hitPoints.add(Point(dx, dy))
-				}
-			}
-		}
+		hitPoints.addAll(hitPointsEl.toHitPointArray())
 	}
 }

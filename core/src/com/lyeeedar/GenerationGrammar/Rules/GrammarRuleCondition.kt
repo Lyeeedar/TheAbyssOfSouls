@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
+import com.exp4j.Helpers.unescapeCharacters
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.Util.children
@@ -38,7 +39,7 @@ class GrammarRuleCondition : AbstractGrammarRule()
 	{
 		for (el in xml.children())
 		{
-			val condition = el.get("Condition").toLowerCase().replace("%", "#size")
+			val condition = el.get("Condition").toLowerCase().replace("%", "#size").unescapeCharacters()
 			val rule = el.get("Rule", "")
 
 			conditions.add(Condition(condition, rule))

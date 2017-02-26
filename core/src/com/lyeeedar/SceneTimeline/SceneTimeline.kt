@@ -176,27 +176,20 @@ abstract class AbstractTimelineAction()
 		private fun get(name: String): AbstractTimelineAction
 		{
 			val uname = name.toUpperCase()
-			val c = getClass(uname)
-			val instance = ClassReflection.newInstance(c)
+			val instance = when(uname) {
+				"BLOCKER" -> BlockerAction()
 
-			return instance
-		}
+				"DESTINATIONRENDERABLE" -> DestinationRenderableAction()
+				"MOVEMENTRENDERABLE" -> MovementRenderableAction()
 
-		private fun getClass(name: String): Class<out AbstractTimelineAction>
-		{
-			val type = when(name) {
-				"BLOCKER" -> BlockerAction::class.java
+				"DAMAGE" -> DamageAction()
+				"SPAWN" -> SpawnAction()
 
-				"DESTINATIONRENDERABLE" -> DestinationRenderableAction::class.java
-				"MOVEMENTRENDERABLE" -> MovementRenderableAction::class.java
-
-				"DAMAGE" -> DamageAction::class.java
-
-			// ARGH everything broke
+				// ARGH everything broke
 				else -> throw RuntimeException("Invalid scene timeline action type: $name")
 			}
 
-			return type
+			return instance
 		}
 	}
 }

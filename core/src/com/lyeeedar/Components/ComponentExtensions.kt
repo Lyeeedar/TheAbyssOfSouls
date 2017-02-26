@@ -28,6 +28,7 @@ fun Entity.shadow() = Mappers.shadow.get(this)
 fun Entity.directionalSprite() = Mappers.directionalSprite.get(this)
 fun Entity.name() = Mappers.name.get(this)
 fun Entity.water() = Mappers.water.get(this)
+fun Entity.trailing() = Mappers.trailing.get(this)
 fun Entity.event(): EventComponent
 {
 	var event = Mappers.event.get(this)
@@ -59,6 +60,7 @@ class Mappers
 		val directionalSprite: ComponentMapper<DirectionalSpriteComponent> = ComponentMapper.getFor(DirectionalSpriteComponent::class.java)
 		val water: ComponentMapper<WaterComponent> = ComponentMapper.getFor(WaterComponent::class.java)
 		val event: ComponentMapper<EventComponent> = ComponentMapper.getFor(EventComponent::class.java)
+		val trailing: ComponentMapper<TrailingEntityComponent> = ComponentMapper.getFor(TrailingEntityComponent::class.java)
 	}
 }
 
@@ -137,6 +139,22 @@ class EntityLoader()
 					if (directional != null)
 					{
 						directional.directionalSprite.size = size
+					}
+
+					val additional = entity.additionalRenderable()
+					if (additional != null)
+					{
+						for (renderable in additional.below.values())
+						{
+							renderable.size[0] = size
+							renderable.size[1] = size
+						}
+
+						for (renderable in additional.above.values())
+						{
+							renderable.size[0] = size
+							renderable.size[1] = size
+						}
 					}
 				}
 			}
@@ -220,6 +238,73 @@ class EntityLoader()
 				water.depth = waterEl.getFloat("Depth", 0.3f)
 
 				entity.add(water)
+			}
+
+			val additionalEl = componentsEl.getChildByName("AdditionalRenderables")
+			if (additionalEl != null)
+			{
+				val additional = AdditionalRenderableComponent()
+
+				val pos = entity.pos()
+
+				val belowEls = additionalEl.getChildByName("Below")
+				if (belowEls != null)
+				{
+					for (el in belowEls.children())
+					{
+						val key = el.get("Key")
+						val renderable = AssetManager.loadRenderable(el.getChildByName("Renderable"))
+
+						if (pos != null)
+						{
+							renderable.size[0] = pos.size
+							renderable.size[1] = pos.size
+						}
+
+						additional.below[key] = renderable
+					}
+				}
+
+				val aboveEls = additionalEl.getChildByName("Above")
+				if (aboveEls != null)
+				{
+					for (el in aboveEls.children())
+					{
+						val key = el.get("Key")
+						val renderable = AssetManager.loadRenderable(el.getChildByName("Renderable"))
+
+						if (pos != null)
+						{
+							renderable.size[0] = pos.size
+							renderable.size[1] = pos.size
+						}
+
+						additional.above[key] = renderable
+					}
+				}
+			}
+
+			val trailingEl = componentsEl.getChildByName("Trailing")
+			if (trailingEl != null)
+			{
+				val trailing = TrailingEntityComponent()
+				trailing.collapses = trailingEl.getBoolean("Collapses", true)
+				entity.add(trailing)
+				trailing.entities.add(entity)
+
+				val renderablesEl = trailingEl.getChildByName("Renderables")
+				for (el in renderablesEl.children())
+				{
+					val renderable = AssetManager.loadRenderable(el)
+					val trailEntity = Entity()
+					trailEntity.add(RenderableComponent(renderable))
+					trailEntity.add(trailing)
+					if (entity.stats() != null) trailEntity.add(entity.stats())
+					trailEntity.add(PositionComponent())
+					trailEntity.pos().slot = entity.pos().slot
+
+					trailing.entities.add(trailEntity)
+				}
 			}
 
 			return entity

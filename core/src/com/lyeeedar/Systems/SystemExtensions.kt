@@ -10,10 +10,11 @@ val systemList: Array<KClass<out AbstractSystem>> = arrayOf(
 		TaskProcessorSystem::class,
 		StatisticsSystem::class,
 		TileSystem::class,
-		DirectionalSpriteSystem::class,
+		SceneTimelineSystem::class,
+		DeletionSystem::class,
 		ShadowCastSystem::class,
 		LightingSystem::class,
-		SceneTimelineSystem::class,
+		DirectionalSpriteSystem::class,
 		RenderSystem::class
 )
 

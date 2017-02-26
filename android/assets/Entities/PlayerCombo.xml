@@ -79,123 +79,122 @@
 			<Keybinding>
 				<AttackNormal meta:X="771.2550048828125" meta:Y="-251.46775817871094" GUID="5217ff07-8239-40ab-99f0-18bff5d1080f" meta:RefKey="ComboNode">
 					<Desc>SlashRight</Desc>
-					<Cost>5</Cost>
+					<Cost>2</Cost>
 					<Keybinding>
 						<AttackNormal meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</AttackNormal>
 						<AttackSpecial meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</AttackSpecial>
 						<Defense meta:X="991.927001953125" meta:Y="217.59098815917969" GUID="a7486078-f2d9-4499-b3c8-ea9f86858990" meta:RefKey="ComboNode">
 							<Desc>Backstep</Desc>
-							<Cost>5</Cost>
 							<Keybinding>
 								<AttackNormal meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 									<Desc>SlashLeft</Desc>
-									<Cost>5</Cost>
+									<Cost>2</Cost>
 								</AttackNormal>
 								<AttackSpecial meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 									<Desc>SlashLeft</Desc>
-									<Cost>5</Cost>
+									<Cost>2</Cost>
 								</AttackSpecial>
 							</Keybinding>
 						</Defense>
 						<Direction meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</Direction>
 					</Keybinding>
 				</AttackNormal>
 				<AttackSpecial meta:X="771.2550048828125" meta:Y="-251.46775817871094" GUID="5217ff07-8239-40ab-99f0-18bff5d1080f" meta:RefKey="ComboNode">
 					<Desc>SlashRight</Desc>
-					<Cost>5</Cost>
+					<Cost>2</Cost>
 					<Keybinding>
 						<AttackNormal meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</AttackNormal>
 						<AttackSpecial meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</AttackSpecial>
 						<Defense meta:X="991.927001953125" meta:Y="217.59098815917969" GUID="a7486078-f2d9-4499-b3c8-ea9f86858990" meta:RefKey="ComboNode">
 							<Desc>Backstep</Desc>
-							<Cost>5</Cost>
 							<Keybinding>
 								<AttackNormal meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 									<Desc>SlashLeft</Desc>
-									<Cost>5</Cost>
+									<Cost>2</Cost>
 								</AttackNormal>
 								<AttackSpecial meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 									<Desc>SlashLeft</Desc>
-									<Cost>5</Cost>
+									<Cost>2</Cost>
 								</AttackSpecial>
 							</Keybinding>
 						</Defense>
 						<Direction meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</Direction>
 					</Keybinding>
 				</AttackSpecial>
 				<Defense meta:X="991.927001953125" meta:Y="217.59098815917969" GUID="a7486078-f2d9-4499-b3c8-ea9f86858990" meta:RefKey="ComboNode">
 					<Desc>Backstep</Desc>
-					<Cost>5</Cost>
 					<Keybinding>
 						<AttackNormal meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</AttackNormal>
 						<AttackSpecial meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</AttackSpecial>
 					</Keybinding>
 				</Defense>
 				<Direction meta:X="771.2550048828125" meta:Y="-251.46775817871094" GUID="5217ff07-8239-40ab-99f0-18bff5d1080f" meta:RefKey="ComboNode">
 					<Desc>SlashRight</Desc>
-					<Cost>5</Cost>
+					<Cost>2</Cost>
 					<Keybinding>
 						<AttackNormal meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</AttackNormal>
 						<AttackSpecial meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</AttackSpecial>
 						<Defense meta:X="991.927001953125" meta:Y="217.59098815917969" GUID="a7486078-f2d9-4499-b3c8-ea9f86858990" meta:RefKey="ComboNode">
 							<Desc>Backstep</Desc>
-							<Cost>5</Cost>
 							<Keybinding>
 								<AttackNormal meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 									<Desc>SlashLeft</Desc>
-									<Cost>5</Cost>
+									<Cost>2</Cost>
 								</AttackNormal>
 								<AttackSpecial meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 									<Desc>SlashLeft</Desc>
-									<Cost>5</Cost>
+									<Cost>2</Cost>
 								</AttackSpecial>
 							</Keybinding>
 						</Defense>
 						<Direction meta:X="1243.7264404296875" meta:Y="-287.37722778320312" GUID="168f4682-b021-46bc-a0d9-1f66ed3e2972" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
-							<Cost>5</Cost>
+							<Cost>2</Cost>
 						</Direction>
 					</Keybinding>
 				</Direction>
 			</Keybinding>
 		</AttackNormal>
 		<Defense meta:X="360.38272094726562" meta:Y="330.58984375" meta:RefKey="ComboNode">
-			<Desc>Block</Desc>
+			<Desc>Roll</Desc>
 			<Cost>5</Cost>
 			<Keybinding>
-				<Defense meta:X="664.15228271484375" meta:Y="331.96157836914062" meta:RefKey="ComboNode">
-					<Desc>Block</Desc>
+				<Defense meta:X="663.15228271484375" meta:Y="331.96157836914062" GUID="11d06243-6d85-4cae-9722-48c2d1c79384" meta:RefKey="ComboNode">
+					<Desc>Roll</Desc>
 				</Defense>
+				<Direction meta:X="663.15228271484375" meta:Y="331.96157836914062" GUID="11d06243-6d85-4cae-9722-48c2d1c79384" meta:RefKey="ComboNode">
+					<Desc>Roll</Desc>
+				</Direction>
 			</Keybinding>
 		</Defense>
 	</Keybinding>

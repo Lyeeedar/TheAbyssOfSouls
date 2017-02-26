@@ -46,6 +46,8 @@ class EquationHelper
 		@JvmOverloads fun createEquationBuilder(eqn: String, ran: Random = MathUtils.random): ExpressionBuilder
 		{
 			val expB = ExpressionBuilder(eqn)
+			expB.exceptionOnMissingVariables = false
+
 			BooleanOperators.applyOperators(expB)
 			expB.operator(PercentageOperator.operator)
 			expB.function(RandomFunction(ran))
@@ -67,6 +69,15 @@ class EquationHelper
 				setVariableNames(expB, variableMap, "")
 				val exp = expB.build()
 
+				val expectedVariables = exp.variableNames
+				for (name in expectedVariables)
+				{
+					if (!variableMap.containsKey(name))
+					{
+						exp.setVariable(name, 0.0)
+					}
+				}
+
 				if (exp == null)
 				{
 					return 0f
@@ -81,6 +92,15 @@ class EquationHelper
 			}
 		}
 	}
+}
+
+fun String.unescapeCharacters(): String
+{
+	var output = this
+	output = output.replace("&gt;", ">")
+	output = output.replace("&lt;", "<")
+	output = output.replace("&amp;", "&")
+	return output
 }
 
 fun String.evaluate(variableMap: ObjectFloatMap<String> = ObjectFloatMap(), ran: Random = MathUtils.random): Float = EquationHelper.evaluate(this, variableMap, ran)

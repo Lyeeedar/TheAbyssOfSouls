@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
+import com.exp4j.Helpers.unescapeCharacters
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import ktx.collections.set
@@ -41,7 +42,7 @@ class GrammarRuleDefine : AbstractGrammarRule()
 	override fun parse(xml: XmlReader.Element)
 	{
 		key = xml.get("Key")
-		value = xml.get("Value")
+		value = xml.get("Value").unescapeCharacters()
 
 		when (key)
 		{

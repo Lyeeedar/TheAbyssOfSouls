@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="exp4j">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/core/libraries/exp4j.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/core/libraries/exp4j.jar!/" />
+    </SOURCES>
+  </library>
+</component>

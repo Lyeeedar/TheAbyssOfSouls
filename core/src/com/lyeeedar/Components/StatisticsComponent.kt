@@ -33,7 +33,6 @@ class StatisticsComponent: Component
 					{
 						blocking = false
 						v = hp + stamina
-						diff = stamina
 
 						blockedDamage = false
 						blockBroken = true
@@ -47,18 +46,7 @@ class StatisticsComponent: Component
 
 			field = v
 			if (godMode && field < 1) field = 1f
-
-			if (diff < 0)
-			{
-				bonusHP = diff / 2f
-			}
-			else
-			{
-				bonusHP = Math.max(0f, bonusHP - diff)
-			}
 		}
-
-	var bonusHP: Float = 0f
 
 	var maxHP: Float = 0f
 		get() = field

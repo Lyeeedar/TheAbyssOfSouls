@@ -14,7 +14,7 @@ import com.lyeeedar.Util.Event0Arg
  * Created by Philip on 20-Mar-16.
  */
 
-class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java, StatisticsComponent::class.java).get())
+class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java).get())
 {
 	lateinit var renderables: ImmutableArray<Entity>
 	lateinit var timelines: ImmutableArray<Entity>
@@ -106,7 +106,7 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 
 	override fun addedToEngine(engine: Engine?)
 	{
-		entities = engine?.getEntitiesFor(Family.all(TaskComponent::class.java, StatisticsComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
+		entities = engine?.getEntitiesFor(Family.all(TaskComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 		renderables = engine?.getEntitiesFor(Family.all(RenderableComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 		timelines = engine?.getEntitiesFor(Family.all(SceneTimelineComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 	}
@@ -160,26 +160,18 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 		}
 	}
 
-	fun processEntityStats(e: Entity)
-	{
-		val stats = Mappers.stats.get(e)
-
-		if (stats.hp == stats.maxHP)
-		{
-			stats.bonusHP = 0f
-		}
-		else if (stats.bonusHP > 0)
-		{
-			stats.hp += Math.max(stats.bonusHP, 10f)
-		}
-	}
-
 	fun processEntity(e: Entity): Boolean
 	{
 		val task = e.task() ?: return false
-		val stats = e.stats() ?: return false
 
-		if (stats.hp <= 0) return false
+		if (e.stats()?.hp ?: 1f <= 0) return false
+
+		val trailing = e.trailing()
+		if (trailing != null && !trailing.initialised)
+		{
+			trailing.updatePos(e.tile()!!)
+			trailing.initialised = true
+		}
 
 		if (task.tasks.size == 0)
 		{
@@ -188,10 +180,6 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 
 		if (task.tasks.size > 0)
 		{
-			if (stats.bonusHP > 0)
-			{
-				stats.hp += Math.min(stats.bonusHP, 5f)
-			}
 			e.event().onTurn()
 
 			val t = task.tasks.removeIndex(0)
@@ -204,9 +192,18 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 			t.execute(e)
 
 			e.pos().turnsOnTile++
-			processEntityStats(e)
+
+			e.trailing()?.updatePos(e.tile()!!)
 
 			return true
+		}
+		else
+		{
+			val trailing = e.trailing()
+			if (trailing != null && trailing.collapses)
+			{
+				trailing.updatePos(e.tile()!!)
+			}
 		}
 
 		return false

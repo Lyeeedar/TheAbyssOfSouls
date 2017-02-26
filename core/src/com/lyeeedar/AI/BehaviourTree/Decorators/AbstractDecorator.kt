@@ -28,7 +28,7 @@ abstract class AbstractDecorator(): AbstractNodeContainer()
 	override fun setData( key:String, value:Any? )
 	{
 		val oldVal = data?.get(key)
-		if (oldVal != value && oldVal is Point && oldVal.javaClass == Point::class.java)
+		if (oldVal != value && oldVal is Point)
 		{
 			oldVal.free()
 		}

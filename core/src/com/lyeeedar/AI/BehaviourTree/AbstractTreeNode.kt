@@ -2,10 +2,7 @@ package com.lyeeedar.AI.BehaviourTree
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.utils.JsonReader
-import com.badlogic.gdx.utils.JsonValue
-import com.badlogic.gdx.utils.ObjectMap
-import com.badlogic.gdx.utils.XmlReader
+import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.lyeeedar.AI.BehaviourTree.Actions.*
 import com.lyeeedar.AI.BehaviourTree.Conditionals.ConditionalCheckValue
@@ -28,7 +25,7 @@ abstract class AbstractTreeNode()
 	open fun setData(key:String, value:Any?)
 	{
 		val oldVal = data?.get(key)
-		if (oldVal != value && oldVal is Point && oldVal.javaClass == Point::class.java)
+		if (oldVal != value && oldVal is Point)
 		{
 			oldVal.free()
 		}
@@ -36,6 +33,36 @@ abstract class AbstractTreeNode()
 		data?.put(key, value)
 	}
 
+	//----------------------------------------------------------------------
+	private val variables = ObjectFloatMap<String>()
+	fun getVariableMap(): ObjectFloatMap<String>
+	{
+		variables.clear()
+
+		for (entry in data!!)
+		{
+			if (entry.value is Float)
+			{
+				variables.put(entry.key, entry.value as Float)
+			}
+			else if (entry.value is Int)
+			{
+				variables.put(entry.key, (entry.value as Int).toFloat())
+			}
+			else if (entry.value is Boolean)
+			{
+				variables.put(entry.key, if(entry.value as Boolean) 1f else 0f)
+			}
+			else
+			{
+				variables.put(entry.key, 1f)
+			}
+		}
+
+		return variables
+	}
+
+	//----------------------------------------------------------------------
 	fun getData(key:String, fallback:Any? = null) = data?.get(key) ?: fallback
 
 	//----------------------------------------------------------------------
@@ -79,9 +106,11 @@ abstract class AbstractTreeNode()
 				"CLEARVALUE" -> ActionClearValue()
 				"CONVERTTO" -> ActionConvertTo()
 				"GETALLVISIBLE" -> ActionGetAllVisible()
+				"KILL" -> ActionKill()
 				"MOVETO" -> ActionMoveTo()
 				"PICK" -> ActionPick()
 				"PROCESSINPUT" -> ActionProcessInput()
+				"SCENE" -> ActionScene()
 				"SETVALUE" -> ActionSetValue()
 				"WAIT" -> ActionWait()
 

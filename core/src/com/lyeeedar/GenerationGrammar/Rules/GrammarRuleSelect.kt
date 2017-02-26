@@ -3,6 +3,7 @@ package com.lyeeedar.GenerationGrammar.Rules
 import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
 import com.exp4j.Helpers.evaluate
+import com.exp4j.Helpers.unescapeCharacters
 import com.lyeeedar.Direction
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
@@ -148,7 +149,7 @@ class GrammarRuleSelect : AbstractGrammarRule()
 	override fun parse(xml: XmlReader.Element)
 	{
 		mode = Mode.valueOf(xml.get("Mode", "RANDOM").toUpperCase())
-		count = xml.get("Count", "1").toLowerCase().replace("%", "#count")
+		count = xml.get("Count", "1").toLowerCase().replace("%", "#count").unescapeCharacters()
 		centerDist = xml.getInt("Dist", 2)
 		rule = xml.get("Rule")
 		remainder = xml.get("Remainder", "")

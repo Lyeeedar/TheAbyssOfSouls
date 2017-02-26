@@ -41,8 +41,8 @@ class ActionMoveTo(): AbstractAction()
 		if ( (towards && (tile.taxiDist(target) <= dst || posData.isOnTile(target))) || (!towards && tile.taxiDist(target) >= dst) )
 		{
 			lastPos = Point.ZERO
-			state = ExecutionState.COMPLETED;
-			return state;
+			state = ExecutionState.COMPLETED
+			return state
 		}
 
 		val pathFinder = Pathfinder(tile.level.grid, tile.x, tile.y, target.x, target.y, posData.size, entity)
@@ -64,15 +64,15 @@ class ActionMoveTo(): AbstractAction()
 			return state
 		}
 
-		var nextTile = tile.level.getTile( path.get( 1 ) );
+		val nextTile = tile.level.getTile( path.get( 1 ) )
 
 		// possible loop, quit just in case
 		if (nextTile == lastPos)
 		{
 			lastPos = Point.ZERO
 			Point.freeAll(path)
-			state = ExecutionState.FAILED;
-			return state;
+			state = ExecutionState.FAILED
+			return state
 		}
 
 		// if next step is impassable then fail
@@ -80,11 +80,11 @@ class ActionMoveTo(): AbstractAction()
 		{
 			lastPos = Point.ZERO
 			Point.freeAll(path)
-			state = ExecutionState.FAILED;
-			return state;
+			state = ExecutionState.FAILED
+			return state
 		}
 
-		var offset = path.get( 1 ) - path.get( 0 );
+		val offset = path.get( 1 ) - path.get( 0 )
 
 		// if moving towards path to the object
 		if ( towards )
@@ -94,12 +94,12 @@ class ActionMoveTo(): AbstractAction()
 				lastPos = Point.ZERO
 				Point.freeAll(path)
 				offset.free()
-				state = ExecutionState.COMPLETED;
-				return state;
+				state = ExecutionState.COMPLETED
+				return state
 			}
 
 			lastPos = tile
-			taskData.tasks.add(TaskMove(Direction.getDirection(offset)));
+			taskData.tasks.add(TaskMove(Direction.getDirection(offset)))
 		}
 		// if moving away then just run directly away
 		else
@@ -109,20 +109,20 @@ class ActionMoveTo(): AbstractAction()
 				lastPos = Point.ZERO
 				Point.freeAll(path)
 				offset.free()
-				state = ExecutionState.COMPLETED;
-				return state;
+				state = ExecutionState.COMPLETED
+				return state
 			}
 
 			lastPos = tile
 			val opposite = offset * -1
-			taskData.tasks.add(TaskMove(Direction.getDirection(opposite)));
+			taskData.tasks.add(TaskMove(Direction.getDirection(opposite)))
 			opposite.free()
 		}
 
 		Point.freeAll(path)
 		offset.free()
-		state = ExecutionState.RUNNING;
-		return state;
+		state = ExecutionState.RUNNING
+		return state
 	}
 
 	override fun cancel(entity: Entity)

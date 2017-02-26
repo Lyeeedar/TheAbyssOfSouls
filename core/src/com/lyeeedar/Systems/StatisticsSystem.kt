@@ -23,7 +23,12 @@ class StatisticsSystem : AbstractSystem(Family.one(StatisticsComponent::class.ja
 	fun processEntity(entity: Entity)
 	{
 		val stats = entity.stats()!!
-		if (stats.blockedDamage)
+
+		if (stats.hp <= 0)
+		{
+			if (entity.getComponent(MarkedForDeletionComponent::class.java) == null) entity.add(MarkedForDeletionComponent())
+		}
+		else if (stats.blockedDamage)
 		{
 			stats.blockedDamage = false
 

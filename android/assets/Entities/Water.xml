@@ -1,0 +1,25 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<AI>
+			<AI>Water</AI>
+		</AI>
+		<Position />
+		<Trailing>
+			<Renderables>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+					<Colour>196,196,196,199</Colour>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+					<Colour>148,148,148,104</Colour>
+				</Renderable>
+			</Renderables>
+		</Trailing>
+		<Renderable>
+			<Renderable meta:RefKey="Sprite">
+				<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+			</Renderable>
+		</Renderable>
+	</Components>
+</Entity>

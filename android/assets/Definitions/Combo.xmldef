@@ -44,7 +44,7 @@
 	</Definition>
 	<Definition Name="Scene" Extends="ComboDesc" ExtendsAfter="CanTurn" meta:RefKey="StructDef">
 		<Data Name="SceneTimeline" Keys="SceneTimeline" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
-		<Data Name="HitPattern" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
+		<Data Name="HitPattern" Default="#" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
 		<Data Name="HitType" EnumValues="All,Target,Random" meta:RefKey="Enum" />
 		<Data Name="Count" Type="Int" Min="1" Default="1" VisibleIf="HitType!=All" meta:RefKey="Number" />
 		<Data Name="StepForward" meta:RefKey="Boolean" />

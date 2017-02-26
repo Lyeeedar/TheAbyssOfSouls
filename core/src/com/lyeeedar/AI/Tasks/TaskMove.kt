@@ -68,6 +68,6 @@ class TaskMove(var direction: Direction): AbstractTask()
 			pos.position.y += direction.y;
 		}
 
-		e.stats().stamina += 2
+		if (e.stats() != null) e.stats().stamina += 2
 	}
 }

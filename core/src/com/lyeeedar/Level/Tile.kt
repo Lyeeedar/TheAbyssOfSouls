@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Components.isAllies
 import com.lyeeedar.Components.pos
+import com.lyeeedar.Components.trailing
 import com.lyeeedar.Direction
 import com.lyeeedar.Pathfinding.IPathfindingTile
 import com.lyeeedar.Renderables.Renderable
@@ -42,9 +43,13 @@ class Tile : Point(), IPathfindingTile
 		val obj = contents.get(travelType)
 		if (obj != null && obj != self)
 		{
-			if (self is Entity && self.isAllies(obj))
+			if (self is Entity)
 			{
-				if (obj.pos().turnsOnTile < 3)
+				if (self.isAllies(obj) && obj.pos().turnsOnTile < 3)
+				{
+					return true
+				}
+				else if (self.trailing()?.entities?.contains(obj) ?: false)
 				{
 					return true
 				}

@@ -1,0 +1,46 @@
+<AI meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Root meta:X="180.33332824707031" meta:Y="-17.666667938232422" meta:RefKey="Until">
+		<Action Key="Pos" Value="move EntityPos SOUTH 1" meta:RefKey="SetValue" />
+		<Node meta:X="497.33334350585938" meta:Y="22.333333969116211" meta:RefKey="Sequence">
+			<Action Key="Pos" meta:RefKey="MoveTo" />
+			<Action Key="DeathCounter" Value="0" meta:RefKey="SetValue" />
+		</Node>
+		<Node meta:X="497.33334350585938" meta:Y="118.33333587646484" meta:RefKey="Sequence">
+			<Action Key="DeathCounter" Value="DeathCounter+1" meta:RefKey="SetValue" />
+			<Node meta:X="765.33334350585938" meta:Y="180.33333333333331" Completed="Completed" Running="Completed" Failed="Completed" meta:RefKey="SetState">
+				<Node meta:X="902.33334350585938" meta:Y="179.33333587646484" meta:RefKey="Sequence">
+					<Action Condition="SpawnedChildren==0 &amp;&amp; DeathCounter &gt; 0" meta:RefKey="Conditional" />
+					<Action Key="SpawnedChildren" Value="1" meta:RefKey="SetValue" />
+					<Action meta:RefKey="Scene">
+						<HitPoints>
+							<Line>#@#</Line>
+						</HitPoints>
+						<SceneTimeline meta:RefKey="SceneTimeline">
+							<Timeline>
+								<Spawn>
+									<Time>0.1</Time>
+									<Entity>
+										<Extends>Water2</Extends>
+									</Entity>
+								</Spawn>
+							</Timeline>
+							<Timeline>
+								<DestinationRenderable>
+									<Duration LockDuration="False">0.126097053</Duration>
+									<Renderable meta:RefKey="ParticleEffect">
+										<Name>slash</Name>
+										<Colour>43,169,178,255</Colour>
+									</Renderable>
+									<RenderablePerTile>true</RenderablePerTile>
+									<KillOnEnd>false</KillOnEnd>
+								</DestinationRenderable>
+							</Timeline>
+						</SceneTimeline>
+					</Action>
+				</Node>
+			</Node>
+			<Action Condition="DeathCounter&gt;=3" meta:RefKey="Conditional" />
+			<Action meta:RefKey="Kill" />
+		</Node>
+	</Root>
+</AI>

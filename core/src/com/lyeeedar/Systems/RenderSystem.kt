@@ -35,7 +35,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 	val tileSize = 40f
 
 	val hpbarBack = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarBack.png")!!, 4, 4, 4, 4)
-	val hpbarBar = AssetManager.loadTextureRegion("Sprites/GUI/HpBarFront.png")!!
+	val hpbarBar = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarFront.png")!!, 4, 4, 4, 4)
 
 	lateinit var renderer: SortedRenderer
 
@@ -157,7 +157,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				val effect = renderable
 				if (effect.completed && effect.complete() && entity.components.size() == 2)
 				{
-					engine.removeEntity(entity)
+					entity.add(MarkedForDeletionComponent())
 				}
 			}
 
@@ -247,20 +247,16 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				val stats = entity.stats()
 				val totalWidth = pos.size.toFloat()
 
-				renderer.queueNinepatch(hpbarBack, ax + totalWidth / 2f, ay + 0.1f, pos.slot.ordinal, 1, tileCol, totalWidth, 0.15f)
+				renderer.queueNinepatch(hpbarBack, ax + totalWidth / 2f, ay + 0.1f, pos.slot.ordinal, 1, tileCol, totalWidth, 0.1f)
 
 				val perc = stats.hp / stats.maxHP
 				var col = Colour.GREEN
 				if (perc < 0.4) col = Colour.ORANGE
 				if (perc < 0.2) col = Colour.RED
 
-				val extraPerc = (stats.hp + stats.bonusHP) / stats.maxHP
-
 				val hpWidth = totalWidth * perc
-				renderer.queueTexture(hpbarBar, ax + hpWidth / 2f, ay + 0.1f, pos.slot.ordinal, 2, hpBarCol.set(Colour.LIGHT_GRAY).mul(tileCol), hpWidth, 0.1f)
 
-				val extraWidth = totalWidth * extraPerc
-				renderer.queueTexture(hpbarBar, ax + extraWidth / 2f, ay + 0.1f, pos.slot.ordinal, 3, hpBarCol.set(col).mul(tileCol), extraWidth, 0.1f)
+				if (hpWidth > 0) renderer.queueNinepatch(hpbarBar, ax + hpWidth / 2f, ay + 0.1f, pos.slot.ordinal, 2, hpBarCol.set(col).mul(tileCol), hpWidth, 0.1f)
 
 				if (entity == player)
 				{
@@ -271,12 +267,12 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 						c.mul(Colour.RED)
 					}
 
-					renderer.queueNinepatch(hpbarBack, ax + totalWidth / 2f, ay, pos.slot.ordinal, 4, c, totalWidth, 0.15f)
+					renderer.queueNinepatch(hpbarBack, ax + totalWidth / 2f, ay, pos.slot.ordinal, 4, c, totalWidth, 0.1f)
 
 					val perc = stats.stamina / stats.maxStamina
 
 					val hpWidth = Math.max(totalWidth * perc, 0f)
-					renderer.queueTexture(hpbarBar, ax + hpWidth / 2f, ay, pos.slot.ordinal, 5, hpBarCol.set(Colour.YELLOW).mul(tileCol), hpWidth, 0.1f)
+					if (hpWidth > 0) renderer.queueNinepatch(hpbarBar, ax + hpWidth / 2f, ay, pos.slot.ordinal, 5, hpBarCol.set(Colour.YELLOW).mul(tileCol), hpWidth, 0.1f)
 				}
 			}
 		}

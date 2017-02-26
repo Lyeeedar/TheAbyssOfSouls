@@ -90,6 +90,11 @@ class ChargeComboStep : ComboStep()
 
 			e.renderable().renderable.animation = LeapAnimation.obtain().setRelative(0.3f, start, chosen, 2f)
 			e.renderable().renderable.animation = SpinAnimation.obtain().set(0.3f, 360f)
+
+			if (e.renderable().renderable is Sprite)
+			{
+				(e.renderable().renderable as Sprite).removeAmount = 0f
+			}
 		}
 
 		var prev = pos.tile!!

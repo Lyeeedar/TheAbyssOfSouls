@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.EquationHelper
+import com.exp4j.Helpers.evaluate
+import com.exp4j.Helpers.unescapeCharacters
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.Components.stats
 import java.util.*
@@ -15,69 +17,21 @@ import java.util.*
 class ConditionalCheckValue(): AbstractConditional()
 {
 	//----------------------------------------------------------------------
-	var key: String? = null
-	var condition: String? = null
-	lateinit var reliesOn: Array<String>
+	lateinit var condition: String
 	var succeed: ExecutionState = ExecutionState.COMPLETED
 	var fail: ExecutionState = ExecutionState.FAILED
-	val variableMap: ObjectFloatMap<String> = ObjectFloatMap()
 
 	//----------------------------------------------------------------------
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		var keyVal = 0f;
+		val variableMap = getVariableMap()
 
-		val k = key
-		if (k != null)
-		{
-			val storedValue = getData(k, null);
+		entity.stats()?.write(variableMap)
 
-			if (condition == null)
-			{
-				state = if (storedValue != null) succeed else fail;
-				return state;
-			}
-			else
-			{
-				if (storedValue is Boolean)
-				{
-					keyVal = if (storedValue) 1f else 0f;
-				}
-				else if (storedValue is Int)
-				{
-					keyVal = storedValue.toFloat();
-				}
-				else if (storedValue is Float)
-				{
-					keyVal = storedValue;
-				}
-				else
-				{
-					keyVal = if (storedValue != null) 1f else 0f;
-				}
-			}
-		}
+		val conditionVal = condition.evaluate(variableMap)
 
-		val stats = entity.stats()
-		stats.write(variableMap)
-
-		if (k != null)
-		{
-			variableMap.put( k.toLowerCase(), keyVal );
-		}
-
-		for (s in reliesOn)
-		{
-			if (!variableMap.containsKey( s ))
-			{
-				variableMap.put( s, 0f );
-			}
-		}
-
-		val conditionVal = EquationHelper.evaluate( condition!!, variableMap );
-
-		state = if (conditionVal != 0f) succeed else fail;
-		return state;
+		state = if (conditionVal != 0f) succeed else fail
+		return state
 	}
 
 	//----------------------------------------------------------------------
@@ -89,12 +43,9 @@ class ConditionalCheckValue(): AbstractConditional()
 	//----------------------------------------------------------------------
 	override fun parse(xml: XmlReader.Element)
 	{
-		this.key = xml.getAttribute("Key", null)?.toLowerCase()
-		this.succeed = ExecutionState.valueOf(xml.getAttribute("Success", "COMPLETED").toUpperCase());
-		this.fail = ExecutionState.valueOf(xml.getAttribute("Failure", "FAILED").toUpperCase());
+		this.succeed = ExecutionState.valueOf(xml.getAttribute("Success", "COMPLETED").toUpperCase())
+		this.fail = ExecutionState.valueOf(xml.getAttribute("Failure", "FAILED").toUpperCase())
 
-		this.condition = xml.getAttribute("Condition", null)?.toLowerCase();
-
-		reliesOn = xml.getAttribute( "ReliesOn", "" ).toLowerCase().split( "," ).toTypedArray();
+		this.condition = xml.getAttribute("Condition").toLowerCase().unescapeCharacters()
 	}
 }

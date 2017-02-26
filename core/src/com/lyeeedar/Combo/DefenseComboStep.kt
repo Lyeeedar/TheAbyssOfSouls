@@ -3,10 +3,14 @@ package com.lyeeedar.Combo
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Components.event
-import com.lyeeedar.Components.pos
-import com.lyeeedar.Components.stats
+import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
+import com.lyeeedar.Renderables.Animation.ExpandAnimation
+import com.lyeeedar.Renderables.Animation.LeapAnimation
+import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.Animation.SpinAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Point
 
 class DefenseComboStep : ComboStep()
@@ -36,6 +40,8 @@ class DefenseComboStep : ComboStep()
 
 	override fun activate(entity: Entity, direction: Direction, target: Point)
 	{
+		val origDirection = direction
+
 		if (mode == DefenseMode.BLOCK)
 		{
 			entity.stats().blocking = true
@@ -55,6 +61,80 @@ class DefenseComboStep : ComboStep()
 			}
 		}
 		else throw UnsupportedOperationException()
+
+		if (moveDist > 0)
+		{
+			val direction = if (this.moveDirection == MoveDirection.SAME) direction else direction.opposite
+			val start = entity.tile()!!
+			var end = start
+
+			outer@for (i in 1..moveDist)
+			{
+				for (x in 0..entity.pos().size-1)
+				{
+					for (y in 0..entity.pos().size-1)
+					{
+						val etile = start.level.getTile(start, direction.x * i + x, direction.y * i + y) ?: break@outer
+						if (etile.contents.containsKey(SpaceSlot.WALL)) break@outer
+						if (etile.contents.containsKey(SpaceSlot.ENTITY) && etile.contents[SpaceSlot.ENTITY] != entity) break@outer
+					}
+				}
+
+				end = start.level.getTile(start, direction.x * i, direction.y * i)!!
+			}
+
+			for (ix in 0..entity.pos().size-1)
+			{
+				for (iy in 0..entity.pos().size-1)
+				{
+					val tile = start.level.getTile(start, ix, iy)
+					tile?.contents?.remove(entity.pos().slot)
+				}
+			}
+
+			entity.pos().position = end
+			entity.pos().facing = origDirection
+
+			for (ix in 0..entity.pos().size-1)
+			{
+				for (iy in 0..entity.pos().size-1)
+				{
+					val tile = end.level.getTile(end, ix, iy) ?: continue
+					tile.contents.put(entity.pos().slot, entity)
+				}
+			}
+
+			if (moveType == MoveType.ROLL)
+			{
+				entity.renderable().renderable.animation = MoveAnimation.obtain().set(end, start, 0.3f)
+
+				if (direction == Direction.EAST)
+				{
+					entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.3f, -360f)
+				}
+				else
+				{
+					entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.3f, 360f)
+				}
+
+				entity.renderable().renderable.animation = ExpandAnimation.obtain().set(0.2f, 1f, 0.8f, false)
+
+				if (entity.renderable().renderable is Sprite)
+				{
+					(entity.renderable().renderable as Sprite).removeAmount = 0f
+				}
+			}
+			else if (moveType == MoveType.LEAP)
+			{
+				entity.renderable().renderable.animation = LeapAnimation.obtain().setRelative(0.3f, start, end, 2f)
+
+				if (entity.renderable().renderable is Sprite)
+				{
+					(entity.renderable().renderable as Sprite).removeAmount = 0f
+				}
+			}
+			else throw UnsupportedOperationException()
+		}
 	}
 
 	override fun getAllValid(entity: Entity, direction: Direction): Array<Point>

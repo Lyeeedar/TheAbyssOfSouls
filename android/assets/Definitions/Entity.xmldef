@@ -3,6 +3,20 @@
 		<Data Name="Extends" BasePath="Entities" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
 		<Data Name="IsPlayer" meta:RefKey="Boolean" />
 		<Data Name="Components" ChildrenAreUnique="True" meta:RefKey="Collection">
+			<Data Name="AdditionalRenderables" meta:RefKey="Struct">
+				<Data Name="Below" meta:RefKey="Collection">
+					<Data Name="Renderable" meta:RefKey="Struct">
+						<Data Name="Key" meta:RefKey="String" />
+						<Data Name="Renderable" Keys="Sprite,TilingSprite,ParticleEffect" meta:RefKey="Reference" />
+					</Data>
+				</Data>
+				<Data Name="Above" meta:RefKey="Collection">
+					<Data Name="Renderable" meta:RefKey="Struct">
+						<Data Name="Key" meta:RefKey="String" />
+						<Data Name="Renderable" Keys="Sprite,TilingSprite,ParticleEffect" meta:RefKey="Reference" />
+					</Data>
+				</Data>
+			</Data>
 			<Data Name="AI" meta:RefKey="Struct">
 				<Data Name="AI" BasePath="AI" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
 			</Data>
@@ -30,6 +44,12 @@
 				<Data Name="HP" Type="Int" Min="-999999" Default="10" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="Stamina" Type="Int" Min="-999999" Default="10" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="Sight" Default="5" SkipIfDefault="False" meta:RefKey="Number" />
+			</Data>
+			<Data Name="Trailing" meta:RefKey="Struct">
+				<Data Name="Collapses" Default="True" meta:RefKey="Boolean" />
+				<Data Name="Renderables" meta:RefKey="Collection">
+					<Data Name="Renderable" Keys="Sprite,TilingSprite,ParticleEffect" meta:RefKey="Reference" />
+				</Data>
 			</Data>
 			<Data Name="Water" meta:RefKey="Struct">
 				<Data Name="Direction" meta:RefKey="Vector" />

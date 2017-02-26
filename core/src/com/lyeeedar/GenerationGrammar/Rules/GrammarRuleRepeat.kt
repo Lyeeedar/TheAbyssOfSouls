@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
+import com.exp4j.Helpers.unescapeCharacters
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.Util.round
@@ -68,7 +69,7 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 	override fun parse(xml: XmlReader.Element)
 	{
 		onX = xml.get("Axis", "X") == "X"
-		size = xml.get("Size").replace("%", "#size")
+		size = xml.get("Size").replace("%", "#size").unescapeCharacters()
 		rule = xml.get("Rule")
 		remainder = xml.get("Remainder", "")
 	}

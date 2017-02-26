@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
+import com.exp4j.Helpers.unescapeCharacters
 import com.lyeeedar.Components.*
 import com.lyeeedar.GenerationGrammar.Rules.AbstractGrammarRule
 import com.lyeeedar.GenerationGrammar.Rules.DeferredRule
@@ -101,8 +102,8 @@ class GenerationGrammar
 		fun load(xml: XmlReader.Element): GenerationGrammar
 		{
 			val grammar = GenerationGrammar()
-			grammar.width = xml.get("Width")
-			grammar.height = xml.get("Height")
+			grammar.width = xml.get("Width").unescapeCharacters()
+			grammar.height = xml.get("Height").unescapeCharacters()
 			grammar.rootRule = xml.get("Root")
 
 			val rulesEl = xml.getChildByName("Rules")

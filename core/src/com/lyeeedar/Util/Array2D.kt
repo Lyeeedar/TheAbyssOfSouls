@@ -109,19 +109,3 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>): S
 		return string
 	}
 }
-
-fun XmlReader.Element.toCharGrid(): Array2D<Char>
-{
-	val grid = Array2D<Char>(this.getChild(0).text.length, this.childCount) {x, y -> ' '}
-
-	for (y in 0..this.childCount-1)
-	{
-		val lineContents = this.getChild(y)
-		for (x in 0..lineContents.text.length-1)
-		{
-			grid[x, y] = lineContents.text[x]
-		}
-	}
-
-	return grid
-}

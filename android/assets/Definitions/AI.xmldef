@@ -3,8 +3,8 @@
 		<Data Name="Root" DefKey="Nodes" meta:RefKey="GraphReference" />
 	</Definition>
 	<!--Reference Definitions-->
-	<Definition Name="Nodes" Keys="Selectors(Any,Priority,Random,Sequence,Until),Decorators(DataScope,Import,Invert,Repeat)" meta:RefKey="ReferenceDef" />
-	<Definition Name="Actions" Keys="Actions(Combo,MoveTo,Wait),Values(ClearValue,ConvertTo,GetAllVisible,Pick,ProcessInput,SetValue),Conditions(Conditional)" meta:RefKey="ReferenceDef" />
+	<Definition Name="Nodes" Keys="Selectors(Any,Priority,Random,Sequence,Until),Decorators(DataScope,Import,Invert,Repeat,SetState)" meta:RefKey="ReferenceDef" />
+	<Definition Name="Actions" Keys="Actions(Combo,Kill,MoveTo,Scene,Wait),Values(ClearValue,ConvertTo,GetAllVisible,Pick,ProcessInput,SetValue),Conditions(Conditional)" meta:RefKey="ReferenceDef" />
 	<!--Selectors-->
 	<Definition Name="Any" MinCount="1" Background="39,76,77,70" ToolTip="Runs all the children, then returns success if any completed." HasAttributes="True" meta:RefKey="GraphCollectionDef">
 		<Attributes meta:RefKey="Attributes">
@@ -55,6 +55,15 @@
 		<Data Name="Node" DefKey="Nodes" meta:RefKey="GraphReference" />
 		<Data Name="Action" DefKey="Actions" meta:RefKey="Reference" />
 	</Definition>
+	<Definition Name="SetState" MaxCount="1" Background="128,46,156,24" ToolTip="Change the return state using the mapping specified" HasAttributes="True" meta:RefKey="GraphCollectionDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Completed" EnumValues="Running,Failed,Completed" Default="Completed" SkipIfDefault="False" meta:RefKey="Enum" />
+			<Attribute Name="Running" EnumValues="Running,Failed,Completed" Default="Running" SkipIfDefault="False" meta:RefKey="Enum" />
+			<Attribute Name="Failed" EnumValues="Running,Failed,Completed" Default="Failed" SkipIfDefault="False" meta:RefKey="Enum" />
+		</Attributes>
+		<Data Name="Node" DefKey="Nodes" meta:RefKey="GraphReference" />
+		<Data Name="Action" DefKey="Actions" meta:RefKey="Reference" />
+	</Definition>
 	<!--Actions-->
 	<Definition Name="Combo" TextColour="122,199,142" HasAttributes="True" meta:RefKey="StructDef">
 		<Attributes meta:RefKey="Attributes">
@@ -63,10 +72,9 @@
 	</Definition>
 	<Definition Name="Conditional" TextColour="222,219,139" HasAttributes="True" meta:RefKey="StructDef">
 		<Attributes meta:RefKey="Attributes">
-			<Attribute Name="Key" meta:RefKey="String" />
+			<Attribute Name="Condition" meta:RefKey="String" />
 			<Attribute Name="Success" EnumValues="Running,Failed,Completed" Default="Completed" meta:RefKey="Enum" />
 			<Attribute Name="Failed" EnumValues="Running,Failed,Completed" Default="Failed" meta:RefKey="Enum" />
-			<Attribute Name="Condition" meta:RefKey="String" />
 		</Attributes>
 	</Definition>
 	<Definition Name="ClearValue" TextColour="124,173,222" HasAttributes="True" meta:RefKey="StructDef">
@@ -88,6 +96,7 @@
 			<Attribute Name="Type" EnumValues="Tiles,Allies,Enemies" meta:RefKey="Enum" />
 		</Attributes>
 	</Definition>
+	<Definition Name="Kill" TextColour="122,199,142" meta:RefKey="StructDef" />
 	<Definition Name="MoveTo" TextColour="122,199,142" HasAttributes="True" meta:RefKey="StructDef">
 		<Attributes meta:RefKey="Attributes">
 			<Attribute Name="Key" meta:RefKey="String" />
@@ -104,6 +113,10 @@
 		</Attributes>
 	</Definition>
 	<Definition Name="ProcessInput" TextColour="122,199,142" meta:RefKey="StructDef" />
+	<Definition Name="Scene" TextColour="122,199,142" meta:RefKey="StructDef">
+		<Data Name="HitPoints" Default="#" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
+		<Data Name="SceneTimeline" Keys="SceneTimeline" meta:RefKey="Reference" />
+	</Definition>
 	<Definition Name="SetValue" TextColour="124,173,222" HasAttributes="True" meta:RefKey="StructDef">
 		<Attributes meta:RefKey="Attributes">
 			<Attribute Name="Key" meta:RefKey="String" />
