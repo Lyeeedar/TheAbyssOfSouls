@@ -37,7 +37,7 @@ class TrailingEntityComponent : Component
 				val prevTile = tiles[i]
 				tiles[i] = target
 
-				prevTile.contents[entity.pos().slot] = null
+				if (prevTile.contents[entity.pos().slot] == entity) prevTile.contents[entity.pos().slot] = null
 				if (!target.contents.containsKey(entity.pos().slot)) target.contents[entity.pos().slot] = entity
 
 				entity.renderable().renderable.rotation = getRotation(prevTile, target)

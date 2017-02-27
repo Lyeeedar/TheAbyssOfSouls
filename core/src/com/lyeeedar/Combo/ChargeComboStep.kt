@@ -55,7 +55,7 @@ class ChargeComboStep : ComboStep()
 							if (t.x == face.x) return false
 							if (t.y == face.y) return false
 						}
-						if (t.contents.containsKey(SpaceSlot.ENTITY) || t.contents.containsKey(SpaceSlot.WALL)) return false
+						if (t.contents.containsKey(e.pos().slot) || t.contents.containsKey(SpaceSlot.WALL)) return false
 					}
 				}
 
@@ -63,7 +63,7 @@ class ChargeComboStep : ComboStep()
 			}
 
 			val chosen = etile.level.grid
-								 .filter { !it.contents.containsKey(SpaceSlot.WALL) && !it.contents.containsKey(SpaceSlot.ENTITY) }
+								 .filter { !it.contents.containsKey(SpaceSlot.WALL) && !it.contents.containsKey(e.pos().slot) }
 								 .filter { it.dist(etile) <= knockbackDist }
 								 .filter(::isValid)
 								 .random() ?: return
@@ -108,7 +108,7 @@ class ChargeComboStep : ComboStep()
 					val t = current.level.getTile(current, x, y) ?: break@outer
 					if (t.contents.containsKey(SpaceSlot.WALL)) break@outer
 
-					val e = t.contents[SpaceSlot.ENTITY]
+					val e = t.contents[entity.pos().slot]
 					if (e != null && e != entity && !hitEntities.contains(e))
 					{
 						hitEntities.add(e)
@@ -184,7 +184,7 @@ class ChargeComboStep : ComboStep()
 				{
 					val t = current.level.getTile(current, x, y) ?: break@outer
 					if (t.contents.containsKey(SpaceSlot.WALL)) break@outer
-					if (t.contents.containsKey(SpaceSlot.ENTITY) && t.contents[SpaceSlot.ENTITY] != entity && t.contents[SpaceSlot.ENTITY].pos().size > knockbackDist) break@outer
+					if (t.contents.containsKey(entity.pos().slot) && t.contents[entity.pos().slot] != entity && t.contents[entity.pos().slot].pos().size > knockbackDist) break@outer
 
 					hitPoints.add(t)
 				}

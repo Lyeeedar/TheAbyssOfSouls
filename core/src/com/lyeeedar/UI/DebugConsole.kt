@@ -31,6 +31,7 @@ class DebugConsole() : Table()
 	var tabIndex = 0
 	var historyIndex = -1
 	var showingHistory = false
+	lateinit var scroll: ScrollPane
 
 	init
 	{
@@ -182,7 +183,7 @@ class DebugConsole() : Table()
 
 		log.background = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/white.png")).tint(Color(0.2f, 0.2f, 0.2f, 0.6f))
 
-		val scroll = ScrollPane(log, Global.skin)
+		scroll = ScrollPane(log, Global.skin)
 		scroll.setScrollingDisabled(true, false)
 
 		log.height = 300f
@@ -209,6 +210,8 @@ class DebugConsole() : Table()
 
 		log.row()
 		log.add(label).width(Value.percentWidth(1f, log)).left().bottom()
+
+		scroll.scrollTo(0f, 0f, 0f, 0f)
 
 		println("Console: " + line)
 	}
@@ -298,4 +301,10 @@ class ConsoleCommand(val text: String, val help: String, val callback: (args: ko
 			}
 		}
 	}
+}
+
+interface IDebugCommandProvider
+{
+	fun attachCommands()
+	fun detachCommands()
 }

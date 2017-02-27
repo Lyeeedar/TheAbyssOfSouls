@@ -2,9 +2,14 @@ package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.utils.ObjectSet
+import com.lyeeedar.AI.Tasks.TaskInterrupt
 import com.lyeeedar.Components.*
+import com.lyeeedar.Direction
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
@@ -21,6 +26,16 @@ class TileSystem : AbstractSystem()
 		}
 	}
 
+	override fun onTurn()
+	{
+		movedByWater.clear()
+
+		for (tile in level!!.grid)
+		{
+			processWaterTurn(tile)
+		}
+	}
+
 	fun processWater(tile: Tile)
 	{
 		val entity = tile.contents[SpaceSlot.ENTITY] ?: return
@@ -28,7 +43,7 @@ class TileSystem : AbstractSystem()
 
 		val sprite = entity.renderable()?.renderable as? Sprite ?: return
 
-		val water = tile.contents[SpaceSlot.FLOOR]?.water()
+		val water = tile.contents[SpaceSlot.FLOOR]?.water() ?: tile.contents[SpaceSlot.BELOWENTITY]?.water()
 
 		if (water == null)
 		{
@@ -80,6 +95,39 @@ class TileSystem : AbstractSystem()
 					}
 
 					entity.add(additional)
+				}
+			}
+		}
+	}
+
+	val movedByWater = ObjectSet<Entity>()
+	fun processWaterTurn(tile: Tile)
+	{
+		val entity = tile.contents[SpaceSlot.ENTITY] ?: return
+		val pos = entity.pos() ?: return
+
+		if (movedByWater.contains(entity)) return
+		movedByWater.add(entity)
+
+		val water = tile.contents[SpaceSlot.FLOOR]?.water() ?: tile.contents[SpaceSlot.BELOWENTITY]?.water() ?: return
+
+		if (water.flowDir != Direction.CENTRE)
+		{
+			val direction = water.flowDir
+
+			val doFlow = MathUtils.random(1f)
+			if (doFlow <= water.flowChance)
+			{
+				val prev = (pos.position as Tile)
+				val next = prev.level.getTile(prev, direction) ?: return
+
+				if (entity.pos().isValidTile(next, entity))
+				{
+					entity.pos().doMove(next, entity)
+
+					entity.renderable().renderable.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
+
+					entity.task().tasks.add(TaskInterrupt())
 				}
 			}
 		}

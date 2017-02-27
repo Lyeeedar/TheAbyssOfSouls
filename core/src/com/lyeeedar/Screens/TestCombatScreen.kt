@@ -12,10 +12,8 @@ import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Systems.level
 import com.lyeeedar.Systems.systemList
 import com.lyeeedar.UI.DebugConsole
-import com.lyeeedar.Util.Array2D
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.Colour
-import com.lyeeedar.Util.Point
+import com.lyeeedar.UI.IDebugCommandProvider
+import com.lyeeedar.Util.*
 
 class TestCombatScreen : AbstractScreen()
 {
@@ -29,6 +27,10 @@ class TestCombatScreen : AbstractScreen()
 	val systemTimes: Array<SystemData> by lazy { Array<SystemData>(systemList.size) { i -> SystemData(systemList[i].java.simpleName.replace("System", ""), 0f, "--") } }
 	var totalSystemTime: Float = 0f
 	var drawSystemTime = false
+
+	var clickedTile: Tile? = null
+	var selectedEntity: Entity? = null
+	var selectedComponent: IDebugCommandProvider? = null
 
 	override fun create()
 	{
@@ -150,6 +152,71 @@ class TestCombatScreen : AbstractScreen()
 			return false
 		})
 
+		DebugConsole.register("Select", "", fun (args, console): Boolean {
+			if (clickedTile == null)
+			{
+				console.error("No tile selected!")
+			}
+			else if (args.size == 1)
+			{
+				if (selectedEntity != null)
+				{
+					val componentName = args[0] + "component"
+					for (component in selectedEntity!!.components)
+					{
+						if (component.javaClass.simpleName.toLowerCase() == componentName)
+						{
+							if (component is IDebugCommandProvider)
+							{
+								selectedComponent = component
+								component.attachCommands()
+
+								console.write("")
+								console.write("Selected component: " + args[0])
+
+								return true
+							}
+							else
+							{
+
+								console.error("Component has no debugging commands!")
+								return false
+							}
+						}
+					}
+				}
+
+				val slot = SpaceSlot.valueOf(args[0].toUpperCase())
+
+				if (clickedTile!!.contents.containsKey(slot))
+				{
+					selectedEntity = clickedTile!!.contents[slot]
+					selectedComponent?.detachCommands()
+					selectedComponent = null
+
+					console.write("")
+					console.write("Selected entity: " + (selectedEntity!!.name()?.name ?: selectedEntity.toString()))
+					for (component in selectedEntity!!.components)
+					{
+						val isProvider = component is IDebugCommandProvider
+						console.write(component.javaClass.simpleName.replace("Component", "") + if (isProvider) " - Debug" else "")
+					}
+
+					return true
+				}
+				else
+				{
+					console.error("No entity in that slot on the selected tile!")
+				}
+			}
+			else
+			{
+				console.error("Too many arguments!")
+			}
+
+			return false
+		})
+
 		super.show()
 	}
 
@@ -174,6 +241,33 @@ class TestCombatScreen : AbstractScreen()
 	{
 		updateMousePos(screenX, screenY)
 
+		if (debugConsole.isVisible)
+		{
+			val tile = Global.engine.level!!.getTile(mousex, mousey)
+			if (tile != null)
+			{
+				tile.isSelectedPoint = true
+				Future.call({ tile.isSelectedPoint = false }, 1f, tile)
+
+				debugConsole.write("")
+				debugConsole.write("Select point: $mousex,$mousey")
+
+				for (slot in SpaceSlot.Values)
+				{
+					if (tile.contents.containsKey(slot))
+					{
+						debugConsole.write(slot.toString() + ": " + (tile.contents[slot].name()?.name ?: tile.contents[slot].toString()))
+					}
+				}
+
+				selectedEntity = null
+				selectedComponent?.detachCommands()
+				selectedComponent = null
+
+				clickedTile = tile
+			}
+		}
+
 		return super.touchDown(screenX, screenY, pointer, button)
 	}
 
@@ -194,7 +288,7 @@ class TestCombatScreen : AbstractScreen()
 			offsety -= offset[1] * Global.tilesize
 		}
 
-		mousex = ((screenX - offsetx) / 32f).toInt()
+		mousex = ((screenX - offsetx) / Global.tilesize).toInt()
 		mousey = (((Global.resolution[1] - screenY) - offsety) / Global.tilesize).toInt()
 	}
 

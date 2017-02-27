@@ -32,7 +32,7 @@
 				<Data Name="Occludes" meta:RefKey="Boolean" />
 			</Data>
 			<Data Name="Position" meta:RefKey="Struct">
-				<Data Name="SpaceSlot" EnumValues="Entity,Air" meta:RefKey="Enum" />
+				<Data Name="SpaceSlot" EnumValues="Entity,BelowEntity,AboveEntity" meta:RefKey="Enum" />
 				<Data Name="Size" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
 			</Data>
 			<Data Name="Renderable" meta:RefKey="Struct">
@@ -52,7 +52,8 @@
 				</Data>
 			</Data>
 			<Data Name="Water" meta:RefKey="Struct">
-				<Data Name="Direction" meta:RefKey="Vector" />
+				<Data Name="Direction" EnumValues="--,North,South,East,West" meta:RefKey="Enum" />
+				<Data Name="FlowChance" Min="0" Max="1" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="Depth" Min="0" Max="1" Default="0.2" SkipIfDefault="False" meta:RefKey="Number" />
 			</Data>
 		</Data>

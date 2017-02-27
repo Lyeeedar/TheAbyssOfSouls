@@ -27,7 +27,7 @@ class GrammarRuleFilter : AbstractGrammarRule()
 		val condition: (symbol: GrammarSymbol) -> Boolean = when (mode)
 		{
 			Mode.NOTWALL -> fun (symbol) = !symbol.contents.containsKey(SpaceSlot.WALL)
-			Mode.NOTENTITY -> fun (symbol) = !symbol.contents.containsKey(SpaceSlot.ENTITY)
+			Mode.NOTENTITY -> fun (symbol) = SpaceSlot.EntityValues.all { !symbol.contents.containsKey(it) }
 			Mode.CHARACTER ->  fun (symbol) = symbol.char == char
 			else -> throw UnsupportedOperationException("Unknown mode '$mode'!")
 		}

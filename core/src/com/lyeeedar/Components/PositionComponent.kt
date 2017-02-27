@@ -127,4 +127,44 @@ class PositionComponent: Component
 
 		return tiles
 	}
+
+	fun isValidTile(t: Tile, entity: Entity): Boolean
+	{
+		for (x in 0..size-1)
+		{
+			for (y in 0..size-1)
+			{
+				val tile = t.level.getTile(t, x, y)
+				if (tile == null || (tile.contents.get(slot) != null && tile.contents.get(slot) != entity) || tile.contents.get(SpaceSlot.WALL) != null)
+				{
+					return false
+				}
+			}
+		}
+
+		return true
+	}
+
+	fun doMove(t: Tile, entity: Entity)
+	{
+		for (x in 0..size-1)
+		{
+			for (y in 0..size-1)
+			{
+				val tile = t.level.getTile(position, x, y) ?: continue
+				if (tile.contents[slot] == entity) tile.contents.remove(slot)
+			}
+		}
+
+		position = t
+
+		for (x in 0..size-1)
+		{
+			for (y in 0..size-1)
+			{
+				val tile = t.level.getTile(t, x, y) ?: continue
+				tile.contents[slot] = entity
+			}
+		}
+	}
 }

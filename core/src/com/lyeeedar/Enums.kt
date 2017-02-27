@@ -301,8 +301,9 @@ enum class SpaceSlot
 	FLOORDETAIL,
 	WALL,
 	WALLDETAIL,
+	BELOWENTITY,
 	ENTITY,
-	AIR;
+	ABOVEENTITY;
 
 
 	companion object
@@ -310,6 +311,6 @@ enum class SpaceSlot
 
 		val Values = SpaceSlot.values()
 		val BasicValues = arrayOf(FLOOR, FLOORDETAIL, WALL, WALLDETAIL)
-		val InterestingValues = arrayOf(ENTITY, AIR)
+		val EntityValues = arrayOf(BELOWENTITY, ENTITY, ABOVEENTITY)
 	}
 }

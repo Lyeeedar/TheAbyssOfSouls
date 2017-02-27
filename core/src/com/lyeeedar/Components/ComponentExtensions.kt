@@ -7,6 +7,7 @@ import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Combo.ComboTree
+import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.SpaceSlot
@@ -120,7 +121,7 @@ class EntityLoader()
 				val pos = entity.pos() ?: PositionComponent()
 				entity.add(pos)
 
-				val slot = posEl.get("Slot", null)
+				val slot = posEl.get("SpaceSlot", null)
 				if (slot != null) pos.slot = SpaceSlot.valueOf(slot.toUpperCase())
 
 				val size = posEl.getInt("Size", -1)
@@ -236,6 +237,10 @@ class EntityLoader()
 			{
 				val water = WaterComponent()
 				water.depth = waterEl.getFloat("Depth", 0.3f)
+				water.flowChance = waterEl.getFloat("FlowChance", 0f)
+
+				val dirEl = waterEl.get("Direction")
+				if (dirEl != null) water.flowDir = Direction.valueOf(dirEl.toUpperCase())
 
 				entity.add(water)
 			}
@@ -299,9 +304,11 @@ class EntityLoader()
 					val trailEntity = Entity()
 					trailEntity.add(RenderableComponent(renderable))
 					trailEntity.add(trailing)
-					if (entity.stats() != null) trailEntity.add(entity.stats())
 					trailEntity.add(PositionComponent())
 					trailEntity.pos().slot = entity.pos().slot
+
+					if (entity.stats() != null) trailEntity.add(entity.stats())
+					if (entity.water() != null) trailEntity.add(entity.water())
 
 					trailing.entities.add(trailEntity)
 				}

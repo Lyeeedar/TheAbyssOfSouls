@@ -132,22 +132,7 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 
 			if (tookTurn)
 			{
-				for (entity in entities)
-				{
-					if (entity != player)
-					{
-						val pos = entity.pos()
-						if (pos != null)
-						{
-							// skip far away entities
-							if (pos.position.taxiDist(player.tile()!!) > 100) continue
-						}
-
-						processEntity(entity)
-					}
-				}
-
-				onTurn()
+				doTurn()
 			}
 		}
 		else if (hasEffects)
@@ -157,6 +142,33 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 		else if (hasTimelines)
 		{
 			lastState = "Waiting on timelines"
+		}
+	}
+
+	fun doTurn()
+	{
+		val player = level!!.player
+
+		for (entity in entities)
+		{
+			if (entity != player)
+			{
+				val pos = entity.pos()
+				if (pos != null)
+				{
+					// skip far away entities
+					if (pos.position.taxiDist(player.tile()!!) > 100) continue
+				}
+
+				processEntity(entity)
+			}
+		}
+
+		onTurn()
+
+		for (system in systemList)
+		{
+			(engine.getSystem(system.java) as AbstractSystem).onTurn()
 		}
 	}
 

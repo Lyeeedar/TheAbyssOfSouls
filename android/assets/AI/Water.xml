@@ -8,7 +8,7 @@
 		<Node meta:X="497.33334350585938" meta:Y="118.33333587646484" meta:RefKey="Sequence">
 			<Action Key="DeathCounter" Value="DeathCounter+1" meta:RefKey="SetValue" />
 			<Node meta:X="765.33334350585938" meta:Y="180.33333333333331" Completed="Completed" Running="Completed" Failed="Completed" meta:RefKey="SetState">
-				<Node meta:X="902.33334350585938" meta:Y="179.33333587646484" meta:RefKey="Sequence">
+				<Node meta:X="902.33334350585938" meta:Y="180.33333333333331" meta:RefKey="Sequence">
 					<Action Condition="SpawnedChildren==0 &amp;&amp; DeathCounter &gt; 0" meta:RefKey="Conditional" />
 					<Action Key="SpawnedChildren" Value="1" meta:RefKey="SetValue" />
 					<Action meta:RefKey="Scene">

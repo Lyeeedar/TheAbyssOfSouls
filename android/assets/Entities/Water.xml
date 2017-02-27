@@ -3,7 +3,9 @@
 		<AI>
 			<AI>Water</AI>
 		</AI>
-		<Position />
+		<Position>
+			<SpaceSlot>BelowEntity</SpaceSlot>
+		</Position>
 		<Trailing>
 			<Renderables>
 				<Renderable meta:RefKey="Sprite">
@@ -21,5 +23,10 @@
 				<Name>Oryx/uf_split/uf_terrain/water_green</Name>
 			</Renderable>
 		</Renderable>
+		<Water>
+			<Direction>South</Direction>
+			<FlowChance>0.9</FlowChance>
+			<Depth>0.3</Depth>
+		</Water>
 	</Components>
 </Entity>

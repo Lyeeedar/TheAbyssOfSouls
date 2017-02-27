@@ -15,57 +15,23 @@ class TaskMove(var direction: Direction): AbstractTask()
 		e.directionalSprite()?.currentAnim = "move"
 
 		val pos = e.pos() ?: return
-		val renderable = e.renderable()
 
 		if (pos.position is Tile)
 		{
 			val prev = (pos.position as Tile)
+			val next = prev.level.getTile(prev, direction) ?: return
 
-			// check valid
-			var isValidMove = true
-			outer@ for (x in 0..pos.size-1)
+			if (e.pos().isValidTile(next, e))
 			{
-				for (y in 0..pos.size-1)
-				{
-					val tile = prev.level.getTile(prev, x+direction.x, y+direction.y)
-					if (tile == null || (tile.contents.get(pos.slot) != null && tile.contents.get(pos.slot) != e) || tile.contents.get(SpaceSlot.WALL) != null)
-					{
-						isValidMove = false
-						break@outer
-					}
-				}
-			}
+				e.pos().doMove(next, e)
 
-			if (isValidMove)
-			{
-				for (x in 0..pos.size-1)
-				{
-					for (y in 0..pos.size-1)
-					{
-						val tile = prev.level.getTile(prev, x, y)
-						tile?.contents?.remove(pos.slot)
-					}
-				}
-
-				val next = prev.level.getTile(prev, direction) ?: return
-				pos.position = next
-
-				for (x in 0..pos.size-1)
-				{
-					for (y in 0..pos.size-1)
-					{
-						val tile = next.level.getTile(next, x, y)
-						tile?.contents?.put(pos.slot, e)
-					}
-				}
-
-				renderable.renderable.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
+				e.renderable().renderable.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
 			}
 		}
 		else
 		{
-			pos.position.x += direction.x;
-			pos.position.y += direction.y;
+			pos.position.x += direction.x
+			pos.position.y += direction.y
 		}
 
 		if (e.stats() != null) e.stats().stamina += 2

@@ -3,7 +3,9 @@
 		<AI>
 			<AI>Water2</AI>
 		</AI>
-		<Position />
+		<Position>
+			<SpaceSlot>BelowEntity</SpaceSlot>
+		</Position>
 		<Trailing>
 			<Renderables>
 				<Renderable meta:RefKey="Sprite">
@@ -18,5 +20,10 @@
 				<Colour>196,196,196,199</Colour>
 			</Renderable>
 		</Renderable>
+		<Water>
+			<Direction>South</Direction>
+			<FlowChance>0.3</FlowChance>
+			<Depth>0.2</Depth>
+		</Water>
 	</Components>
 </Entity>

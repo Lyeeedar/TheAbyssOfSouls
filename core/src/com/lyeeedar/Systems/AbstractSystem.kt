@@ -57,6 +57,11 @@ abstract class AbstractSystem() : EntitySystem()
 		processDuration = (processDuration + diff) / 2f
 	}
 
+	open fun onTurn()
+	{
+
+	}
+
 	abstract fun doUpdate(deltaTime: Float)
 
 	open fun onLevelChanged()

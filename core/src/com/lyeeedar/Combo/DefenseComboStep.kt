@@ -76,7 +76,7 @@ class DefenseComboStep : ComboStep()
 					{
 						val etile = start.level.getTile(start, direction.x * i + x, direction.y * i + y) ?: break@outer
 						if (etile.contents.containsKey(SpaceSlot.WALL)) break@outer
-						if (etile.contents.containsKey(SpaceSlot.ENTITY) && etile.contents[SpaceSlot.ENTITY] != entity) break@outer
+						if (etile.contents.containsKey(entity.pos().slot) && etile.contents[entity.pos().slot] != entity) break@outer
 					}
 				}
 
