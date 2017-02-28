@@ -10,7 +10,27 @@
 			<Renderables>
 				<Renderable meta:RefKey="Sprite">
 					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+					<Colour>224,222,222,229</Colour>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+					<Colour>204,204,204,209</Colour>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
 					<Colour>196,196,196,199</Colour>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+					<Colour>178,178,178,172</Colour>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+					<Colour>163,162,162,145</Colour>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+					<Colour>153,153,153,125</Colour>
 				</Renderable>
 				<Renderable meta:RefKey="Sprite">
 					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
@@ -25,8 +45,8 @@
 		</Renderable>
 		<Water>
 			<Direction>South</Direction>
-			<FlowChance>0.9</FlowChance>
-			<Depth>0.3</Depth>
+			<FlowChance>0.7</FlowChance>
+			<Depth>0.4</Depth>
 		</Water>
 	</Components>
 </Entity>

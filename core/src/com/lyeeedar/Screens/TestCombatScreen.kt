@@ -3,17 +3,19 @@ package com.lyeeedar.Screens
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.lyeeedar.Components.*
+import com.lyeeedar.Components.name
+import com.lyeeedar.Components.pos
+import com.lyeeedar.Components.renderable
 import com.lyeeedar.GenerationGrammar.GenerationGrammar
 import com.lyeeedar.Global
-import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Systems.level
 import com.lyeeedar.Systems.systemList
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.UI.IDebugCommandProvider
-import com.lyeeedar.Util.*
+import com.lyeeedar.Util.Colour
+import com.lyeeedar.Util.Future
 
 class TestCombatScreen : AbstractScreen()
 {
@@ -34,7 +36,7 @@ class TestCombatScreen : AbstractScreen()
 
 	override fun create()
 	{
-		val grammar = GenerationGrammar.load("Test")
+		val grammar = GenerationGrammar.load("FloodMap")
 
 		val level = grammar.generate(10, Global.engine)
 		Global.engine.level = level

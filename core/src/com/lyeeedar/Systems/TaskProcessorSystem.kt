@@ -17,7 +17,7 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 	lateinit var renderables: ImmutableArray<Entity>
 	lateinit var timelines: ImmutableArray<Entity>
 
-	val onTurn = Event0Arg()
+	val onTurnEvent = Event0Arg()
 
 	var lastState = "---"
 	var printTasks = false
@@ -162,7 +162,7 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 			}
 		}
 
-		onTurn()
+		onTurnEvent()
 
 		for (system in systemList)
 		{

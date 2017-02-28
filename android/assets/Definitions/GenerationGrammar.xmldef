@@ -29,19 +29,19 @@
 		<Data Name="Degrees" SkipIfDefault="False" meta:RefKey="Number" />
 	</Definition>
 	<Definition Name="Scale" meta:RefKey="StructDef">
-		<Data Name="Mode" EnumValues="Additive,Multiplicative" meta:RefKey="Enum" />
-		<Data Name="X" meta:RefKey="Number" />
-		<Data Name="Y" meta:RefKey="Number" />
+		<Data Name="Mode" EnumValues="Additive,Multiplicative,Absolute" meta:RefKey="Enum" />
+		<Data Name="X" Default="0" SkipIfDefault="False" meta:RefKey="String" />
+		<Data Name="Y" Default="0" SkipIfDefault="False" meta:RefKey="String" />
 	</Definition>
 	<Definition Name="Translate" meta:RefKey="StructDef">
-		<Data Name="X" Type="Int" meta:RefKey="Number" />
-		<Data Name="Y" Type="Int" meta:RefKey="Number" />
+		<Data Name="X" Default="0" meta:RefKey="String" />
+		<Data Name="Y" Default="0" meta:RefKey="String" />
 	</Definition>
 	<!--Chain Rules-->
 	<Definition Name="Condition" MinCount="1" meta:RefKey="CollectionDef">
 		<Data Name="Condition" Description="{Condition}" meta:RefKey="Struct">
 			<Data Name="Condition" meta:RefKey="String" />
-			<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+			<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 		</Data>
 	</Definition>
 	<Definition Name="Defer" meta:RefKey="StructDef">
@@ -59,12 +59,12 @@
 	<Definition Name="Filter" Description="{Mode}" meta:RefKey="StructDef">
 		<Data Name="Mode" EnumValues="NotWall,NotEntity,Character" meta:RefKey="Enum" />
 		<Data Name="Character" MaxLength="1" VisibleIf="Mode==Character" meta:RefKey="String" />
-		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 	</Definition>
-	<Definition Name="Repeat" meta:RefKey="StructDef">
+	<Definition Name="Repeat" Description="{Size}" meta:RefKey="StructDef">
 		<Data Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
 		<Data Name="Size" meta:RefKey="String" />
-		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
+		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 		<Data Name="Remainder" Keys="Node" meta:RefKey="GraphReference" />
 	</Definition>
 	<Definition Name="Rule" meta:RefKey="StructDef">

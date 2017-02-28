@@ -27,6 +27,9 @@ class SceneTimeline
 			return timelines.any { (it.getExact(progression) as? BlockerAction)?.isBlocked != true }
 		}
 
+	val blocker: BlockerAction?
+		get() = timelines.map { it.getExact(progression) as? BlockerAction }.firstOrNull { it != null }
+
 	val isComplete: Boolean
 		get() = progression > duration
 
@@ -50,6 +53,7 @@ class SceneTimeline
 					{
 						newTime = action.startTime
 						action.enter()
+						action.isEntered = true
 					}
 				}
 			}
@@ -64,8 +68,8 @@ class SceneTimeline
 				{
 					if (!action.isEntered)
 					{
-						action.enter()
 						action.isEntered = true
+						action.enter()
 					}
 
 					if (action.endTime <= newTime)
@@ -77,6 +81,18 @@ class SceneTimeline
 		}
 
 		progression = newTime
+	}
+
+	fun reset()
+	{
+		progression = 0f
+		for (timeline in timelines)
+		{
+			for (action in timeline.actions)
+			{
+				action.isEntered = false
+			}
+		}
 	}
 
 	fun copy(): SceneTimeline
@@ -208,7 +224,7 @@ class BlockerAction() : AbstractTimelineAction()
 
 		if (blockOnTurn)
 		{
-			Global.engine.task().onTurn += fun(): Boolean {
+			Global.engine.task().onTurnEvent += fun(): Boolean {
 
 				blockCount--
 				if (blockCount == 0)
@@ -228,7 +244,7 @@ class BlockerAction() : AbstractTimelineAction()
 
 	override fun exit()
 	{
-		isBlocked = true
+		isBlocked = false
 	}
 
 	override fun copy(parent: SceneTimeline): AbstractTimelineAction
@@ -238,6 +254,7 @@ class BlockerAction() : AbstractTimelineAction()
 		action.blockOnTurn = blockOnTurn
 		action.startTime = startTime
 		action.duration = duration
+		action.countEqn = countEqn
 		return action
 	}
 

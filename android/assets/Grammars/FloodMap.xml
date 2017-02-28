@@ -1,20 +1,30 @@
 <GenerationGrammar meta:X="-179" meta:Y="-39" GUID="de4174d2-5f44-4910-8975-295b7e3d1429" xmlns:meta="Editor">
-	<Width>50</Width>
-	<Height>100</Height>
+	<Width>100</Width>
+	<Height>50</Height>
 	<Root meta:RefKey="Node">7c5b7af5-a80c-4976-95ae-bf38812d3b13</Root>
 	<Rules>
 		<Node meta:X="-57" meta:Y="-39" GUID="7c5b7af5-a80c-4976-95ae-bf38812d3b13">
 			<Rule meta:RefKey="Rule">
 				<Rule meta:RefKey="Node">dff7a193-1d9d-48e9-8d33-6bc2c655b8ba</Rule>
 			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>.</Character>
+			</Rule>
 			<Rule Axis="Y" meta:RefKey="Divide">
 				<Division>
 					<Size>2</Size>
 					<Rule meta:RefKey="Node">ac9daac8-1482-40e3-8c58-97c029e0e8c1</Rule>
 				</Division>
+				<Division>
+					<Size>100%-2</Size>
+					<Rule meta:RefKey="Node">65d5b137-d8a9-450b-a420-e2005ebfe340</Rule>
+				</Division>
+			</Rule>
+			<Rule meta:RefKey="Defer">
+				<Rule meta:RefKey="Node">dfa6e441-a70a-4b93-824e-22e53d43f8b5</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="206" meta:Y="-96" GUID="dff7a193-1d9d-48e9-8d33-6bc2c655b8ba">
+		<Node meta:X="161.23953247070313" meta:Y="-149.12916564941406" GUID="dff7a193-1d9d-48e9-8d33-6bc2c655b8ba">
 			<!--Define base symbols-->
 			<Rule meta:RefKey="Symbol">
 				<Character>.</Character>
@@ -25,6 +35,26 @@
 							<Renderable meta:RefKey="Sprite">
 								<Name>Oryx/uf_split/uf_terrain/ground_crusted_1</Name>
 							</Renderable>
+							<Variants>
+								<Variant>
+									<Chance>chance(1,10)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/ground_crusted_2</Name>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1,20)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/ground_crusted_3</Name>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1,10)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/ground_crusted_4</Name>
+									</Renderable>
+								</Variant>
+							</Variants>
 						</Renderable>
 					</Components>
 				</Floor>
@@ -48,18 +78,63 @@
 									<Name>Oryx/Custom/terrain/wall_crusted_overhang_1</Name>
 								</Overhang>
 							</Renderable>
+							<Variants>
+								<Variant>
+									<Chance>chance(1,10)</Chance>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>wall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_3</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_top_2</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_overhang_1</Name>
+										</Overhang>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1,20)</Chance>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>wall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_2</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_top_3</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_overhang_1</Name>
+										</Overhang>
+									</Renderable>
+								</Variant>
+							</Variants>
 						</Renderable>
 					</Components>
 				</Wall>
 			</Rule>
 		</Node>
-		<Node meta:X="206" meta:Y="91" GUID="ac9daac8-1482-40e3-8c58-97c029e0e8c1">
+		<Node meta:X="523.54705810546875" meta:Y="51.602741241455078" GUID="ac9daac8-1482-40e3-8c58-97c029e0e8c1">
 			<!--Water spawners-->
 			<Rule meta:RefKey="DataScope">
-				<Rule meta:RefKey="Node">5a275d29-b5ef-411f-b1fc-1f1a0d17706e</Rule>
+				<Rule meta:RefKey="Node">7978526f-9703-4e01-b221-4675924c2f97</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="476" meta:Y="91" GUID="5a275d29-b5ef-411f-b1fc-1f1a0d17706e">
+		<Node meta:X="1655.916748046875" meta:Y="239.57395935058594" GUID="5a275d29-b5ef-411f-b1fc-1f1a0d17706e">
+			<Rule meta:RefKey="Fill">
+				<Character>#</Character>
+				<Overwrite>true</Overwrite>
+			</Rule>
+		</Node>
+		<Node meta:X="987.832275390625" meta:Y="51.602741241455078" GUID="3db410f1-f89c-4bd5-abea-41629a24ff70">
+			<Rule meta:RefKey="Fill">
+				<Character>#</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="987.832275390625" meta:Y="151.57395935058594" GUID="7128073a-360e-4a90-a3ca-1b32ae6f57dd">
 			<Rule meta:RefKey="Symbol">
 				<Character>#</Character>
 				<Extends>#</Extends>
@@ -71,7 +146,7 @@
 								<Timeline>
 									<Blocker>
 										<BlockOnTurn>true</BlockOnTurn>
-										<Count>15</Count>
+										<Count>50</Count>
 									</Blocker>
 									<Spawn>
 										<Time>0.01</Time>
@@ -83,8 +158,146 @@
 								</Timeline>
 							</SceneTimeline>
 						</SceneTimeline>
+						<Name>
+							<Name>Spawner</Name>
+						</Name>
 					</Components>
 				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Repeat">
+				<Size>1+rnd(5)</Size>
+				<Rule meta:RefKey="Node">19353af0-d9d8-4025-a1a8-b6d3926c8be5</Rule>
+				<Remainder meta:RefKey="Node">5a275d29-b5ef-411f-b1fc-1f1a0d17706e</Remainder>
+			</Rule>
+		</Node>
+		<Node meta:X="1167.1983642578125" meta:Y="51.602741241455078" GUID="19353af0-d9d8-4025-a1a8-b6d3926c8be5">
+			<Rule meta:RefKey="Condition">
+				<Condition>
+					<Condition>chance(1,3)</Condition>
+					<Rule meta:RefKey="Node">f681c56e-db27-40b2-8566-baba503e0926</Rule>
+				</Condition>
+				<Condition>
+					<Condition>else</Condition>
+					<Rule meta:RefKey="Node">5a275d29-b5ef-411f-b1fc-1f1a0d17706e</Rule>
+				</Condition>
+			</Rule>
+		</Node>
+		<Node meta:X="1461.0347900390625" meta:Y="51.602741241455078" GUID="f681c56e-db27-40b2-8566-baba503e0926">
+			<Rule meta:RefKey="Translate">
+				<Y>1</Y>
+			</Rule>
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">5a275d29-b5ef-411f-b1fc-1f1a0d17706e</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="776.4105224609375" meta:Y="51.602741241455078" GUID="7978526f-9703-4e01-b221-4675924c2f97">
+			<Rule Axis="Y" meta:RefKey="Divide">
+				<Division>
+					<Size>1</Size>
+					<Rule meta:RefKey="Node">3db410f1-f89c-4bd5-abea-41629a24ff70</Rule>
+				</Division>
+				<Division>
+					<Size>1</Size>
+					<Rule meta:RefKey="Node">7128073a-360e-4a90-a3ca-1b32ae6f57dd</Rule>
+				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="14.482117652893066" meta:Y="589.947509765625" GUID="dfa6e441-a70a-4b93-824e-22e53d43f8b5">
+			<!--player-->
+			<Rule meta:RefKey="Filter">
+				<Mode>Character</Mode>
+				<Character>.</Character>
+				<Rule meta:RefKey="Node">0afcde94-9816-4d8e-a619-4fac3fc765b0</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="170.26458740234375" meta:Y="598.2208251953125" GUID="0afcde94-9816-4d8e-a619-4fac3fc765b0">
+			<Rule meta:RefKey="Select">
+				<Count>1</Count>
+				<Rule meta:RefKey="Node">bee9f08e-8767-4558-a379-0b26bc722d30</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="350.32037353515625" meta:Y="603.736328125" GUID="bee9f08e-8767-4558-a379-0b26bc722d30">
+			<Rule meta:RefKey="Symbol">
+				<Character>@</Character>
+				<Entity>
+					<Extends>player</Extends>
+					<IsPlayer>true</IsPlayer>
+				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>@</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="521.37078857421875" meta:Y="440.33456420898438" GUID="65d5b137-d8a9-450b-a420-e2005ebfe340">
+			<Rule Axis="Y" meta:RefKey="Divide">
+				<Division>
+					<Size>20</Size>
+				</Division>
+				<Division>
+					<Size>20</Size>
+					<Rule meta:RefKey="Node">c026faf5-4176-41ff-b23e-5679a3de0941</Rule>
+				</Division>
+				<Division>
+					<Size>10</Size>
+				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="773.053466796875" meta:Y="475.79092407226562" GUID="c026faf5-4176-41ff-b23e-5679a3de0941">
+			<!--Buildings-->
+			<Rule meta:RefKey="Repeat">
+				<Size>20 + rnd(10)</Size>
+				<Rule meta:RefKey="Node">e1632935-4f09-4aa3-a869-965d8b02b985</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1031.498779296875" meta:Y="478.2362060546875" GUID="e1632935-4f09-4aa3-a869-965d8b02b985">
+			<!--Building-->
+			<Rule meta:RefKey="Scale">
+				<Mode>Absolute</Mode>
+				<X>5+rnd(5)</X>
+				<Y>5+rnd(5)</Y>
+			</Rule>
+			<Rule meta:RefKey="Translate">
+				<X>-5+rnd(10)</X>
+				<Y>-5+rnd(10)</Y>
+			</Rule>
+			<Rule Axis="Y" meta:RefKey="Divide">
+				<Division>
+					<Size>1</Size>
+					<Rule meta:RefKey="Node">1b289559-cb77-40e6-a130-e53b9dc94ff2</Rule>
+				</Division>
+				<Division>
+					<Size>100%-2</Size>
+					<Rule meta:RefKey="Node">dc7a7f9e-1458-4c44-a6b3-c559a52f6593</Rule>
+				</Division>
+				<Division>
+					<Size>1</Size>
+				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="1581.4134521484375" meta:Y="519.24609375" GUID="e16de267-f04e-43b7-8bbd-461614218a0f">
+			<Rule meta:RefKey="Fill">
+				<Character>#</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="1373.27978515625" meta:Y="531.36163330078125" GUID="1b289559-cb77-40e6-a130-e53b9dc94ff2">
+			<Rule meta:RefKey="Select">
+				<Count>90%</Count>
+				<Rule meta:RefKey="Node">e16de267-f04e-43b7-8bbd-461614218a0f</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1242.8189697265625" meta:Y="676.9764404296875" GUID="dc7a7f9e-1458-4c44-a6b3-c559a52f6593">
+			<Rule meta:RefKey="Divide">
+				<Division>
+					<Size>1</Size>
+					<Rule meta:RefKey="Node">1b289559-cb77-40e6-a130-e53b9dc94ff2</Rule>
+				</Division>
+				<Division>
+					<Size>100%-2</Size>
+				</Division>
+				<Division>
+					<Size>1</Size>
+					<Rule meta:RefKey="Node">1b289559-cb77-40e6-a130-e53b9dc94ff2</Rule>
+				</Division>
 			</Rule>
 		</Node>
 	</Rules>

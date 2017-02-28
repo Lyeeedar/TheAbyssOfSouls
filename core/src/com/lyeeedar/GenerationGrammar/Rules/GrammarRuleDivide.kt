@@ -21,28 +21,58 @@ class GrammarRuleDivide : AbstractGrammarRule()
 	{
 		area.xMode = onX
 
-		var current = 0
-		for (i in 0..divisions.size-1)
+		if (onX)
 		{
-			val division = divisions[i]
-
-			area.writeVariables(variables)
-			val size = if (division.size == "remainder") area.size - current else Math.min(area.size - current, division.size.evaluate(variables, ran).round())
-			val newArea = area.copy()
-			newArea.pos = area.pos + current
-			newArea.size = size
-
-			if (!division.rule.isNullOrBlank() && newArea.hasContents)
+			var current = 0
+			for (i in 0..divisions.size - 1)
 			{
-				newArea.points.clear()
-				newArea.addPointsWithin(area)
+				val division = divisions[i]
 
-				val rule = ruleTable[division.rule]
-				rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+				area.writeVariables(variables)
+				val size = if (division.size == "remainder") area.size - current else Math.min(area.size - current, division.size.evaluate(variables, ran).round())
+				val newArea = area.copy()
+				newArea.pos = area.pos + current
+				newArea.size = size
+
+				if (!division.rule.isNullOrBlank() && newArea.hasContents)
+				{
+					newArea.points.clear()
+					newArea.addPointsWithin(area)
+
+					val rule = ruleTable[division.rule]
+					rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+				}
+
+				current += size
+				if (current == area.size) break
 			}
+		}
+		else
+		{
+			var current = area.size
+			for (i in 0..divisions.size - 1)
+			{
+				val division = divisions[i]
 
-			current += size
-			if (current == area.size) break
+				area.writeVariables(variables)
+				val size = if (division.size == "remainder") current else Math.min(current, division.size.evaluate(variables, ran).round())
+				current -= size
+
+				val newArea = area.copy()
+				newArea.pos = area.pos + current
+				newArea.size = size
+
+				if (!division.rule.isNullOrBlank() && newArea.hasContents)
+				{
+					newArea.points.clear()
+					newArea.addPointsWithin(area)
+
+					val rule = ruleTable[division.rule]
+					rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+				}
+
+				if (current == 0) break
+			}
 		}
 	}
 

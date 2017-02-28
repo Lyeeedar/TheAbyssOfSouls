@@ -2,8 +2,11 @@ package com.lyeeedar.Components
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
+import com.exp4j.Helpers.evaluate
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.children
+import com.lyeeedar.Util.round
 import ktx.collections.set
 
 class RenderableComponent() : AbstractComponent()
@@ -17,7 +20,21 @@ class RenderableComponent() : AbstractComponent()
 
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{
-		val renderableEl = xml.getChildByName("Renderable")
+		var renderableEl = xml.getChildByName("Renderable")
+
+		val variantsEl = xml.getChildByName("Variants")
+		if (variantsEl != null)
+		{
+			for (el in variantsEl.children())
+			{
+				val chance = el.get("Chance")
+				if (chance.evaluate().round() == 1)
+				{
+					renderableEl = el.getChildByName("Renderable")
+					break
+				}
+			}
+		}
 
 		fun loadRenderable(): Renderable
 		{
@@ -41,7 +58,7 @@ class RenderableComponent() : AbstractComponent()
 
 		if (xml.getBoolean("IsShared", false))
 		{
-			val key = xml.toString().hashCode()
+			val key = renderableEl.toString().hashCode()
 			if (!EntityLoader.sharedRenderableMap.containsKey(key))
 			{
 				EntityLoader.sharedRenderableMap[key] = loadRenderable()

@@ -1,13 +1,11 @@
 package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.AI.Tasks.TaskInterrupt
 import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
-import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
@@ -105,6 +103,7 @@ class TileSystem : AbstractSystem()
 	{
 		val entity = tile.contents[SpaceSlot.ENTITY] ?: return
 		val pos = entity.pos() ?: return
+		entity.renderable() ?: return
 
 		if (movedByWater.contains(entity)) return
 		movedByWater.add(entity)

@@ -274,6 +274,6 @@ class ActionProcessInput(): AbstractAction()
 
 	override fun cancel(entity: Entity)
 	{
-
+		setData("pos", null)
 	}
 }

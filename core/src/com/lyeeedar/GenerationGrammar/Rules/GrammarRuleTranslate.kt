@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.exp4j.Helpers.evaluate
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.GenerationGrammar.Pos
@@ -11,11 +12,15 @@ import java.util.*
 
 class GrammarRuleTranslate : AbstractGrammarRule()
 {
-	var x: Int = 0
-	var y: Int = 0
+	lateinit var xEqn: String
+	lateinit var yEqn: String
 
 	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
+		area.writeVariables(variables)
+		val x = xEqn.evaluate(variables, ran).toInt()
+		val y = yEqn.evaluate(variables, ran).toInt()
+
 		area.x += x
 		area.y += y
 
@@ -27,8 +32,8 @@ class GrammarRuleTranslate : AbstractGrammarRule()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		x = xml.getInt("X", 0)
-		y = xml.getInt("Y", 0)
+		xEqn = xml.get("X", "0")
+		yEqn = xml.get("Y", "0")
 	}
 
 }

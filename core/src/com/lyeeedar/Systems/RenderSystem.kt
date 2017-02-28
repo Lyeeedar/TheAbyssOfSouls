@@ -1,19 +1,14 @@
 package com.lyeeedar.Systems
 
-import com.badlogic.ashley.core.*
-import com.badlogic.ashley.utils.ImmutableArray
+import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Components.*
-import com.lyeeedar.Direction
 import com.lyeeedar.Global
-import com.lyeeedar.Level.Level
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.SortedRenderer
-import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.AssetManager
@@ -175,8 +170,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				if (!tile.isVisible)
 				{
 					// dont draw dynamic entities on non visible tiles
-					val task = Mappers.task.get(entity)
-					if (task != null)
+					if (entity.task() != null || entity.trailing() != null || entity.sceneTimeline() != null)
 					{
 						renderable.animation = null
 						continue

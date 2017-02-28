@@ -51,7 +51,7 @@ class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::c
 		{
 			if (timeline.sceneTimeline.loop)
 			{
-				timeline.sceneTimeline.progression = 0f
+				timeline.sceneTimeline.reset()
 			}
 			else
 			{
