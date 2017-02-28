@@ -1,8 +1,6 @@
 package com.lyeeedar.AI.BehaviourTree.Actions
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
 import com.exp4j.Helpers.unescapeCharacters
@@ -29,22 +27,22 @@ class ActionSetValue(): AbstractAction()
 			val direction = Direction.valueOf(split[2].toUpperCase())
 			val dist = split[3].toInt()
 
-			val point = getData(pointKey, entity.tile()) as Point
+			val point = getData(pointKey, entity.tile())!!
 
 			val newPoint = Point.obtain().set(point.x + direction.x * dist, point.y + direction.y * dist)
 
-			parent.setData(key, newPoint)
+			setData(key, newPoint)
 		}
 		else
 		{
 			try
 			{
 				val value = value.evaluate(getVariableMap())
-				parent.setData(key, value);
+				setData(key, value)
 			}
 			catch (ex: Exception)
 			{
-				parent.setData(key, value);
+				setData(key, value)
 			}
 		}
 

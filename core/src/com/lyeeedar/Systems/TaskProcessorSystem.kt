@@ -2,11 +2,9 @@ package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
 import com.lyeeedar.Components.*
-import com.lyeeedar.Level.Level
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Event0Arg
 
@@ -118,7 +116,7 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 
 		if (!hasEffects)
 		{
-			hasTimelines = timelines.any{ it.sceneTimeline()!!.sceneTimeline.isRunning }
+			hasTimelines = timelines.any{ !it.sceneTimeline()!!.sceneTimeline.loop && it.sceneTimeline()!!.sceneTimeline.isRunning }
 		}
 
 		if (!hasEffects && !hasTimelines)

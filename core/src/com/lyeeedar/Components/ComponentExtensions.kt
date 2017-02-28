@@ -6,15 +6,10 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Combo.ComboTree
-import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Renderable
-import com.lyeeedar.SpaceSlot
-import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.children
 import ktx.collections.set
-import ktx.collections.toGdxArray
 
 fun Entity.pos() = Mappers.position.get(this)
 fun Entity.tile() = Mappers.position.get(this).position as? Tile
@@ -53,7 +48,6 @@ class Mappers
 		val task: ComponentMapper<TaskComponent> = ComponentMapper.getFor(TaskComponent::class.java)
 		val light: ComponentMapper<LightComponent> = ComponentMapper.getFor(LightComponent::class.java)
 		val occluder: ComponentMapper<OccluderComponent> = ComponentMapper.getFor(OccluderComponent::class.java)
-		val impassable: ComponentMapper<ImpassableComponent> = ComponentMapper.getFor(ImpassableComponent::class.java)
 		val stats: ComponentMapper<StatisticsComponent> = ComponentMapper.getFor(StatisticsComponent::class.java)
 		val shadow: ComponentMapper<ShadowCastComponent> = ComponentMapper.getFor(ShadowCastComponent::class.java)
 		val combo: ComponentMapper<ComboComponent> = ComponentMapper.getFor(ComboComponent::class.java)
@@ -103,215 +97,38 @@ class EntityLoader()
 		{
 			val entity = if (xml.get("Extends", null) != null) load(xml.get("Extends")) else Entity()
 
+			val componentsEl = xml.getChildByName("Components") ?: return entity
+
+			for (componentEl in componentsEl.children())
+			{
+				val component = when(componentEl.name.toUpperCase())
+				{
+					"ADDITIONALRENDERABLES" -> AdditionalRenderableComponent()
+					"COMBO" -> ComboComponent()
+					"DIRECTIONALSPRITE" -> DirectionalSpriteComponent()
+					"LIGHT" -> LightComponent()
+					"NAME" -> NameComponent()
+					"OCCLUDER" -> OccluderComponent()
+					"POSITION" -> PositionComponent()
+					"RENDERABLE" -> RenderableComponent()
+					"SCENE" -> SceneTimelineComponent()
+					"STATISTICS" -> StatisticsComponent()
+					"AI" -> TaskComponent()
+					"TRAILING" -> TrailingEntityComponent()
+					"WATER" -> WaterComponent()
+
+					else -> throw Exception("Unknown component type '" + componentEl.name + "'!")
+				}
+
+				component.parse(componentEl, entity)
+				entity.add(component)
+			}
+
 			if (xml.getBoolean("IsPlayer", false))
 			{
 				val name = entity.name() ?: NameComponent("player")
 				name.isPlayer = true
 				entity.add(name)
-			}
-
-			val componentsEl = xml.getChildByName("Components") ?: return entity
-
-			val ai = componentsEl.getChildByName("AI")?.get("AI", null)
-			if (ai != null) entity.add(TaskComponent(ai))
-
-			val posEl = componentsEl.getChildByName("Position")
-			if (posEl != null)
-			{
-				val pos = entity.pos() ?: PositionComponent()
-				entity.add(pos)
-
-				val slot = posEl.get("SpaceSlot", null)
-				if (slot != null) pos.slot = SpaceSlot.valueOf(slot.toUpperCase())
-
-				val size = posEl.getInt("Size", -1)
-				if (size != -1)
-				{
-					pos.size = size
-
-					val renderable = entity.renderable()
-					if (renderable != null)
-					{
-						renderable.renderable.size[0] = size
-						renderable.renderable.size[1] = size
-					}
-
-					val directional = entity.directionalSprite()
-					if (directional != null)
-					{
-						directional.directionalSprite.size = size
-					}
-
-					val additional = entity.additionalRenderable()
-					if (additional != null)
-					{
-						for (renderable in additional.below.values())
-						{
-							renderable.size[0] = size
-							renderable.size[1] = size
-						}
-
-						for (renderable in additional.above.values())
-						{
-							renderable.size[0] = size
-							renderable.size[1] = size
-						}
-					}
-				}
-			}
-
-			val renderableCompEl = componentsEl.getChildByName("Renderable")
-			if (renderableCompEl != null)
-			{
-				val renderableEl = renderableCompEl.getChildByName("Renderable")
-
-				fun loadRenderable(): Renderable
-				{
-					val renderable = when (renderableEl.getAttribute("meta:RefKey"))
-					{
-						"Sprite" -> AssetManager.loadSprite(renderableEl)
-						"TilingSprite" -> AssetManager.loadTilingSprite(renderableEl)
-						"ParticleEffect" -> AssetManager.loadParticleEffect(renderableEl)
-						else -> throw Exception("Unknown renderable type '" + renderableEl.getAttribute("meta:RefKey") + "'!")
-					}
-
-					val pos = entity.pos()
-					if (pos != null)
-					{
-						renderable.size[0] = pos.size
-						renderable.size[1] = pos.size
-					}
-
-					return renderable
-				}
-
-				if (renderableCompEl.getBoolean("IsShared", false))
-				{
-					val key = renderableCompEl.toString().hashCode()
-					if (!sharedRenderableMap.containsKey(key))
-					{
-						sharedRenderableMap[key] = loadRenderable()
-					}
-
-					entity.add(RenderableComponent(sharedRenderableMap[key]))
-				}
-				else
-				{
-					val renderable = loadRenderable()
-
-					entity.add(RenderableComponent(renderable))
-				}
-			}
-
-			val directionalSprite = componentsEl.getChildByName("DirectionalSprite")
-			if (directionalSprite != null) entity.add(DirectionalSpriteComponent(AssetManager.loadDirectionalSprite(directionalSprite, entity.pos()?.size ?: 1)))
-
-			val light = componentsEl.getChildByName("Light")
-			if (light != null) entity.add(LightComponent(AssetManager.loadColour(light.getChildByName("Colour")), light.getFloat("Distance")))
-
-			val occludes = componentsEl.getChildByName("Occludes") != null
-			if (occludes) entity.add(OccluderComponent())
-
-			val statsEl = componentsEl.getChildByName("Statistics")
-			if (statsEl != null)
-			{
-				val stats = entity.stats() ?: StatisticsComponent()
-
-				stats.factions.addAll(statsEl.get("Faction").split(",").toGdxArray())
-				stats.maxHP += statsEl.getInt("HP")
-				stats.maxStamina += statsEl.getInt("Stamina")
-				stats.sight += statsEl.getInt("Sight")
-
-				entity.add(stats)
-			}
-
-			val comboEl = componentsEl.getChildByName("Combo")
-			if (comboEl != null)
-			{
-				val combo = ComboComponent(ComboTree.load(comboEl.get("ComboTree")))
-				entity.add(combo)
-			}
-
-			val waterEl = componentsEl.getChildByName("Water")
-			if (waterEl != null)
-			{
-				val water = WaterComponent()
-				water.depth = waterEl.getFloat("Depth", 0.3f)
-				water.flowChance = waterEl.getFloat("FlowChance", 0f)
-
-				val dirEl = waterEl.get("Direction")
-				if (dirEl != null) water.flowDir = Direction.valueOf(dirEl.toUpperCase())
-
-				entity.add(water)
-			}
-
-			val additionalEl = componentsEl.getChildByName("AdditionalRenderables")
-			if (additionalEl != null)
-			{
-				val additional = AdditionalRenderableComponent()
-
-				val pos = entity.pos()
-
-				val belowEls = additionalEl.getChildByName("Below")
-				if (belowEls != null)
-				{
-					for (el in belowEls.children())
-					{
-						val key = el.get("Key")
-						val renderable = AssetManager.loadRenderable(el.getChildByName("Renderable"))
-
-						if (pos != null)
-						{
-							renderable.size[0] = pos.size
-							renderable.size[1] = pos.size
-						}
-
-						additional.below[key] = renderable
-					}
-				}
-
-				val aboveEls = additionalEl.getChildByName("Above")
-				if (aboveEls != null)
-				{
-					for (el in aboveEls.children())
-					{
-						val key = el.get("Key")
-						val renderable = AssetManager.loadRenderable(el.getChildByName("Renderable"))
-
-						if (pos != null)
-						{
-							renderable.size[0] = pos.size
-							renderable.size[1] = pos.size
-						}
-
-						additional.above[key] = renderable
-					}
-				}
-			}
-
-			val trailingEl = componentsEl.getChildByName("Trailing")
-			if (trailingEl != null)
-			{
-				val trailing = TrailingEntityComponent()
-				trailing.collapses = trailingEl.getBoolean("Collapses", true)
-				entity.add(trailing)
-				trailing.entities.add(entity)
-
-				val renderablesEl = trailingEl.getChildByName("Renderables")
-				for (el in renderablesEl.children())
-				{
-					val renderable = AssetManager.loadRenderable(el)
-					val trailEntity = Entity()
-					trailEntity.add(RenderableComponent(renderable))
-					trailEntity.add(trailing)
-					trailEntity.add(PositionComponent())
-					trailEntity.pos().slot = entity.pos().slot
-
-					if (entity.stats() != null) trailEntity.add(entity.stats())
-					if (entity.water() != null) trailEntity.add(entity.water())
-
-					trailing.entities.add(trailEntity)
-				}
 			}
 
 			return entity

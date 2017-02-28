@@ -2,10 +2,10 @@ package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
-import com.badlogic.ashley.systems.IteratingSystem
-import com.lyeeedar.Components.*
+import com.lyeeedar.Components.SceneTimelineComponent
+import com.lyeeedar.Components.sceneTimeline
+import com.lyeeedar.Components.tile
 import com.lyeeedar.Global
-import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
 
 class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::class.java).get())
@@ -22,6 +22,19 @@ class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::c
 	{
 		val timeline = entity!!.sceneTimeline() ?: return
 
+		if (timeline.hitPoints.size > 0 && entity.tile() != null)
+		{
+			val tile = entity.tile()!!
+			timeline.sceneTimeline.sourceTile = tile
+			timeline.sceneTimeline.destinationTiles.clear()
+
+			for (point in timeline.hitPoints)
+			{
+				val t = tile.level.getTile(tile, point) ?: continue
+				timeline.sceneTimeline.destinationTiles.add(t)
+			}
+		}
+
 		var visible = timeline.sceneTimeline.sourceTile?.isVisible ?: false
 		if (!visible) visible = timeline.sceneTimeline.destinationTiles.any(Tile::isVisible)
 
@@ -36,15 +49,22 @@ class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::c
 
 		if (timeline.sceneTimeline.isComplete)
 		{
-			entity.remove(SceneTimelineComponent::class.java)
-
-			if (entity.components.size() == 0)
+			if (timeline.sceneTimeline.loop)
 			{
-				Global.engine.removeEntity(entity)
+				timeline.sceneTimeline.progression = 0f
+			}
+			else
+			{
+				entity.remove(SceneTimelineComponent::class.java)
 
-				for (tile in timeline.sceneTimeline.destinationTiles)
+				if (entity.components.size() == 0)
 				{
-					tile.timelines.removeValue(timeline.sceneTimeline, true)
+					Global.engine.removeEntity(entity)
+
+					for (tile in timeline.sceneTimeline.destinationTiles)
+					{
+						tile.timelines.removeValue(timeline.sceneTimeline, true)
+					}
 				}
 			}
 		}

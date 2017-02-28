@@ -1,0 +1,91 @@
+<GenerationGrammar meta:X="-179" meta:Y="-39" GUID="de4174d2-5f44-4910-8975-295b7e3d1429" xmlns:meta="Editor">
+	<Width>50</Width>
+	<Height>100</Height>
+	<Root meta:RefKey="Node">7c5b7af5-a80c-4976-95ae-bf38812d3b13</Root>
+	<Rules>
+		<Node meta:X="-57" meta:Y="-39" GUID="7c5b7af5-a80c-4976-95ae-bf38812d3b13">
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">dff7a193-1d9d-48e9-8d33-6bc2c655b8ba</Rule>
+			</Rule>
+			<Rule Axis="Y" meta:RefKey="Divide">
+				<Division>
+					<Size>2</Size>
+					<Rule meta:RefKey="Node">ac9daac8-1482-40e3-8c58-97c029e0e8c1</Rule>
+				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="206" meta:Y="-96" GUID="dff7a193-1d9d-48e9-8d33-6bc2c655b8ba">
+			<!--Define base symbols-->
+			<Rule meta:RefKey="Symbol">
+				<Character>.</Character>
+				<Floor>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/uf_split/uf_terrain/ground_crusted_1</Name>
+							</Renderable>
+						</Renderable>
+					</Components>
+				</Floor>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>#</Character>
+				<Wall>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="TilingSprite">
+								<Name>wall</Name>
+								<Mode>Premade</Mode>
+								<Front meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/wall_crusted_1</Name>
+								</Front>
+								<Top meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/wall_crusted_top_1</Name>
+								</Top>
+								<Overhang meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/wall_crusted_overhang_1</Name>
+								</Overhang>
+							</Renderable>
+						</Renderable>
+					</Components>
+				</Wall>
+			</Rule>
+		</Node>
+		<Node meta:X="206" meta:Y="91" GUID="ac9daac8-1482-40e3-8c58-97c029e0e8c1">
+			<!--Water spawners-->
+			<Rule meta:RefKey="DataScope">
+				<Rule meta:RefKey="Node">5a275d29-b5ef-411f-b1fc-1f1a0d17706e</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="476" meta:Y="91" GUID="5a275d29-b5ef-411f-b1fc-1f1a0d17706e">
+			<Rule meta:RefKey="Symbol">
+				<Character>#</Character>
+				<Extends>#</Extends>
+				<Entity>
+					<Components>
+						<SceneTimeline>
+							<Loop>true</Loop>
+							<SceneTimeline meta:RefKey="SceneTimeline">
+								<Timeline>
+									<Blocker>
+										<BlockOnTurn>true</BlockOnTurn>
+										<Count>15</Count>
+									</Blocker>
+									<Spawn>
+										<Time>0.01</Time>
+										<IgnoreWall>true</IgnoreWall>
+										<Entity>
+											<Extends>Water</Extends>
+										</Entity>
+									</Spawn>
+								</Timeline>
+							</SceneTimeline>
+						</SceneTimeline>
+					</Components>
+				</Entity>
+			</Rule>
+		</Node>
+	</Rules>
+</GenerationGrammar>

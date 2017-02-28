@@ -14,10 +14,10 @@ class ActionClearValue(): AbstractAction()
 
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		parent.setData(key, null);
+		setData(key, null)
 
 		state = ExecutionState.COMPLETED
-		return state;
+		return state
 	}
 
 	override fun cancel(entity: Entity)

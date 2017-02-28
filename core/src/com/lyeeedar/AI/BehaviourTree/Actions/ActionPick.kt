@@ -3,7 +3,6 @@ package com.lyeeedar.AI.BehaviourTree.Actions
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
-import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.stats
 import com.lyeeedar.Components.tile
 import com.lyeeedar.Global
@@ -29,7 +28,7 @@ class ActionPick(): AbstractAction()
 		state = ExecutionState.FAILED
 		val tile = entity.tile() ?: return ExecutionState.FAILED
 
-		val obj = getData(input, null)
+		val obj = getData<Any>(input, null)
 
 		if (obj == null || obj !is Iterable<*>)
 		{
@@ -46,7 +45,7 @@ class ActionPick(): AbstractAction()
 				if (criteria == "random" || criteria == "ran" || criteria == "rnd")
 				{
 					val index = ran.nextInt(obj.count())
-					parent.setData(output, obj.elementAt(index))
+					setData(output, obj.elementAt(index))
 					state = ExecutionState.COMPLETED
 				}
 				else if (criteria == "distance" || criteria == "dist" || criteria == "dst")
@@ -54,7 +53,7 @@ class ActionPick(): AbstractAction()
 					obj.sortedBy { (it as? Point)?.taxiDist(tile) ?: (it as? Entity)?.tile()?.taxiDist(tile) }
 
 					val item = if (lowest) obj.first() else obj.last()
-					parent.setData(output, item)
+					setData(output, item)
 					state = ExecutionState.COMPLETED
 				}
 				else if (criteria == "player")
@@ -63,7 +62,7 @@ class ActionPick(): AbstractAction()
 					{
 						if (e === Global.engine.level!!.player)
 						{
-							parent.setData(output, e)
+							setData(output, e)
 							state = ExecutionState.COMPLETED
 							break
 						}
@@ -74,7 +73,7 @@ class ActionPick(): AbstractAction()
 					obj.sortedBy { (it as? Entity)?.stats()?.get(criteria, 0f) }
 
 					val item = if (lowest) obj.first() else obj.last()
-					parent.setData(output, item);
+					setData(output, item);
 					state = ExecutionState.COMPLETED;
 				}
 			}

@@ -1,14 +1,15 @@
 package com.lyeeedar.Components
 
-import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectIntMap
 import com.badlogic.gdx.utils.OrderedSet
+import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.ElementType
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.ciel
+import ktx.collections.toGdxArray
 
-class StatisticsComponent: Component
+class StatisticsComponent: AbstractComponent()
 {
 	val factions: OrderedSet<String> = OrderedSet()
 
@@ -85,6 +86,14 @@ class StatisticsComponent: Component
 	var blockedDamage = false
 	var blockBroken = false
 	var insufficientStamina = 0f
+
+	override fun parse(xml: XmlReader.Element, entity: Entity)
+	{
+		factions.addAll(xml.get("Faction").split(",").toGdxArray())
+		maxHP += xml.getInt("HP")
+		maxStamina += xml.getInt("Stamina")
+		sight += xml.getInt("Sight")
+	}
 
 	fun dealDamage(amount: Int, element: ElementType, elementalConversion: Float)
 	{

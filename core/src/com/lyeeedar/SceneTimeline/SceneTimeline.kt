@@ -2,7 +2,7 @@ package com.lyeeedar.SceneTimeline
 
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
-import com.badlogic.gdx.utils.reflect.ClassReflection
+import com.exp4j.Helpers.evaluate
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
@@ -11,6 +11,7 @@ import com.lyeeedar.Util.children
 
 class SceneTimeline
 {
+	var loop = false
 	var facing: Direction = Direction.CENTRE
 
 	var sourceTile: Tile? = null
@@ -18,7 +19,7 @@ class SceneTimeline
 
 	private val timelines = Array<Timeline>()
 
-	private var progression: Float = 0f
+	var progression: Float = 0f
 
 	val isRunning: Boolean
 		get()
@@ -93,7 +94,6 @@ class SceneTimeline
 		fun load(xml: XmlReader.Element): SceneTimeline
 		{
 			val scene = SceneTimeline()
-
 			for (el in xml.children())
 			{
 				val timeline = Timeline.load(el, scene)
@@ -198,14 +198,28 @@ class BlockerAction() : AbstractTimelineAction()
 {
 	var blockOnTurn = false
 	var isBlocked = false
+	var blockCount = 0
+
+	lateinit var countEqn: String
 
 	override fun enter()
 	{
+		blockCount = countEqn.evaluate().toInt()
+
 		if (blockOnTurn)
 		{
 			Global.engine.task().onTurn += fun(): Boolean {
-				exit()
-				return true
+
+				blockCount--
+				if (blockCount == 0)
+				{
+					exit()
+					return true
+				}
+				else
+				{
+					return false
+				}
 			}
 		}
 
@@ -230,5 +244,6 @@ class BlockerAction() : AbstractTimelineAction()
 	override fun parse(xml: XmlReader.Element)
 	{
 		blockOnTurn = true
+		countEqn = xml.get("Count", "1")
 	}
 }

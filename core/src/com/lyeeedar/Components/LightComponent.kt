@@ -1,23 +1,25 @@
 package com.lyeeedar.Components
 
-import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Pathfinding.ShadowCastCache
+import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Colour
 import squidpony.squidgrid.FOV
 
-class LightComponent : Component
+class LightComponent() : AbstractComponent()
 {
-	constructor(col: Colour, dist: Float)
-	{
-		this.col = col
-		this.dist = dist
-	}
-
-	val col: Colour
-	val dist: Float
+	lateinit var col: Colour
+	var dist: Float = 0f
 
 	var x: Float = 0f
 	var y: Float = 0f
 
 	val cache: ShadowCastCache = ShadowCastCache(FOV.SHADOW)
+
+	override fun parse(xml: XmlReader.Element, entity: Entity)
+	{
+		col = AssetManager.loadColour(xml.getChildByName("Colour"))
+		dist = xml.getFloat("Distance")
+	}
 }

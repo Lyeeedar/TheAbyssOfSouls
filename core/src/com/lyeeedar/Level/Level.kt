@@ -2,7 +2,6 @@ package com.lyeeedar.Level
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.MathUtils
-import com.lyeeedar.Components.ImpassableComponent
 import com.lyeeedar.Direction
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D

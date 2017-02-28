@@ -28,6 +28,9 @@
 				<Data Name="Colour" meta:RefKey="Colour" />
 				<Data Name="Distance" Min="1" Default="1" meta:RefKey="Number" />
 			</Data>
+			<Data Name="Name" meta:RefKey="Struct">
+				<Data Name="Name" meta:RefKey="String" />
+			</Data>
 			<Data Name="Occludes" meta:RefKey="Struct">
 				<Data Name="Occludes" meta:RefKey="Boolean" />
 			</Data>
@@ -38,6 +41,11 @@
 			<Data Name="Renderable" meta:RefKey="Struct">
 				<Data Name="IsShared" meta:RefKey="Boolean" />
 				<Data Name="Renderable" Keys="Sprite,TilingSprite,ParticleEffect" meta:RefKey="Reference" />
+			</Data>
+			<Data Name="SceneTimeline" meta:RefKey="Struct">
+				<Data Name="Loop" meta:RefKey="Boolean" />
+				<Data Name="HitPoints" Default="#" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
+				<Data Name="SceneTimeline" Keys="SceneTimeline" meta:RefKey="Reference" />
 			</Data>
 			<Data Name="Statistics" meta:RefKey="Struct">
 				<Data Name="Faction" meta:RefKey="String" />

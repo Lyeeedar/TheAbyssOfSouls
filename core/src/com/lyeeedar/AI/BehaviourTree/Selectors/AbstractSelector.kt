@@ -1,11 +1,8 @@
 package com.lyeeedar.AI.BehaviourTree.Selectors
 
-import com.badlogic.gdx.utils.JsonValue
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.AbstractNodeContainer
 import com.lyeeedar.AI.BehaviourTree.AbstractTreeNode
-import com.lyeeedar.AI.BehaviourTree.Decorators.AbstractDecorator
-import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -24,33 +21,6 @@ abstract class AbstractSelector(): AbstractNodeContainer()
 		}
 		node.parent = this;
 		nodes.add( node );
-	}
-
-	// ----------------------------------------------------------------------
-	override fun setData( key:String, value:Any? )
-	{
-		val oldVal = data?.get(key)
-		if (oldVal != value && oldVal is Point)
-		{
-			oldVal.free()
-		}
-
-		if ( value == null )
-		{
-			data?.remove( key );
-		}
-		else
-		{
-			data?.put( key, value );
-		}
-
-		for ( i in 0..nodes.size-1 )
-		{
-			if ( nodes.get( i ) is AbstractSelector || nodes.get( i ) is AbstractDecorator )
-			{
-				nodes.get( i ).setData( key, value );
-			}
-		}
 	}
 
 	// ----------------------------------------------------------------------

@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.tile
-import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 29-Mar-16.
@@ -19,7 +18,7 @@ class ActionConvertTo(): AbstractAction()
 
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		val obj: Any? = getData(input, null)
+		val obj: Any? = getData<Any>(input, null)
 		var out: Any? = null
 
 		if (obj is Entity)
@@ -29,7 +28,7 @@ class ActionConvertTo(): AbstractAction()
 
 		if (out != null)
 		{
-			parent.setData(output, out)
+			setData(output, out)
 			state = ExecutionState.COMPLETED
 		}
 		else

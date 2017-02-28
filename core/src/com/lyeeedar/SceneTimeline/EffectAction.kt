@@ -1,7 +1,6 @@
 package com.lyeeedar.SceneTimeline
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.*
@@ -65,6 +64,7 @@ class SpawnAction() : AbstractTimelineAction()
 {
 	lateinit var entityXml: XmlReader.Element
 	var deleteOnExit = false
+	var ignoreWall = false
 
 	val spawnedEntities = Array<Entity>()
 
@@ -74,7 +74,7 @@ class SpawnAction() : AbstractTimelineAction()
 		{
 			val entity = EntityLoader.load(entityXml)
 
-			if (!tile.contents.containsKey(entity.pos().slot) || tile.contents.containsKey(SpaceSlot.WALL))
+			if (!tile.contents.containsKey(entity.pos().slot) && (ignoreWall || !tile.contents.containsKey(SpaceSlot.WALL)))
 			{
 				entity.pos().tile = tile
 				tile.contents[entity.pos().slot] = entity
@@ -107,6 +107,7 @@ class SpawnAction() : AbstractTimelineAction()
 		out.parent = parent
 		out.entityXml = entityXml
 		out.deleteOnExit = deleteOnExit
+		out.ignoreWall = ignoreWall
 
 		return out
 	}
@@ -115,6 +116,7 @@ class SpawnAction() : AbstractTimelineAction()
 	{
 		entityXml = xml.getChildByName("Entity")
 		deleteOnExit = xml.getBoolean("DeleteOnExit", false)
+		ignoreWall = xml.getBoolean("IgnoreWall", false)
 	}
 
 }

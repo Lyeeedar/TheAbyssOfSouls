@@ -1,23 +1,14 @@
 package com.lyeeedar.Components
 
-import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Point
 
-class PositionComponent: Component
+class PositionComponent(): AbstractComponent()
 {
-	constructor()
-	constructor(point: Point, slot: SpaceSlot)
-	{
-		this.position = point
-		this.max = point
-		this.slot = slot
-	}
-
 	var position: Point = Point() // bottom left pos
 		set(value)
 		{
@@ -59,6 +50,45 @@ class PositionComponent: Component
 
 	val tiles: Iterable<Tile>
 		get() = (min.x..max.x).zip(min.y..max.y).map { tile!!.level.getTile(it.first, it.second) }.filterNotNull()
+
+	override fun parse(xml: XmlReader.Element, entity: Entity)
+	{
+		val slotEl = xml.get("SpaceSlot", null)
+		if (slotEl != null) slot = SpaceSlot.valueOf(slotEl.toUpperCase())
+
+		size = xml.getInt("Size", 1)
+		if (size != -1)
+		{
+			val renderable = entity.renderable()
+			if (renderable != null)
+			{
+				renderable.renderable.size[0] = size
+				renderable.renderable.size[1] = size
+			}
+
+			val directional = entity.directionalSprite()
+			if (directional != null)
+			{
+				directional.directionalSprite.size = size
+			}
+
+			val additional = entity.additionalRenderable()
+			if (additional != null)
+			{
+				for (r in additional.below.values())
+				{
+					r.size[0] = size
+					r.size[1] = size
+				}
+
+				for (r in additional.above.values())
+				{
+					r.size[0] = size
+					r.size[1] = size
+				}
+			}
+		}
+	}
 
 	fun isOnTile(point: Point): Boolean
 	{

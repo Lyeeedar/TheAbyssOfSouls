@@ -7,7 +7,6 @@ import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.ShadowCastComponent
 import com.lyeeedar.Components.isAllies
 import com.lyeeedar.Level.Tile
-import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -58,7 +57,7 @@ class ActionGetAllVisible(): AbstractAction()
 				}
 			}
 
-			parent.setData( key, temp );
+			setData( key, temp );
 			state = if (temp.size > 0) ExecutionState.COMPLETED else ExecutionState.FAILED;
 		}
 		else if (type == Type.ENEMIES)
@@ -78,12 +77,12 @@ class ActionGetAllVisible(): AbstractAction()
 				}
 			}
 
-			parent.setData( key, temp );
+			setData( key, temp );
 			state = if(temp.size > 0) ExecutionState.COMPLETED else ExecutionState.FAILED;
 		}
 		else
 		{
-			parent.setData( key, points );
+			setData( key, points );
 			state = if(points.size > 0) ExecutionState.COMPLETED else ExecutionState.FAILED;
 		}
 

@@ -6,9 +6,10 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskCombo
 import com.lyeeedar.AI.Tasks.TaskWait
-import com.lyeeedar.Combo.ComboStep
 import com.lyeeedar.Combo.ComboTree
-import com.lyeeedar.Components.*
+import com.lyeeedar.Components.combo
+import com.lyeeedar.Components.pos
+import com.lyeeedar.Components.task
 import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Util.Point
@@ -20,7 +21,7 @@ class ActionCombo : AbstractAction()
 
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		val target = getData( key, null ) as? Point
+		val target = getData<Point>( key, null )
 
 		val combo = entity.combo()
 		val pos = entity.pos()

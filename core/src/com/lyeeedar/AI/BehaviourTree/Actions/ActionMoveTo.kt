@@ -6,7 +6,6 @@ import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Direction
-import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Pathfinding.Pathfinder
 import com.lyeeedar.Util.Point
@@ -25,7 +24,7 @@ class ActionMoveTo(): AbstractAction()
 
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		val target = getData( key, null ) as? Point
+		val target = getData<Point>( key, null )
 		val posData = Mappers.position.get(entity)
 		val taskData = Mappers.task.get(entity)
 		val tile = posData.position as? Tile

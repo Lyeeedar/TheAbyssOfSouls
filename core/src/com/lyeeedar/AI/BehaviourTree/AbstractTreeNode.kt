@@ -2,8 +2,9 @@ package com.lyeeedar.AI.BehaviourTree
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.utils.*
-import com.badlogic.gdx.utils.reflect.ClassReflection
+import com.badlogic.gdx.utils.ObjectFloatMap
+import com.badlogic.gdx.utils.ObjectMap
+import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.Actions.*
 import com.lyeeedar.AI.BehaviourTree.Conditionals.ConditionalCheckValue
 import com.lyeeedar.AI.BehaviourTree.Decorators.*
@@ -17,12 +18,12 @@ import com.lyeeedar.Util.Point
 abstract class AbstractTreeNode()
 {
 	//----------------------------------------------------------------------
-	lateinit var parent: AbstractNodeContainer
+	var parent: AbstractNodeContainer? = null
 	var state: ExecutionState = ExecutionState.NONE
 	var data: ObjectMap<String, Any>? = null
 
 	//----------------------------------------------------------------------
-	open fun setData(key:String, value:Any?)
+	fun setData(key:String, value:Any?)
 	{
 		val oldVal = data?.get(key)
 		if (oldVal != value && oldVal is Point)
@@ -38,6 +39,15 @@ abstract class AbstractTreeNode()
 	fun getVariableMap(): ObjectFloatMap<String>
 	{
 		variables.clear()
+
+		val parentmap = parent?.getVariableMap()
+		if (parentmap != null)
+		{
+			for (pair in parentmap)
+			{
+				variables.put(pair.key, pair.value)
+			}
+		}
 
 		for (entry in data!!)
 		{
@@ -63,7 +73,14 @@ abstract class AbstractTreeNode()
 	}
 
 	//----------------------------------------------------------------------
-	fun getData(key:String, fallback:Any? = null) = data?.get(key) ?: fallback
+	fun <T> getData(key:String, fallback:T? = null): T?
+	{
+		val parentVar = parent?.getData<T>(key, null)
+
+		val thisVar = data?.get(key) as? T
+
+		return thisVar ?: parentVar ?: fallback
+	}
 
 	//----------------------------------------------------------------------
 	companion object

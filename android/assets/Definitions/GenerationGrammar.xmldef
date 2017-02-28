@@ -95,7 +95,8 @@
 		<Data Name="FloorDetail" Extends="Entity" meta:RefKey="Struct" />
 		<Data Name="Wall" Extends="Entity" meta:RefKey="Struct" />
 		<Data Name="WallDetail" Extends="Entity" meta:RefKey="Struct" />
+		<Data Name="BelowEntity" Extends="Entity" meta:RefKey="Struct" />
 		<Data Name="Entity" Extends="Entity" meta:RefKey="Struct" />
-		<Data Name="Air" Extends="Entity" meta:RefKey="Struct" />
+		<Data Name="AboveEntity" Extends="Entity" meta:RefKey="Struct" />
 	</Definition>
 </Definitions>

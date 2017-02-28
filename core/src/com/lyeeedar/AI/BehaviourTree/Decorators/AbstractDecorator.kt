@@ -4,8 +4,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.AbstractNodeContainer
 import com.lyeeedar.AI.BehaviourTree.AbstractTreeNode
-import com.lyeeedar.AI.BehaviourTree.Selectors.AbstractSelector
-import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -23,30 +21,6 @@ abstract class AbstractDecorator(): AbstractNodeContainer()
 			value?.parent = this;
 			field = value;
 		}
-
-	// ----------------------------------------------------------------------
-	override fun setData( key:String, value:Any? )
-	{
-		val oldVal = data?.get(key)
-		if (oldVal != value && oldVal is Point)
-		{
-			oldVal.free()
-		}
-
-		if ( value == null )
-		{
-			data?.remove( key );
-		}
-		else
-		{
-			data?.put( key, value );
-		}
-
-		if ( node is AbstractSelector || node is AbstractDecorator )
-		{
-			node?.setData( key, value );
-		}
-	}
 
 	// ----------------------------------------------------------------------
 	override fun parse( xml: XmlReader.Element)

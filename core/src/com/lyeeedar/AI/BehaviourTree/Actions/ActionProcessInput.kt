@@ -1,18 +1,17 @@
 package com.lyeeedar.AI.BehaviourTree.Actions
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.AI.BehaviourTree.ExecutionState
-import com.lyeeedar.AI.Tasks.TaskWait
-import com.lyeeedar.Direction
-import com.lyeeedar.Global
-import com.lyeeedar.MainGame
-import com.lyeeedar.Screens.AbstractScreen
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskCombo
+import com.lyeeedar.AI.Tasks.TaskWait
 import com.lyeeedar.Combo.ComboTree
 import com.lyeeedar.Components.*
+import com.lyeeedar.Direction
+import com.lyeeedar.Global
+import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.Util.*
 
 
@@ -28,11 +27,11 @@ class ActionProcessInput(): AbstractAction()
 
 		val tile = entity.tile() ?: return ExecutionState.FAILED
 
-		var targetPos = getData( "clickpos", null ) as? Point
+		var targetPos = getData<Point>( "clickpos", null )
 
 		if (targetPos != null)
 		{
-			parent.setData( "clickpos", null )
+			setData( "clickpos", null )
 		}
 		else if ( Gdx.input.isTouched( 0 ) )
 		{
@@ -251,7 +250,7 @@ class ActionProcessInput(): AbstractAction()
 			}
 		}
 
-		parent.setData( "pos", null )
+		setData( "pos", null )
 		if (targetPos != null)
 		{
 			if (targetPos == tile)
@@ -260,7 +259,7 @@ class ActionProcessInput(): AbstractAction()
 			}
 			else
 			{
-				parent.setData( "pos", targetPos )
+				setData( "pos", targetPos )
 			}
 		}
 
