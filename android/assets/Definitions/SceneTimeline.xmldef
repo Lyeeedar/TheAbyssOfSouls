@@ -20,6 +20,12 @@
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="UseLeap" meta:RefKey="Boolean" />
 			</Keyframe>
+			<Keyframe Name="Screenshake" HasDuration="True" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
+				<Data Name="Strength" meta:RefKey="Number" />
+				<Data Name="Speed" Min="1" Default="10" meta:RefKey="Number" />
+			</Keyframe>
 			<!--Effect-->
 			<Keyframe Name="Damage" Background="255,0,0,66" meta:RefKey="Keyframe">
 				<Time Name="Time" Min="0" meta:RefKey="Number" />

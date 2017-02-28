@@ -148,6 +148,12 @@
 										<BlockOnTurn>true</BlockOnTurn>
 										<Count>50</Count>
 									</Blocker>
+									<Screenshake>
+										<Duration LockDuration="False">0.9947888</Duration>
+										<Time>0.00537332054</Time>
+										<Strength>5</Strength>
+										<Speed>15</Speed>
+									</Screenshake>
 									<Spawn>
 										<Time>0.01</Time>
 										<IgnoreWall>true</IgnoreWall>

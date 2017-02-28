@@ -11,10 +11,12 @@ class TaskComponent: AbstractComponent(), IDebugCommandProvider
 {
 	lateinit var ai: BehaviourTree
 	val tasks: com.badlogic.gdx.utils.Array<AbstractTask> = com.badlogic.gdx.utils.Array()
+	var speed: Int = 1
 
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{
 		ai = BehaviourTree.load(xml.get("AI"))
+		speed = xml.getInt("Speed", 1)
 	}
 
 	override fun detachCommands()

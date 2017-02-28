@@ -4,8 +4,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Components.*
-import com.lyeeedar.Direction
+import com.lyeeedar.Components.PositionComponent
+import com.lyeeedar.Components.RenderableComponent
+import com.lyeeedar.Components.pos
+import com.lyeeedar.Components.renderable
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Animation.ExpandAnimation
@@ -14,6 +16,7 @@ import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Systems.render
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.UnsmoothedPath
 import com.lyeeedar.Util.getRotation
@@ -188,5 +191,40 @@ class MovementRenderableAction() : AbstractTimelineAction()
 		slot = SpaceSlot.valueOf(xml.get("Slot", "Entity").toUpperCase())
 		useLeap = xml.getBoolean("UseLeap")
 		renderable = AssetManager.loadRenderable(xml.getChildByName("Renderable"))
+	}
+}
+
+class ScreenShakeAction() : AbstractTimelineAction()
+{
+	var speed: Float = 0f
+	var amount: Float = 0f
+
+	override fun enter()
+	{
+		Global.engine.render().renderer.setScreenShake(amount, speed, duration)
+	}
+
+	override fun exit()
+	{
+
+	}
+
+	override fun copy(parent: SceneTimeline): AbstractTimelineAction
+	{
+		val out = ScreenShakeAction()
+		out.parent = parent
+
+		out.startTime = startTime
+		out.duration = duration
+		out.speed = speed
+		out.amount = amount
+
+		return out
+	}
+
+	override fun parse(xml: XmlReader.Element)
+	{
+		this.speed = 1f / xml.getFloat("Speed", 10f)
+		this.amount = xml.getFloat("Strength")
 	}
 }

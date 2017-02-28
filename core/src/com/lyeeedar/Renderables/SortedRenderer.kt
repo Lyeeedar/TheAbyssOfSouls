@@ -1,10 +1,10 @@
 package com.lyeeedar.Renderables
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.*
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
+import com.badlogic.gdx.graphics.g2d.NinePatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.*
@@ -12,16 +12,13 @@ import com.badlogic.gdx.utils.Array
 import com.lyeeedar.BlendMode
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
-import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Particle.Emitter
-import com.lyeeedar.Renderables.Particle.Particle
-import com.lyeeedar.Renderables.Particle.ParticleData
-import com.lyeeedar.Renderables.Sprite.TilingSprite
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Util.*
-import java.util.*
-import ktx.collections.get
 import ktx.collections.set
+import java.util.*
 
 /**
  * Created by Philip on 04-Jul-16.
@@ -45,6 +42,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	var screenShakeAccumulator: Float = 0f
 	var screenShakeSpeed: Float = 0f
 	var screenShakeAngle: Float = 0f
+	var screenShakeDuration: Float = 0f
 
 	val BLENDMODES = BlendMode.values().size
 	val MAX_INDEX = 6 * BLENDMODES
@@ -77,9 +75,11 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
-	fun setScreenShake(amount: Float)
+	fun setScreenShake(amount: Float, speed: Float, duration: Float)
 	{
 		screenShakeRadius = amount
+		screenShakeSpeed = speed
+		screenShakeDuration = duration
 	}
 
 	// ----------------------------------------------------------------------
@@ -91,11 +91,17 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		if ( screenShakeRadius > 2 )
 		{
 			screenShakeAccumulator += delta
+			screenShakeDuration -= delta
+
 			while ( screenShakeAccumulator >= screenShakeSpeed )
 			{
 				screenShakeAccumulator -= screenShakeSpeed
 				screenShakeAngle += ( 150 + MathUtils.random() * 60 )
-				screenShakeRadius *= 0.9f
+
+				if (screenShakeDuration <= 0f)
+				{
+					screenShakeRadius *= 0.9f
+				}
 			}
 
 			offsetx += Math.sin( screenShakeAngle.toDouble() ).toFloat() * screenShakeRadius

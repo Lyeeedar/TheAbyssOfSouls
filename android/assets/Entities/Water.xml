@@ -1,6 +1,7 @@
 <Entity xmlns:meta="Editor">
 	<Components>
 		<AI>
+			<Speed>2</Speed>
 			<AI>Water</AI>
 		</AI>
 		<Position>
@@ -45,7 +46,7 @@
 		</Renderable>
 		<Water>
 			<Direction>South</Direction>
-			<FlowChance>0.7</FlowChance>
+			<FlowChance>1</FlowChance>
 			<Depth>0.4</Depth>
 		</Water>
 	</Components>

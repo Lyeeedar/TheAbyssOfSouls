@@ -158,7 +158,10 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 					if (pos.position.taxiDist(player.tile()!!) > 100) continue
 				}
 
-				processEntity(entity)
+				for (i in 1..entity.task().speed)
+				{
+					processEntity(entity)
+				}
 			}
 		}
 

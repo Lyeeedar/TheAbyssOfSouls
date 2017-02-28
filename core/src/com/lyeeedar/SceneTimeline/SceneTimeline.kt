@@ -197,6 +197,7 @@ abstract class AbstractTimelineAction()
 
 				"DESTINATIONRENDERABLE" -> DestinationRenderableAction()
 				"MOVEMENTRENDERABLE" -> MovementRenderableAction()
+				"SCREENSHAKE" -> ScreenShakeAction()
 
 				"DAMAGE" -> DamageAction()
 				"SPAWN" -> SpawnAction()
