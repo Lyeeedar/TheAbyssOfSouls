@@ -72,8 +72,9 @@ class SceneTimeline
 						action.enter()
 					}
 
-					if (action.endTime <= newTime)
+					if (action.endTime <= newTime && !action.isExited)
 					{
+						action.isExited = true
 						action.exit()
 					}
 				}
@@ -91,6 +92,7 @@ class SceneTimeline
 			for (action in timeline.actions)
 			{
 				action.isEntered = false
+				action.isExited = false
 			}
 		}
 	}
@@ -164,6 +166,7 @@ abstract class AbstractTimelineAction()
 	lateinit var parent: SceneTimeline
 
 	var isEntered: Boolean = false
+	var isExited: Boolean = false
 
 	var startTime: Float = 0f
 	var duration: Float = 0f
@@ -230,6 +233,7 @@ class BlockerAction() : AbstractTimelineAction()
 				blockCount--
 				if (blockCount == 0)
 				{
+					isExited = true
 					exit()
 					return true
 				}
