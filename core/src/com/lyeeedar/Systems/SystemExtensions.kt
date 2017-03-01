@@ -15,7 +15,8 @@ val systemList: Array<KClass<out AbstractSystem>> = arrayOf(
 		ShadowCastSystem::class,
 		LightingSystem::class,
 		DirectionalSpriteSystem::class,
-		RenderSystem::class
+		RenderSystem::class,
+		DialogueSystem::class
 )
 
 fun createEngine(): Engine

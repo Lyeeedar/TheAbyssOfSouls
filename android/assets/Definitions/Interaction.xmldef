@@ -1,0 +1,31 @@
+<Definitions xmlns:meta="Editor">
+	<Definition Name="Interaction" AllowCircularLinks="True" FlattenData="True" meta:RefKey="GraphStruct">
+		<Data Name="Branch" Keys="Branch" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
+	</Definition>
+	<!--Node-->
+	<Definition Name="Node" meta:RefKey="GraphCollectionDef">
+		<Data Name="Node" Keys="Node" meta:RefKey="GraphReference" />
+		<Data Name="Action" Keys="Branch,Choice,Define,Line" meta:RefKey="Reference" />
+	</Definition>
+	<!--Actions-->
+	<Definition Name="Line" meta:RefKey="StructDef">
+		<Data Name="Text" meta:RefKey="String" />
+		<Data Name="Italics" meta:RefKey="Boolean" />
+	</Definition>
+	<Definition Name="Branch" meta:RefKey="CollectionDef">
+		<Data Name="Branch" Description="{Condition}" meta:RefKey="Struct">
+			<Data Name="Condition" meta:RefKey="String" />
+			<Data Name="Node" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
+		</Data>
+	</Definition>
+	<Definition Name="Choice" meta:RefKey="CollectionDef">
+		<Data Name="Choice" Description="{Text}" meta:RefKey="Struct">
+			<Data Name="Text" meta:RefKey="String" />
+			<Data Name="Node" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
+		</Data>
+	</Definition>
+	<Definition Name="Define" meta:RefKey="StructDef">
+		<Data Name="Key" meta:RefKey="String" />
+		<Data Name="Value" meta:RefKey="String" />
+	</Definition>
+</Definitions>

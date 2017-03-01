@@ -149,9 +149,9 @@
 										<Count>50</Count>
 									</Blocker>
 									<Screenshake>
-										<Duration LockDuration="False">0.9947888</Duration>
+										<Duration LockDuration="False">0.490959018</Duration>
 										<Time>0.00537332054</Time>
-										<Strength>5</Strength>
+										<Strength>3</Strength>
 										<Speed>15</Speed>
 									</Screenshake>
 									<Spawn>

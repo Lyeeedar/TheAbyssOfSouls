@@ -70,6 +70,8 @@ public class HDRColourSpriteBatch implements Batch {
 	/** The maximum number of sprites rendered in one batchHDRColour so far. **/
 	public int maxSpritesInBatch = 0;
 
+	public boolean forceExtractVertices = false;
+
 	/** Constructs a new HDRColourSpriteBatch with a size of 1000, one buffer, and the default shader.
 	 * @see HDRColourSpriteBatch#HDRColourSpriteBatch(int, ShaderProgram) */
 	public HDRColourSpriteBatch() {
@@ -638,7 +640,7 @@ public class HDRColourSpriteBatch implements Batch {
 	{
 		if (!drawing) throw new IllegalStateException("SpriteBatch.begin must be called before draw.");
 
-		if (count % 8 == 0)
+		if (count % 8 == 0 && !forceExtractVertices)
 		{
 			int verticesLength = vertices.length;
 			int remainingVertices = verticesLength;
@@ -689,7 +691,10 @@ public class HDRColourSpriteBatch implements Batch {
 				tempVertexBuffer[6] = u;
 				tempVertexBuffer[7] = v;
 
+				boolean oldForceExtract = forceExtractVertices;
+				forceExtractVertices = false;
 				draw( texture, tempVertexBuffer, 0, 8 );
+				forceExtractVertices = oldForceExtract;
 			}
 		}
 	}

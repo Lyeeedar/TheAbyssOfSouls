@@ -127,10 +127,9 @@ class Timeline
 {
 	val actions = Array<AbstractTimelineAction>()
 
-	val duration: Float by lazy { actions.last()?.endTime ?: 0f }
+	val duration: Float by lazy { actions.map { it.endTime }.max() ?: 0f }
 
 	fun getExact(time: Float): AbstractTimelineAction? = actions.firstOrNull{ it.startTime == time }
-	fun get(time: Float): AbstractTimelineAction? = actions.firstOrNull{ it.startTime <= time }
 	fun get(start: Float, end: Float): Iterable<AbstractTimelineAction> = actions.select { start <= it.endTime && end >= it.startTime }
 
 	fun copy(parent: SceneTimeline): Timeline

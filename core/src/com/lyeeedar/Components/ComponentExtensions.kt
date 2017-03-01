@@ -36,6 +36,7 @@ fun Entity.event(): EventComponent
 
 	return event
 }
+fun Entity.dialogue() = Mappers.dialogue.get(this)
 
 class Mappers
 {
@@ -56,6 +57,7 @@ class Mappers
 		val water: ComponentMapper<WaterComponent> = ComponentMapper.getFor(WaterComponent::class.java)
 		val event: ComponentMapper<EventComponent> = ComponentMapper.getFor(EventComponent::class.java)
 		val trailing: ComponentMapper<TrailingEntityComponent> = ComponentMapper.getFor(TrailingEntityComponent::class.java)
+		val dialogue: ComponentMapper<DialogueComponent> = ComponentMapper.getFor(DialogueComponent::class.java)
 	}
 }
 
@@ -129,7 +131,14 @@ class EntityLoader()
 				val name = entity.name() ?: NameComponent("player")
 				name.isPlayer = true
 				entity.add(name)
+
+				val dialogue = DialogueComponent()
+				dialogue.text = "asdasdadadas"
+				dialogue.displayedText = dialogue.text
+				entity.add(dialogue)
 			}
+
+
 
 			return entity
 		}
