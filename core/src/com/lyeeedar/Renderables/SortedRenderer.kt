@@ -42,7 +42,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	var screenShakeAccumulator: Float = 0f
 	var screenShakeSpeed: Float = 0f
 	var screenShakeAngle: Float = 0f
-	var screenShakeDuration: Float = 0f
+	var screenShakeLocked: Boolean = false
 
 	val BLENDMODES = BlendMode.values().size
 	val MAX_INDEX = 6 * BLENDMODES
@@ -75,11 +75,22 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
-	fun setScreenShake(amount: Float, speed: Float, duration: Float)
+	fun setScreenShake(amount: Float, speed: Float)
 	{
 		screenShakeRadius = amount
 		screenShakeSpeed = speed
-		screenShakeDuration = duration
+	}
+	
+	// ----------------------------------------------------------------------
+	fun lockScreenShake()
+	{
+		screenShakeLocked = true
+	}
+	
+	// ----------------------------------------------------------------------
+	fun unlockScreenShake()
+	{
+		screenShakeLocked = false
 	}
 
 	// ----------------------------------------------------------------------
@@ -91,14 +102,13 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		if ( screenShakeRadius > 2 )
 		{
 			screenShakeAccumulator += delta
-			screenShakeDuration -= delta
 
 			while ( screenShakeAccumulator >= screenShakeSpeed )
 			{
 				screenShakeAccumulator -= screenShakeSpeed
 				screenShakeAngle += ( 150 + MathUtils.random() * 60 )
 
-				if (screenShakeDuration <= 0f)
+				if (!screenShakeLocked)
 				{
 					screenShakeRadius *= 0.9f
 				}
