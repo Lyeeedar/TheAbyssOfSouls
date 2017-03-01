@@ -201,12 +201,13 @@ class ScreenShakeAction() : AbstractTimelineAction()
 
 	override fun enter()
 	{
-		Global.engine.render().renderer.setScreenShake(amount, speed, duration)
+		Global.engine.render().renderer.setScreenShake(amount, speed)
+		Global.engine.render().renderer.lockScreenShake()
 	}
 
 	override fun exit()
 	{
-
+		Global.engine.render().renderer.unlockScreenShake()
 	}
 
 	override fun copy(parent: SceneTimeline): AbstractTimelineAction
