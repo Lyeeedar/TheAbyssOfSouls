@@ -3,18 +3,19 @@ package com.lyeeedar
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Colors
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.ObjectMap
 import com.esotericsoftware.kryo.Kryo
 import com.esotericsoftware.kryo.io.Input
 import com.esotericsoftware.kryo.io.Output
+import com.lyeeedar.Interaction.Interaction
 import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.Systems.createEngine
 import com.lyeeedar.Systems.render
@@ -51,6 +52,21 @@ class Global
 
 		var resolution = Point(800, 600)
 
+		var interaction: Interaction? = null
+			set(value)
+			{
+				field = value
+
+				if (value == null)
+				{
+					engine.render().tileSize = 40f
+				}
+				else
+				{
+					engine.render().tileSize = 50f
+				}
+			}
+
 		lateinit var controls: Controls
 
 		val stage: Stage
@@ -61,6 +77,8 @@ class Global
 			skin = loadSkin()
 			engine = createEngine()
 			controls = Controls()
+
+			Colors.put("Important", Color(0.6f, 1f, 0.9f, 1f))
 		}
 
 		private fun loadSkin(): Skin

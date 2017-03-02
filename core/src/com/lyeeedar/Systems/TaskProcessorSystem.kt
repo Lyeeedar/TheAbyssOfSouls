@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
 import com.lyeeedar.Components.*
+import com.lyeeedar.Global
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Event0Arg
 
@@ -111,6 +112,8 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 
 	override fun doUpdate(deltaTime: Float)
 	{
+		if (Global.interaction != null) return
+
 		val hasEffects = renderables.any { it.renderable()!!.renderable.animation != null }
 		var hasTimelines = false
 

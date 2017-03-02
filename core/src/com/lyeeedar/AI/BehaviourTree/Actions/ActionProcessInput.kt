@@ -259,7 +259,25 @@ class ActionProcessInput(): AbstractAction()
 			}
 			else
 			{
-				setData( "pos", targetPos )
+				val targetTile = tile.level.getTile(targetPos!!)
+				if (targetTile != null)
+				{
+					for (e in targetTile.contents)
+					{
+						val interaction = e.interaction()
+						if (interaction != null)
+						{
+							Global.interaction = interaction.interaction
+							interaction.interaction.interact(entity)
+
+							entity.task().tasks.add(TaskWait())
+
+							break
+						}
+					}
+				}
+
+				if (Global.interaction == null) setData( "pos", targetPos )
 			}
 		}
 

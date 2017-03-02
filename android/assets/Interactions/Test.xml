@@ -15,11 +15,8 @@
 				<Value>1</Value>
 			</Action>
 			<Action meta:RefKey="Line">
-				<Text>*This is a shrine of some kind.*</Text>
-				<Italics>true</Italics>
-			</Action>
-			<Action meta:RefKey="Line">
-				<Text>*On it's side is an inscription.*</Text>
+				<Text>*This is a shrine of some kind.*
+*On Its side is a partially faded inscription.*</Text>
 				<Italics>true</Italics>
 			</Action>
 			<Node meta:RefKey="Node">b6e5d7e2-6a1d-4c29-9719-d0691ada8d0c</Node>

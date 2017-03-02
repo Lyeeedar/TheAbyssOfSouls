@@ -23,6 +23,24 @@ class DialogueSystem : AbstractSystem(Family.all(DialogueComponent::class.java).
 
 	val batch: SpriteBatch = SpriteBatch()
 
+	val tempCol = Color()
+
+	override fun onTurn()
+	{
+		for (entity in entities)
+		{
+			val dialogue = entity.dialogue()
+			if (dialogue.turnsToShow > 0)
+			{
+				dialogue.turnsToShow--
+				if (dialogue.turnsToShow == 0)
+				{
+					dialogue.remove = true
+				}
+			}
+		}
+	}
+
 	override fun doUpdate(deltaTime: Float)
 	{
 		if (level == null) return
@@ -47,6 +65,51 @@ class DialogueSystem : AbstractSystem(Family.all(DialogueComponent::class.java).
 		{
 			val dialogue = entity.dialogue()
 
+			if (dialogue.remove)
+			{
+				dialogue.textFade -= deltaTime
+				if (dialogue.textFade <= 0f)
+				{
+					entity.remove(DialogueComponent::class.java)
+					continue
+				}
+			}
+
+			if (dialogue.displayedText != dialogue.text)
+			{
+				dialogue.textAccumulator += deltaTime
+				while (dialogue.textAccumulator >= 0.02f)
+				{
+					dialogue.textAccumulator -= 0.02f
+
+					val currentPos = dialogue.displayedText.length
+					val nextChar = dialogue.text[currentPos]
+					var nextString = "" + nextChar
+					if (nextChar == '[')
+					{
+						// this is a colour tag, so read ahead to the closing tag, and the letter after
+						var current = currentPos + 1
+						while (true)
+						{
+							val char = dialogue.text[current]
+							nextString += char
+
+							current++
+							if (char == ']') break
+						}
+
+						val char = dialogue.text[current]
+						nextString += char
+					}
+
+					dialogue.displayedText += nextString
+
+					if (dialogue.displayedText == dialogue.text) break
+				}
+			}
+
+			tempCol.set(1f, 1f, 1f, dialogue.alpha)
+
 			var x = offsetx + entity.pos().x * tileSize
 			var y = offsety + entity.pos().y * tileSize
 
@@ -68,7 +131,7 @@ class DialogueSystem : AbstractSystem(Family.all(DialogueComponent::class.java).
 				y += tileSize
 			}
 
-			layout.setText(font, dialogue.text, Color.WHITE, Global.stage.width * 0.5f, Align.left, true)
+			layout.setText(font, dialogue.text, tempCol, Global.stage.width * 0.5f, Align.left, true)
 
 			var left = x - (layout.width * 0.5f) - 10f
 			if (left < 0) left = 0f
@@ -79,9 +142,9 @@ class DialogueSystem : AbstractSystem(Family.all(DialogueComponent::class.java).
 			val width = layout.width
 			val height = layout.height
 
-			layout.setText(font, dialogue.displayedText, Color.WHITE, Global.stage.width * 0.5f, Align.left, true)
+			layout.setText(font, dialogue.displayedText, tempCol, Global.stage.width * 0.5f, Align.left, true)
 
-			batch.color = Color.WHITE
+			batch.color = tempCol
 			speechBubbleBack.draw( batch, left, y, width + 20, height + 20 )
 			batch.draw( speechBubbleArrow, x - 4f, y - 6f, 8f, 8f )
 

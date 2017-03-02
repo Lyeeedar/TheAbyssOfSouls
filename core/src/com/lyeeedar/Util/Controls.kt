@@ -23,6 +23,8 @@ class Controls
 	private val keyMap = FastEnumMap<Keys, Int>(Keys::class.java)
 	private val keyPressMap = FastEnumMap<Keys, Boolean>(Keys::class.java)
 
+	val onInput = Event1Arg<Int>()
+
 	init
 	{
 		for (key in Keys.values())

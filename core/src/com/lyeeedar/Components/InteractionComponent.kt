@@ -10,6 +10,6 @@ class InteractionComponent : AbstractComponent()
 
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{
-
+		interaction = Interaction.Companion.load(xml.get("Interaction"))
 	}
 }

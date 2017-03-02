@@ -1,9 +1,6 @@
 package com.lyeeedar.Systems
 
-import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
-import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
@@ -19,8 +16,6 @@ import com.lyeeedar.Util.Colour
 
 class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).one(RenderableComponent::class.java).get())
 {
-	lateinit var dialogueEntities: ImmutableArray<Entity>
-
 	val shape: ShapeRenderer by lazy { ShapeRenderer() }
 	var drawParticleDebug = false
 	var drawEmitters = false
@@ -32,7 +27,12 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 	val tileCol = Colour()
 	val hpBarCol = Colour()
 
-	val tileSize = 40f
+	var tileSize = 40f
+		set(value)
+		{
+			field = value
+			renderer.tileSize = value
+		}
 
 	val hpbarBack = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarBack.png")!!, 4, 4, 4, 4)
 	val hpbarBar = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarFront.png")!!, 4, 4, 4, 4)
@@ -116,13 +116,6 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 		{
 			renderer = SortedRenderer(tileSize, level!!.width.toFloat(), level!!.height.toFloat(), SpaceSlot.Values.size)
 		}
-	}
-
-	override fun addedToEngine(engine: Engine?)
-	{
-		super.addedToEngine(engine)
-
-		dialogueEntities = engine?.getEntitiesFor(Family.all(DialogueComponent::class.java).get()) ?: throw RuntimeException("Engine is null!")
 	}
 
 	override fun doUpdate(deltaTime: Float)
@@ -248,7 +241,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				}
 			}
 
-			if (entity.stats() != null)
+			if (entity.stats() != null && Global.interaction == null)
 			{
 				val stats = entity.stats()
 				val totalWidth = pos.size.toFloat()

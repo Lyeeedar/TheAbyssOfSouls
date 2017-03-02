@@ -9,4 +9,24 @@ abstract class AbstractInteractionAction
 	abstract fun interact(entity: Entity, interaction: Interaction): Boolean
 	abstract fun parse(xml: XmlReader.Element)
 	abstract fun resolve(nodes: ObjectMap<String, InteractionNode>)
+
+	companion object
+	{
+		fun load(xml: XmlReader.Element): AbstractInteractionAction
+		{
+			val action = when (xml.getAttribute("meta:RefKey").toUpperCase())
+			{
+				"BRANCH" -> InteractionActionBranch()
+				"LINE" -> InteractionActionLine()
+				"DEFINE" -> InteractionActionDefine()
+				"NODE" -> InteractionActionNode()
+
+				else -> throw Exception("Unknown action type '" + xml.getAttribute("meta:RefKey") + "'!")
+			}
+
+			action.parse(xml)
+
+			return action
+		}
+	}
 }

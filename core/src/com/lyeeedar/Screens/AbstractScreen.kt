@@ -2,18 +2,13 @@ package com.lyeeedar.Screens
 
 import com.badlogic.gdx.*
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Scaling
-import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.ScalingViewport
-import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.lyeeedar.Global
 import com.lyeeedar.UI.DebugConsole
-import com.lyeeedar.UI.ensureOnScreen
 import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Point
 import ktx.actors.setKeyboardFocus
@@ -122,6 +117,8 @@ abstract class AbstractScreen() : Screen, InputProcessor
 		{
 			Global.controls.keyPressed(keycode)
 		}
+
+		Global.controls.onInput(keycode)
 
 		return false
 	}

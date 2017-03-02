@@ -149,8 +149,8 @@
 										<Count>50</Count>
 									</Blocker>
 									<Screenshake>
-										<Duration LockDuration="False">0.490959018</Duration>
 										<Time>0.00537332054</Time>
+										<Duration LockDuration="False">0.490959018</Duration>
 										<Strength>3</Strength>
 										<Speed>15</Speed>
 									</Screenshake>
@@ -238,6 +238,7 @@
 			<Rule Axis="Y" meta:RefKey="Divide">
 				<Division>
 					<Size>20</Size>
+					<Rule meta:RefKey="Node">161ecd32-558e-4282-942b-8288ef808aa3</Rule>
 				</Division>
 				<Division>
 					<Size>20</Size>
@@ -248,14 +249,14 @@
 				</Division>
 			</Rule>
 		</Node>
-		<Node meta:X="773.053466796875" meta:Y="475.79092407226562" GUID="c026faf5-4176-41ff-b23e-5679a3de0941">
+		<Node meta:X="883.19183349609375" meta:Y="826.37225341796875" GUID="c026faf5-4176-41ff-b23e-5679a3de0941">
 			<!--Buildings-->
 			<Rule meta:RefKey="Repeat">
 				<Size>20 + rnd(10)</Size>
 				<Rule meta:RefKey="Node">e1632935-4f09-4aa3-a869-965d8b02b985</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1031.498779296875" meta:Y="478.2362060546875" GUID="e1632935-4f09-4aa3-a869-965d8b02b985">
+		<Node meta:X="1141.63720703125" meta:Y="828.81756591796875" GUID="e1632935-4f09-4aa3-a869-965d8b02b985">
 			<!--Building-->
 			<Rule meta:RefKey="Scale">
 				<Mode>Absolute</Mode>
@@ -280,18 +281,18 @@
 				</Division>
 			</Rule>
 		</Node>
-		<Node meta:X="1581.4134521484375" meta:Y="519.24609375" GUID="e16de267-f04e-43b7-8bbd-461614218a0f">
+		<Node meta:X="1691.5518798828125" meta:Y="869.82745361328125" GUID="e16de267-f04e-43b7-8bbd-461614218a0f">
 			<Rule meta:RefKey="Fill">
 				<Character>#</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="1373.27978515625" meta:Y="531.36163330078125" GUID="1b289559-cb77-40e6-a130-e53b9dc94ff2">
+		<Node meta:X="1483.418212890625" meta:Y="881.9429931640625" GUID="1b289559-cb77-40e6-a130-e53b9dc94ff2">
 			<Rule meta:RefKey="Select">
 				<Count>90%</Count>
 				<Rule meta:RefKey="Node">e16de267-f04e-43b7-8bbd-461614218a0f</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1242.8189697265625" meta:Y="676.9764404296875" GUID="dc7a7f9e-1458-4c44-a6b3-c559a52f6593">
+		<Node meta:X="1352.9573974609375" meta:Y="1027.5577392578125" GUID="dc7a7f9e-1458-4c44-a6b3-c559a52f6593">
 			<Rule meta:RefKey="Divide">
 				<Division>
 					<Size>1</Size>
@@ -304,6 +305,150 @@
 					<Size>1</Size>
 					<Rule meta:RefKey="Node">1b289559-cb77-40e6-a130-e53b9dc94ff2</Rule>
 				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="1374.6866455078125" meta:Y="479.83526611328125" GUID="161ecd32-558e-4282-942b-8288ef808aa3">
+			<!--Shrine-->
+			<Rule meta:RefKey="Divide">
+				<Division>
+					<Size>20% + rnd(60%)</Size>
+				</Division>
+				<Division>
+					<Size>10</Size>
+					<Rule meta:RefKey="Node">8771ed0f-2cf2-4c9e-8d32-a6a0a87b0533</Rule>
+				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="1667.83251953125" meta:Y="478.6439208984375" GUID="8771ed0f-2cf2-4c9e-8d32-a6a0a87b0533">
+			<Rule meta:RefKey="Scale">
+				<Mode>Absolute</Mode>
+				<X>5</X>
+				<Y>5</Y>
+			</Rule>
+			<Rule meta:RefKey="DataScope">
+				<Rule meta:RefKey="Node">3f1abe56-39ac-409f-bff9-c616cb8d1342</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1972.83251953125" meta:Y="478.6439208984375" GUID="3f1abe56-39ac-409f-bff9-c616cb8d1342">
+			<Rule meta:RefKey="Symbol">
+				<Character>.</Character>
+				<Floor>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/uf_split/uf_terrain/floor_extra_16</Name>
+								<Colour>156,156,156,255</Colour>
+							</Renderable>
+						</Renderable>
+					</Components>
+				</Floor>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>#</Character>
+				<Wall>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="TilingSprite">
+								<Name>shrinewall</Name>
+								<Mode>Premade</Mode>
+								<Front meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/light_brick_wall</Name>
+								</Front>
+								<Top meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/light_brick_wall_top</Name>
+								</Top>
+								<Overhang meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/light_brick_wall_overhang</Name>
+								</Overhang>
+							</Renderable>
+						</Renderable>
+					</Components>
+				</Wall>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>.</Character>
+				<Overwrite>true</Overwrite>
+			</Rule>
+			<Rule meta:RefKey="DataScope">
+				<Rule meta:RefKey="Node">2254a0c8-0d46-4dbf-9ae9-47c85c1bbcc2</Rule>
+			</Rule>
+			<Rule meta:RefKey="Divide">
+				<Division>
+					<Size>1</Size>
+					<Rule meta:RefKey="Node">87866d2e-8469-4df6-8f33-81670cd33f35</Rule>
+				</Division>
+				<Division>
+					<Size>100%-2</Size>
+					<Rule meta:RefKey="Node">7a512bf0-7954-4b27-a65e-5270c772726a</Rule>
+				</Division>
+				<Division>
+					<Size>1</Size>
+					<Rule meta:RefKey="Node">87866d2e-8469-4df6-8f33-81670cd33f35</Rule>
+				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="2277.83251953125" meta:Y="478.6439208984375" GUID="2254a0c8-0d46-4dbf-9ae9-47c85c1bbcc2">
+			<!--Altar-->
+			<Rule meta:RefKey="Scale">
+				<Mode>Absolute</Mode>
+				<X>1</X>
+				<Y>1</Y>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>A</Character>
+				<Entity>
+					<Components>
+						<Renderable>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/uf_split/uf_terrain/altar_blood</Name>
+								<DrawActualSize>true</DrawActualSize>
+							</Renderable>
+						</Renderable>
+						<Interaction>
+							<Interaction>Test</Interaction>
+						</Interaction>
+					</Components>
+				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>A</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="2356.237060546875" meta:Y="749.88134765625" GUID="7a512bf0-7954-4b27-a65e-5270c772726a">
+			<Rule Axis="Y" meta:RefKey="Divide">
+				<Division>
+					<Size>1</Size>
+					<Rule meta:RefKey="Node">87866d2e-8469-4df6-8f33-81670cd33f35</Rule>
+				</Division>
+				<Division>
+					<Size>100%-2</Size>
+				</Division>
+				<Division>
+					<Size>1</Size>
+					<Rule meta:RefKey="Node">31ad8aef-f199-451e-b97a-1fd4212e86ca</Rule>
+				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="2765.727783203125" meta:Y="646.38653564453125" GUID="87866d2e-8469-4df6-8f33-81670cd33f35">
+			<!--Walls-->
+			<Rule meta:RefKey="Fill">
+				<Character>#</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="2527.311279296875" meta:Y="876.67071533203125" GUID="31ad8aef-f199-451e-b97a-1fd4212e86ca">
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">87866d2e-8469-4df6-8f33-81670cd33f35</Rule>
+			</Rule>
+			<Rule meta:RefKey="Scale">
+				<Mode>Absolute</Mode>
+				<X>1</X>
+				<Y>1</Y>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>.</Character>
+				<Overwrite>true</Overwrite>
 			</Rule>
 		</Node>
 	</Rules>

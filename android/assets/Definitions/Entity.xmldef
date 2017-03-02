@@ -25,6 +25,9 @@
 				<Data Name="ComboTree" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
 			</Data>
 			<Data Name="DirectionalSprite" Extends="DirectionalSprite" meta:RefKey="Struct" />
+			<Data Name="Interaction" meta:RefKey="Struct">
+				<Data Name="Interaction" BasePath="Interactions" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
+			</Data>
 			<Data Name="Light" meta:RefKey="Struct">
 				<Data Name="Colour" meta:RefKey="Colour" />
 				<Data Name="Distance" Min="1" Default="1" meta:RefKey="Number" />

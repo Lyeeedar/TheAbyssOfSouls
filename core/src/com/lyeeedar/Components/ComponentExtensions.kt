@@ -37,6 +37,9 @@ fun Entity.event(): EventComponent
 	return event
 }
 fun Entity.dialogue() = Mappers.dialogue.get(this)
+fun Entity.interaction() = Mappers.interaction.get(this)
+
+fun <T: AbstractComponent> Entity.hasComponent(c: Class<T>) = this.getComponent(c) != null
 
 class Mappers
 {
@@ -58,6 +61,7 @@ class Mappers
 		val event: ComponentMapper<EventComponent> = ComponentMapper.getFor(EventComponent::class.java)
 		val trailing: ComponentMapper<TrailingEntityComponent> = ComponentMapper.getFor(TrailingEntityComponent::class.java)
 		val dialogue: ComponentMapper<DialogueComponent> = ComponentMapper.getFor(DialogueComponent::class.java)
+		var interaction: ComponentMapper<InteractionComponent> = ComponentMapper.getFor(InteractionComponent::class.java)
 	}
 }
 
@@ -108,6 +112,7 @@ class EntityLoader()
 					"ADDITIONALRENDERABLES" -> AdditionalRenderableComponent()
 					"COMBO" -> ComboComponent()
 					"DIRECTIONALSPRITE" -> DirectionalSpriteComponent()
+					"INTERACTION" -> InteractionComponent()
 					"LIGHT" -> LightComponent()
 					"NAME" -> NameComponent()
 					"OCCLUDER" -> OccluderComponent()
@@ -131,14 +136,7 @@ class EntityLoader()
 				val name = entity.name() ?: NameComponent("player")
 				name.isPlayer = true
 				entity.add(name)
-
-				val dialogue = DialogueComponent()
-				dialogue.text = "asdasdadadas"
-				dialogue.displayedText = dialogue.text
-				entity.add(dialogue)
 			}
-
-
 
 			return entity
 		}
