@@ -6,12 +6,44 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.launch
 import java.util.*
 
 abstract class AbstractGrammarRule
 {
-	abstract fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend abstract fun execute(area: Area,
+								 ruleTable: ObjectMap<String, AbstractGrammarRule>,
+								 defines: ObjectMap<String, String>,
+								 variables: ObjectFloatMap<String>,
+								 symbolTable: ObjectMap<Char, GrammarSymbol>,
+								 ran: Random, deferredRules: Array<DeferredRule>)
+
 	abstract fun parse(xml: XmlReader.Element)
+
+	fun executeAsync(area: Area,
+				ruleTable: ObjectMap<String, AbstractGrammarRule>,
+				defines: ObjectMap<String, String>,
+				variables: ObjectFloatMap<String>,
+				symbolTable: ObjectMap<Char, GrammarSymbol>,
+				ran: Random, deferredRules: Array<DeferredRule>): Job
+	{
+		val newDefines = ObjectMap<String, String>(defines.size)
+		newDefines.putAll(defines)
+
+		val newVariables = ObjectFloatMap<String>(variables.size)
+		newVariables.putAll(variables)
+
+		val newSymbols = ObjectMap<Char, GrammarSymbol>(symbolTable.size)
+		symbolTable.forEach { newSymbols.put(it.key, it.value.copy()) }
+
+		val newRan = Random(ran.nextLong())
+
+		return launch(CommonPool) {
+			execute(area, ruleTable, newDefines, newVariables, newSymbols, newRan, deferredRules)
+		}
+	}
 
 	companion object
 	{

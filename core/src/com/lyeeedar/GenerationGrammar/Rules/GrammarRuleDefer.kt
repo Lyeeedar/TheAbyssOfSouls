@@ -13,11 +13,14 @@ class GrammarRuleDefer : AbstractGrammarRule()
 {
 	lateinit var rule: String
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
 		val rule = ruleTable[rule]
 
-		deferredRules.add(DeferredRule(rule, area, defines, variables, symbolTable))
+		synchronized(deferredRules)
+		{
+			deferredRules.add(DeferredRule(rule, area, defines, variables, symbolTable))
+		}
 	}
 
 	override fun parse(xml: XmlReader.Element)
@@ -57,7 +60,7 @@ data class DeferredRule(val rule: AbstractGrammarRule, val area: Area, val defin
 		}
 	}
 
-	fun execute(ruleTable: ObjectMap<String, AbstractGrammarRule>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend fun execute(ruleTable: ObjectMap<String, AbstractGrammarRule>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
 		rule.execute(areaMap[area], ruleTable, defineMap[defines], variableMap[variables], symbolMap[symbolTable], ran, deferredRules)
 	}

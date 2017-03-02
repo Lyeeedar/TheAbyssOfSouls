@@ -50,6 +50,7 @@
 	<Definition Name="Divide" MinCount="1" HasAttributes="True" meta:RefKey="CollectionDef">
 		<Attributes meta:RefKey="Attributes">
 			<Attribute Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
+			<Attribute Name="Parallel" meta:RefKey="Boolean" />
 		</Attributes>
 		<Data Name="Division" Description="{Size}" meta:RefKey="Struct">
 			<Data Name="Size" meta:RefKey="String" />
@@ -63,6 +64,7 @@
 	</Definition>
 	<Definition Name="Repeat" Description="{Size}" meta:RefKey="StructDef">
 		<Data Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
+		<Data Name="Parallel" meta:RefKey="Boolean" />
 		<Data Name="Size" meta:RefKey="String" />
 		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 		<Data Name="Remainder" Keys="Node" meta:RefKey="GraphReference" />

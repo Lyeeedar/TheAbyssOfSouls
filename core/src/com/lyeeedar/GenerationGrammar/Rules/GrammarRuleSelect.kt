@@ -30,7 +30,7 @@ class GrammarRuleSelect : AbstractGrammarRule()
 	lateinit var rule: String
 	lateinit var remainder: String
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
 		val valid = Array<Pos>(false, if (area.isPoints) area.points.size else area.width * area.height)
 		valid.addAll(area.getAllPoints())

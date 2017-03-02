@@ -49,14 +49,18 @@ class GenerationGrammar
 		var deferred = Array<DeferredRule>()
 		DeferredRule.reset()
 
-		rule.execute(area, ruleTable, ObjectMap(), ObjectFloatMap(), ObjectMap(), ran, deferred)
+		runBlocking {
+			rule.execute(area, ruleTable, ObjectMap(), ObjectFloatMap(), ObjectMap(), ran, deferred)
+		}
 
 		while (deferred.size > 0)
 		{
 			val newDeferred = Array<DeferredRule>()
 			for (deferredRule in deferred)
 			{
-				deferredRule.execute(ruleTable, ran, newDeferred)
+				runBlocking {
+					deferredRule.execute(ruleTable, ran, newDeferred)
+				}
 			}
 
 			deferred = newDeferred

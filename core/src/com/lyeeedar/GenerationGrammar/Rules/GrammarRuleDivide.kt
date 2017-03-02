@@ -10,16 +10,20 @@ import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.round
+import kotlinx.coroutines.experimental.Job
 import java.util.*
 
 class GrammarRuleDivide : AbstractGrammarRule()
 {
 	val divisions = Array<Division>()
 	var onX = true
+	var parallel = false
 
-	override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
 		area.xMode = onX
+
+		val jobs = Array<Job>()
 
 		if (onX)
 		{
@@ -40,7 +44,15 @@ class GrammarRuleDivide : AbstractGrammarRule()
 					newArea.addPointsWithin(area)
 
 					val rule = ruleTable[division.rule]
-					rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+
+					if (parallel)
+					{
+						jobs.add(rule.executeAsync(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules))
+					}
+					else
+					{
+						rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+					}
 				}
 
 				current += size
@@ -68,17 +80,28 @@ class GrammarRuleDivide : AbstractGrammarRule()
 					newArea.addPointsWithin(area)
 
 					val rule = ruleTable[division.rule]
-					rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+
+					if (parallel)
+					{
+						jobs.add(rule.executeAsync(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules))
+					}
+					else
+					{
+						rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+					}
 				}
 
 				if (current == 0) break
 			}
 		}
+
+		for (job in jobs) job.join()
 	}
 
 	override fun parse(xml: XmlReader.Element)
 	{
 		onX = xml.getAttribute("Axis", "X") == "X"
+		parallel = xml.getBooleanAttribute("Parallel", false)
 
 		for (el in xml.children())
 		{
