@@ -4,8 +4,6 @@
       <root url="jar://$PROJECT_DIR$/core/libraries/exp4j.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/core/libraries/exp4j.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

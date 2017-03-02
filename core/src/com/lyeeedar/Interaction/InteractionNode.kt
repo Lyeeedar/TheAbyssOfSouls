@@ -8,7 +8,6 @@ import com.lyeeedar.Util.children
 class InteractionNode
 {
 	val actions = Array<AbstractInteractionAction>()
-	var index = 0
 
 	fun parse(xml: XmlReader.Element)
 	{

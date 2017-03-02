@@ -58,13 +58,17 @@ class RenderableComponent() : AbstractComponent()
 
 		if (xml.getBoolean("IsShared", false))
 		{
-			val key = renderableEl.toString().hashCode()
-			if (!EntityLoader.sharedRenderableMap.containsKey(key))
+			synchronized(EntityLoader.sharedRenderableMap)
 			{
-				EntityLoader.sharedRenderableMap[key] = loadRenderable()
-			}
+				val key = renderableEl.toString().hashCode()
 
-			renderable = EntityLoader.sharedRenderableMap[key]
+				if (!EntityLoader.sharedRenderableMap.containsKey(key))
+				{
+					EntityLoader.sharedRenderableMap[key] = loadRenderable()
+				}
+
+				renderable = EntityLoader.sharedRenderableMap[key]
+			}
 		}
 		else
 		{

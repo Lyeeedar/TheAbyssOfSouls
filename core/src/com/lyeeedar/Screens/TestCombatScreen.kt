@@ -38,7 +38,13 @@ class TestCombatScreen : AbstractScreen()
 	{
 		val grammar = GenerationGrammar.load("FloodMap")
 
+		val start = System.nanoTime()
 		val level = grammar.generate(10, Global.engine)
+		val end = System.nanoTime()
+
+		println("Time: " + ((end - start)/1000000f))
+		// 1300 abouts for single thread
+
 		Global.engine.level = level
 		level.ambient.set(Colour.WHITE)
 

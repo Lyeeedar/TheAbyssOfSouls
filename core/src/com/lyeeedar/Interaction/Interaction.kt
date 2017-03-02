@@ -12,7 +12,7 @@ import ktx.collections.set
 
 class Interaction
 {
-	val interactionStack = Array<InteractionNode>()
+	val interactionStack = Array<InteractionNodeData>()
 	lateinit var root: InteractionActionBranch
 	val nodes = ObjectMap<String, InteractionNode>()
 
@@ -22,7 +22,6 @@ class Interaction
 	{
 		if (interactionStack.size == 0)
 		{
-			reset()
 			root.interact(entity, this)
 		}
 
@@ -30,13 +29,13 @@ class Interaction
 		{
 			if (interactionStack.size == 0) break
 			val current = interactionStack.last()
-			val action = current.actions[current.index]
+			val action = current.node.actions[current.index]
 
 			val advance = action.interact(entity, this)
 			if (advance)
 			{
 				current.index++
-				if (current.index == current.actions.size)
+				if (current.index == current.node.actions.size)
 				{
 					interactionStack.removeValue(current, true)
 				}
@@ -56,10 +55,6 @@ class Interaction
 	fun reset()
 	{
 		interactionStack.clear()
-		for (node in nodes.values())
-		{
-			node.index = 0
-		}
 	}
 
 	fun getVariables(entity: Entity): ObjectFloatMap<String>
@@ -104,3 +99,5 @@ class Interaction
 		}
 	}
 }
+
+data class InteractionNodeData(val node: InteractionNode, var index: Int)

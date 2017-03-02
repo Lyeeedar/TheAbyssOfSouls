@@ -18,6 +18,10 @@ import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.getXml
 import com.lyeeedar.Util.round
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 import ktx.collections.set
 import java.util.*
 
@@ -61,32 +65,45 @@ class GenerationGrammar
 		val level = Level()
 		level.grid = Array2D(width, height) { x, y -> Tile() }
 
-		for (x in 0..width-1)
-		{
-			for (y in 0..height-1)
+		runBlocking {
+			val jobs = Array<Job>()
+			for (x in 0..width-1)
 			{
-				for (slot in SpaceSlot.Values)
+				for (y in 0..height-1)
 				{
-					if (symbolGrid[x, y].contents.containsKey(slot))
+					val job = launch(CommonPool)
 					{
-						val xml = symbolGrid[x, y].contents[slot]
-
-						val entity = EntityLoader.load(xml)
-						if (entity.pos() == null)
+						for (slot in SpaceSlot.Values)
 						{
-							val pos = PositionComponent()
-							pos.slot = slot
+							if (symbolGrid[x, y].contents.containsKey(slot))
+							{
+								val xml = symbolGrid[x, y].contents[slot]
 
-							entity.add(pos)
+								val entity = EntityLoader.load(xml)
+								if (entity.pos() == null)
+								{
+									val pos = PositionComponent()
+									pos.slot = slot
+
+									entity.add(pos)
+								}
+
+								level.grid[x, y].contents[slot] = entity
+								entity.pos().position = level.grid[x, y]
+
+								synchronized(engine)
+								{
+									engine.addEntity(entity)
+								}
+							}
 						}
-
-						level.grid[x, y].contents[slot] = entity
-						entity.pos().position = level.grid[x, y]
-
-						engine.addEntity(entity)
 					}
+
+					jobs.add(job)
 				}
 			}
+
+			for (job in jobs) job.join()
 		}
 
 		val namedEntities = engine.getEntitiesFor(Family.one(NameComponent::class.java).get())

@@ -11,7 +11,7 @@ class InteractionActionNode : AbstractInteractionAction()
 
 	override fun interact(entity: Entity, interaction: Interaction): Boolean
 	{
-		interaction.interactionStack.add(node)
+		interaction.interactionStack.add(InteractionNodeData(node, 0))
 		return true
 	}
 

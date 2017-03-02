@@ -21,7 +21,7 @@ class InteractionActionBranch : AbstractInteractionAction()
 			{
 				if (branch.hasNode)
 				{
-					interaction.interactionStack.add(branch.node)
+					interaction.interactionStack.add(InteractionNodeData(branch.node, 0))
 				}
 
 				break
