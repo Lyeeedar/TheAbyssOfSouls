@@ -10,21 +10,20 @@ import com.lyeeedar.GenerationGrammar.Pos
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.toCharGrid
-import java.util.*
 
 class GrammarRulePrefab : AbstractGrammarRule()
 {
 	val symbols = Array<GrammarRuleSymbol>()
 	lateinit var prefab: Array2D<Char>
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
 		val newSymbols = ObjectMap<Char, GrammarSymbol>()
 		symbolTable.forEach { newSymbols.put(it.key, it.value.copy()) }
 
 		for (symbol in symbols)
 		{
-			symbol.execute(area, ruleTable, defines, variables, newSymbols, ran, deferredRules)
+			symbol.execute(area, ruleTable, defines, variables, newSymbols, seed, deferredRules)
 		}
 
 		val newArea = area.copy()

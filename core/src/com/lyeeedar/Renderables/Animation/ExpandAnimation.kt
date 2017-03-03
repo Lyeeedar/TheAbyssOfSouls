@@ -2,7 +2,6 @@ package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
 
 /**
@@ -86,7 +85,13 @@ class ExpandAnimation() : AbstractScaleAnimation()
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<ExpandAnimation> = Pools.get( ExpandAnimation::class.java, Int.MAX_VALUE )
+		private val pool: Pool<ExpandAnimation> = object : Pool<ExpandAnimation>() {
+			override fun newObject(): ExpandAnimation
+			{
+				return ExpandAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): ExpandAnimation
 		{

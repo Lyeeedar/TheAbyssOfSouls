@@ -3,6 +3,7 @@ package com.lyeeedar.AI.BehaviourTree.Selectors
 import com.badlogic.ashley.core.Entity
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.Util.removeRandom
+import squidpony.squidmath.LightRNG
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -11,7 +12,7 @@ import com.lyeeedar.Util.removeRandom
 class SelectorRandom(): AbstractSelector()
 {
 	//----------------------------------------------------------------------
-	val ran: java.util.Random = java.util.Random()
+	val ran = LightRNG()
 	val numList: com.badlogic.gdx.utils.Array<Int> = com.badlogic.gdx.utils.Array<Int>(false, 16);
 	var i: Int = -1
 

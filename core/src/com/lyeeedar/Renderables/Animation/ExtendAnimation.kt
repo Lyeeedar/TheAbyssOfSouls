@@ -3,10 +3,7 @@ package com.lyeeedar.Renderables.Animation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Global
-import com.lyeeedar.Util.getPool
 
 /**
  * Created by Philip on 04-Aug-16.
@@ -84,7 +81,13 @@ class ExtendAnimation() : AbstractScaleAnimation()
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<ExtendAnimation> = getPool()
+		private val pool: Pool<ExtendAnimation> = object : Pool<ExtendAnimation>() {
+			override fun newObject(): ExtendAnimation
+			{
+				return ExtendAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): ExtendAnimation
 		{

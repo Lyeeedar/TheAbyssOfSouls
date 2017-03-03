@@ -1,11 +1,6 @@
 package com.lyeeedar.Renderables.Particle
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.math.Interpolation
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
@@ -15,7 +10,6 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.BlendMode
 import com.lyeeedar.Direction
 import com.lyeeedar.Util.*
-import com.sun.org.apache.xpath.internal.operations.Bool
 
 /**
  * Created by Philip on 14-Aug-16.
@@ -277,13 +271,13 @@ class Particle(val emitter: Emitter)
 	{
 		val particle = ParticleData.obtain().set(
 				position, velocity,
-				rotation, (lifetime.v2 - lifetime.v1) * MathUtils.random(),
-				MathUtils.random(texture.streams.size-1),
-				MathUtils.random(colour.streams.size-1),
-				MathUtils.random(alpha.streams.size-1),
-				MathUtils.random(rotationSpeed.streams.size-1),
-				MathUtils.random(size.streams.size-1),
-				MathUtils.random())
+				rotation, (lifetime.v2 - lifetime.v1) * Random.random(),
+				Random.random(texture.streams.size-1),
+				Random.random(colour.streams.size-1),
+				Random.random(alpha.streams.size-1),
+				Random.random(rotationSpeed.streams.size-1),
+				Random.random(size.streams.size-1),
+				Random.random())
 
 		particles.add(particle)
 	}
@@ -383,7 +377,13 @@ data class ParticleData(val position: Vector2, val velocity: Vector2,
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<ParticleData> = getPool()
+		private val pool: Pool<ParticleData> = object : Pool<ParticleData>() {
+			override fun newObject(): ParticleData
+			{
+				return ParticleData()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): ParticleData
 		{

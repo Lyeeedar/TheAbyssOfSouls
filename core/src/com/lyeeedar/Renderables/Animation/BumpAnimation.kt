@@ -3,7 +3,6 @@ package com.lyeeedar.Renderables.Animation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Direction
 
@@ -82,7 +81,13 @@ class BumpAnimation : AbstractMoveAnimation
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<BumpAnimation> = Pools.get( BumpAnimation::class.java, Int.MAX_VALUE )
+		private val pool: Pool<BumpAnimation> = object : Pool<BumpAnimation>() {
+			override fun newObject(): BumpAnimation
+			{
+				return BumpAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): BumpAnimation
 		{

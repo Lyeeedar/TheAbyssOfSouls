@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.lyeeedar.Direction
@@ -85,7 +84,12 @@ open class Point : Pool.Poolable, Comparable<Point>
 
 		val tempPointList = Array<Point>(false, 32)
 
-        private val pool: Pool<Point> = getPool()
+        private val pool: Pool<Point> = object : Pool<Point>() {
+			override fun newObject(): Point
+			{
+				return Point()
+			}
+		}
 
         @JvmStatic fun obtain(): Point
 		{

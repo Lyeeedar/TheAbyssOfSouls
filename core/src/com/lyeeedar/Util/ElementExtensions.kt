@@ -1,7 +1,6 @@
 package com.lyeeedar.Util
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import kotlin.coroutines.experimental.buildSequence
@@ -27,7 +26,7 @@ fun getXml(path: String, extension: String = "xml"): XmlReader.Element
 	}
 }
 
-fun XmlReader.Element.ranChild() = this.getChild(MathUtils.random(this.childCount-1))!!
+fun XmlReader.Element.ranChild() = this.getChild(Random.random(this.childCount-1))!!
 
 fun XmlReader.Element.children(): Sequence<XmlReader.Element>
 {

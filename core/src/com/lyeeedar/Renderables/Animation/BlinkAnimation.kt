@@ -1,9 +1,7 @@
 package com.lyeeedar.Renderables.Animation
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.HSLColour
@@ -93,7 +91,13 @@ class BlinkAnimation() : AbstractColourAnimation()
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<BlinkAnimation> = Pools.get( BlinkAnimation::class.java, Int.MAX_VALUE )
+		private val pool: Pool<BlinkAnimation> = object : Pool<BlinkAnimation>() {
+			override fun newObject(): BlinkAnimation
+			{
+				return BlinkAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): BlinkAnimation
 		{

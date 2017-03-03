@@ -9,14 +9,13 @@ import com.exp4j.Helpers.unescapeCharacters
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import ktx.collections.set
-import java.util.*
 
 class GrammarRuleDefine : AbstractGrammarRule()
 {
 	lateinit var key: String
 	lateinit var value: String
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
 		var expanded = value
 		for (def in defines)
@@ -30,7 +29,7 @@ class GrammarRuleDefine : AbstractGrammarRule()
 		{
 			area.writeVariables(variables)
 
-			val value = expanded.toLowerCase().evaluate(variables, ran)
+			val value = expanded.toLowerCase().evaluate(variables, seed)
 			variables.put(key.toLowerCase(), value)
 		}
 		catch (ex: Exception)

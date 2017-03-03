@@ -7,10 +7,11 @@ import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
+import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.children
+import com.lyeeedar.Util.freeTS
 import com.lyeeedar.Util.round
 import kotlinx.coroutines.experimental.Job
-import java.util.*
 
 class GrammarRuleSplit : AbstractGrammarRule()
 {
@@ -26,13 +27,17 @@ class GrammarRuleSplit : AbstractGrammarRule()
 	val splits = Array<Split>()
 	var parallel = false
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
+		val rng = Random.obtainTS(seed)
+
 		val jobs = Array<Job>(splits.size)
 
 		var currentArea = area.copy()
 		for (i in 0..splits.size-1)
 		{
+			val newSeed = rng.nextLong()
+
 			val split = splits[i]
 
 			val newArea = currentArea.copy()
@@ -42,7 +47,7 @@ class GrammarRuleSplit : AbstractGrammarRule()
 			{
 				currentArea.xMode = false
 				currentArea.writeVariables(variables)
-				val size = split.size.evaluate(variables, ran).round()
+				val size = split.size.evaluate(variables, rng.nextLong()).round()
 
 				newArea.x = currentArea.x
 				newArea.y = currentArea.y + currentArea.height - size
@@ -62,7 +67,7 @@ class GrammarRuleSplit : AbstractGrammarRule()
 			{
 				currentArea.xMode = false
 				currentArea.writeVariables(variables)
-				val size = split.size.evaluate(variables, ran).round()
+				val size = split.size.evaluate(variables, rng.nextLong()).round()
 
 				newArea.x = currentArea.x
 				newArea.y = currentArea.y
@@ -82,7 +87,7 @@ class GrammarRuleSplit : AbstractGrammarRule()
 			{
 				currentArea.xMode = true
 				currentArea.writeVariables(variables)
-				val size = split.size.evaluate(variables, ran).round()
+				val size = split.size.evaluate(variables, rng.nextLong()).round()
 
 				newArea.x = currentArea.x
 				newArea.y = currentArea.y
@@ -102,7 +107,7 @@ class GrammarRuleSplit : AbstractGrammarRule()
 			{
 				currentArea.xMode = true
 				currentArea.writeVariables(variables)
-				val size = split.size.evaluate(variables, ran).round()
+				val size = split.size.evaluate(variables, rng.nextLong()).round()
 
 				newArea.x = currentArea.x + currentArea.width - size
 				newArea.y = currentArea.y
@@ -126,11 +131,11 @@ class GrammarRuleSplit : AbstractGrammarRule()
 
 					if (parallel)
 					{
-						jobs.add(rule.executeAsync(currentArea, ruleTable, defines, variables, symbolTable, ran, deferredRules))
+						jobs.add(rule.executeAsync(currentArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules))
 					}
 					else
 					{
-						rule.execute(currentArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+						rule.execute(currentArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules)
 					}
 				}
 
@@ -146,16 +151,18 @@ class GrammarRuleSplit : AbstractGrammarRule()
 
 				if (parallel)
 				{
-					jobs.add(rule.executeAsync(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules))
+					jobs.add(rule.executeAsync(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules))
 				}
 				else
 				{
-					rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+					rule.execute(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules)
 				}
 			}
 		}
 
 		for (job in jobs) job.join()
+
+		rng.freeTS()
 	}
 
 	override fun parse(xml: XmlReader.Element)

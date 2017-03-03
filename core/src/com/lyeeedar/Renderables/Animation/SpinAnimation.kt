@@ -2,7 +2,6 @@ package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Util.getPool
 
 class SpinAnimation : AbstractRotationAnimation()
 {
@@ -46,7 +45,13 @@ class SpinAnimation : AbstractRotationAnimation()
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<SpinAnimation> = getPool()
+		private val pool: Pool<SpinAnimation> = object : Pool<SpinAnimation>() {
+			override fun newObject(): SpinAnimation
+			{
+				return SpinAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): SpinAnimation
 		{

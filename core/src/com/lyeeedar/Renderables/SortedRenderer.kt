@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
@@ -18,7 +17,7 @@ import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Util.*
 import ktx.collections.set
-import java.util.*
+import squidpony.squidmath.LightRNG
 
 /**
  * Created by Philip on 04-Jul-16.
@@ -36,7 +35,13 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap()
 	var tilingMap: ObjectMap<Point, ObjectSet<Long>> = ObjectMap()
 
-	val setPool: Pool<ObjectSet<Long>> = getPool()
+	val setPool: Pool<ObjectSet<Long>> = object : Pool<ObjectSet<Long>>() {
+		override fun newObject(): ObjectSet<Long>
+		{
+			return ObjectSet()
+		}
+
+	}
 
 	var screenShakeRadius: Float = 0f
 	var screenShakeAccumulator: Float = 0f
@@ -80,13 +85,13 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		screenShakeRadius = amount
 		screenShakeSpeed = speed
 	}
-	
+
 	// ----------------------------------------------------------------------
 	fun lockScreenShake()
 	{
 		screenShakeLocked = true
 	}
-	
+
 	// ----------------------------------------------------------------------
 	fun unlockScreenShake()
 	{
@@ -106,7 +111,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			while ( screenShakeAccumulator >= screenShakeSpeed )
 			{
 				screenShakeAccumulator -= screenShakeSpeed
-				screenShakeAngle += ( 150 + MathUtils.random() * 60 )
+				screenShakeAngle += (150 + Random.random() * 60)
 
 				if (!screenShakeLocked)
 				{
@@ -617,7 +622,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	// ----------------------------------------------------------------------
 	companion object
 	{
-		val random = Random()
+		val random = LightRNG()
 	}
 }
 
@@ -690,7 +695,14 @@ class RenderSprite : BinaryHeap.Node(0f)
 	// ----------------------------------------------------------------------
 	companion object
 	{
-		val pool: Pool<RenderSprite> = Pools.get( RenderSprite::class.java, Int.MAX_VALUE )
+		val pool: Pool<RenderSprite> = object : Pool<RenderSprite>() {
+			override fun newObject(): RenderSprite
+			{
+				return RenderSprite()
+			}
+
+		}
+
 		fun obtain() = pool.obtain()
 	}
 }

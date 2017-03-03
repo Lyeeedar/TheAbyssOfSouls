@@ -7,19 +7,18 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import ktx.collections.set
-import java.util.*
 
 class GrammarRuleDefer : AbstractGrammarRule()
 {
 	lateinit var rule: String
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
 		val rule = ruleTable[rule]
 
 		synchronized(deferredRules)
 		{
-			deferredRules.add(DeferredRule(rule, area, defines, variables, symbolTable))
+			deferredRules.add(DeferredRule(rule, area, defines, variables, symbolTable, seed))
 		}
 	}
 
@@ -29,7 +28,7 @@ class GrammarRuleDefer : AbstractGrammarRule()
 	}
 }
 
-data class DeferredRule(val rule: AbstractGrammarRule, val area: Area, val defines: ObjectMap<String, String>, val variables: ObjectFloatMap<String>, val symbolTable: ObjectMap<Char, GrammarSymbol>)
+data class DeferredRule(val rule: AbstractGrammarRule, val area: Area, val defines: ObjectMap<String, String>, val variables: ObjectFloatMap<String>, val symbolTable: ObjectMap<Char, GrammarSymbol>, val seed: Long)
 {
 	init
 	{
@@ -60,9 +59,9 @@ data class DeferredRule(val rule: AbstractGrammarRule, val area: Area, val defin
 		}
 	}
 
-	suspend fun execute(ruleTable: ObjectMap<String, AbstractGrammarRule>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend fun execute(ruleTable: ObjectMap<String, AbstractGrammarRule>, deferredRules: Array<DeferredRule>)
 	{
-		rule.execute(areaMap[area], ruleTable, defineMap[defines], variableMap[variables], symbolMap[symbolTable], ran, deferredRules)
+		rule.execute(areaMap[area], ruleTable, defineMap[defines], variableMap[variables], symbolMap[symbolTable], seed, deferredRules)
 	}
 
 	companion object

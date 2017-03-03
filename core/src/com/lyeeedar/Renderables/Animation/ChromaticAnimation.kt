@@ -1,15 +1,10 @@
 package com.lyeeedar.Renderables.Animation
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Colors
-import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.HSLColour
-import com.lyeeedar.Util.random
 
 /**
  * Created by Philip on 31-Jul-16.
@@ -62,7 +57,13 @@ class ChromaticAnimation() : AbstractColourAnimation()
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<ChromaticAnimation> = Pools.get( ChromaticAnimation::class.java, Int.MAX_VALUE )
+		private val pool: Pool<ChromaticAnimation> = object : Pool<ChromaticAnimation>() {
+			override fun newObject(): ChromaticAnimation
+			{
+				return ChromaticAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): ChromaticAnimation
 		{

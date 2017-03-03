@@ -4,21 +4,21 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.exp4j.Helpers.evaluate
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
-import java.util.*
 
 class GrammarRuleRotate : AbstractGrammarRule()
 {
-	var degrees: Float = 0f
+	lateinit var degrees: String
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
-		area.orientation += degrees
+		area.orientation += degrees.evaluate(variables, seed)
 	}
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		degrees = xml.getFloat("Degrees")
+		degrees = xml.get("Degrees")
 	}
 }

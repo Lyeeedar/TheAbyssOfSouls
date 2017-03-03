@@ -2,11 +2,11 @@ package com.lyeeedar.Util
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
-import java.util.*
+import squidpony.squidmath.LightRNG
 
 fun <T> com.badlogic.gdx.utils.Array<T>.tryGet(i: Int): T = this[MathUtils.clamp(i, 0, this.size-1)]
-fun <T> com.badlogic.gdx.utils.Array<T>.random(ran: Random): T = this[ran.nextInt(this.size)]
-fun <T> com.badlogic.gdx.utils.Array<T>.removeRandom(ran: Random): T
+fun <T> com.badlogic.gdx.utils.Array<T>.random(ran: LightRNG): T = this[ran.nextInt(this.size)]
+fun <T> com.badlogic.gdx.utils.Array<T>.removeRandom(ran: LightRNG): T
 {
 	val index = ran.nextInt(this.size)
 	val item = this[index]
@@ -24,8 +24,8 @@ fun <T> Iterable<T>.asGdxArray(): com.badlogic.gdx.utils.Array<T> {
 	return array
 }
 
-fun <T> Sequence<T>.random() = if (this.count() > 0) this.elementAt(MathUtils.random(this.count()-1)) else null
-fun <T> Sequence<T>.random(ran: Random) = if (this.count() > 0) this.elementAt(ran.nextInt(this.count())) else null
+fun <T> Sequence<T>.random() = if (this.count() > 0) this.elementAt(Random.random(this.count()-1)) else null
+fun <T> Sequence<T>.random(ran: LightRNG) = if (this.count() > 0) this.elementAt(ran.nextInt(this.count())) else null
 inline fun <reified T> Sequence<T>.random(num: Int): Sequence<T>
 {
 	val array = Array<T>(this.count())
@@ -35,12 +35,12 @@ inline fun <reified T> Sequence<T>.random(num: Int): Sequence<T>
 	for (i in 0..num-1)
 	{
 		if (array.size == 0) break
-		outArray.add(array.removeRandom(MathUtils.random))
+		outArray.add(array.removeRandom(Random.random))
 	}
 
 	return outArray.asSequence()
 }
-inline fun <reified T> Sequence<T>.random(num: Int, ran: Random): Sequence<T>
+inline fun <reified T> Sequence<T>.random(num: Int, ran: LightRNG): Sequence<T>
 {
 	val array = Array<T>(this.count())
 	for (item in this) array.add(item)
@@ -54,7 +54,7 @@ inline fun <reified T> Sequence<T>.random(num: Int, ran: Random): Sequence<T>
 
 	return outArray.asSequence()
 }
-inline fun <reified T> Sequence<T>.weightedRandom(weightFun: (T) -> Int, ran: Random = MathUtils.random): T?
+inline fun <reified T> Sequence<T>.weightedRandom(weightFun: (T) -> Int, ran: LightRNG = Random.random): T?
 {
 	if (this.count() == 0) return null
 

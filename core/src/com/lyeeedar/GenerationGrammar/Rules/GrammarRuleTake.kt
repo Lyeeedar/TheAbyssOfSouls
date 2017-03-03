@@ -8,6 +8,8 @@ import com.lyeeedar.Direction
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.GenerationGrammar.Pos
+import com.lyeeedar.Util.Random
+import com.lyeeedar.Util.freeTS
 import com.lyeeedar.Util.removeRandom
 import com.lyeeedar.Util.round
 import java.util.*
@@ -28,7 +30,7 @@ class GrammarRuleTake : AbstractGrammarRule()
 	lateinit var rule: String
 	lateinit var remainder: String
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
 		val valid = Array<Pos>(false, if (area.isPoints) area.points.size else area.width * area.height)
 		valid.addAll(area.getAllPoints())
@@ -111,7 +113,9 @@ class GrammarRuleTake : AbstractGrammarRule()
 		area.writeVariables(variables)
 		variables.put("count", valid.size.toFloat())
 
-		val count = count.evaluate(variables, ran).round()
+		val rng = Random.obtainTS(seed)
+
+		val count = count.evaluate(variables, rng.nextLong()).round()
 
 		var newArea: Area? = null
 		if (count > 0)
@@ -120,7 +124,7 @@ class GrammarRuleTake : AbstractGrammarRule()
 
 			for (i in 0..count - 1)
 			{
-				finalPoints.add(valid.removeRandom(ran))
+				finalPoints.add(valid.removeRandom(rng))
 			}
 
 			newArea = area.copy()
@@ -129,7 +133,7 @@ class GrammarRuleTake : AbstractGrammarRule()
 			newArea.points.addAll(finalPoints)
 
 			val rule = ruleTable[rule]
-			rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+			rule.execute(newArea, ruleTable, defines, variables, symbolTable, rng.nextLong(), deferredRules)
 		}
 
 		if (!remainder.isNullOrBlank() && valid.size > 0)
@@ -140,8 +144,10 @@ class GrammarRuleTake : AbstractGrammarRule()
 			remainderArea.points.addAll(valid)
 
 			val remainder = ruleTable[remainder]
-			remainder.execute(remainderArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+			remainder.execute(remainderArea, ruleTable, defines, variables, symbolTable, rng.nextLong(), deferredRules)
 		}
+
+		rng.freeTS()
 	}
 
 	override fun parse(xml: XmlReader.Element)

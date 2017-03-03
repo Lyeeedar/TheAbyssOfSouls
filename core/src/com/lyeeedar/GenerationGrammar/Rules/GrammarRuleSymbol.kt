@@ -10,7 +10,6 @@ import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.children
 import ktx.collections.set
-import java.util.*
 
 class GrammarRuleSymbol : AbstractGrammarRule()
 {
@@ -18,7 +17,7 @@ class GrammarRuleSymbol : AbstractGrammarRule()
 	var extends: Char? = null
 	val contents = FastEnumMap<SpaceSlot, XmlReader.Element>(SpaceSlot::class.java)
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
 		val symbol = GrammarSymbol(char)
 

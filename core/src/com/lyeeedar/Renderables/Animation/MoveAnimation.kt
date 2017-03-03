@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Path
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.UnsmoothedPath
@@ -142,7 +141,13 @@ class MoveAnimation : AbstractMoveAnimation
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<MoveAnimation> = Pools.get( MoveAnimation::class.java, Int.MAX_VALUE )
+		private val pool: Pool<MoveAnimation> = object : Pool<MoveAnimation>() {
+			override fun newObject(): MoveAnimation
+			{
+				return MoveAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): MoveAnimation
 		{

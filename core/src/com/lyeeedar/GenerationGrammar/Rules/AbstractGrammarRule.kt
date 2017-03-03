@@ -9,7 +9,6 @@ import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
-import java.util.*
 
 abstract class AbstractGrammarRule
 {
@@ -18,7 +17,7 @@ abstract class AbstractGrammarRule
 								 defines: ObjectMap<String, String>,
 								 variables: ObjectFloatMap<String>,
 								 symbolTable: ObjectMap<Char, GrammarSymbol>,
-								 ran: Random, deferredRules: Array<DeferredRule>)
+								 seed: Long, deferredRules: Array<DeferredRule>)
 
 	abstract fun parse(xml: XmlReader.Element)
 
@@ -27,7 +26,7 @@ abstract class AbstractGrammarRule
 				defines: ObjectMap<String, String>,
 				variables: ObjectFloatMap<String>,
 				symbolTable: ObjectMap<Char, GrammarSymbol>,
-				ran: Random, deferredRules: Array<DeferredRule>): Job
+				seed: Long, deferredRules: Array<DeferredRule>): Job
 	{
 		area.allowedBoundsX = area.x
 		area.allowedBoundsY = area.y
@@ -43,10 +42,8 @@ abstract class AbstractGrammarRule
 		val newSymbols = ObjectMap<Char, GrammarSymbol>(symbolTable.size)
 		symbolTable.forEach { newSymbols.put(it.key, it.value.copy()) }
 
-		val newRan = Random(ran.nextLong())
-
 		return launch(CommonPool) {
-			execute(area, ruleTable, newDefines, newVariables, newSymbols, newRan, deferredRules)
+			execute(area, ruleTable, newDefines, newVariables, newSymbols, seed, deferredRules)
 		}
 	}
 

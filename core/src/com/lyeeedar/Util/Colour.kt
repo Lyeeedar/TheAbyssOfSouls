@@ -250,7 +250,7 @@ class Colour()
 
 		fun random(s: Float = 0.9f, l: Float = 0.7f): Colour
 		{
-			val hsl = HSLColour(MathUtils.random(), s, l, 1.0f)
+			val hsl = HSLColour(Random.random(), s, l, 1.0f)
 			return hsl.toRGB()
 		}
 	}

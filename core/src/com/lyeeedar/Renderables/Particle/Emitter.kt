@@ -1,16 +1,12 @@
 package com.lyeeedar.Renderables.Particle
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.math.Interpolation
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Util.Array2D
+import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.ciel
-import com.lyeeedar.Util.vectorToAngle
 
 class Emitter(val particleEffect: ParticleEffect)
 {
@@ -190,8 +186,8 @@ class Emitter(val particleEffect: ParticleEffect)
 			else -> throw RuntimeException("Invalid emitter direction type! $dir")
 		}
 
-		val speed = particleSpeed.lerp(MathUtils.random())
-		var localRot = particleRotation.lerp(MathUtils.random()) + rotation
+		val speed = particleSpeed.lerp(Random.random())
+		var localRot = particleRotation.lerp(Random.random()) + rotation
 		val offset = this.offset.valAt(0, time)
 
 		if (particleEffect.flipX)
@@ -247,15 +243,15 @@ class Emitter(val particleEffect: ParticleEffect)
 	{
 		if (area == EmissionArea.INTERIOR)
 		{
-			val angle = -width*0.5f + MathUtils.random() * width
-			val h = MathUtils.random() * height
+			val angle = -width*0.5f + Random.random() * width
+			val h = Random.random() * height
 
 			temp.set(0f, h)
 			temp.rotate(angle)
 		}
 		else if (area == EmissionArea.BORDER)
 		{
-			val angle = -width*0.5f + MathUtils.random() * width
+			val angle = -width*0.5f + Random.random() * width
 			temp.set(0f, height)
 			temp.rotate(angle)
 		}
@@ -270,9 +266,9 @@ class Emitter(val particleEffect: ParticleEffect)
 	{
 		if (area == EmissionArea.INTERIOR)
 		{
-			val ranVal = MathUtils.random()
+			val ranVal = Random.random()
 			val sqrtRanVal = Math.sqrt(ranVal.toDouble()).toFloat()
-			val phi = MathUtils.random() * (2f * Math.PI)
+			val phi = Random.random() * (2f * Math.PI)
 			val x = sqrtRanVal * Math.cos(phi).toFloat() * (width / 2f)
 			val y = sqrtRanVal * Math.sin(phi).toFloat() * (height / 2f)
 
@@ -280,7 +276,7 @@ class Emitter(val particleEffect: ParticleEffect)
 		}
 		else if (area == EmissionArea.BORDER)
 		{
-			val phi = MathUtils.random() * (2f * Math.PI)
+			val phi = Random.random() * (2f * Math.PI)
 			val x = Math.cos(phi).toFloat() * (width / 2f)
 			val y = Math.sin(phi).toFloat() * (height / 2f)
 
@@ -306,7 +302,7 @@ class Emitter(val particleEffect: ParticleEffect)
 			for (i in 1..dists.size-1) dists[i] += dists[i-1]
 
 			val totalDist = dists.last()
-			val chosenDst = MathUtils.random() * totalDist
+			val chosenDst = Random.random() * totalDist
 
 			var i = 0
 			while (i < dists.size)
@@ -329,8 +325,8 @@ class Emitter(val particleEffect: ParticleEffect)
 		}
 		else if (area == EmissionArea.INTERIOR)
 		{
-			val x = MathUtils.random() * width - (width / 2f)
-			val y = MathUtils.random() * height - (height / 2f)
+			val x = Random.random() * width - (width / 2f)
+			val y = Random.random() * height - (height / 2f)
 
 			temp.set(x, y)
 		}

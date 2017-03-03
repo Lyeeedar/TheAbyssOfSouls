@@ -3,10 +3,8 @@ package com.lyeeedar.Renderables.Animation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.getPool
 
 class LeapAnimation : AbstractMoveAnimation
 {
@@ -107,7 +105,13 @@ class LeapAnimation : AbstractMoveAnimation
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<LeapAnimation> = getPool()
+		private val pool: Pool<LeapAnimation> = object : Pool<LeapAnimation>() {
+			override fun newObject(): LeapAnimation
+			{
+				return LeapAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): LeapAnimation
 		{

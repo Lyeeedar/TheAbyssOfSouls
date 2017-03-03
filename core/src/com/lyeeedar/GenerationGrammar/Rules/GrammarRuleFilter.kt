@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.SpaceSlot
-import java.util.*
 
 class GrammarRuleFilter : AbstractGrammarRule()
 {
@@ -22,7 +21,7 @@ class GrammarRuleFilter : AbstractGrammarRule()
 	lateinit var rule: String
 	var char: Char = ' '
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
 		val condition: (symbol: GrammarSymbol) -> Boolean = when (mode)
 		{
@@ -46,7 +45,7 @@ class GrammarRuleFilter : AbstractGrammarRule()
 		if (newArea.points.size > 0)
 		{
 			val rule = ruleTable[rule]
-			rule.execute(newArea, ruleTable, defines, variables, symbolTable, ran, deferredRules)
+			rule.execute(newArea, ruleTable, defines, variables, symbolTable, seed, deferredRules)
 		}
 	}
 

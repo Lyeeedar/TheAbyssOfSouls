@@ -14,10 +14,8 @@ import com.lyeeedar.GenerationGrammar.Rules.DeferredRule
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
-import com.lyeeedar.Util.Array2D
-import com.lyeeedar.Util.children
-import com.lyeeedar.Util.getXml
-import com.lyeeedar.Util.round
+import com.lyeeedar.Util.*
+import com.lyeeedar.Util.Random
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
@@ -34,9 +32,10 @@ class GenerationGrammar
 
 	fun generate(seed: Long, engine: Engine): Level
 	{
-		val ran = Random(seed)
-		val width = width.evaluate(ran = ran).round()
-		val height = height.evaluate(ran = ran).round()
+		val rng = Random.obtainTS(seed)
+
+		val width = width.evaluate(seed = rng.nextLong()).round()
+		val height = height.evaluate(seed = rng.nextLong()).round()
 
 		val symbolGrid = Array2D<GrammarSymbol>(width, height) { x, y -> GrammarSymbol(' ') }
 		val area = Area()
@@ -52,8 +51,10 @@ class GenerationGrammar
 		DeferredRule.reset()
 
 		runBlocking {
-			rule.execute(area, ruleTable, ObjectMap(), ObjectFloatMap(), ObjectMap(), ran, deferred)
+			rule.execute(area, ruleTable, ObjectMap(), ObjectFloatMap(), ObjectMap(), rng.nextLong(), deferred)
 		}
+
+		rng.freeTS()
 
 		while (deferred.size > 0)
 		{
@@ -61,7 +62,7 @@ class GenerationGrammar
 			for (deferredRule in deferred)
 			{
 				runBlocking {
-					deferredRule.execute(ruleTable, ran, newDeferred)
+					deferredRule.execute(ruleTable, newDeferred)
 				}
 			}
 

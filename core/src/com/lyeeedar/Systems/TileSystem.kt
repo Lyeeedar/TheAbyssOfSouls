@@ -1,7 +1,6 @@
 package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.AI.Tasks.TaskInterrupt
 import com.lyeeedar.Components.*
@@ -15,6 +14,7 @@ import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Future
+import com.lyeeedar.Util.Random
 import ktx.collections.set
 
 class TileSystem : AbstractSystem()
@@ -118,7 +118,7 @@ class TileSystem : AbstractSystem()
 					if (e.pos().position == tile && entity.renderable().renderable.animation == null && entity.renderable().renderable.visible && entity.getComponent(MarkedForDeletionComponent::class.java) == null)
 					{
 						entity.renderable().renderable.animation = ExpandAnimation.obtain().set(0.3f, 1f, 0f)
-						entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.3f, MathUtils.random(-50f, 50f))
+						entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.3f, Random.random(-50f, 50f))
 						Future.call(
 								{
 									entity.renderable().renderable.visible = false
@@ -136,7 +136,7 @@ class TileSystem : AbstractSystem()
 				if (entity.renderable().renderable.animation == null && entity.renderable().renderable.visible && entity.getComponent(MarkedForDeletionComponent::class.java) == null)
 				{
 					entity.renderable().renderable.animation = ExpandAnimation.obtain().set(0.3f, 1f, 0f)
-					entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.3f, MathUtils.random(-50f, 50f))
+					entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.3f, Random.random(-50f, 50f))
 					Future.call(
 							{
 								entity.renderable().renderable.visible = false
@@ -163,7 +163,7 @@ class TileSystem : AbstractSystem()
 		{
 			val direction = water.flowDir
 
-			val doFlow = MathUtils.random(1f)
+			val doFlow = Random.random()
 			if (doFlow <= water.flowChance)
 			{
 				val prev = (pos.position as Tile)

@@ -1,9 +1,7 @@
 package com.lyeeedar.Renderables.Animation
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Util.Colour
 
@@ -64,7 +62,13 @@ class AlphaAnimation() : AbstractColourAnimation()
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<AlphaAnimation> = Pools.get( AlphaAnimation::class.java, Int.MAX_VALUE )
+		private val pool: Pool<AlphaAnimation> = object : Pool<AlphaAnimation>() {
+			override fun newObject(): AlphaAnimation
+			{
+				return AlphaAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): AlphaAnimation
 		{

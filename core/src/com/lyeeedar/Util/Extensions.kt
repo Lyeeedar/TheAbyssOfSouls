@@ -1,14 +1,10 @@
 package com.lyeeedar.Util
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 
 /**
  * Created by Philip on 04-Jul-16.
  */
-
-inline fun <reified T : Any> getPool(): Pool<T> = Pools.get(T::class.java, Int.MAX_VALUE)
 
 fun String.neaten() = this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase()
 
