@@ -7,11 +7,14 @@ import com.lyeeedar.AI.Tasks.TaskInterrupt
 import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Renderables.Animation.ExpandAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.Animation.SpinAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Future
 import ktx.collections.set
 
 class TileSystem : AbstractSystem()
@@ -21,6 +24,7 @@ class TileSystem : AbstractSystem()
 		for (tile in level!!.grid)
 		{
 			processWater(tile)
+			processPit(tile)
 		}
 	}
 
@@ -93,6 +97,51 @@ class TileSystem : AbstractSystem()
 					}
 
 					entity.add(additional)
+				}
+			}
+		}
+	}
+
+	fun processPit(tile: Tile)
+	{
+		val pit = tile.contents[SpaceSlot.FLOOR]?.pit() ?: return
+
+		for (slot in SpaceSlot.EntityValues)
+		{
+			val entity = tile.contents[slot] ?: continue
+
+			val trailing = entity.trailing()
+			if (trailing != null)
+			{
+				for (e in trailing.entities)
+				{
+					if (e.pos().position == tile && entity.renderable().renderable.animation == null && entity.renderable().renderable.visible && entity.getComponent(MarkedForDeletionComponent::class.java) == null)
+					{
+						entity.renderable().renderable.animation = ExpandAnimation.obtain().set(0.3f, 1f, 0f)
+						entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.3f, MathUtils.random(-50f, 50f))
+						Future.call(
+								{
+									entity.renderable().renderable.visible = false
+
+									if (trailing.entities.all { !it.renderable().renderable.visible })
+									{
+										entity.add(MarkedForDeletionComponent())
+									}
+								}, 0.25f)
+					}
+				}
+			}
+			else
+			{
+				if (entity.renderable().renderable.animation == null && entity.renderable().renderable.visible && entity.getComponent(MarkedForDeletionComponent::class.java) == null)
+				{
+					entity.renderable().renderable.animation = ExpandAnimation.obtain().set(0.3f, 1f, 0f)
+					entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.3f, MathUtils.random(-50f, 50f))
+					Future.call(
+							{
+								entity.renderable().renderable.visible = false
+								entity.add(MarkedForDeletionComponent())
+							}, 0.25f)
 				}
 			}
 		}

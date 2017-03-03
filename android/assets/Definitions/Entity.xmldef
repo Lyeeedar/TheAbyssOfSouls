@@ -38,6 +38,7 @@
 			<Data Name="Occludes" meta:RefKey="Struct">
 				<Data Name="Occludes" meta:RefKey="Boolean" />
 			</Data>
+			<Data Name="Pit" SkipIfDefault="False" meta:RefKey="Struct" />
 			<Data Name="Position" meta:RefKey="Struct">
 				<Data Name="SpaceSlot" EnumValues="Entity,BelowEntity,AboveEntity" meta:RefKey="Enum" />
 				<Data Name="Size" Type="Int" Min="1" Default="1" meta:RefKey="Number" />

@@ -64,11 +64,26 @@ class TrailingEntityComponent : AbstractComponent()
 				if (prevTile.contents[entity.pos().slot] == entity) prevTile.contents[entity.pos().slot] = null
 				if (!target.contents.containsKey(entity.pos().slot)) target.contents[entity.pos().slot] = entity
 
-				entity.renderable().renderable.rotation = getRotation(prevTile, target)
-				entity.renderable().renderable.animation = MoveAnimation.obtain().set(target, prevTile, 0.15f)
+				if (prevTile != target)
+				{
+					entity.renderable().renderable.rotation = getRotation(prevTile, target)
+					entity.renderable().renderable.animation = MoveAnimation.obtain().set(target, prevTile, 0.15f)
+				}
+				else
+				{
+					if (!entities[0].renderable().renderable.visible)
+					{
+						entity.renderable().renderable.visible = false
+					}
+				}
 
 				target = prevTile
 			}
+		}
+
+		if (entities.all { !it.renderable().renderable.visible })
+		{
+			entities.forEach { it.add(MarkedForDeletionComponent()) }
 		}
 	}
 }
