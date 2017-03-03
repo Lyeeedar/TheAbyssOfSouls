@@ -24,9 +24,6 @@
 					<Rule meta:RefKey="Node">bb8a0f99-9474-4a7d-b9f0-2e830eddda28</Rule>
 				</Division>
 			</Rule>
-			<Rule meta:RefKey="Defer">
-				<Rule meta:RefKey="Node">dfa6e441-a70a-4b93-824e-22e53d43f8b5</Rule>
-			</Rule>
 		</Node>
 		<Node meta:X="161.23953247070313" meta:Y="-149.12916564941406" GUID="dff7a193-1d9d-48e9-8d33-6bc2c655b8ba">
 			<!--Define base symbols-->
@@ -213,7 +210,7 @@
 				</Division>
 			</Rule>
 		</Node>
-		<Node meta:X="14.482117652893066" meta:Y="589.947509765625" GUID="dfa6e441-a70a-4b93-824e-22e53d43f8b5">
+		<Node meta:X="2333.9265620973374" meta:Y="1131.6141764322917" GUID="dfa6e441-a70a-4b93-824e-22e53d43f8b5">
 			<!--player-->
 			<Rule meta:RefKey="Filter">
 				<Mode>Character</Mode>
@@ -221,13 +218,13 @@
 				<Rule meta:RefKey="Node">0afcde94-9816-4d8e-a619-4fac3fc765b0</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="170.26458740234375" meta:Y="598.2208251953125" GUID="0afcde94-9816-4d8e-a619-4fac3fc765b0">
+		<Node meta:X="2489.7090318467881" meta:Y="1139.8874918619792" GUID="0afcde94-9816-4d8e-a619-4fac3fc765b0">
 			<Rule meta:RefKey="Take">
 				<Count>1</Count>
 				<Rule meta:RefKey="Node">bee9f08e-8767-4558-a379-0b26bc722d30</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="350.32037353515625" meta:Y="603.736328125" GUID="bee9f08e-8767-4558-a379-0b26bc722d30">
+		<Node meta:X="2669.7648179796006" meta:Y="1145.4029947916667" GUID="bee9f08e-8767-4558-a379-0b26bc722d30">
 			<Rule meta:RefKey="Symbol">
 				<Character>@</Character>
 				<Entity>
@@ -386,6 +383,9 @@
 					<Rule meta:RefKey="Node">31ad8aef-f199-451e-b97a-1fd4212e86ca</Rule>
 				</Split>
 			</Rule>
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">dfa6e441-a70a-4b93-824e-22e53d43f8b5</Rule>
+			</Rule>
 		</Node>
 		<Node meta:X="2277.83251953125" meta:Y="478.6439208984375" GUID="2254a0c8-0d46-4dbf-9ae9-47c85c1bbcc2">
 			<!--Altar-->
@@ -435,7 +435,7 @@
 				<Overwrite>true</Overwrite>
 			</Rule>
 		</Node>
-		<Node meta:X="230.43140298906718" meta:Y="307.39952335425579" GUID="bb8a0f99-9474-4a7d-b9f0-2e830eddda28">
+		<Node meta:X="230.431396484375" meta:Y="307.3995361328125" GUID="bb8a0f99-9474-4a7d-b9f0-2e830eddda28">
 			<Rule meta:RefKey="Symbol">
 				<Character>v</Character>
 				<Floor>

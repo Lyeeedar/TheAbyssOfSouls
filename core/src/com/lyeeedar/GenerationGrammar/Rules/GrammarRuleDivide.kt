@@ -23,7 +23,7 @@ class GrammarRuleDivide : AbstractGrammarRule()
 	{
 		area.xMode = onX
 
-		val jobs = Array<Job>()
+		val jobs = Array<Job>(divisions.size)
 
 		if (onX)
 		{

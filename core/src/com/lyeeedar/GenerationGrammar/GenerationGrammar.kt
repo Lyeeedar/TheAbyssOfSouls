@@ -40,6 +40,8 @@ class GenerationGrammar
 
 		val symbolGrid = Array2D<GrammarSymbol>(width, height) { x, y -> GrammarSymbol(' ') }
 		val area = Area()
+		area.allowedBoundsWidth = width
+		area.allowedBoundsHeight = height
 		area.width = width
 		area.height = height
 		area.grid = symbolGrid
@@ -70,7 +72,7 @@ class GenerationGrammar
 		level.grid = Array2D(width, height) { x, y -> Tile() }
 
 		runBlocking {
-			val jobs = Array<Job>()
+			val jobs = Array<Job>(width * height)
 			for (x in 0..width-1)
 			{
 				for (y in 0..height-1)

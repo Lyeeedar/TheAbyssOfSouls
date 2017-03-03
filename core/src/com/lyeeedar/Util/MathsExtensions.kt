@@ -71,3 +71,5 @@ fun Float.abs() = Math.abs(this)
 fun Float.ciel() = MathUtils.ceil(this)
 fun Float.floor() = MathUtils.floor(this)
 fun Float.round() = MathUtils.round(this)
+
+fun Float.lerp(target: Float, alpha: Float) = MathUtils.lerp(this, target, alpha)

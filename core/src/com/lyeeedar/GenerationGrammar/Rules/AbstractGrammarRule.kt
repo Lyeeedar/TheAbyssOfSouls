@@ -29,6 +29,11 @@ abstract class AbstractGrammarRule
 				symbolTable: ObjectMap<Char, GrammarSymbol>,
 				ran: Random, deferredRules: Array<DeferredRule>): Job
 	{
+		area.allowedBoundsX = area.x
+		area.allowedBoundsY = area.y
+		area.allowedBoundsWidth = area.width
+		area.allowedBoundsHeight = area.height
+
 		val newDefines = ObjectMap<String, String>(defines.size)
 		newDefines.putAll(defines)
 

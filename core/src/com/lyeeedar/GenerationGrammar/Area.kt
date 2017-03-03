@@ -8,32 +8,37 @@ import com.lyeeedar.Util.Array2D
 
 class Area
 {
+	var allowedBoundsX: Int = 0
+	var allowedBoundsY: Int = 0
+	var allowedBoundsWidth: Int = 0
+	var allowedBoundsHeight: Int = 0
+
 	var x: Int = 0
 		set(value)
 		{
 			field = value
-			if (value < 0 || value >= grid.width) throw Exception("Invalid area x '$value'!")
+			if (value < allowedBoundsX || value > allowedBoundsX + allowedBoundsWidth) throw Exception("Invalid area x '$value'!")
 		}
 
 	var y: Int = 0
 		set(value)
 		{
 			field = value
-			if (value < 0 || value >= grid.height) throw Exception("Invalid area y '$value'!")
+			if (value < allowedBoundsY || value > allowedBoundsY + allowedBoundsHeight) throw Exception("Invalid area y '$value'!")
 		}
 
 	var width: Int = 0
 		set(value)
 		{
 			field = value
-			if (value < 0) throw Exception("Invalid area width '$value'!")
+			if (value < 0 || value > allowedBoundsWidth) throw Exception("Invalid area width '$value'!")
 		}
 
 	var height: Int = 0
 		set(value)
 		{
 			field = value
-			if (value < 0) throw Exception("Invalid area height '$value'!")
+			if (value < 0 || value > allowedBoundsHeight) throw Exception("Invalid area height '$value'!")
 		}
 
 	lateinit var grid: Array2D<GrammarSymbol>
@@ -149,6 +154,11 @@ class Area
 	{
 		val area = Area()
 		area.grid = grid
+		area.allowedBoundsX = allowedBoundsX
+		area.allowedBoundsY = allowedBoundsY
+		area.allowedBoundsWidth = allowedBoundsWidth
+		area.allowedBoundsHeight = allowedBoundsHeight
+
 		area.x = x
 		area.y = y
 		area.width = width

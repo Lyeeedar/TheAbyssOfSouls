@@ -27,7 +27,7 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 		var current = 0
 		val totalSize = area.size
 
-		val jobs = Array<Job>()
+		val jobs = Array<Job>(8)
 
 		while (current < totalSize)
 		{

@@ -26,6 +26,20 @@
 				<Text>*To cleanse your mortal sins you must help others to pass on. Bring [Important]Lost Souls[] and offer them up to be cleansed of the sin of sloth.*</Text>
 				<Italics>true</Italics>
 			</Action>
+			<Action meta:RefKey="Choice">
+				<Choice>
+					<Text>Poke the altar with your finger.</Text>
+					<Node meta:RefKey="Node">9c9b9534-5263-4be6-8edc-570ac439df40</Node>
+				</Choice>
+				<Choice>
+					<Text>Do nothing</Text>
+				</Choice>
+			</Action>
+		</Node>
+		<Node meta:X="954" meta:Y="181.33332824707031" GUID="9c9b9534-5263-4be6-8edc-570ac439df40">
+			<Action meta:RefKey="Line">
+				<Text>Nothing happens</Text>
+			</Action>
 		</Node>
 	</Nodes>
 </Interaction>

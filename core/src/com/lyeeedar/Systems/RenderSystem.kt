@@ -13,6 +13,7 @@ import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Colour
+import com.lyeeedar.Util.lerp
 
 class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).one(RenderableComponent::class.java).get())
 {
@@ -33,6 +34,12 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 			field = value
 			renderer.tileSize = value
 		}
+
+	var isAnimatingTileSize = false
+	var startTileSize = 0f
+	var targetTileSize = 0f
+	var tileSizeProgress = 0f
+	var tileSizeDuration = 0f
 
 	val hpbarBack = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarBack.png")!!, 4, 4, 4, 4)
 	val hpbarBar = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarFront.png")!!, 4, 4, 4, 4)
@@ -110,6 +117,18 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 		})
 	}
 
+	fun setTileSizeAnimated(targetSize: Float, duration: Float)
+	{
+		if (tileSize == targetSize) return
+
+		startTileSize = tileSize
+		targetTileSize = targetSize
+		tileSizeProgress = 0f
+		tileSizeDuration = duration
+
+		isAnimatingTileSize = true
+	}
+
 	override fun onLevelChanged()
 	{
 		if (level != null)
@@ -121,6 +140,19 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 	override fun doUpdate(deltaTime: Float)
 	{
 		if (level == null) return
+
+		if (isAnimatingTileSize)
+		{
+			tileSizeProgress += deltaTime
+
+			tileSize = startTileSize.lerp(targetTileSize, tileSizeProgress / tileSizeDuration)
+
+			if (tileSizeProgress > tileSizeDuration)
+			{
+				tileSize = targetTileSize
+				isAnimatingTileSize = false
+			}
+		}
 
 		val player = level!!.player
 		val playerPos = player.pos()

@@ -28,7 +28,7 @@ class GrammarRuleSplit : AbstractGrammarRule()
 
 	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, ran: Random, deferredRules: Array<DeferredRule>)
 	{
-		val jobs = Array<Job>()
+		val jobs = Array<Job>(splits.size)
 
 		var currentArea = area.copy()
 		for (i in 0..splits.size-1)

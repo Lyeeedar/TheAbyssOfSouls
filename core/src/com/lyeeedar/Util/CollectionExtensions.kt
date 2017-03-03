@@ -28,7 +28,7 @@ fun <T> Sequence<T>.random() = if (this.count() > 0) this.elementAt(MathUtils.ra
 fun <T> Sequence<T>.random(ran: Random) = if (this.count() > 0) this.elementAt(ran.nextInt(this.count())) else null
 inline fun <reified T> Sequence<T>.random(num: Int): Sequence<T>
 {
-	val array = Array<T>()
+	val array = Array<T>(this.count())
 	for (item in this) array.add(item)
 
 	val outArray = Array<T>()
@@ -42,7 +42,7 @@ inline fun <reified T> Sequence<T>.random(num: Int): Sequence<T>
 }
 inline fun <reified T> Sequence<T>.random(num: Int, ran: Random): Sequence<T>
 {
-	val array = Array<T>()
+	val array = Array<T>(this.count())
 	for (item in this) array.add(item)
 
 	val outArray = Array<T>()

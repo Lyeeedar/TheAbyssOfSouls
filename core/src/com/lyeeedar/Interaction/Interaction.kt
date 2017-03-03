@@ -29,6 +29,12 @@ class Interaction
 		{
 			if (interactionStack.size == 0) break
 			val current = interactionStack.last()
+			if (current.index == current.node.actions.size)
+			{
+				interactionStack.removeValue(current, true)
+				continue
+			}
+
 			val action = current.node.actions[current.index]
 
 			val advance = action.interact(entity, this)

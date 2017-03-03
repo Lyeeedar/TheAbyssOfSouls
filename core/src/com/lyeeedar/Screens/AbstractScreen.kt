@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Scaling
 import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.lyeeedar.Global
+import com.lyeeedar.UI.ButtonKeyboardHelper
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Point
@@ -120,6 +121,8 @@ abstract class AbstractScreen() : Screen, InputProcessor
 
 		Global.controls.onInput(keycode)
 
+		keyboardHelper?.keyDown(keycode)
+
 		return false
 	}
 
@@ -224,6 +227,8 @@ abstract class AbstractScreen() : Screen, InputProcessor
 	var frameDuration: Float = 0f
 	var fps: Int = 0
 	var fpsAccumulator: Float = 0f
+
+	var keyboardHelper: ButtonKeyboardHelper? = null
 
 	lateinit var debugConsole: DebugConsole
 

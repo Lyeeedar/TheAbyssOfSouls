@@ -74,9 +74,8 @@ class SpawnAction() : AbstractTimelineAction()
 
 	override fun enter()
 	{
-
 		runBlocking {
-			val jobs = Array<Job>()
+			val jobs = Array<Job>(parent.destinationTiles.size)
 
 			for (tile in parent.destinationTiles)
 			{

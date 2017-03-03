@@ -59,11 +59,11 @@ class Global
 
 				if (value == null)
 				{
-					engine.render().tileSize = 40f
+					engine.render().setTileSizeAnimated(40f, 0.1f)
 				}
 				else
 				{
-					engine.render().tileSize = 50f
+					engine.render().setTileSizeAnimated(50f, 0.1f)
 				}
 			}
 
