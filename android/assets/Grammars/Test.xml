@@ -11,15 +11,15 @@
 			<Rule meta:RefKey="Fill">
 				<Character>.</Character>
 			</Rule>
-			<Rule meta:RefKey="Select">
+			<Rule meta:RefKey="Take">
 				<Count>5%</Count>
 				<Rule meta:RefKey="Node">09d6249a-6690-4127-893e-340df41ae4a9</Rule>
 			</Rule>
-			<Rule meta:RefKey="Select">
+			<Rule meta:RefKey="Take">
 				<Count>1%</Count>
 				<Rule meta:RefKey="Node">2ac26915-7492-4bfe-8bc9-8ad1fcc818b0</Rule>
 			</Rule>
-			<Rule meta:RefKey="Select">
+			<Rule meta:RefKey="Take">
 				<Count>5%</Count>
 				<Rule meta:RefKey="Node">a3691e74-1eb9-4a07-a496-17d7846bf210</Rule>
 			</Rule>
@@ -92,7 +92,7 @@
 			</Rule>
 		</Node>
 		<Node meta:X="1249.4173583984375" meta:Y="-43.133895874023438" GUID="2a7fa959-4e24-443b-8d69-07bffefb43de">
-			<Rule meta:RefKey="Select">
+			<Rule meta:RefKey="Take">
 				<Count>10%</Count>
 				<Rule meta:RefKey="Node">91b30dda-58c1-44c5-99d9-18d8ab57cf89</Rule>
 			</Rule>
@@ -116,7 +116,7 @@
 			</Rule>
 		</Node>
 		<Node meta:X="662.27203369140625" meta:Y="737.9920654296875" GUID="9ab601eb-c253-4764-8c20-a4bfb819696a">
-			<Rule meta:RefKey="Select">
+			<Rule meta:RefKey="Take">
 				<Count>1</Count>
 				<Rule meta:RefKey="Node">491eda3c-d3cd-4500-95b4-8868688193a7</Rule>
 			</Rule>

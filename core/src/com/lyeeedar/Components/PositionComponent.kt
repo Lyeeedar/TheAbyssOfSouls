@@ -9,7 +9,7 @@ import com.lyeeedar.Util.Point
 
 class PositionComponent(): AbstractComponent()
 {
-	var position: Point = Point() // bottom left pos
+	var position: Point = Point(-1, -1) // bottom left pos
 		set(value)
 		{
 			if (value != field)
@@ -33,7 +33,7 @@ class PositionComponent(): AbstractComponent()
 		set(value) { position = value }
 		get() { return position }
 
-	var max: Point = Point()
+	var max: Point = Point(-1, -1)
 
 	var size: Int = 1
 

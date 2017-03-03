@@ -10,6 +10,10 @@ import com.lyeeedar.Renderables.Animation.BlinkAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Colour
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 
 class DamageAction() : AbstractTimelineAction()
 {
@@ -70,23 +74,39 @@ class SpawnAction() : AbstractTimelineAction()
 
 	override fun enter()
 	{
-		for (tile in parent.destinationTiles)
-		{
-			val entity = EntityLoader.load(entityXml)
 
-			if (!tile.contents.containsKey(entity.pos().slot) && (ignoreWall || !tile.contents.containsKey(SpaceSlot.WALL)))
+		runBlocking {
+			val jobs = Array<Job>()
+
+			for (tile in parent.destinationTiles)
 			{
-				entity.pos().tile = tile
-				tile.contents[entity.pos().slot] = entity
+				if (tile == null) continue
 
-				Global.engine.addEntity(entity)
+				val job = launch(CommonPool)
+				{
+					val entity = EntityLoader.load(entityXml)
 
-				spawnedEntities.add(entity)
+					if (!tile.contents.containsKey(entity.pos().slot) && (ignoreWall || !tile.contents.containsKey(SpaceSlot.WALL)))
+					{
+						entity.pos().tile = tile
+						tile.contents[entity.pos().slot] = entity
+
+						synchronized(Global.engine)
+						{
+							Global.engine.addEntity(entity)
+
+							spawnedEntities.add(entity)
+						}
+					}
+					else
+					{
+						System.err.println("Tried to spawn entity '" + entity.name().name + "' in non-empty tile!")
+					}
+				}
+				jobs.add(job)
 			}
-			else
-			{
-				System.err.println("Tried to spawn entity '" + entity.name().name + "' in non-empty tile!")
-			}
+
+			for (job in jobs) job.join()
 		}
 	}
 

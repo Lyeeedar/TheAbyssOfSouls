@@ -8,13 +8,11 @@ import com.lyeeedar.Direction
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.GenerationGrammar.Pos
-import com.lyeeedar.Util.random
 import com.lyeeedar.Util.removeRandom
 import com.lyeeedar.Util.round
-import ktx.collections.toGdxArray
 import java.util.*
 
-class GrammarRuleSelect : AbstractGrammarRule()
+class GrammarRuleTake : AbstractGrammarRule()
 {
 	enum class Mode
 	{

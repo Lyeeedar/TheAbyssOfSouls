@@ -1,6 +1,25 @@
 <AI meta:X="0" meta:Y="0" xmlns:meta="Editor">
 	<Root meta:X="180.33332824707031" meta:Y="-17.666667938232422" meta:RefKey="Until">
 		<Action Key="Pos" Value="move EntityPos SOUTH 1" meta:RefKey="SetValue" />
+		<Node meta:X="496.22221713595923" meta:Y="-197.66666793823242" meta:RefKey="Sequence">
+			<Action Key="SpawnCounter" Value="SpawnCounter+1" meta:RefKey="SetValue" />
+			<Action Condition="SpawnCounter==8" meta:RefKey="Conditional" />
+			<Action Key="SpawnCounter" Value="0" meta:RefKey="SetValue" />
+			<Action meta:RefKey="Scene">
+				<HitPoints>
+					<Line>#@#</Line>
+				</HitPoints>
+				<SceneTimeline meta:RefKey="SceneTimeline">
+					<Timeline>
+						<Spawn>
+							<Entity>
+								<Extends>Water</Extends>
+							</Entity>
+						</Spawn>
+					</Timeline>
+				</SceneTimeline>
+			</Action>
+		</Node>
 		<Node meta:X="497.33334350585938" meta:Y="22.333333969116211" meta:RefKey="Sequence">
 			<Action Key="Pos" meta:RefKey="MoveTo" />
 			<Action Key="DeathCounter" Value="0" meta:RefKey="SetValue" />

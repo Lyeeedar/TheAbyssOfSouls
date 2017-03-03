@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
+import kotlin.coroutines.experimental.buildSequence
 
 fun getXml(path: String, extension: String = "xml"): XmlReader.Element
 {
@@ -28,16 +29,15 @@ fun getXml(path: String, extension: String = "xml"): XmlReader.Element
 
 fun XmlReader.Element.ranChild() = this.getChild(MathUtils.random(this.childCount-1))!!
 
-fun XmlReader.Element.children(): Array<XmlReader.Element>
+fun XmlReader.Element.children(): Sequence<XmlReader.Element>
 {
-	val els = Array<XmlReader.Element>()
-
-	for (i in 0..this.childCount-1)
-	{
-		els.add(this.getChild(i))
+	val el = this
+	return buildSequence {
+		for (i in 0..el.childCount - 1)
+		{
+			yield(el.getChild(i))
+		}
 	}
-
-	return els
 }
 
 operator fun XmlReader.Element.iterator(): Iterator<XmlReader.Element> = this.children().iterator()

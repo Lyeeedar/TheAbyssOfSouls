@@ -8,7 +8,7 @@
 		<Data Name="Rule" DefKey="Rules" meta:RefKey="Reference" />
 	</Definition>
 	<!--Rule Types-->
-	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Defer,Divide,Filter,Repeat,Rule,Select),Symbol(Fill,Prefab,Symbol)" meta:RefKey="ReferenceDef" />
+	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Defer,Divide,Filter,Repeat,Rule,Split,Take),Symbol(Fill,Prefab,Symbol)" meta:RefKey="ReferenceDef" />
 	<!--Data Rules-->
 	<Definition Name="DataScope" meta:RefKey="StructDef">
 		<Data Name="Defines" Default="True" meta:RefKey="Boolean" />
@@ -72,7 +72,17 @@
 	<Definition Name="Rule" meta:RefKey="StructDef">
 		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
 	</Definition>
-	<Definition Name="Select" Description="{Mode} ({Count})" meta:RefKey="StructDef">
+	<Definition Name="Split" HasAttributes="True" meta:RefKey="CollectionDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="Parallel" meta:RefKey="Boolean" />
+		</Attributes>
+		<Data Name="Split" Description="{Side} : {Size}" meta:RefKey="Struct">
+			<Data Name="Side" EnumValues="North,South,East,West,Remainder" meta:RefKey="Enum" />
+			<Data Name="Size" Default="1" meta:RefKey="String" />
+			<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
+		</Data>
+	</Definition>
+	<Definition Name="Take" Description="{Mode} ({Count})" meta:RefKey="StructDef">
 		<Data Name="Mode" EnumValues="Random,Edge,Corner,Center" meta:RefKey="Enum" />
 		<Data Name="Count" Default="1" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Dist" Type="Int" Min="1" Default="2" VisibleIf="Mode==Center" meta:RefKey="Number" />

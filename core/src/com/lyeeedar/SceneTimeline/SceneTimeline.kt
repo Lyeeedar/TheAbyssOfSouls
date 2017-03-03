@@ -24,14 +24,15 @@ class SceneTimeline
 	val isRunning: Boolean
 		get()
 		{
-			return timelines.any { (it.getExact(progression) as? BlockerAction)?.isBlocked != true }
+			val blocker = blocker
+			return blocker?.isBlocked != true && !isComplete
 		}
 
 	val blocker: BlockerAction?
 		get() = timelines.map { it.getExact(progression) as? BlockerAction }.firstOrNull { it != null }
 
 	val isComplete: Boolean
-		get() = progression > duration
+		get() = progression >= duration && timelines.all { it.actions.last().isExited }
 
 	val duration: Float by lazy { timelines.map { it.duration }.max()!! }
 

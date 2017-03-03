@@ -11,7 +11,19 @@
 			<Renderables>
 				<Renderable meta:RefKey="Sprite">
 					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+					<Colour>242,242,242,250</Colour>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+					<Colour>237,236,236,239</Colour>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
 					<Colour>224,222,222,229</Colour>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+					<Colour>209,209,209,217</Colour>
 				</Renderable>
 				<Renderable meta:RefKey="Sprite">
 					<Name>Oryx/uf_split/uf_terrain/water_green</Name>

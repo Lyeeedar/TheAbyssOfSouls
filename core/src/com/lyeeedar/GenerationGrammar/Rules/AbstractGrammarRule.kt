@@ -63,9 +63,10 @@ abstract class AbstractGrammarRule
 				"PREFAB" -> GrammarRulePrefab()
 				"ROTATE" -> GrammarRuleRotate()
 				"RULE" -> GrammarRuleRule()
-				"SELECT" -> GrammarRuleSelect()
 				"SCALE" -> GrammarRuleScale()
+				"SPLIT" -> GrammarRuleSplit()
 				"SYMBOL" -> GrammarRuleSymbol()
+				"TAKE" -> GrammarRuleTake()
 				"TRANSLATE" -> GrammarRuleTranslate()
 
 				else -> throw NotImplementedError("Unknown rule type: " + xml.name.toUpperCase())

@@ -126,7 +126,7 @@ class TileSystem : AbstractSystem()
 
 					entity.renderable().renderable.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
 
-					entity.task().tasks.add(TaskInterrupt())
+					entity.task()?.tasks?.add(TaskInterrupt())
 				}
 			}
 		}
