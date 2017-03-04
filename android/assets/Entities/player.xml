@@ -7,25 +7,29 @@
 				<Animation>
 					<Name>idle</Name>
 					<Up meta:RefKey="Sprite">
-						<Name>player</Name>
+						<Name>Oryx/Custom/heroes/wraith_w</Name>
 						<DrawActualSize>true</DrawActualSize>
+						<Blend>true</Blend>
 					</Up>
 					<Down meta:RefKey="Sprite">
-						<Name>player</Name>
+						<Name>Oryx/Custom/heroes/wraith_w</Name>
 						<DrawActualSize>true</DrawActualSize>
+						<Blend>true</Blend>
 					</Down>
 				</Animation>
 				<Animation>
 					<Name>attack</Name>
 					<Up meta:RefKey="Sprite">
-						<Name>player</Name>
+						<Name>Oryx/Custom/heroes/wraith_w_atk</Name>
 						<DrawActualSize>true</DrawActualSize>
-						<Colour>250,144,144,255</Colour>
+						<UpdateRate>0.25</UpdateRate>
+						<Blend>true</Blend>
 					</Up>
 					<Down meta:RefKey="Sprite">
-						<Name>player</Name>
+						<Name>Oryx/Custom/heroes/wraith_w_atk</Name>
 						<DrawActualSize>true</DrawActualSize>
-						<Colour>250,144,144,255</Colour>
+						<UpdateRate>0.25</UpdateRate>
+						<Blend>true</Blend>
 					</Down>
 				</Animation>
 			</Animations>

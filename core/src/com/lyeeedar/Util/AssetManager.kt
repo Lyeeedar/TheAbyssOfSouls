@@ -1,25 +1,16 @@
 package com.lyeeedar.Util
 
-import java.nio.IntBuffer
-import java.util.HashMap
-
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
-import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Pixmap
-import com.badlogic.gdx.graphics.Pixmap.Format
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.Texture.TextureFilter
 import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.PixmapPacker
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.BufferUtils
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Renderables.Animation.AbstractAnimation
@@ -28,6 +19,7 @@ import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Renderables.Sprite.DirectionalSprite
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
+import java.util.*
 
 class AssetManager
 {
@@ -293,6 +285,7 @@ class AssetManager
 					xml.getBoolean("DrawActualSize", false))
 
 			sprite.repeatDelay = xml.getFloat("RepeatDelay", 0f)
+			sprite.frameBlend = xml.getBoolean("Blend", false)
 
 			val animationElement = xml.getChildByName("Animation")
 			if (animationElement != null)

@@ -227,7 +227,13 @@ class AStarPathfind<T: IPathfindingTile>(private val grid: Array2D<T>, startx: I
 	{
 		private val NormalOffsets = arrayOf(intArrayOf(-1, 0), intArrayOf(0, -1), intArrayOf(+1, 0), intArrayOf(0, +1))
 
-		private val pool = Pools.get(Node::class.java, Integer.MAX_VALUE)
+		private val pool = object : Pool<Node>() {
+			override fun newObject(): Node
+			{
+				return Node()
+			}
+
+		}
 	}
 
 }

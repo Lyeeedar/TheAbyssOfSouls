@@ -1,6 +1,9 @@
 package com.lyeeedar.Util
 
-import com.badlogic.gdx.graphics.g2d.*
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 
 inline fun draw(batch: Batch, region: TextureRegion,
@@ -14,7 +17,7 @@ inline fun draw(batch: Batch, region: TextureRegion,
 	}
 	else if (batch is HDRColourSpriteBatch)
 	{
-		doDraw(batch, region, batch.colour, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
+		doDraw(batch, region, region, batch.colour, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount, 0f)
 	}
 	else
 	{
@@ -45,17 +48,7 @@ inline fun drawBlend(batch: Batch, region1: TextureRegion, region2: TextureRegio
 	}
 	else if (batch is HDRColourSpriteBatch)
 	{
-		tempCol1.set(batch.colour)
-
-		tempCol2.set(tempCol1)
-		tempCol2.a *= 1f - blendAlpha
-
-		doDraw(batch, region1, tempCol2, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
-
-		tempCol2.set(tempCol1)
-		tempCol2.a *= blendAlpha
-
-		doDraw(batch, region2, tempCol2, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
+		doDraw(batch, region1, region2, batch.colour, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount, blendAlpha)
 	}
 	else
 	{
@@ -65,48 +58,48 @@ inline fun drawBlend(batch: Batch, region1: TextureRegion, region2: TextureRegio
 
 // 4 vertices of order x, y, colour, u, v
 val verticesSpriteBatch: FloatArray by lazy { FloatArray(4 * 5) }
-val verticesHdrBatchBatch: FloatArray by lazy { FloatArray(4 * 8) }
+val verticesHdrBatchBatch: FloatArray by lazy { FloatArray(4 * 11) }
 inline fun doDraw(batch: SpriteBatch, region: TextureRegion, packedColor: Float,
 		   x: Float, y: Float, originX: Float, originY: Float,
 		   width: Float, height: Float, scaleX: Float, scaleY: Float,
 		   rotation: Float, flipX: Boolean, flipY: Boolean, removeAmount: Float)
 {
-	val (x1, x2, x3, x4, y1, y2, y3, y4, u, u2, v, v2) = calculateVertexData(region, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
+	val (x1, x2, x3, x4, y1, y2, y3, y4, r1u, r1u2, r1v, r1v2, r2u, r2u2, r2v, r2v2) = calculateVertexData(region, region, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
 
 	val vertices = verticesSpriteBatch
 	vertices[0] = x1
 	vertices[1] = y1
 	vertices[2] = packedColor
-	vertices[3] = u
-	vertices[4] = v
+	vertices[3] = r1u
+	vertices[4] = r1v
 
 	vertices[5] = x2
 	vertices[6] = y2
 	vertices[7] = packedColor
-	vertices[8] = u
-	vertices[9] = v2
+	vertices[8] = r1u
+	vertices[9] = r1v2
 
 	vertices[10] = x3
 	vertices[11] = y3
 	vertices[12] = packedColor
-	vertices[13] = u2
-	vertices[14] = v2
+	vertices[13] = r1u2
+	vertices[14] = r1v2
 
 	vertices[15] = x4
 	vertices[16] = y4
 	vertices[17] = packedColor
-	vertices[18] = u2
-	vertices[19] = v
+	vertices[18] = r1u2
+	vertices[19] = r1v
 
 	batch.draw(region.texture, vertices, 0, 20)
 }
 
-inline fun doDraw(batch: HDRColourSpriteBatch, region: TextureRegion, colour: Colour,
+inline fun doDraw(batch: HDRColourSpriteBatch, region1: TextureRegion, region2: TextureRegion, colour: Colour,
 		   x: Float, y: Float, originX: Float, originY: Float,
 		   width: Float, height: Float, scaleX: Float, scaleY: Float,
-		   rotation: Float, flipX: Boolean, flipY: Boolean, removeAmount: Float)
+		   rotation: Float, flipX: Boolean, flipY: Boolean, removeAmount: Float, blendAlpha: Float)
 {
-	val (x1, x2, x3, x4, y1, y2, y3, y4, u, u2, v, v2) = calculateVertexData(region, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
+	val (x1, x2, x3, x4, y1, y2, y3, y4, r1u, r1u2, r1v, r1v2, r2u, r2u2, r2v, r2v2) = calculateVertexData(region1, region2, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
 
 	val vertices = verticesHdrBatchBatch
 	vertices[0] = x1
@@ -115,40 +108,52 @@ inline fun doDraw(batch: HDRColourSpriteBatch, region: TextureRegion, colour: Co
 	vertices[3] = colour.g
 	vertices[4] = colour.b
 	vertices[5] = colour.a
-	vertices[6] = u
-	vertices[7] = v
+	vertices[6] = r1u
+	vertices[7] = r1v
+	vertices[8] = r2u
+	vertices[9] = r2v
+	vertices[10] = blendAlpha
 
-	vertices[8] = x2
-	vertices[9] = y2
-	vertices[10] = colour.r
-	vertices[11] = colour.g
-	vertices[12] = colour.b
-	vertices[13] = colour.a
-	vertices[14] = u
-	vertices[15] = v2
+	vertices[11] = x2
+	vertices[12] = y2
+	vertices[13] = colour.r
+	vertices[14] = colour.g
+	vertices[15] = colour.b
+	vertices[16] = colour.a
+	vertices[17] = r1u
+	vertices[18] = r1v2
+	vertices[19] = r2u
+	vertices[20] = r2v2
+	vertices[21] = blendAlpha
 
-	vertices[16] = x3
-	vertices[17] = y3
-	vertices[18] = colour.r
-	vertices[19] = colour.g
-	vertices[20] = colour.b
-	vertices[21] = colour.a
-	vertices[22] = u2
-	vertices[23] = v2
+	vertices[22] = x3
+	vertices[23] = y3
+	vertices[24] = colour.r
+	vertices[25] = colour.g
+	vertices[26] = colour.b
+	vertices[27] = colour.a
+	vertices[28] = r1u2
+	vertices[29] = r1v2
+	vertices[30] = r2u2
+	vertices[31] = r2v2
+	vertices[32] = blendAlpha
 
-	vertices[24] = x4
-	vertices[25] = y4
-	vertices[26] = colour.r
-	vertices[27] = colour.g
-	vertices[28] = colour.b
-	vertices[29] = colour.a
-	vertices[30] = u2
-	vertices[31] = v
+	vertices[33] = x4
+	vertices[34] = y4
+	vertices[35] = colour.r
+	vertices[36] = colour.g
+	vertices[37] = colour.b
+	vertices[38] = colour.a
+	vertices[39] = r1u2
+	vertices[40] = r1v
+	vertices[41] = r2u2
+	vertices[42] = r2v
+	vertices[43] = blendAlpha
 
-	batch.drawVertices(region.texture, vertices, 0, 32)
+	batch.drawVertices(region1.texture, vertices, 0, 44)
 }
 
-inline fun calculateVertexData(region: TextureRegion,
+inline fun calculateVertexData(region1: TextureRegion, region2: TextureRegion,
 							   x: Float, y: Float, originX: Float, originY: Float,
 							   width: Float, height: Float, scaleX: Float, scaleY: Float,
 							   rotation: Float, flipX: Boolean, flipY: Boolean, removeAmount: Float): VertexData
@@ -231,10 +236,15 @@ inline fun calculateVertexData(region: TextureRegion,
 	x4 += worldOriginX
 	y4 += worldOriginY
 
-	val u = if (flipX) region.u2 else region.u
-	var v = if (flipY) region.v else region.v2
-	val u2 = if (flipX) region.u else region.u2
-	val v2 = if (flipY) region.v2 else region.v
+	val r1u = if (flipX) region1.u2 else region1.u
+	var r1v = if (flipY) region1.v else region1.v2
+	val r1u2 = if (flipX) region1.u else region1.u2
+	val r1v2 = if (flipY) region1.v2 else region1.v
+
+	val r2u = if (flipX) region2.u2 else region2.u
+	var r2v = if (flipY) region2.v else region2.v2
+	val r2u2 = if (flipX) region2.u else region2.u2
+	val r2v2 = if (flipY) region2.v2 else region2.v
 
 	if (removeAmount > 0f)
 	{
@@ -245,13 +255,17 @@ inline fun calculateVertexData(region: TextureRegion,
 		y2 += yMove / 2f
 		y3 += yMove / 2f
 
-		val vMove = (v-v2) * removeAmount
-		v -= vMove
+		val vMove1 = (r1v-r1v2) * removeAmount
+		r1v -= vMove1
+
+		val vMove2 = (r2v-r2v2) * removeAmount
+		r2v -= vMove2
 	}
 
-	return VertexData(x1, x2, x3, x4, y1, y2, y3, y4, u, u2, v, v2)
+	return VertexData(x1, x2, x3, x4, y1, y2, y3, y4, r1u, r1u2, r1v, r1v2, r2u, r2u2, r2v, r2v2)
 }
 data class VertexData(
 		val x1: Float, val x2: Float, val x3: Float, val x4: Float,
 		val y1: Float, val y2: Float, val y3: Float, val y4: Float,
-		val u: Float, val u2: Float, val v: Float, val v2: Float)
+		val r1u: Float, val r1u2: Float, val r1v: Float, val r1v2: Float,
+		val r2u: Float, val r2u2: Float, val r2v: Float, val r2v2: Float)

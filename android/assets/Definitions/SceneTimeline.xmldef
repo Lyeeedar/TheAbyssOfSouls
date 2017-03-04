@@ -1,28 +1,29 @@
 <Definitions xmlns:meta="Editor">
 	<Definition Name="SceneTimeline" meta:RefKey="Collection">
 		<Data Name="Timeline" Interpolate="False" SkipIfDefault="False" meta:RefKey="Timeline">
-			<Keyframe Name="Blocker" Background="24,186,97,158" meta:RefKey="Keyframe">
+			<!--Blocker-->
+			<Keyframe Name="Blocker" Background="255,255,255,148" meta:RefKey="Keyframe">
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="BlockOnTurn" meta:RefKey="Boolean" />
 				<Data Name="Count" Default="1" meta:RefKey="String" />
 			</Keyframe>
 			<!--Renderable-->
 			<Keyframe Name="DestinationRenderable" Background="75,166,173,101" HasDuration="True" meta:RefKey="Keyframe">
-				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="RenderablePerTile" meta:RefKey="Boolean" />
 				<Data Name="KillOnEnd" Default="True" meta:RefKey="Boolean" />
 			</Keyframe>
 			<Keyframe Name="MovementRenderable" Background="49,181,114,94" HasDuration="True" meta:RefKey="Keyframe">
-				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="UseLeap" meta:RefKey="Boolean" />
 			</Keyframe>
-			<Keyframe Name="Screenshake" HasDuration="True" meta:RefKey="Keyframe">
-				<Time Name="Time" Min="0" meta:RefKey="Number" />
+			<Keyframe Name="Screenshake" Background="85,94,232,81" HasDuration="True" meta:RefKey="Keyframe">
 				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="Strength" meta:RefKey="Number" />
 				<Data Name="Speed" Min="1" Default="10" meta:RefKey="Number" />
 			</Keyframe>
@@ -34,21 +35,20 @@
 				<Data Name="ElementalConversion" Min="0" Max="1" Default="0.5" VisibleIf="Element!=None" meta:RefKey="Number" />
 			</Keyframe>
 			<Keyframe Name="Spawn" Background="237,245,87,60" HasDuration="True" meta:RefKey="Keyframe">
-				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="DeleteOnExit" meta:RefKey="Boolean" />
 				<Data Name="IgnoreWall" meta:RefKey="Boolean" />
 				<Data Name="Entity" Extends="Entity" meta:RefKey="Struct" />
 			</Keyframe>
 			<!--Movement-->
-			<Keyframe Name="MoveSource" meta:RefKey="Keyframe">
+			<Keyframe Name="MoveSource" Background="227,101,203,118" meta:RefKey="Keyframe">
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
-				<Data Name="MoveType" EnumValues="Move,Leap,Charge,Roll,Teleport" meta:RefKey="Enum" />
+				<Data Name="MoveType" EnumValues="Move,Leap,Roll,Teleport" meta:RefKey="Enum" />
 			</Keyframe>
-			<Keyframe Name="MoveTarget" meta:RefKey="Keyframe">
+			<Keyframe Name="MoveTarget" Background="183,110,191,118" meta:RefKey="Keyframe">
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
-				<Data Name="MoveType" EnumValues="Move,Leap,Charge,Roll,Teleport" meta:RefKey="Enum" />
-				<Data Name="Direction" EnumValues="Towards,Away" meta:RefKey="Enum" />
+				<Data Name="MoveType" EnumValues="Move,Leap,Roll,Teleport" meta:RefKey="Enum" />
 			</Keyframe>
 		</Data>
 	</Definition>
