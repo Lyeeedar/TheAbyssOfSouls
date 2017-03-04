@@ -478,7 +478,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueTexture(texture: TextureRegion, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, width: Float = 1f, height: Float = 1f, scaleX: Float = 1f, scaleY: Float = 1f)
+	fun queueTexture(texture: TextureRegion, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, width: Float = 1f, height: Float = 1f, scaleX: Float = 1f, scaleY: Float = 1f, sortX: Float? = null, sortY: Float? = null)
 	{
 		if (!inBegin) throw Exception("Queue called before begin!")
 
@@ -499,7 +499,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		if (localx + localw < 0 || localx > Global.stage.width || localy + localh < 0 || localy > Global.stage.height) return
 
-		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
+		val comparisonVal = getComparisonVal((sortX ?: lx).toInt(), (sortY ?: ly).toInt(), layer, index, BlendMode.MULTIPLICATIVE)
 
 		val rs = RenderSprite.obtain().set( null, null, texture, null, x, y, ix, iy, colour, width, height, 0f, scaleX, scaleY, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 

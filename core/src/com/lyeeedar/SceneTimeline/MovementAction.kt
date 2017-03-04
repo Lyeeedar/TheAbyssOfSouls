@@ -1,8 +1,11 @@
 package com.lyeeedar.SceneTimeline
 
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.AI.Tasks.TaskInterrupt
 import com.lyeeedar.Components.pos
 import com.lyeeedar.Components.renderable
+import com.lyeeedar.Components.stats
+import com.lyeeedar.Components.task
 import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Pathfinding.BresenhamLine
@@ -89,6 +92,12 @@ private fun doMove(src: Tile, dst: Tile, type: MovementType)
 {
 	val entity = src.contents[SpaceSlot.ENTITY] ?: return
 	val pos = entity.pos() ?: return
+	val stats = entity.stats() ?: return
+	if (stats.invulnerable || stats.blocking)
+	{
+		stats.blockedDamage = true
+		return
+	}
 
 	val path = BresenhamLine.lineNoDiag(src.x, src.y, dst.x, dst.y, src.level.grid)
 
@@ -105,6 +114,9 @@ private fun doMove(src: Tile, dst: Tile, type: MovementType)
 	if (dst == src) return
 
 	pos.doMove(dst, entity)
+
+	entity.task().tasks.clear()
+	entity.task().tasks.add(TaskInterrupt())
 
 	if (type == MovementType.MOVE)
 	{

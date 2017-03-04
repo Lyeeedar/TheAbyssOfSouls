@@ -33,7 +33,7 @@
 						<Node meta:X="1511.9793701171875" meta:Y="355.96380615234375" meta:RefKey="Sequence">
 							<!--Pick tile to walk to if we dont have one-->
 							<Node meta:X="1736.821533203125" meta:Y="426.27960205078125" meta:RefKey="Invert">
-								<Action Key="Pos" meta:RefKey="Conditional" />
+								<Action Condition="Pos" meta:RefKey="Conditional" />
 							</Node>
 							<Action Input="Tiles" Output="Tile" Criteria="Random" meta:RefKey="Pick" />
 							<Action Input="Tile" Output="Pos" meta:RefKey="ConvertTo" />

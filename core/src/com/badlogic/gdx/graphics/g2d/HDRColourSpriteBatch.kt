@@ -141,7 +141,7 @@ class HDRColourSpriteBatch
 		if (customShader != null)
 			customShader!!.begin()
 		else
-			shader!!.begin()
+			shader.begin()
 		setupMatrices()
 
 		drawing = true
@@ -161,7 +161,7 @@ class HDRColourSpriteBatch
 		if (customShader != null)
 			customShader!!.end()
 		else
-			shader!!.end()
+			shader.end()
 	}
 
 	fun tintColour(tint: Colour)
@@ -380,7 +380,7 @@ class HDRColourSpriteBatch
 
 		renderCalls++
 		totalRenderCalls++
-		val spritesInBatch = idx / (4 * 8)
+		val spritesInBatch = idx / (4 * 11)
 		if (spritesInBatch > maxSpritesInBatch) maxSpritesInBatch = spritesInBatch
 		val count = spritesInBatch * 6
 

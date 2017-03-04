@@ -2,13 +2,13 @@ package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
-import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.SortedRenderer
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.AssetManager
@@ -41,8 +41,10 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 	var tileSizeProgress = 0f
 	var tileSizeDuration = 0f
 
-	val hpbarBack = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarBack.png")!!, 4, 4, 4, 4)
-	val hpbarBar = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarFront.png")!!, 4, 4, 4, 4)
+	val hp_full_green = AssetManager.loadTextureRegion("Sprites/GUI/health_full_green.png")!!
+	val hp_full_red = AssetManager.loadTextureRegion("Sprites/GUI/health_full.png")!!
+	val hp_full_blue = AssetManager.loadTextureRegion("Sprites/GUI/health_full_blue.png")!!
+	val hp_empty = AssetManager.loadTextureRegion("Sprites/GUI/health_empty.png")!!
 
 	lateinit var renderer: SortedRenderer
 
@@ -275,35 +277,57 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 
 			if (entity.stats() != null && Global.interaction == null)
 			{
+				val hp_full = if (entity == player) hp_full_green else hp_full_red
+
 				val stats = entity.stats()
 				val totalWidth = pos.size.toFloat()
 
-				renderer.queueNinepatch(hpbarBack, ax + totalWidth / 2f, ay + 0.1f, pos.slot.ordinal, 1, tileCol, totalWidth, 0.1f)
+				val hp = stats.hp.toInt()
+				val maxhp = stats.maxHP.toInt()
 
-				val perc = stats.hp / stats.maxHP
-				var col = Colour.GREEN
-				if (perc < 0.4) col = Colour.ORANGE
-				if (perc < 0.2) col = Colour.RED
+				val solidSpaceRatio = 0.05f
+				val space = totalWidth
+				val spacePerPip = space / maxhp
+				val spacing = spacePerPip * solidSpaceRatio
+				val solid = spacePerPip - spacing
 
-				val hpWidth = totalWidth * perc
+				var overhead = totalWidth
+				if (renderable is Sprite && renderable.drawActualSize)
+				{
+					val region = renderable.currentTexture
+					val height = region.regionHeight
+					val ratio = height / 32f
+					overhead *= ratio
+				}
 
-				if (hpWidth > 0) renderer.queueNinepatch(hpbarBar, ax + hpWidth / 2f, ay + 0.1f, pos.slot.ordinal, 2, hpBarCol.set(col).mul(tileCol), hpWidth, 0.1f)
+				for (i in 0..maxhp-1)
+				{
+					val pip = if(i < hp) hp_full else hp_empty
+					renderer.queueTexture(pip, ax+i*spacePerPip, ay+overhead, pos.slot.ordinal, 1, width = solid, height = 0.1f, sortX = ax, sortY = ay)
+				}
 
 				if (entity == player)
 				{
-					val c = hpBarCol.set(tileCol)
-					if (entity.stats().insufficientStamina > 0f)
+					val stamina = stats.stamina.toInt()
+					val maxstamina = stats.maxStamina.toInt()
+
+					val solidSpaceRatio = 0.05f
+					val space = totalWidth
+					val spacePerPip = space / maxstamina
+					val spacing = spacePerPip * solidSpaceRatio
+					val solid = spacePerPip - spacing
+
+					for (i in 0..maxstamina-1)
 					{
-						entity.stats().insufficientStamina -= deltaTime
-						c.mul(Colour.RED)
+						var pip = if(i < stamina) hp_full_blue else hp_empty
+						if (entity.stats().insufficientStamina > 0f)
+						{
+							entity.stats().insufficientStamina -= deltaTime
+							pip = hp_full_red
+						}
+
+						renderer.queueTexture(pip, ax+i*spacePerPip, ay+0.1f, pos.slot.ordinal, 1, width = solid, height = 0.1f)
 					}
-
-					renderer.queueNinepatch(hpbarBack, ax + totalWidth / 2f, ay, pos.slot.ordinal, 4, c, totalWidth, 0.1f)
-
-					val perc = stats.stamina / stats.maxStamina
-
-					val hpWidth = Math.max(totalWidth * perc, 0f)
-					if (hpWidth > 0) renderer.queueNinepatch(hpbarBar, ax + hpWidth / 2f, ay, pos.slot.ordinal, 5, hpBarCol.set(Colour.YELLOW).mul(tileCol), hpWidth, 0.1f)
 				}
 			}
 		}

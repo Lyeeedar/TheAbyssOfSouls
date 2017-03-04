@@ -58,15 +58,18 @@
 		</Combo>
 		<Combo meta:RefKey="Defense">
 			<Name>Roll</Name>
-			<Animation>Roll</Animation>
+			<Animation>defense</Animation>
 			<Type>Invulnerable</Type>
-			<Move>1</Move>
+			<Move>2</Move>
+			<AnimType>Roll</AnimType>
 		</Combo>
 		<Combo meta:RefKey="Defense">
 			<Name>Block</Name>
+			<Animation>defense</Animation>
 		</Combo>
 		<Combo meta:RefKey="Defense">
 			<Name>Backstep</Name>
+			<Animation>defense</Animation>
 			<Type>Invulnerable</Type>
 			<Move>1</Move>
 			<Direction>Opposite</Direction>

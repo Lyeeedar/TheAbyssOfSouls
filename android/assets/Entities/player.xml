@@ -32,6 +32,21 @@
 						<Blend>true</Blend>
 					</Down>
 				</Animation>
+				<Animation>
+					<Name>defense</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/wraith_w_defense</Name>
+						<DrawActualSize>true</DrawActualSize>
+						<UpdateRate>0.4</UpdateRate>
+						<Blend>true</Blend>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/wraith_w_defense</Name>
+						<DrawActualSize>true</DrawActualSize>
+						<UpdateRate>0.4</UpdateRate>
+						<Blend>true</Blend>
+					</Down>
+				</Animation>
 			</Animations>
 		</DirectionalSprite>
 		<AI>

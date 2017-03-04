@@ -4,12 +4,11 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Components.Mappers
-import com.lyeeedar.Components.pos
 import com.lyeeedar.Direction
-import com.lyeeedar.Level.Tile
-import com.lyeeedar.Renderables.Sprite.Sprite
-import com.lyeeedar.Util.*
+import com.lyeeedar.Util.FastEnumMap
+import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.children
+import com.lyeeedar.Util.getXml
 import ktx.collections.set
 
 abstract class ComboStep
@@ -38,7 +37,7 @@ abstract class ComboStep
 			}
 
 			step.name = xml.get("Name")
-			step.anim = xml.get("Anim", "attack")
+			step.anim = xml.get("Animation", "attack")
 			step.canTurn = xml.getBoolean("CanTurn", false)
 
 			step.parse(xml)

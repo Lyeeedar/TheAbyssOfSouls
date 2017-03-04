@@ -34,25 +34,25 @@
 		<Data Name="CanTurn" VisibleIf="Root.NextMode==Random" meta:RefKey="Boolean" />
 	</Definition>
 	<!--Combo Defs-->
-	<Definition Name="Wait" Extends="ComboDesc" meta:RefKey="StructDef">
+	<Definition Name="Wait" Extends="ComboDesc" Description="{Name}" meta:RefKey="StructDef">
 		<Data Name="Particle" Extends="ParticleEffect" meta:RefKey="Struct" />
 	</Definition>
-	<Definition Name="Charge" Extends="ComboDesc" meta:RefKey="StructDef">
+	<Definition Name="Charge" Extends="ComboDesc" Description="{Name}" meta:RefKey="StructDef">
 		<Data Name="Distance" Type="Int" Min="1" Default="1" SkipIfDefault="False" meta:RefKey="Number" />
 		<Data Name="Damage" Type="Int" Min="0" meta:RefKey="Number" />
 		<Data Name="KnockbackDist" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
 	</Definition>
-	<Definition Name="Scene" Extends="ComboDesc" ExtendsAfter="CanTurn" meta:RefKey="StructDef">
+	<Definition Name="Scene" Extends="ComboDesc" ExtendsAfter="CanTurn" Description="{Name}" meta:RefKey="StructDef">
 		<Data Name="SceneTimeline" Keys="SceneTimeline" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
 		<Data Name="HitPattern" Default="#" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
 		<Data Name="HitType" EnumValues="All,Target,Random" meta:RefKey="Enum" />
 		<Data Name="Count" Type="Int" Min="1" Default="1" VisibleIf="HitType!=All" meta:RefKey="Number" />
 		<Data Name="StepForward" meta:RefKey="Boolean" />
 	</Definition>
-	<Definition Name="Defense" Extends="ComboDesc" ExtendsAfter="CanTurn" meta:RefKey="StructDef">
+	<Definition Name="Defense" Extends="ComboDesc" ExtendsAfter="CanTurn" Description="{Name}" meta:RefKey="StructDef">
 		<Data Name="Type" EnumValues="Block,Invulnerable" meta:RefKey="Enum" />
 		<Data Name="Move" Type="Int" Min="0" meta:RefKey="Number" />
 		<Data Name="Direction" EnumValues="Same,Opposite" VisibleIf="Move&gt;0" meta:RefKey="Enum" />
-		<Data Name="Animation" EnumValues="Leap,Roll" VisibleIf="Move&gt;0" meta:RefKey="Enum" />
+		<Data Name="AnimType" EnumValues="Leap,Roll" VisibleIf="Move&gt;0" meta:RefKey="Enum" />
 	</Definition>
 </Definitions>

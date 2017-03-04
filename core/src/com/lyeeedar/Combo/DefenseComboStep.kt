@@ -158,7 +158,7 @@ class DefenseComboStep : ComboStep()
 	{
 		mode = DefenseMode.valueOf(xml.get("Type", "Block").toUpperCase())
 		moveDist = xml.getInt("Move", 0)
-		moveType = MoveType.valueOf(xml.get("Animation", "Roll").toUpperCase())
+		moveType = MoveType.valueOf(xml.get("AnimType", "Roll").toUpperCase())
 		moveDirection = MoveDirection.valueOf(xml.get("Direction", "Same").toUpperCase())
 	}
 }

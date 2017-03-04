@@ -10,7 +10,7 @@
 			<Faction>monster</Faction>
 			<HP>10</HP>
 			<Stamina>10</Stamina>
-			<Sight>5</Sight>
+			<Sight>15</Sight>
 		</Statistics>
 		<Combo>
 			<ComboTree>Entities/TestMonsterCombo</ComboTree>
