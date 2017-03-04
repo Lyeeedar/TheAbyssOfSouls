@@ -95,10 +95,10 @@
 					</DestinationRenderable>
 				</Timeline>
 				<Timeline>
-					<MoveTarget>
+					<Pull>
 						<Time>0.25</Time>
 						<MoveType>Leap</MoveType>
-					</MoveTarget>
+					</Pull>
 				</Timeline>
 			</SceneTimeline>
 			<HitPattern>

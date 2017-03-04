@@ -15,6 +15,7 @@ import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Animation.SpinAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Util.Point
 
 enum class MovementType
 {
@@ -56,7 +57,7 @@ class MoveSourceAction : AbstractTimelineAction()
 	}
 }
 
-class MoveDestAction : AbstractTimelineAction()
+class PullAction : AbstractTimelineAction()
 {
 	lateinit var type: MovementType
 
@@ -75,7 +76,7 @@ class MoveDestAction : AbstractTimelineAction()
 
 	override fun copy(parent: SceneTimeline): AbstractTimelineAction
 	{
-		val action = MoveDestAction()
+		val action = PullAction()
 		action.parent = parent
 		action.type = type
 
@@ -87,6 +88,46 @@ class MoveDestAction : AbstractTimelineAction()
 		type = MovementType.valueOf(xml.get("MovementType", "Move").toUpperCase())
 	}
 }
+
+class KnockbackAction : AbstractTimelineAction()
+{
+	lateinit var type: MovementType
+	var dist: Int = 1
+
+	override fun enter()
+	{
+		for (src in parent.destinationTiles)
+		{
+			val dir = Direction.getDirection(parent.sourceTile!!, src)
+			val dstPoint = src + Point(dir.x, dir.y) * dist
+			val dst = src.level.getTileClamped(dstPoint)
+
+			doMove(src, dst, type)
+		}
+	}
+
+	override fun exit()
+	{
+
+	}
+
+	override fun copy(parent: SceneTimeline): AbstractTimelineAction
+	{
+		val action = KnockbackAction()
+		action.parent = parent
+		action.type = type
+		action.dist = dist
+
+		return action
+	}
+
+	override fun parse(xml: XmlReader.Element)
+	{
+		type = MovementType.valueOf(xml.get("MovementType", "Move").toUpperCase())
+		dist = xml.getInt("Dist", 1)
+	}
+}
+
 
 private fun doMove(src: Tile, dst: Tile, type: MovementType)
 {

@@ -46,9 +46,14 @@
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="MoveType" EnumValues="Move,Leap,Roll,Teleport" meta:RefKey="Enum" />
 			</Keyframe>
-			<Keyframe Name="MoveTarget" Background="183,110,191,118" meta:RefKey="Keyframe">
+			<Keyframe Name="Pull" Background="183,110,191,118" meta:RefKey="Keyframe">
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="MoveType" EnumValues="Move,Leap,Roll,Teleport" meta:RefKey="Enum" />
+			</Keyframe>
+			<Keyframe Name="Knockback" Background="143,72,156,118" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Data Name="MoveType" EnumValues="Move,Leap,Roll,Teleport" meta:RefKey="Enum" />
+				<Data Name="Dist" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
 			</Keyframe>
 		</Data>
 	</Definition>

@@ -203,7 +203,8 @@ abstract class AbstractTimelineAction()
 				"SCREENSHAKE" -> ScreenShakeAction()
 
 				"MOVESOURCE" -> MoveSourceAction()
-				"MOVETARGET" -> MoveDestAction()
+				"PULL" -> PullAction()
+				"KNOCKBACK" -> KnockbackAction()
 
 				"DAMAGE" -> DamageAction()
 				"SPAWN" -> SpawnAction()
