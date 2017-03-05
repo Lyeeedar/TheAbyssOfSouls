@@ -128,6 +128,8 @@ class TileSystem : AbstractSystem()
 										entity.add(MarkedForDeletionComponent())
 									}
 								}, 0.25f)
+
+						entity.renderable().renderable.animation!!.isBlocking = false
 					}
 				}
 			}
@@ -142,6 +144,8 @@ class TileSystem : AbstractSystem()
 								entity.renderable().renderable.visible = false
 								entity.add(MarkedForDeletionComponent())
 							}, 0.25f)
+
+					entity.renderable().renderable.animation!!.isBlocking = entity == level!!.player
 				}
 			}
 		}

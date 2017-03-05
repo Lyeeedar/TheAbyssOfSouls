@@ -114,7 +114,7 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 	{
 		if (Global.interaction != null) return
 
-		val hasEffects = renderables.any { it.renderable()!!.renderable.animation != null }
+		val hasEffects = renderables.any { it.renderable()!!.renderable.animation != null && it.renderable()!!.renderable.animation!!.isBlocking }
 		var hasTimelines = false
 
 		if (!hasEffects)
@@ -181,6 +181,8 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 		val task = e.task() ?: return false
 
 		if (e.stats()?.hp ?: 1f <= 0) return false
+
+		if (e.renderable()?.renderable?.animation != null && !e.renderable().renderable.animation!!.isBlocking) return false
 
 		val trailing = e.trailing()
 		if (trailing != null && !trailing.initialised)
