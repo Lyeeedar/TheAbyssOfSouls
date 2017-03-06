@@ -67,6 +67,8 @@ fun getRotation(p1: Vector2, p2: Vector2) : Float
 	return angle
 }
 
+fun Int.abs() = Math.abs(this)
+
 fun Float.abs() = Math.abs(this)
 fun Float.ciel() = MathUtils.ceil(this)
 fun Float.floor() = MathUtils.floor(this)

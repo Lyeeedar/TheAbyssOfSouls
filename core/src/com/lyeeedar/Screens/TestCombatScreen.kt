@@ -14,7 +14,6 @@ import com.lyeeedar.Systems.level
 import com.lyeeedar.Systems.systemList
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.UI.IDebugCommandProvider
-import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.Future
 
 class TestCombatScreen : AbstractScreen()
@@ -46,8 +45,6 @@ class TestCombatScreen : AbstractScreen()
 		// 1300 abouts for single thread
 
 		Global.engine.level = level
-		level.ambient.set(Colour.WHITE)
-
 
 		font = Global.skin.getFont("default")
 		batch = SpriteBatch()

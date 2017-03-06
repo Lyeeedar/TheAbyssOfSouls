@@ -2,6 +2,7 @@
 	<Definition Name="GenerationGrammar" AllowCircularLinks="True" FlattenData="True" NodeStoreName="Rules" meta:RefKey="GraphStruct">
 		<Data Name="Width" Default="100" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Height" Default="100" SkipIfDefault="False" meta:RefKey="String" />
+		<Data Name="Ambient" HasAlpha="True" meta:RefKey="Colour" />
 		<Data Name="Root" Keys="Node" meta:RefKey="GraphReference" />
 	</Definition>
 	<Definition Name="Node" MinCount="1" meta:RefKey="GraphCollectionDef">

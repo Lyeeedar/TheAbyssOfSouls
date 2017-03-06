@@ -15,6 +15,7 @@ class SceneTimeline
 	var loop = false
 	var facing: Direction = Direction.CENTER
 
+	val sharingEntities = Array<Entity>()
 	var parentEntity: Entity? = null
 	var sourceTile: Tile? = null
 	val destinationTiles = Array<Tile>()

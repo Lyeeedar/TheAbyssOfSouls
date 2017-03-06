@@ -46,6 +46,10 @@ class ActionSetValue(): AbstractAction()
 			}
 			else throw Exception("Unknown trail set value action '$action'!")
 		}
+		else if (value == "entitypos")
+		{
+			setData(key, entity.tile()!!)
+		}
 		else
 		{
 			try

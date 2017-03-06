@@ -166,8 +166,8 @@ private fun doMove(src: Tile, dst: Tile, type: MovementType)
 
 	pos.doMove(dst, entity)
 
-	entity.task().tasks.clear()
-	entity.task().tasks.add(TaskInterrupt())
+	entity.task()?.tasks?.clear()
+	entity.task()?.tasks?.add(TaskInterrupt())
 
 	if (type == MovementType.MOVE)
 	{

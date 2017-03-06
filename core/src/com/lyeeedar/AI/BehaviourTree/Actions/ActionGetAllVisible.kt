@@ -6,6 +6,7 @@ import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.Components.Mappers
 import com.lyeeedar.Components.ShadowCastComponent
 import com.lyeeedar.Components.isAllies
+import com.lyeeedar.Components.isEnemies
 import com.lyeeedar.Level.Tile
 
 /**
@@ -50,7 +51,7 @@ class ActionGetAllVisible(): AbstractAction()
 				{
 					val estats = Mappers.stats.get(e) ?: continue
 
-					if (e != entity && estats.hp > 0 && estats.factions.isAllies(stats.factions))
+					if (e != entity && estats.hp > 0 && entity.isAllies(e))
 					{
 						temp.add(e)
 					}
@@ -70,7 +71,7 @@ class ActionGetAllVisible(): AbstractAction()
 				{
 					val estats = Mappers.stats.get(e) ?: continue
 
-					if (e != entity && estats.hp > 0 && !estats.factions.isAllies(stats.factions))
+					if (e != entity && estats.hp > 0 && entity.isEnemies(e))
 					{
 						temp.add(e)
 					}

@@ -97,7 +97,8 @@ class StatisticsComponent: AbstractComponent()
 
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{
-		factions.addAll(xml.get("Faction", "").split(",").toGdxArray())
+		val factionString = xml.get("Faction", null)
+		if (factionString != null) factions.addAll(factionString.split(",").toGdxArray())
 		maxHP += xml.getInt("HP")
 		maxStamina += xml.getInt("Stamina")
 		sight += xml.getInt("Sight")
@@ -138,14 +139,4 @@ class StatisticsComponent: AbstractComponent()
 
 		return variableMap
 	}
-}
-
-fun OrderedSet<String>.isAllies(other: OrderedSet<String>): Boolean
-{
-	for (faction in this)
-	{
-		if (other.contains(faction)) return true
-	}
-
-	return false
 }

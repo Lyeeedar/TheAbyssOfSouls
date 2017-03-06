@@ -11,7 +11,6 @@ import com.lyeeedar.Global
 import com.lyeeedar.UI.ButtonKeyboardHelper
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Future
-import com.lyeeedar.Util.Point
 import ktx.actors.setKeyboardFocus
 
 /**
@@ -68,8 +67,6 @@ abstract class AbstractScreen() : Screen, InputProcessor
         doRender(delta)
 
         stage.draw()
-
-		Point.freeTemp()
 
 		val end = System.nanoTime()
 

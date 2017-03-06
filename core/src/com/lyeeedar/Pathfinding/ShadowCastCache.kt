@@ -85,7 +85,7 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 
 		if (recalculate)
 		{
-			Point.freeAll(currentShadowCast)
+			Point.freeAllTS(currentShadowCast)
 			currentShadowCast.clear()
 			currentShadowCastSet.clear()
 
@@ -120,7 +120,7 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 
 					if (rawOutput!![ix][iy] > 0 && grid.inBounds(gx, gy))
 					{
-						val point = Point.obtain().set(gx, gy)
+						val point = Point.obtainTS().set(gx, gy)
 						currentShadowCast.add(point)
 						currentShadowCastSet.add(point)
 					}

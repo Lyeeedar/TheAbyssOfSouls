@@ -32,6 +32,9 @@
 				<Data Name="Colour" meta:RefKey="Colour" />
 				<Data Name="Distance" Min="1" Default="1" meta:RefKey="Number" />
 			</Data>
+			<Data Name="MetaRegion" meta:RefKey="Struct">
+				<Data Name="Key" meta:RefKey="String" />
+			</Data>
 			<Data Name="Name" meta:RefKey="Struct">
 				<Data Name="Name" meta:RefKey="String" />
 			</Data>
@@ -58,6 +61,7 @@
 				<Data Name="Loop" meta:RefKey="Boolean" />
 				<Data Name="HitPoints" Default="#" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
 				<Data Name="SceneTimeline" Keys="SceneTimeline" meta:RefKey="Reference" />
+				<Data Name="IsShared" meta:RefKey="Boolean" />
 			</Data>
 			<Data Name="Statistics" meta:RefKey="Struct">
 				<Data Name="Faction" meta:RefKey="String" />
@@ -73,7 +77,8 @@
 				</Data>
 			</Data>
 			<Data Name="Water" meta:RefKey="Struct">
-				<Data Name="Direction" EnumValues="--,North,South,East,West" meta:RefKey="Enum" />
+				<Data Name="Direction" EnumValues="--,North,South,East,West" VisibleIf="FlowTowards==null" meta:RefKey="Enum" />
+				<Data Name="FlowTowards" VisibleIf="Direction==--" meta:RefKey="String" />
 				<Data Name="FlowChance" Min="0" Max="1" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="Depth" Min="0" Max="1" Default="0.2" SkipIfDefault="False" meta:RefKey="Number" />
 			</Data>

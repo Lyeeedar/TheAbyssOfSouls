@@ -6,17 +6,23 @@ import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Components.*
+import com.lyeeedar.Components.SceneTimelineComponent
+import com.lyeeedar.Components.pos
+import com.lyeeedar.Components.renderable
+import com.lyeeedar.Components.tile
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Pathfinding.ShadowCastCache
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.SceneTimeline.SceneTimeline
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.abs
 import com.lyeeedar.Util.random
 import com.lyeeedar.Util.toHitPointArray
 import ktx.collections.toGdxArray
+import squidpony.squidgrid.FOV
 
 
 class SceneTimelineComboStep : ComboStep()
@@ -33,6 +39,8 @@ class SceneTimelineComboStep : ComboStep()
 	var hitCount = 1
 	lateinit var sceneTimeline: SceneTimeline
 	var stepForward = false
+
+	val shadowCast = ShadowCastCache(SpaceSlot.ENTITY, FOV.RIPPLE_LOOSE)
 
 	fun canMove(rootEntity: Entity, entity: Entity, direction: Direction, toMove: Array<Entity>? = null): Boolean
 	{
@@ -237,6 +245,8 @@ class SceneTimelineComboStep : ComboStep()
 			ystep = 1
 		}
 
+		var maxDist = 0
+
 		for (i in 0..epos.size - 1)
 		{
 			val attackerTile = etile.level.getTile(etile, sx + xstep * i, sy + ystep * i)!!
@@ -253,13 +263,18 @@ class SceneTimelineComboStep : ComboStep()
 				val dx = Math.round(vec.x)
 				val dy = Math.round(vec.y)
 
+				if (dx.abs() > maxDist) maxDist = dx.abs()
+				if (dy.abs() > maxDist) maxDist = dy.abs()
+
 				val tile = attackerTile.level.getTile(attackerTile, dx, dy)
 				if (tile != null) tiles.add(tile)
 			}
 		}
 
+		shadowCast.getShadowCast(etile.level.grid, etile.x, etile.y, maxDist+1, entity, false)
+
 		// restrict by visibility and remove duplicates
-		val visibleTiles = entity.shadow().cache.currentShadowCastSet
+		val visibleTiles = shadowCast.currentShadowCastSet
 		val existingSet = ObjectSet<Point>()
 
 		val itr = tiles.iterator()

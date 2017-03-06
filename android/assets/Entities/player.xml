@@ -53,7 +53,7 @@
 			<AI>player</AI>
 		</AI>
 		<Light>
-			<Colour>214,217,158,70</Colour>
+			<Colour>214,217,158,154</Colour>
 			<Distance>5</Distance>
 		</Light>
 		<Statistics>

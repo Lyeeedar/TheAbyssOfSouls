@@ -14,7 +14,7 @@
 			<Faction>toad</Faction>
 			<HP>10</HP>
 			<Stamina>10</Stamina>
-			<Sight>15</Sight>
+			<Sight>6</Sight>
 		</Statistics>
 		<Combo>
 			<ComboTree>Entities/ToadCombo</ComboTree>

@@ -28,9 +28,12 @@ class GenerationGrammar
 	lateinit var width: String
 	lateinit var height: String
 	lateinit var rootRule: String
+	lateinit var ambient: Colour
 
 	fun generate(seed: Long, engine: Engine): Level
 	{
+		SceneTimelineComponent.sharedTimelines.clear()
+
 		val rng = Random.obtainTS(seed)
 
 		val width = width.evaluate(seed = rng.nextLong()).round()
@@ -129,6 +132,7 @@ class GenerationGrammar
 		val player = namedEntities.firstOrNull { it.name()!!.isPlayer } ?: throw Exception("No player on level!")
 
 		level.player = player
+		level.ambient.set(ambient)
 
 		return level
 	}
@@ -149,6 +153,8 @@ class GenerationGrammar
 				val guid = el.getAttribute("GUID")
 				grammar.ruleTable[guid] = rule
 			}
+
+			grammar.ambient = AssetManager.loadColour(xml.getChildByName("Ambient"))
 
 			return grammar
 		}

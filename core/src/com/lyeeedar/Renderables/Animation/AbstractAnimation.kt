@@ -17,6 +17,8 @@ abstract class AbstractAnimation
 
 	abstract fun duration(): Float
 	abstract fun time(): Float
+	fun remaining() = Math.max(duration() - time(), 0f)
+
 	abstract fun update(delta: Float): Boolean
 	abstract fun parse(xml: Element)
 

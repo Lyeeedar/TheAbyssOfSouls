@@ -3,7 +3,6 @@ package com.lyeeedar.Util
 import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
-import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.lyeeedar.Direction
@@ -82,8 +81,6 @@ open class Point : Pool.Poolable, Comparable<Point>
 		@JvmField val MAX = Point(Int.MAX_VALUE, Int.MAX_VALUE, true)
 		@JvmField val MIN = Point(-Int.MAX_VALUE, -Int.MAX_VALUE, true)
 
-		val tempPointList = Array<Point>(false, 32)
-
         private val pool: Pool<Point> = object : Pool<Point>() {
 			override fun newObject(): Point
 			{
@@ -93,7 +90,7 @@ open class Point : Pool.Poolable, Comparable<Point>
 
         @JvmStatic fun obtain(): Point
 		{
-			val point = Point.pool.obtain()
+			val point = pool.obtain()
 			point.fromPool = true
 			point.locked = false
 
@@ -104,18 +101,23 @@ open class Point : Pool.Poolable, Comparable<Point>
 			return point
 		}
 
-		@JvmStatic fun obtainTemp(): Point
+		fun obtainTS(): Point
 		{
-			val point = obtain()
-
-			//tempPointList.add(point)
-
-			return point
+			synchronized(pool)
+			{
+				return obtain()
+			}
 		}
 
-		fun freeTemp() = { freeAll(tempPointList); tempPointList.clear() }
-
 		@JvmStatic fun freeAll(items: Iterable<Point>) = { for (item in items) item.free() }
+
+		fun freeAllTS(items: Iterable<Point>)
+		{
+			synchronized(pool)
+			{
+				freeAll(items)
+			}
+		}
     }
 
     private var obtained = false
@@ -148,6 +150,14 @@ open class Point : Pool.Poolable, Comparable<Point>
 	inline fun copy() = Point.obtain().set(this)
 
 	fun free() { if (obtained) { Point.pool.free(this); obtained = false; obtainPath = "" } }
+
+	fun freeTS()
+	{
+		synchronized(pool)
+		{
+			free()
+		}
+	}
 
 	inline fun taxiDist(other: Point) = Math.max( Math.abs(other.x - x), Math.abs(other.y - y) )
 	inline fun dist(other: Point) = Math.abs(other.x - x) + Math.abs(other.y - y)
@@ -347,7 +357,7 @@ class PointIterator(val start: Point, val end: Point): Iterator<Point>
 		val y = start.y + Math.round(ystep * i.toFloat()).toInt()
 		i++
 
-		return Point.obtainTemp().set(x, y)
+		return Point.obtain().set(x, y)
 	}
 }
 

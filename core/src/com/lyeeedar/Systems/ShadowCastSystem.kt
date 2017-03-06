@@ -1,21 +1,21 @@
 package com.lyeeedar.Systems
 
-import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
-import com.badlogic.ashley.utils.ImmutableArray
+import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Components.*
-import com.lyeeedar.Level.Level
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 
 class ShadowCastSystem(): AbstractSystem(Family.all(PositionComponent::class.java).one(ShadowCastComponent::class.java, LightComponent::class.java).get())
 {
 	private val jobs = Array<Job>()
-	
+
 	override fun doUpdate(deltaTime: Float)
 	{
 		jobs.clear()
-		
+
 		runBlocking {
 			for (entity in entities)
 			{
@@ -37,8 +37,8 @@ class ShadowCastSystem(): AbstractSystem(Family.all(PositionComponent::class.jav
 					}
 					jobs.add(job)
 				}
-				
-				if (light != null) 
+
+				if (light != null)
 				{
 					val job = launch(CommonPool) {
 						light.cache.getShadowCast(tile.level.grid, tile.x, tile.y, Math.ceil(light.dist.toDouble()).toInt(), entity)
@@ -47,7 +47,7 @@ class ShadowCastSystem(): AbstractSystem(Family.all(PositionComponent::class.jav
 				}
 			}
 
-			for (job in jobs) job.Join()
+			for (job in jobs) job.join()
 		}
 	}
 }

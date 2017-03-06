@@ -41,6 +41,7 @@ fun Entity.interaction() = Mappers.interaction.get(this)
 fun Entity.pit() = Mappers.pit.get(this)
 fun Entity.occludes() = Mappers.occludes.get(this)
 fun Entity.pickup() = Mappers.pickup.get(this)
+fun Entity.metaregion() = Mappers.metaregion.get(this)
 
 fun <T: AbstractComponent> Entity.hasComponent(c: Class<T>) = this.getComponent(c) != null
 
@@ -67,6 +68,7 @@ class Mappers
 		var interaction: ComponentMapper<InteractionComponent> = ComponentMapper.getFor(InteractionComponent::class.java)
 		val pit: ComponentMapper<PitComponent> = ComponentMapper.getFor(PitComponent::class.java)
 		val pickup: ComponentMapper<PickupComponent> = ComponentMapper.getFor(PickupComponent::class.java)
+		val metaregion: ComponentMapper<MetaRegionComponent> = ComponentMapper.getFor(MetaRegionComponent::class.java)
 	}
 }
 
@@ -119,6 +121,7 @@ class EntityLoader()
 					"DIRECTIONALSPRITE" -> DirectionalSpriteComponent()
 					"INTERACTION" -> InteractionComponent()
 					"LIGHT" -> LightComponent()
+					"METAREGION" -> MetaRegionComponent()
 					"NAME" -> NameComponent()
 					"OCCLUDES" -> OccludesComponent()
 					"POSITION" -> PositionComponent()
@@ -149,4 +152,20 @@ class EntityLoader()
 	}
 }
 
-fun Entity.isAllies(other: Entity): Boolean { return if (this.stats() != null && other.stats() != null) this.stats().factions.isAllies(other.stats().factions) else false }
+fun Entity.isAllies(other: Entity): Boolean
+{
+	if (this.stats() == null || other.stats() == null) return false
+
+	if (this.stats().factions.size == 0 || other.stats().factions.size == 0) return false
+
+	return this.stats().factions.any { other.stats().factions.contains(it) }
+}
+
+fun Entity.isEnemies(other: Entity): Boolean
+{
+	if (this.stats() == null || other.stats() == null) return false
+
+	if (this.stats().factions.size == 0 || other.stats().factions.size == 0) return false
+
+	return !this.stats().factions.any { other.stats().factions.contains(it) }
+}

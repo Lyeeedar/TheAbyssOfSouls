@@ -2,22 +2,24 @@ package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
+import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Components.SceneTimelineComponent
 import com.lyeeedar.Components.sceneTimeline
 import com.lyeeedar.Components.tile
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.SceneTimeline.SceneTimeline
 
 class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::class.java).get())
 {
 	private val processedTimelines = Array<SceneTimeline>()
-	
+
 	override fun doUpdate(deltaTime: Float)
 	{
 		if (Global.interaction != null) return
 
 		processedTimelines.clear()
-		
+
 		for (entity in entities)
 		{
 			processEntity(entity, deltaTime)
@@ -28,15 +30,15 @@ class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::c
 	{
 		val timeline = entity!!.sceneTimeline() ?: return
 		if (processedTimelines.contains(timeline.sceneTimeline)) return
-		
+
 		if (timeline.isShared)
 		{
 			timeline.sceneTimeline.destinationTiles.clear()
-			
+
 			for (entity in timeline.sceneTimeline.sharingEntities)
 			{
 				val tile = entity.tile()!!
-				
+
 				for (point in timeline.hitPoints)
 				{
 					val t = tile.level.getTile(tile, point) ?: continue
@@ -46,7 +48,7 @@ class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::c
 					}
 				}
 			}
-			
+
 			processedTimelines.add(timeline.sceneTimeline)
 		}
 		else

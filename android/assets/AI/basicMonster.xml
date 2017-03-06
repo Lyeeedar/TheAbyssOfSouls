@@ -4,6 +4,10 @@
 		<Action Key="Tiles" meta:RefKey="GetAllVisible" />
 		<Action Key="Enemies" SrcKey="Tiles" Type="Enemies" meta:RefKey="GetAllVisible" />
 		<Action Key="Allies" SrcKey="Tiles" Type="Allies" meta:RefKey="GetAllVisible" />
+		<Node meta:X="571.916276619049" meta:Y="-111.96308233316606" meta:RefKey="Sequence">
+			<Action Condition="StartTile==0" meta:RefKey="Conditional" />
+			<Action Key="StartTile" Value="entityPos" meta:RefKey="SetValue" />
+		</Node>
 		<!--Actual Logic-->
 		<Node meta:X="574.06585693359375" meta:Y="144.375" meta:RefKey="Priority">
 			<Node meta:X="850.44921875" meta:Y="70.375" meta:RefKey="DataScope">
@@ -21,27 +25,34 @@
 					<Action Key="Pos" meta:RefKey="ClearValue" />
 				</Node>
 			</Node>
-			<Node meta:X="851.38165283203125" meta:Y="298.743408203125" meta:RefKey="Random">
+			<Node meta:X="794.70856497102341" meta:Y="241.01855072042758" meta:RefKey="Sequence">
 				<!--Idle Logic-->
-				<Action meta:RefKey="Wait" />
-				<Action meta:RefKey="Wait" />
-				<Action meta:RefKey="Wait" />
-				<Action meta:RefKey="Wait" />
-				<Node meta:X="1106.1602783203125" meta:Y="398.0032958984375" meta:RefKey="DataScope">
-					<!--Wander-->
-					<Node meta:X="1277.400390625" meta:Y="412.91119384765625" meta:RefKey="Any">
-						<Node meta:X="1511.9793701171875" meta:Y="355.96380615234375" meta:RefKey="Sequence">
-							<!--Pick tile to walk to if we dont have one-->
-							<Node meta:X="1736.821533203125" meta:Y="426.27960205078125" meta:RefKey="Invert">
-								<Action Condition="Pos" meta:RefKey="Conditional" />
+				<Node meta:X="1017.8081580838582" meta:Y="253.88253757241355" meta:RefKey="Sequence">
+					<!--Stay close to spawn-->
+					<Action Condition="dist entityPos startTile &gt;10" meta:RefKey="Conditional" />
+					<Action Key="startTile" Distance="4" meta:RefKey="MoveTo" />
+				</Node>
+				<Node meta:X="1040.0777511442413" meta:Y="507.33924584896033" meta:RefKey="Random">
+					<Action meta:RefKey="Wait" />
+					<Action meta:RefKey="Wait" />
+					<Action meta:RefKey="Wait" />
+					<Action meta:RefKey="Wait" />
+					<Node meta:X="1265.5958453468463" meta:Y="587.09211268715524" meta:RefKey="DataScope">
+						<!--Wander-->
+						<Node meta:X="1436.8359576515338" meta:Y="602.000010636374" meta:RefKey="Any">
+							<Node meta:X="1671.4149371437213" meta:Y="545.05262294106149" meta:RefKey="Sequence">
+								<!--Pick tile to walk to if we dont have one-->
+								<Node meta:X="1896.2571002296588" meta:Y="615.368418839499" meta:RefKey="Invert">
+									<Action Condition="Pos" meta:RefKey="Conditional" />
+								</Node>
+								<Action Input="Tiles" Output="Tile" Criteria="Random" meta:RefKey="Pick" />
+								<Action Input="Tile" Output="Pos" meta:RefKey="ConvertTo" />
 							</Node>
-							<Action Input="Tiles" Output="Tile" Criteria="Random" meta:RefKey="Pick" />
-							<Action Input="Tile" Output="Pos" meta:RefKey="ConvertTo" />
-						</Node>
-						<Node meta:X="1510.67041015625" meta:Y="543.91119384765625" meta:RefKey="Until">
-							<!--Walk to picked tile-->
-							<Action Key="Pos" meta:RefKey="MoveTo" />
-							<Action Key="Pos" meta:RefKey="ClearValue" />
+							<Node meta:X="1670.1059771827838" meta:Y="733.000010636374" meta:RefKey="Until">
+								<!--Walk to picked tile-->
+								<Action Key="Pos" meta:RefKey="MoveTo" />
+								<Action Key="Pos" meta:RefKey="ClearValue" />
+							</Node>
 						</Node>
 					</Node>
 				</Node>

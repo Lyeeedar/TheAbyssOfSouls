@@ -1,6 +1,7 @@
 package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.AI.Tasks.TaskInterrupt
 import com.lyeeedar.Components.*
@@ -34,7 +35,7 @@ class TileSystem : AbstractSystem()
 
 		for (tile in level!!.grid)
 		{
-			processWaterTurn(tile)
+			processWaterTurn(tile, false)
 		}
 	}
 
@@ -152,26 +153,58 @@ class TileSystem : AbstractSystem()
 	}
 
 	val movedByWater = ObjectSet<Entity>()
-	fun processWaterTurn(tile: Tile)
+	fun processWaterTurn(tile: Tile, isDeferred: Boolean)
 	{
 		val entity = tile.contents[SpaceSlot.ENTITY] ?: return
 		val pos = entity.pos() ?: return
 		entity.renderable() ?: return
 
+		if (entity.renderable().renderable.animation != null && !isDeferred)
+		{
+			val remaining = entity.renderable().renderable.animation!!.remaining()
+			Future.call({ processWaterTurn(tile, true) }, remaining)
+			return
+		}
+
 		if (movedByWater.contains(entity)) return
 		movedByWater.add(entity)
 
-		val water = tile.contents[SpaceSlot.FLOOR]?.water() ?: tile.contents[SpaceSlot.BELOWENTITY]?.water() ?: return
+		fun getWater(tile: Tile): WaterComponent? = tile.contents[SpaceSlot.FLOOR]?.water() ?: tile.contents[SpaceSlot.BELOWENTITY]?.water()
 
-		if (water.flowDir != Direction.CENTER)
+		val water =  getWater(tile) ?: return
+
+		if (water.flowDir != Direction.CENTER || water.flowTowards != null)
 		{
-			val direction = water.flowDir
+			var direction = water.flowDir
+
+			if (direction == Direction.CENTER)
+			{
+				val key = water.flowTowards
+				val closest = tile.level.getClosestMetaRegion(key!!, tile) ?: return
+
+				direction = Direction.Companion.getDirection(tile, closest)
+			}
 
 			val doFlow = Random.random()
 			if (doFlow <= water.flowChance)
 			{
 				val prev = (pos.position as Tile)
-				val next = prev.level.getTile(prev, direction) ?: return
+				var next = prev.level.getTile(prev, direction) ?: return
+
+				if (getWater(next) == null)
+				{
+					// try clockwise / anti
+					val valid = Array<Direction>(2)
+					val cw = prev.level.getTile(prev, direction.cardinalClockwise)
+					val ccw = prev.level.getTile(prev, direction.cardinalAnticlockwise)
+					if (cw != null && getWater(cw) != null) valid.add(direction.cardinalClockwise)
+					if (ccw != null && getWater(ccw) != null) valid.add(direction.cardinalAnticlockwise)
+
+					if (valid.size == 0) return
+
+					val chosen = valid.random()
+					next = prev.level.getTile(prev, chosen)!!
+				}
 
 				if (entity.pos().isValidTile(next, entity))
 				{

@@ -1,6 +1,7 @@
 <GenerationGrammar meta:X="-353.12057495117187" meta:Y="4.7794466018676758" GUID="ab4f5e8c-8fe7-4708-bc53-cafdcae905f9" xmlns:meta="Editor">
 	<Width>200</Width>
 	<Height>50</Height>
+	<Ambient>59,59,59,255</Ambient>
 	<Root meta:RefKey="Node">9f7e0b6b-b265-4dfb-9d73-9a7aee0d2127</Root>
 	<Rules>
 		<Node meta:X="-231.12059020996094" meta:Y="4.7794466018676758" GUID="9f7e0b6b-b265-4dfb-9d73-9a7aee0d2127">
@@ -88,6 +89,10 @@
 							<FlowChance>0.5</FlowChance>
 							<Depth>0.5</Depth>
 						</Water>
+						<Light>
+							<Colour>10,212,240,41</Colour>
+							<Distance>3</Distance>
+						</Light>
 					</Components>
 				</Floor>
 			</Rule>
@@ -128,7 +133,7 @@
 							<Occludes>true</Occludes>
 						</Occludes>
 						<Statistics>
-							<HP>10</HP>
+							<HP>2</HP>
 							<Stamina>0</Stamina>
 							<Sight>0</Sight>
 							<DisplayHP>false</DisplayHP>
@@ -236,15 +241,15 @@
 			<!--Beginning waterfall and player spawn-->
 			<Rule Axis="Y" Parallel="True" meta:RefKey="Divide">
 				<Division>
-					<Size>(size-8) / 2</Size>
+					<Size>(size-12) / 2</Size>
 					<Rule meta:RefKey="Node">e315da64-9e87-47cd-8e32-d7e0deda7e45</Rule>
 				</Division>
 				<Division>
-					<Size>8</Size>
+					<Size>12</Size>
 					<Rule meta:RefKey="Node">46c3d0d8-5b60-4328-a18c-dd44ee0c18c8</Rule>
 				</Division>
 				<Division>
-					<Size>(size-8) / 2</Size>
+					<Size>(size-12) / 2</Size>
 					<Rule meta:RefKey="Node">9dea48ad-ac4f-4966-bd88-a68e7c004f70</Rule>
 				</Division>
 			</Rule>
@@ -265,10 +270,14 @@
 									</Renderable>
 								</Renderable>
 								<Water>
-									<Direction>East</Direction>
+									<FlowTowards>poolcenter</FlowTowards>
 									<FlowChance>0.5</FlowChance>
 									<Depth>0.55</Depth>
 								</Water>
+								<Light>
+									<Colour>10,212,240,15</Colour>
+									<Distance>3</Distance>
+								</Light>
 							</Components>
 						</Floor>
 					</Symbol>
@@ -284,8 +293,8 @@
 									</Renderable>
 								</Renderable>
 								<Water>
-									<Direction>East</Direction>
-									<FlowChance>0.5</FlowChance>
+									<FlowTowards>poolcenter</FlowTowards>
+									<FlowChance>0.56</FlowChance>
 									<Depth>0.65</Depth>
 								</Water>
 							</Components>
@@ -303,8 +312,8 @@
 									</Renderable>
 								</Renderable>
 								<Water>
-									<Direction>East</Direction>
-									<FlowChance>0.5</FlowChance>
+									<FlowTowards>poolcenter</FlowTowards>
+									<FlowChance>0.7</FlowChance>
 									<Depth>0.75</Depth>
 								</Water>
 							</Components>
@@ -322,25 +331,34 @@
 									</Renderable>
 								</Renderable>
 								<Water>
-									<Direction>East</Direction>
-									<FlowChance>0.5</FlowChance>
+									<FlowChance>0</FlowChance>
 									<Depth>0.9</Depth>
 								</Water>
 								<Pit />
+								<MetaRegion>
+									<Key>poolcenter</Key>
+								</MetaRegion>
 							</Components>
 						</Floor>
 					</Symbol>
 				</Symbols>
 				<Prefab>
-					<Line>...~~~~~..</Line>
-					<Line>..~11111~.</Line>
-					<Line>~~1122211~</Line>
-					<Line>~~1223221~</Line>
-					<Line>~~1234321~</Line>
-					<Line>~~1223221~</Line>
-					<Line>.~1122211~</Line>
-					<Line>..~11111~.</Line>
-					<Line>...~~~~~..</Line>
+					<Line>.......~~~~~......</Line>
+					<Line>.....~~~~~~~~~....</Line>
+					<Line>....~~~11111~~~...</Line>
+					<Line>...~~~1111111~~~..</Line>
+					<Line>..~~~112222211~~~.</Line>
+					<Line>..~~11222222211~~.</Line>
+					<Line>~~~1122333332211~~</Line>
+					<Line>~~~1122344432211~~</Line>
+					<Line>~~~1122344432211~~</Line>
+					<Line>~~~1122333332211~~</Line>
+					<Line>..~~11222222211~~.</Line>
+					<Line>..~~~112222211~~~.</Line>
+					<Line>...~~~1111111~~~..</Line>
+					<Line>....~~~11111~~~...</Line>
+					<Line>.....~~~~~~~~~....</Line>
+					<Line>.......~~~~~......</Line>
 				</Prefab>
 				<Snap>West</Snap>
 			</Rule>
@@ -348,15 +366,60 @@
 		<Node meta:X="592.3603515625" meta:Y="232.09176635742187" GUID="46c3d0d8-5b60-4328-a18c-dd44ee0c18c8">
 			<!--Waterfall prefab-->
 			<Rule meta:RefKey="Prefab">
+				<Symbols>
+					<Symbol meta:RefKey="Symbol">
+						<Character>s</Character>
+						<Extends>~</Extends>
+						<BelowEntity>
+							<Components>
+								<SceneTimeline>
+									<Loop>true</Loop>
+									<SceneTimeline meta:RefKey="SceneTimeline">
+										<Timeline>
+											<Blocker>
+												<Count>20+rnd(20)</Count>
+											</Blocker>
+											<Spawn>
+												<Time>0.09150613</Time>
+												<Entity>
+													<Components>
+														<Renderable>
+															<Renderable meta:RefKey="Sprite">
+																<Name>Oryx/uf_split/uf_heroes/wisp</Name>
+																<Blend>true</Blend>
+															</Renderable>
+														</Renderable>
+														<Statistics>
+															<Faction>lostsoul</Faction>
+															<HP>4</HP>
+															<Stamina>4</Stamina>
+															<Sight>0</Sight>
+															<DisplayHP>false</DisplayHP>
+														</Statistics>
+														<Position />
+													</Components>
+												</Entity>
+											</Spawn>
+										</Timeline>
+									</SceneTimeline>
+								</SceneTimeline>
+							</Components>
+						</BelowEntity>
+					</Symbol>
+				</Symbols>
 				<Prefab>
-					<Line>..~~~~~..</Line>
-					<Line>.~~~~~~~.</Line>
-					<Line>~~~~~~~~~</Line>
-					<Line>~~~~~~~~~</Line>
-					<Line>~~~~~~~~~</Line>
-					<Line>~~~~~~~~~</Line>
-					<Line>.~~~~~~~.</Line>
-					<Line>..~~~~~..</Line>
+					<Line>....~~~~~....</Line>
+					<Line>..~~~~~~~~~..</Line>
+					<Line>.~~~~~~~~~~~.</Line>
+					<Line>.~~~~~~~~~~~.</Line>
+					<Line>~~~s~~~~~~~~~</Line>
+					<Line>~~~~~~~~~s~~~</Line>
+					<Line>~~~~~~~~~~~~~</Line>
+					<Line>~~~~~~s~~~~~~</Line>
+					<Line>.~~~~~~~~~~~.</Line>
+					<Line>.~~~~~~~~~~~.</Line>
+					<Line>..~~~~~~~~~..</Line>
+					<Line>....~~~~~....</Line>
 				</Prefab>
 				<Snap>East</Snap>
 			</Rule>
@@ -420,11 +483,8 @@
 												<Time>0.411396027</Time>
 												<Duration LockDuration="False">0.187403858</Duration>
 												<Text>[GREEN]*To attack with a weapon hold CTRL then press a direction. This starts a normal combo. Press the Normal (CTRL), Special (INS), Defense(SHIFT) or Direction keys to continue the combo.* 
-
 *You can also press the Special and Defense keys to start other combos.*
-
 *Keys can be rebound in the options menu.*
-
 *Combos differ per weapon, press ? to see the available combos for the current weapon.*[]</Text>
 											</Speech>
 										</Timeline>
@@ -782,13 +842,15 @@
 				<Rule meta:RefKey="Node">f2ef7556-9bfd-45c5-8f52-beccdd3acee0</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="2346.6025816151532" meta:Y="765.63732282431351" GUID="d5cc35ce-33ef-4d74-bf68-926a89314f1f">
+		<Node meta:X="2346.6025390625" meta:Y="765.6373291015625" GUID="d5cc35ce-33ef-4d74-bf68-926a89314f1f">
+			<!--Toads-->
 			<Rule meta:RefKey="Take">
-				<Count>2%</Count>
+				<Count>1%</Count>
 				<Rule meta:RefKey="Node">d8e383d2-f54c-4866-ab02-4d389b8d32f0</Rule>
+				<Remainder meta:RefKey="Node">e775ad86-f5fc-4685-af99-84bea5159ec1</Remainder>
 			</Rule>
 		</Node>
-		<Node meta:X="2539.4180923806789" meta:Y="771.5557717477609" GUID="d8e383d2-f54c-4866-ab02-4d389b8d32f0">
+		<Node meta:X="2539.418212890625" meta:Y="771.5557861328125" GUID="d8e383d2-f54c-4866-ab02-4d389b8d32f0">
 			<Rule meta:RefKey="Symbol">
 				<Character>T</Character>
 				<Entity>
@@ -797,6 +859,34 @@
 			</Rule>
 			<Rule meta:RefKey="Fill">
 				<Character>T</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="2552.9238830162312" meta:Y="916.48312348691513" GUID="e775ad86-f5fc-4685-af99-84bea5159ec1">
+			<!--Motes-->
+			<Rule meta:RefKey="Take">
+				<Count>0.5%</Count>
+				<Rule meta:RefKey="Node">05202874-385a-49ef-94e7-3e87d48194c5</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="2804.9238830162312" meta:Y="916.48312348691513" GUID="05202874-385a-49ef-94e7-3e87d48194c5">
+			<Rule meta:RefKey="Symbol">
+				<Character>M</Character>
+				<AboveEntity>
+					<Components>
+						<Renderable>
+							<Renderable meta:RefKey="ParticleEffect">
+								<Name>Motes</Name>
+							</Renderable>
+						</Renderable>
+						<Light>
+							<Colour>255,255,255,151</Colour>
+							<Distance>4</Distance>
+						</Light>
+					</Components>
+				</AboveEntity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>M</Character>
 			</Rule>
 		</Node>
 	</Rules>
