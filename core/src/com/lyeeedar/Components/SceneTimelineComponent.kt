@@ -27,6 +27,8 @@ class SceneTimelineComponent() : AbstractComponent(), IDebugCommandProvider
 		val hitPointsEl = xml.getChildByName("HitPoints")
 		if (hitPointsEl != null) hitPoints.addAll(hitPointsEl.toHitPointArray())
 		else hitPoints.add(Point(0, 0))
+
+		sceneTimeline.parentEntity = entity
 	}
 
 	override fun attachCommands()
@@ -37,7 +39,7 @@ class SceneTimelineComponent() : AbstractComponent(), IDebugCommandProvider
 			else
 			{
 				val blocker = sceneTimeline.blocker!!
-				console.write("Blocked (" + blocker.blockCount + ")")
+				console.write("Blocked ($blocker)")
 			}
 
 			return true

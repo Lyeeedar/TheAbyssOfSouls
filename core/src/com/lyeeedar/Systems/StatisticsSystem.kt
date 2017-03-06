@@ -5,12 +5,16 @@ import com.badlogic.ashley.core.Family
 import com.lyeeedar.AI.Tasks.TaskInterrupt
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
+import com.lyeeedar.Renderables.Animation.BlinkAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Colour
 
 class StatisticsSystem : AbstractSystem(Family.one(StatisticsComponent::class.java).get())
 {
 	val blockEffect = AssetManager.loadParticleEffect("Block")
 	val blockBrokenEffect = AssetManager.loadParticleEffect("BlockBroken")
+	val hitEffect = AssetManager.loadParticleEffect("Hit")
 
 	override fun doUpdate(deltaTime: Float)
 	{
@@ -28,25 +32,41 @@ class StatisticsSystem : AbstractSystem(Family.one(StatisticsComponent::class.ja
 		{
 			if (entity.getComponent(MarkedForDeletionComponent::class.java) == null) entity.add(MarkedForDeletionComponent())
 		}
-		else if (stats.blockedDamage)
+
+		if (stats.tookDamage)
 		{
-			stats.blockedDamage = false
+			if (stats.showHp)
+			{
+				val sprite = entity.renderable()?.renderable as? Sprite
 
-			val p = blockEffect.copy()
-			p.size[0] = entity.pos().size
-			p.size[1] = entity.pos().size
+				if (sprite != null)
+				{
+					sprite.colourAnimation = BlinkAnimation.obtain().set(Colour(1f, 0.5f, 0.5f, 1f), sprite.colour, 0.15f, true)
+				}
+			}
 
-			val pe = Entity()
-			pe.add(RenderableComponent(p))
-			val ppos = PositionComponent()
+			val tile = entity.tile()
+			if (tile != null)
+			{
+				val p = hitEffect.copy()
+				p.size[0] = entity.pos().size
+				p.size[1] = entity.pos().size
 
-			ppos.size = entity.pos().size
-			ppos.position = entity.pos().position
+				val pe = Entity()
+				pe.add(RenderableComponent(p))
+				val ppos = PositionComponent()
 
-			pe.add(ppos)
-			Global.engine.addEntity(pe)
+				ppos.size = entity.pos().size
+				ppos.position = entity.pos().position
+
+				pe.add(ppos)
+				Global.engine.addEntity(pe)
+			}
+
+			stats.tookDamage = false
 		}
-		else if (stats.blockBroken)
+
+		if (stats.blockBroken)
 		{
 			stats.blockBroken = false
 
@@ -65,6 +85,24 @@ class StatisticsSystem : AbstractSystem(Family.one(StatisticsComponent::class.ja
 			Global.engine.addEntity(pe)
 
 			entity.task().tasks.add(TaskInterrupt())
+		}
+		else if (stats.blockedDamage)
+		{
+			stats.blockedDamage = false
+
+			val p = blockEffect.copy()
+			p.size[0] = entity.pos().size
+			p.size[1] = entity.pos().size
+
+			val pe = Entity()
+			pe.add(RenderableComponent(p))
+			val ppos = PositionComponent()
+
+			ppos.size = entity.pos().size
+			ppos.position = entity.pos().position
+
+			pe.add(ppos)
+			Global.engine.addEntity(pe)
 		}
 	}
 }

@@ -32,6 +32,7 @@
 		<Data Name="Mode" EnumValues="Additive,Multiplicative,Absolute" meta:RefKey="Enum" />
 		<Data Name="X" Default="0" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Y" Default="0" SkipIfDefault="False" meta:RefKey="String" />
+		<Data Name="Snap" EnumValues="Center,North,South,East,West,NorthEast,NorthWest,SouthEast,SouthWest" meta:RefKey="Enum" />
 	</Definition>
 	<Definition Name="Translate" meta:RefKey="StructDef">
 		<Data Name="X" Default="0" meta:RefKey="String" />
@@ -61,6 +62,7 @@
 		<Data Name="Mode" EnumValues="NotWall,NotEntity,Character" meta:RefKey="Enum" />
 		<Data Name="Character" MaxLength="1" VisibleIf="Mode==Character" meta:RefKey="String" />
 		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
+		<Data Name="Remainder" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 	</Definition>
 	<Definition Name="Repeat" Description="{Size}" meta:RefKey="StructDef">
 		<Data Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
@@ -78,7 +80,7 @@
 		</Attributes>
 		<Data Name="Split" Description="{Side} : {Size}" meta:RefKey="Struct">
 			<Data Name="Side" EnumValues="North,South,East,West,Remainder" meta:RefKey="Enum" />
-			<Data Name="Size" Default="1" meta:RefKey="String" />
+			<Data Name="Size" Default="1" VisibleIf="Side != Remainder" meta:RefKey="String" />
 			<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 		</Data>
 	</Definition>
@@ -99,6 +101,7 @@
 			<Data Name="Symbol" Keys="Symbol" meta:RefKey="Reference" />
 		</Data>
 		<Data Name="Prefab" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
+		<Data Name="Snap" EnumValues="Center,North,South,East,West,NorthEast,NorthWest,SouthEast,SouthWest" meta:RefKey="Enum" />
 	</Definition>
 	<Definition Name="Symbol" Description="{Character}" meta:RefKey="StructDef">
 		<Data Name="Character" MaxLength="1" Default="." SkipIfDefault="False" meta:RefKey="String" />

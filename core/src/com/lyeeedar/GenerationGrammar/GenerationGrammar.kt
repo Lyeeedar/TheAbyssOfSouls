@@ -11,17 +11,16 @@ import com.exp4j.Helpers.unescapeCharacters
 import com.lyeeedar.Components.*
 import com.lyeeedar.GenerationGrammar.Rules.AbstractGrammarRule
 import com.lyeeedar.GenerationGrammar.Rules.DeferredRule
+import com.lyeeedar.Global
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.*
-import com.lyeeedar.Util.Random
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
 import ktx.collections.set
-import java.util.*
 
 class GenerationGrammar
 {
@@ -111,6 +110,19 @@ class GenerationGrammar
 			}
 
 			for (job in jobs) job.join()
+		}
+
+		if (!Global.release)
+		{
+			for (y in 1..height)
+			{
+				for (x in 0..width-1)
+				{
+					val char = symbolGrid[x, height-y].char
+					print(char)
+				}
+				print('\n')
+			}
 		}
 
 		val namedEntities = engine.getEntitiesFor(Family.one(NameComponent::class.java).get())

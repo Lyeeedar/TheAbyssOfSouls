@@ -163,7 +163,7 @@ class TileSystem : AbstractSystem()
 
 		val water = tile.contents[SpaceSlot.FLOOR]?.water() ?: tile.contents[SpaceSlot.BELOWENTITY]?.water() ?: return
 
-		if (water.flowDir != Direction.CENTRE)
+		if (water.flowDir != Direction.CENTER)
 		{
 			val direction = water.flowDir
 

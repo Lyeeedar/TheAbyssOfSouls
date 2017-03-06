@@ -83,7 +83,7 @@ class GrammarRuleSplit : AbstractGrammarRule()
 				nextArea.points.clear()
 				nextArea.addPointsWithin(currentArea)
 			}
-			else if (split.side == SplitSide.EAST)
+			else if (split.side == SplitSide.WEST)
 			{
 				currentArea.xMode = true
 				currentArea.writeVariables(variables)
@@ -103,7 +103,7 @@ class GrammarRuleSplit : AbstractGrammarRule()
 				nextArea.points.clear()
 				nextArea.addPointsWithin(currentArea)
 			}
-			else if (split.side == SplitSide.WEST)
+			else if (split.side == SplitSide.EAST)
 			{
 				currentArea.xMode = true
 				currentArea.writeVariables(variables)

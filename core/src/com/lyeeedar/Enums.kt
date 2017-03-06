@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.XmlReader
-import com.exp4j.Helpers.EquationHelper
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.vectorToAngle
@@ -38,7 +36,7 @@ enum class Rarity
 // ----------------------------------------------------------------------
 enum class Direction private constructor(val x: Int, val y: Int, val identifier: String)
 {
-	CENTRE(0, 0, "C"),
+	CENTER(0, 0, "C"),
 	NORTH(0, 1, "N"),
 	SOUTH(0, -1, "S"),
 	EAST(1, 0, "E"),
@@ -74,8 +72,8 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 		init
 		{
 			// Setup neighbours
-			Direction.CENTRE.clockwise = Direction.CENTRE
-			Direction.CENTRE.anticlockwise = Direction.CENTRE
+			Direction.CENTER.clockwise = Direction.CENTER
+			Direction.CENTER.anticlockwise = Direction.CENTER
 
 			Direction.NORTH.anticlockwise = Direction.NORTHWEST
 			Direction.NORTH.clockwise = Direction.NORTHEAST
@@ -145,7 +143,7 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 			dx = MathUtils.clamp(dx, -1, 1)
 			dy = MathUtils.clamp(dy, -1, 1)
 
-			var d = Direction.CENTRE
+			var d = Direction.CENTER
 
 			for (dir in Direction.Values)
 			{
@@ -163,7 +161,7 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 		{
 			if (dx == 0 && dy == 0)
 			{
-				return Direction.CENTRE
+				return Direction.CENTER
 			}
 
 			if (Math.abs(dx) > Math.abs(dy))
@@ -303,7 +301,8 @@ enum class SpaceSlot
 	WALLDETAIL,
 	BELOWENTITY,
 	ENTITY,
-	ABOVEENTITY;
+	ABOVEENTITY,
+	LIGHT;
 
 
 	companion object

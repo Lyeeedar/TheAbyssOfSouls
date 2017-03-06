@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
+import com.lyeeedar.Direction
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.Util.Random
@@ -22,6 +23,8 @@ class GrammarRuleScale : AbstractGrammarRule()
 	lateinit var mode: Mode
 	lateinit var xEqn: String
 	lateinit var yEqn: String
+
+	lateinit var snap: Direction
 
 	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
@@ -56,8 +59,31 @@ class GrammarRuleScale : AbstractGrammarRule()
 		val diffX = area.width - oldWidth
 		val diffY = area.height - oldHeight
 
-		area.x -= diffX / 2
-		area.y -= diffY / 2
+		if (snap.x == 0)
+		{
+			area.x -= diffX / 2
+		}
+		else if (snap.x < 0)
+		{
+
+		}
+		else if (snap.x > 0)
+		{
+			area.x = (area.x + oldWidth) - area.width
+		}
+
+		if (snap.y == 0)
+		{
+			area.y -= diffY / 2
+		}
+		else if (snap.y < 0)
+		{
+
+		}
+		else if (snap.y > 0)
+		{
+			area.y = (area.y + oldHeight) - area.height
+		}
 
 		if (area.isPoints)
 		{
@@ -76,6 +102,7 @@ class GrammarRuleScale : AbstractGrammarRule()
 		mode = Mode.valueOf(xml.get("Mode", "Additive").toUpperCase())
 		xEqn = xml.get("X")
 		yEqn = xml.get("Y")
+		snap = Direction.valueOf(xml.get("Snap", "Center").toUpperCase())
 	}
 
 }

@@ -4,20 +4,12 @@ import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
-import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
 import squidpony.squidgrid.FOV
 import squidpony.squidgrid.Radius
 
-class ShadowCastCache @JvmOverloads constructor(private val LightPassability: SpaceSlot = SpaceSlot.WALL, fovType: Int = FOV.SHADOW)
+class ShadowCastCache @JvmOverloads constructor(private val LightPassability: SpaceSlot = SpaceSlot.LIGHT, fovType: Int = FOV.SHADOW)
 {
-
-	constructor(fovType: Int) : this(SpaceSlot.WALL, fovType)
-	{
-	}
-
-
-
 	fun copy(): ShadowCastCache
 	{
 		val cache = ShadowCastCache(LightPassability)
@@ -38,7 +30,7 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 		return cache
 	}
 
-	private val fov: FOV
+	private val fov: FOV = FOV(fovType)
 
 	var lastrange: Int = 0
 		private set
@@ -53,11 +45,6 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 	var rawOutput: Array<DoubleArray>? = null
 		private set
 
-	init
-	{
-		fov = FOV(fovType)
-	}
-
 	@JvmOverloads fun getShadowCast(grid: Array2D<Tile>, x: Int, y: Int, range: Int, caster: Any?, allowOutOfBounds: Boolean = false): com.badlogic.gdx.utils.Array<Point>
 	{
 		var recalculate = false
@@ -65,10 +52,12 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 		if (x != lastx || y != lasty)
 		{
 			recalculate = true
-		} else if (range != lastrange)
+		}
+		else if (range != lastrange)
 		{
 			recalculate = true
-		} else
+		}
+		else
 		{
 			for (pos in opaqueTiles)
 			{
@@ -153,7 +142,8 @@ class ShadowCastCache @JvmOverloads constructor(private val LightPassability: Sp
 				if (!tile.getPassable(LightPassability, caster))
 				{
 					opaqueTiles.add(pos)
-				} else
+				}
+				else
 				{
 					clearTiles.add(pos)
 				}

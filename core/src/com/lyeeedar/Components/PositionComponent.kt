@@ -39,6 +39,8 @@ class PositionComponent(): AbstractComponent()
 
 	var slot: SpaceSlot = SpaceSlot.ENTITY
 
+	var moveable = true
+
 	var facing: Direction = Direction.SOUTH
 
 	var turnsOnTile: Int = 0
@@ -55,6 +57,8 @@ class PositionComponent(): AbstractComponent()
 	{
 		val slotEl = xml.get("SpaceSlot", null)
 		if (slotEl != null) slot = SpaceSlot.valueOf(slotEl.toUpperCase())
+
+		moveable = xml.getBoolean("Moveable", true)
 
 		size = xml.getInt("Size", 1)
 		if (size != -1)

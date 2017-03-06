@@ -19,6 +19,7 @@ class GrammarRuleFilter : AbstractGrammarRule()
 
 	lateinit var mode: Mode
 	lateinit var rule: String
+	lateinit var remainder: String
 	var char: Char = ' '
 
 	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
@@ -35,25 +36,38 @@ class GrammarRuleFilter : AbstractGrammarRule()
 
 		if (!newArea.isPoints) newArea.convertToPoints()
 
+		val remainderArea = if (remainder.isNotBlank()) newArea.copy() else null
+		remainderArea?.points?.clear()
+
 		for (point in newArea.points.toList())
 		{
 			val symbol = newArea[point.x - newArea.x, point.y - newArea.y]
 
-			if (symbol == null || !condition.invoke(symbol)) newArea.points.removeValue(point, true)
+			if (symbol == null || !condition.invoke(symbol))
+			{
+				newArea.points.removeValue(point, true)
+				remainderArea?.points?.add(point)
+			}
 		}
 
-		if (newArea.points.size > 0)
+		if (rule.isNotBlank() && newArea.points.size > 0)
 		{
 			val rule = ruleTable[rule]
 			rule.execute(newArea, ruleTable, defines, variables, symbolTable, seed, deferredRules)
+		}
+		if (remainderArea != null && remainderArea.points.size > 0)
+		{
+			val rule = ruleTable[remainder]
+			rule.execute(remainderArea, ruleTable, defines, variables, symbolTable, seed, deferredRules)
 		}
 	}
 
 	override fun parse(xml: XmlReader.Element)
 	{
 		mode = Mode.valueOf(xml.get("Mode", "NotWall").toUpperCase())
-		rule = xml.get("Rule")
+		rule = xml.get("Rule", "")
 		char = xml.get("Character", " ")[0]
+		remainder = xml.get("Remainder", "")
 	}
 
 }

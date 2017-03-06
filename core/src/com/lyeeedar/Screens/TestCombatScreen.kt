@@ -36,7 +36,7 @@ class TestCombatScreen : AbstractScreen()
 
 	override fun create()
 	{
-		val grammar = GenerationGrammar.load("FloodMap")
+		val grammar = GenerationGrammar.load("Level1")
 
 		val start = System.nanoTime()
 		val level = grammar.generate(10, Global.engine)

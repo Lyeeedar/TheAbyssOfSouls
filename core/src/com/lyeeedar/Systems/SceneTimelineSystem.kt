@@ -12,6 +12,8 @@ class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::c
 {
 	override fun doUpdate(deltaTime: Float)
 	{
+		if (Global.interaction != null) return
+
 		for (entity in entities)
 		{
 			processEntity(entity, deltaTime)

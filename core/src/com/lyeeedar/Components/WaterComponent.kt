@@ -6,7 +6,7 @@ import com.lyeeedar.Direction
 
 class WaterComponent : AbstractComponent()
 {
-	var flowDir = Direction.CENTRE
+	var flowDir = Direction.CENTER
 	var flowChance = 0.3f
 	var depth: Float = 0.3f
 

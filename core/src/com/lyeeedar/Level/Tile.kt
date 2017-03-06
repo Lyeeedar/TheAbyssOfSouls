@@ -3,12 +3,11 @@ package com.lyeeedar.Level
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Components.isAllies
+import com.lyeeedar.Components.occludes
 import com.lyeeedar.Components.pos
 import com.lyeeedar.Components.trailing
 import com.lyeeedar.Direction
 import com.lyeeedar.Pathfinding.IPathfindingTile
-import com.lyeeedar.Renderables.Renderable
-import com.lyeeedar.Renderables.Sprite.SpriteWrapper
 import com.lyeeedar.SceneTimeline.SceneTimeline
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Colour
@@ -24,7 +23,6 @@ class Tile : Point(), IPathfindingTile
 
 	val neighbours: FastEnumMap<Direction, Tile> = FastEnumMap( Direction::class.java )
 
-	var isOpaque = false
 	var isVisible = false
 	var isSeen = false
 
@@ -38,26 +36,50 @@ class Tile : Point(), IPathfindingTile
 
 	override fun getPassable(travelType: SpaceSlot, self: Any?): Boolean
 	{
-		if (contents.get(SpaceSlot.WALL) != null) { return false; }
-
-		val obj = contents.get(travelType)
-		if (obj != null && obj != self)
+		if (travelType == SpaceSlot.LIGHT)
 		{
-			if (self is Entity)
+			for (slot in SpaceSlot.Values)
 			{
-				if (self.isAllies(obj) && obj.pos().turnsOnTile < 3)
+				val obj = contents.get(slot)
+				if (obj != null && obj != self)
 				{
-					return true
-				}
-				else if (self.trailing()?.entities?.contains(obj) ?: false)
-				{
-					return true
+					val occludes = obj.occludes()
+					if (occludes != null)
+					{
+						if (occludes.occludes) return false
+					}
+					else if (slot == SpaceSlot.WALL)
+					{
+						return false
+					}
 				}
 			}
 
-			return false
+			return true
 		}
+		else
+		{
+			if (contents.get(SpaceSlot.WALL) != null) { return false; }
 
-		return true
+			val obj = contents.get(travelType)
+			if (obj != null && obj != self)
+			{
+				if (self is Entity)
+				{
+					if (self.isAllies(obj) && obj.pos().turnsOnTile < 3)
+					{
+						return true
+					}
+					else if (self.trailing()?.entities?.contains(obj) ?: false)
+					{
+						return true
+					}
+				}
+
+				return false
+			}
+
+			return true
+		}
 	}
 }

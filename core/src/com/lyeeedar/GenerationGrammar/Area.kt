@@ -17,28 +17,40 @@ class Area
 		set(value)
 		{
 			field = value
-			if (value < allowedBoundsX || value > allowedBoundsX + allowedBoundsWidth) throw Exception("Invalid area x '$value'!")
+			if (value < allowedBoundsX || value > allowedBoundsX + allowedBoundsWidth)
+			{
+				throw Exception("Invalid area x '$value'!")
+			}
 		}
 
 	var y: Int = 0
 		set(value)
 		{
 			field = value
-			if (value < allowedBoundsY || value > allowedBoundsY + allowedBoundsHeight) throw Exception("Invalid area y '$value'!")
+			if (value < allowedBoundsY || value > allowedBoundsY + allowedBoundsHeight)
+			{
+				throw Exception("Invalid area y '$value'!")
+			}
 		}
 
 	var width: Int = 0
 		set(value)
 		{
 			field = value
-			if (value < 0 || value > allowedBoundsWidth) throw Exception("Invalid area width '$value'!")
+			if (value < 0 || value > allowedBoundsWidth)
+			{
+				throw Exception("Invalid area width '$value'!")
+			}
 		}
 
 	var height: Int = 0
 		set(value)
 		{
 			field = value
-			if (value < 0 || value > allowedBoundsHeight) throw Exception("Invalid area height '$value'!")
+			if (value < 0 || value > allowedBoundsHeight)
+			{
+				throw Exception("Invalid area height '$value'!")
+			}
 		}
 
 	lateinit var grid: Array2D<GrammarSymbol>
@@ -54,10 +66,22 @@ class Area
 		{
 			field = value
 
-			mat.setToRotation(field)
+			orientationDirty = true
 		}
 	val mat: Matrix3 = Matrix3()
+		get()
+		{
+			if (orientationDirty)
+			{
+				orientationDirty = false
+				mat.setToRotation(orientation)
+			}
+
+			return field
+		}
+
 	val vec: Vector3 = Vector3()
+	var orientationDirty = true
 
 	var xMode: Boolean = true
 
@@ -187,14 +211,15 @@ class Area
 		val lx = x - width/2
 		val ly = y - height/2
 
-		vec.set(lx.toFloat(),ly.toFloat(), 0f)
-		vec.mul(mat)
+		vec.set(lx.toFloat(), ly.toFloat(), 0f)
+
+		if (orientation != 0f) vec.mul(mat)
 
 		var dx = Math.round(vec.x)
 		var dy = Math.round(vec.y)
 
-		if (flipX) dx *= -1
-		if (flipY) dy *= -1
+		if (flipX) dx = (width-1)-dx
+		if (flipY) dy = (height-1)-dy
 
 		return Pos(dx + cx, dy + cy)
 	}

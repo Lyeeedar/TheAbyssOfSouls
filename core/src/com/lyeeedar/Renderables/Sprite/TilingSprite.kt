@@ -182,7 +182,7 @@ class TilingSprite() : Renderable()
 
 	companion object
 	{
-		private val CENTER = 1 shl Direction.CENTRE.ordinal + 1
+		private val CENTER = 1 shl Direction.CENTER.ordinal + 1
 		private val SOUTH = 1 shl Direction.SOUTH.ordinal + 1
 		private val NORTH = 1 shl Direction.NORTH.ordinal + 1
 		private val NORTHSOUTH = 0 or NORTH or SOUTH

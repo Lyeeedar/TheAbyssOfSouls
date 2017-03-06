@@ -6,10 +6,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.*
 import com.lyeeedar.ElementType
 import com.lyeeedar.Global
-import com.lyeeedar.Renderables.Animation.BlinkAnimation
-import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
-import com.lyeeedar.Util.Colour
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
@@ -29,9 +26,6 @@ class DamageAction() : AbstractTimelineAction()
 			{
 				val stats = entity.stats() ?: continue
 				stats.dealDamage(amount, element, elementalConversion)
-
-				val sprite = entity.renderable()?.renderable as? Sprite ?: continue
-				sprite.colourAnimation = BlinkAnimation.obtain().set(Colour(1f, 0.5f, 0.5f, 1f), sprite.colour, 0.15f, true)
 			}
 		}
 	}

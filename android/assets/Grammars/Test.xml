@@ -1,6 +1,6 @@
 <GenerationGrammar meta:X="-1.9942095279693604" meta:Y="34.03997802734375" GUID="ab4f5e8c-8fe7-4708-bc53-cafdcae905f9" xmlns:meta="Editor">
-	<Width>100</Width>
-	<Height>30</Height>
+	<Width>200</Width>
+	<Height>50</Height>
 	<Root meta:RefKey="Node">9f7e0b6b-b265-4dfb-9d73-9a7aee0d2127</Root>
 	<Rules>
 		<Node meta:X="120.00579071044922" meta:Y="34.03997802734375" GUID="9f7e0b6b-b265-4dfb-9d73-9a7aee0d2127">
@@ -10,18 +10,6 @@
 			<!--Add floor tiles-->
 			<Rule meta:RefKey="Fill">
 				<Character>.</Character>
-			</Rule>
-			<Rule meta:RefKey="Take">
-				<Count>5%</Count>
-				<Rule meta:RefKey="Node">09d6249a-6690-4127-893e-340df41ae4a9</Rule>
-			</Rule>
-			<Rule meta:RefKey="Take">
-				<Count>1%</Count>
-				<Rule meta:RefKey="Node">2ac26915-7492-4bfe-8bc9-8ad1fcc818b0</Rule>
-			</Rule>
-			<Rule meta:RefKey="Take">
-				<Count>5%</Count>
-				<Rule meta:RefKey="Node">a3691e74-1eb9-4a07-a496-17d7846bf210</Rule>
 			</Rule>
 			<!--Build River-->
 			<Rule Axis="Y" meta:RefKey="Divide">
@@ -54,6 +42,26 @@
 							<Renderable meta:RefKey="Sprite">
 								<Name>Oryx/uf_split/uf_terrain/ground_crusted_1</Name>
 							</Renderable>
+							<Variants>
+								<Variant>
+									<Chance>chance(1, 20)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/ground_crusted_2</Name>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1, 30)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/ground_crusted_3</Name>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1, 20)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/ground_crusted_4</Name>
+									</Renderable>
+								</Variant>
+							</Variants>
 						</Renderable>
 					</Components>
 				</Floor>
@@ -78,26 +86,56 @@
 			</Rule>
 			<Rule meta:RefKey="Symbol">
 				<Character>#</Character>
-				<Wall>
+				<Entity>
 					<Components>
 						<Renderable>
 							<IsShared>true</IsShared>
 							<Renderable meta:RefKey="Sprite">
-								<Name>Oryx/Custom/terrain/tree4</Name>
-								<DrawActualSize>true</DrawActualSize>
+								<Name>Oryx/Custom/terrain/bush</Name>
 							</Renderable>
+							<Variants>
+								<Variant>
+									<Chance>chance(1, 10)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/Custom/terrain/bush</Name>
+										<Colour>252,215,215,255</Colour>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1, 10)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/Custom/terrain/bush</Name>
+										<Colour>243,252,215,255</Colour>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1, 10)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/Custom/terrain/bush</Name>
+										<Colour>215,252,226,255</Colour>
+									</Renderable>
+								</Variant>
+							</Variants>
 						</Renderable>
+						<Occludes>
+							<Occludes>true</Occludes>
+						</Occludes>
+						<Statistics>
+							<HP>10</HP>
+							<Stamina>0</Stamina>
+							<Sight>0</Sight>
+						</Statistics>
 					</Components>
-				</Wall>
+				</Entity>
 			</Rule>
 		</Node>
 		<Node meta:X="1249.4173583984375" meta:Y="-43.133895874023438" GUID="2a7fa959-4e24-443b-8d69-07bffefb43de">
 			<Rule meta:RefKey="Take">
-				<Count>10%</Count>
+				<Count>5%</Count>
 				<Rule meta:RefKey="Node">91b30dda-58c1-44c5-99d9-18d8ab57cf89</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1414.4173583984375" meta:Y="-43.133895874023438" GUID="91b30dda-58c1-44c5-99d9-18d8ab57cf89">
+		<Node meta:X="1401.4173583984375" meta:Y="-43.133895874023438" GUID="91b30dda-58c1-44c5-99d9-18d8ab57cf89">
 			<Rule meta:RefKey="Fill">
 				<Character>#</Character>
 			</Rule>
@@ -214,81 +252,6 @@
 			<!--Player-->
 			<Rule meta:RefKey="Defer">
 				<Rule meta:RefKey="Node">a6ea73d0-e7ce-422a-baf1-0c3b5c79f4c9</Rule>
-			</Rule>
-		</Node>
-		<Node meta:X="992.4173583984375" meta:Y="-394.5567626953125" GUID="09d6249a-6690-4127-893e-340df41ae4a9">
-			<Rule meta:RefKey="DataScope">
-				<Rule meta:RefKey="Node">11083b11-5557-4dd5-99c3-14527331eb31</Rule>
-			</Rule>
-		</Node>
-		<Node meta:X="1197.4173583984375" meta:Y="-394.5567626953125" GUID="11083b11-5557-4dd5-99c3-14527331eb31">
-			<Rule meta:RefKey="Symbol">
-				<Character>.</Character>
-				<Extends>.</Extends>
-				<Floor>
-					<Components>
-						<Renderable>
-							<IsShared>true</IsShared>
-							<Renderable meta:RefKey="Sprite">
-								<Name>Oryx/uf_split/uf_terrain/ground_crusted_2</Name>
-							</Renderable>
-						</Renderable>
-					</Components>
-				</Floor>
-			</Rule>
-			<Rule meta:RefKey="Fill">
-				<Character>.</Character>
-				<Overwrite>true</Overwrite>
-			</Rule>
-		</Node>
-		<Node meta:X="992.4173583984375" meta:Y="-300.5567626953125" GUID="2ac26915-7492-4bfe-8bc9-8ad1fcc818b0">
-			<Rule meta:RefKey="DataScope">
-				<Rule meta:RefKey="Node">ff24b6c6-f5ed-43cb-9e8f-0782010b2bea</Rule>
-			</Rule>
-		</Node>
-		<Node meta:X="992.4173583984375" meta:Y="-206.5567626953125" GUID="a3691e74-1eb9-4a07-a496-17d7846bf210">
-			<Rule meta:RefKey="DataScope">
-				<Rule meta:RefKey="Node">949d1768-9313-4ded-9122-859a20c76253</Rule>
-			</Rule>
-		</Node>
-		<Node meta:X="1197.4173583984375" meta:Y="-300.5567626953125" GUID="ff24b6c6-f5ed-43cb-9e8f-0782010b2bea">
-			<Rule meta:RefKey="Symbol">
-				<Character>.</Character>
-				<Extends>.</Extends>
-				<Floor>
-					<Components>
-						<Renderable>
-							<IsShared>true</IsShared>
-							<Renderable meta:RefKey="Sprite">
-								<Name>Oryx/uf_split/uf_terrain/ground_crusted_3</Name>
-							</Renderable>
-						</Renderable>
-					</Components>
-				</Floor>
-			</Rule>
-			<Rule meta:RefKey="Fill">
-				<Character>.</Character>
-				<Overwrite>true</Overwrite>
-			</Rule>
-		</Node>
-		<Node meta:X="1197.4173583984375" meta:Y="-206.5567626953125" GUID="949d1768-9313-4ded-9122-859a20c76253">
-			<Rule meta:RefKey="Symbol">
-				<Character>.</Character>
-				<Extends>.</Extends>
-				<Floor>
-					<Components>
-						<Renderable>
-							<IsShared>true</IsShared>
-							<Renderable meta:RefKey="Sprite">
-								<Name>Oryx/uf_split/uf_terrain/ground_crusted_4</Name>
-							</Renderable>
-						</Renderable>
-					</Components>
-				</Floor>
-			</Rule>
-			<Rule meta:RefKey="Fill">
-				<Character>.</Character>
-				<Overwrite>true</Overwrite>
 			</Rule>
 		</Node>
 	</Rules>

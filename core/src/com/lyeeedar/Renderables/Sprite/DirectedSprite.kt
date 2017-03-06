@@ -23,7 +23,7 @@ class DirectedSprite(val name: String)
 				val sprite = AssetManager.loadSprite(path)
 
 				bitflag.clear()
-				if (dir.contains("C")) bitflag.setBit(Direction.CENTRE)
+				if (dir.contains("C")) bitflag.setBit(Direction.CENTER)
 				if (dir.contains("N")) bitflag.setBit(Direction.NORTH)
 				if (dir.contains("S")) bitflag.setBit(Direction.SOUTH)
 				if (dir.contains("E")) bitflag.setBit(Direction.EAST)

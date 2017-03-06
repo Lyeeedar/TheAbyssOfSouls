@@ -36,12 +36,13 @@
 				<Data Name="Name" meta:RefKey="String" />
 			</Data>
 			<Data Name="Occludes" meta:RefKey="Struct">
-				<Data Name="Occludes" meta:RefKey="Boolean" />
+				<Data Name="Occludes" Default="True" SkipIfDefault="False" meta:RefKey="Boolean" />
 			</Data>
 			<Data Name="Pit" SkipIfDefault="False" meta:RefKey="Struct" />
 			<Data Name="Position" meta:RefKey="Struct">
 				<Data Name="SpaceSlot" EnumValues="Entity,BelowEntity,AboveEntity" meta:RefKey="Enum" />
 				<Data Name="Size" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+				<Data Name="Moveable" Default="True" meta:RefKey="Boolean" />
 			</Data>
 			<Data Name="Renderable" meta:RefKey="Struct">
 				<Data Name="IsShared" meta:RefKey="Boolean" />
@@ -63,6 +64,7 @@
 				<Data Name="HP" Type="Int" Min="-999999" Default="10" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="Stamina" Type="Int" Min="-999999" Default="10" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="Sight" Default="5" SkipIfDefault="False" meta:RefKey="Number" />
+				<Data Name="DisplayHP" Default="True" meta:RefKey="Boolean" />
 			</Data>
 			<Data Name="Trailing" meta:RefKey="Struct">
 				<Data Name="Collapses" Default="True" meta:RefKey="Boolean" />

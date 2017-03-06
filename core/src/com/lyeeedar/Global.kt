@@ -65,7 +65,10 @@ class Global
 				{
 					engine.render().setTileSizeAnimated(50f, 0.1f)
 				}
+
+				interactionChanged(value)
 			}
+		val interactionChanged = Event1Arg<Interaction?>()
 
 		lateinit var controls: Controls
 

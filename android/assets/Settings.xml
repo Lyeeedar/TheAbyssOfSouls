@@ -6,7 +6,7 @@
     </key>
     <value>
       <string>&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\ProjectRoot.xml&lt;/string&gt;</string>
+&lt;string&gt;D:\Users\Philip\workspace\AoS\android\assets\ProjectRoot.xml&lt;/string&gt;</string>
     </value>
   </item>
   <item>
@@ -15,9 +15,11 @@
     </key>
     <value>
       <string>&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Definitions\SceneTimeline.xmldef&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\MHRL\android\assets\Grammars\Test.xml&lt;/string&gt;
+&lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\AoS\android\assets\Grammars\Level1.xml&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\AoS\android\assets\Definitions\GenerationGrammar.xmldef&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\AoS\android\assets\Definitions\Entity.xmldef&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\AoS\android\assets\Grammars\Test.xml&lt;/string&gt;
 &lt;/ArrayOfString&gt;</string>
     </value>
   </item>

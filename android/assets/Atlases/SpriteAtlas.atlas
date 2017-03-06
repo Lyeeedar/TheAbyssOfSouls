@@ -6,7 +6,7 @@ filter: MipMapLinearLinear,MipMapLinearLinear
 repeat: none
 Directional/rat_down_attack_1
   rotate: false
-  xy: 1062, 26
+  xy: 1374, 26
   size: 32, 48
   orig: 32, 48
   offset: 0, 0
@@ -20,7 +20,7 @@ Directional/rat_down_idle_1
   index: -1
 Directional/rat_up_attack_1
   rotate: false
-  xy: 1026, 26
+  xy: 1338, 26
   size: 32, 48
   orig: 32, 48
   offset: 0, 0
@@ -34,49 +34,77 @@ Directional/rat_up_idle_1
   index: -1
 EffectSprites/Aegis/Aegis_0
   rotate: false
-  xy: 1206, 42
+  xy: 1554, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Aegis/Aegis_1
   rotate: false
-  xy: 1170, 42
+  xy: 1518, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Aegis/Aegis_2
   rotate: false
-  xy: 1134, 42
+  xy: 1482, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Aegis/Aegis_3
   rotate: false
-  xy: 1098, 42
+  xy: 1446, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+EffectSprites/Hit/Hit_1
+  rotate: false
+  xy: 1954, 78
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Hit/Hit_2
+  rotate: false
+  xy: 782, 10
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Hit/Hit_3
+  rotate: false
+  xy: 834, 10
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Hit/Hit_4
+  rotate: false
+  xy: 886, 10
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 GUI/Button
   rotate: false
-  xy: 1614, 59
+  xy: 1962, 59
   size: 30, 15
   orig: 30, 15
   offset: 0, 0
   index: -1
 GUI/Checked
   rotate: false
-  xy: 1558, 50
+  xy: 1906, 50
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 1586, 50
+  xy: 1934, 50
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -90,7 +118,7 @@ GUI/SeperatorHorizontal
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 1888, 42
+  xy: 1610, 6
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
@@ -104,14 +132,14 @@ GUI/SpeechBubble
   index: -1
 GUI/SpeechBubbleArrow
   rotate: false
-  xy: 1098, 30
+  xy: 1620, 30
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 GUI/TextField
   rotate: false
-  xy: 1350, 42
+  xy: 1698, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -125,7 +153,7 @@ GUI/Tooltip
   index: -1
 GUI/Unchecked
   rotate: false
-  xy: 1530, 50
+  xy: 1878, 50
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -139,28 +167,28 @@ GUI/background
   index: -1
 GUI/health_empty
   rotate: false
-  xy: 1494, 42
+  xy: 1842, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/health_full
   rotate: false
-  xy: 1422, 42
+  xy: 1770, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/health_full_blue
   rotate: false
-  xy: 1458, 42
+  xy: 1806, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/health_full_green
   rotate: false
-  xy: 1386, 42
+  xy: 1734, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -249,6 +277,13 @@ Oryx/Custom/heroes/wraith_w_defense_4
   orig: 48, 48
   offset: 0, 0
   index: -1
+Oryx/Custom/terrain/bush
+  rotate: false
+  xy: 1410, 42
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 Oryx/Custom/terrain/light_brick_wall
   rotate: false
   xy: 1590, 78
@@ -284,7 +319,14 @@ Oryx/Custom/terrain/light_brick_wall_top: Overhang :Oryx/Custom/terrain/light_br
   orig: 72, 72
   offset: 0, 0
   index: -1
-Oryx/Custom/terrain/tree4
+Oryx/Custom/terrain/reeds
+  rotate: false
+  xy: 1902, 78
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/Custom/terrain/treeglowing
   rotate: false
   xy: 1798, 78
   size: 48, 48
@@ -384,35 +426,35 @@ Oryx/Custom/terrain/wall_crusted_top_3: Overhang :Oryx/Custom/terrain/wall_crust
   index: -1
 Oryx/uf_split/uf_heroes/rat_1
   rotate: false
-  xy: 834, 10
+  xy: 1182, 26
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_heroes/rat_2
   rotate: false
-  xy: 886, 10
+  xy: 1234, 26
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_heroes/rat_4
   rotate: false
-  xy: 886, 10
+  xy: 1234, 26
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_heroes/rat_3
   rotate: false
-  xy: 974, 26
+  xy: 1286, 26
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_interface/uf_interface_681
   rotate: false
-  xy: 1868, 58
+  xy: 1590, 22
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -433,7 +475,7 @@ Oryx/uf_split/uf_terrain/floor_extra_16
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_8
   rotate: false
-  xy: 1850, 78
+  xy: 974, 26
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -466,16 +508,23 @@ Oryx/uf_split/uf_terrain/ground_crusted_4
   orig: 48, 48
   offset: 0, 0
   index: -1
+Oryx/uf_split/uf_terrain/ground_grass_1
+  rotate: false
+  xy: 1850, 78
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_1
   rotate: false
-  xy: 782, 10
+  xy: 1130, 26
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_14
   rotate: false
-  xy: 1902, 78
+  xy: 1026, 26
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -489,7 +538,7 @@ Oryx/uf_split/uf_terrain/wall_dungeon_14: Overhang :Oryx/uf_split/uf_terrain/wal
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_7
   rotate: false
-  xy: 1954, 78
+  xy: 1078, 26
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -531,98 +580,98 @@ Oryx/uf_split/uf_terrain/water_green_4
   index: -1
 Particle/droplet
   rotate: false
-  xy: 1828, 58
+  xy: 1550, 22
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/ember_2
   rotate: false
-  xy: 1748, 58
+  xy: 1470, 22
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/glow
   rotate: false
-  xy: 1768, 58
+  xy: 1490, 22
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/line
   rotate: false
-  xy: 1788, 58
+  xy: 1510, 22
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/oval
   rotate: false
-  xy: 1314, 42
+  xy: 1662, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Particle/plasma_1
   rotate: false
-  xy: 1668, 58
+  xy: 2016, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_2
   rotate: false
-  xy: 1688, 58
+  xy: 1410, 22
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_3
   rotate: false
-  xy: 1708, 58
+  xy: 1430, 22
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/ring
   rotate: false
-  xy: 1278, 42
+  xy: 1626, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Particle/shockwave
   rotate: false
-  xy: 1242, 42
+  xy: 1590, 42
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Particle/slash
   rotate: false
-  xy: 1808, 58
+  xy: 1530, 22
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/spark
   rotate: false
-  xy: 1648, 58
+  xy: 1996, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/star
   rotate: false
-  xy: 1728, 58
+  xy: 1450, 22
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 1848, 58
+  xy: 1570, 22
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

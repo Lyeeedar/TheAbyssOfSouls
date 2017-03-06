@@ -202,6 +202,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				if (!tile.isSeen)
 				{
 					renderable.animation = null
+					continue
 				}
 
 				tileCol.set(tile.light)
@@ -275,11 +276,11 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				}
 			}
 
-			if (entity.stats() != null && Global.interaction == null)
+			val stats = entity.stats()
+			if (stats != null && Global.interaction == null && stats.showHp)
 			{
 				val hp_full = if (entity == player) hp_full_green else hp_full_red
 
-				val stats = entity.stats()
 				val totalWidth = pos.size.toFloat()
 
 				val hp = stats.hp.toInt()

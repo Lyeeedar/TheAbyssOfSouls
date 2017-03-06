@@ -1,7 +1,6 @@
 package com.lyeeedar.Combo
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
@@ -125,7 +124,7 @@ class ChargeComboStep : ComboStep()
 						{
 
 						}
-						else if (e.pos().size > knockbackDist)
+						else if (!e.pos().moveable || e.pos().size > knockbackDist)
 						{
 							break@outer
 						}
@@ -184,7 +183,8 @@ class ChargeComboStep : ComboStep()
 				{
 					val t = current.level.getTile(current, x, y) ?: break@outer
 					if (t.contents.containsKey(SpaceSlot.WALL)) break@outer
-					if (t.contents.containsKey(entity.pos().slot) && t.contents[entity.pos().slot] != entity && t.contents[entity.pos().slot].pos().size > knockbackDist) break@outer
+					val contents = t.contents[entity.pos().slot]
+					if (contents != null && contents != entity && (!contents.pos().moveable || contents.pos().size > knockbackDist)) break@outer
 
 					hitPoints.add(t)
 				}

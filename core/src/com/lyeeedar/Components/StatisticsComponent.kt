@@ -19,7 +19,7 @@ class StatisticsComponent: AbstractComponent()
 		{
 			var v = Math.min(value, maxHP)
 
-			var diff = v - hp
+			val diff = v - hp
 			if (diff < 0)
 			{
 				if (invulnerable)
@@ -43,6 +43,11 @@ class StatisticsComponent: AbstractComponent()
 						blockedDamage = true
 					}
 				}
+			}
+
+			if (v < field)
+			{
+				tookDamage = true
 			}
 
 			field = v
@@ -79,20 +84,24 @@ class StatisticsComponent: AbstractComponent()
 
 	var sight: Float = 0f
 
+	var showHp = true
+
 	var blocking = false
 	var invulnerable = false
 	var godMode = false
 
+	var tookDamage = false
 	var blockedDamage = false
 	var blockBroken = false
 	var insufficientStamina = 0f
 
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{
-		factions.addAll(xml.get("Faction").split(",").toGdxArray())
+		factions.addAll(xml.get("Faction", "").split(",").toGdxArray())
 		maxHP += xml.getInt("HP")
 		maxStamina += xml.getInt("Stamina")
 		sight += xml.getInt("Sight")
+		showHp = xml.getBoolean("DisplayHP", true)
 	}
 
 	fun dealDamage(amount: Int, element: ElementType, elementalConversion: Float)

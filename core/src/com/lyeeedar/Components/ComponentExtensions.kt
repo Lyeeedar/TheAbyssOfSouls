@@ -39,6 +39,7 @@ fun Entity.event(): EventComponent
 fun Entity.dialogue() = Mappers.dialogue.get(this)
 fun Entity.interaction() = Mappers.interaction.get(this)
 fun Entity.pit() = Mappers.pit.get(this)
+fun Entity.occludes() = Mappers.occludes.get(this)
 
 fun <T: AbstractComponent> Entity.hasComponent(c: Class<T>) = this.getComponent(c) != null
 
@@ -52,7 +53,7 @@ class Mappers
 		val additionalRenderable: ComponentMapper<AdditionalRenderableComponent> = ComponentMapper.getFor(AdditionalRenderableComponent::class.java)
 		val task: ComponentMapper<TaskComponent> = ComponentMapper.getFor(TaskComponent::class.java)
 		val light: ComponentMapper<LightComponent> = ComponentMapper.getFor(LightComponent::class.java)
-		val occluder: ComponentMapper<OccluderComponent> = ComponentMapper.getFor(OccluderComponent::class.java)
+		val occludes: ComponentMapper<OccludesComponent> = ComponentMapper.getFor(OccludesComponent::class.java)
 		val stats: ComponentMapper<StatisticsComponent> = ComponentMapper.getFor(StatisticsComponent::class.java)
 		val shadow: ComponentMapper<ShadowCastComponent> = ComponentMapper.getFor(ShadowCastComponent::class.java)
 		val combo: ComponentMapper<ComboComponent> = ComponentMapper.getFor(ComboComponent::class.java)
@@ -117,7 +118,7 @@ class EntityLoader()
 					"INTERACTION" -> InteractionComponent()
 					"LIGHT" -> LightComponent()
 					"NAME" -> NameComponent()
-					"OCCLUDER" -> OccluderComponent()
+					"OCCLUDES" -> OccludesComponent()
 					"POSITION" -> PositionComponent()
 					"PIT" -> PitComponent()
 					"RENDERABLE" -> RenderableComponent()

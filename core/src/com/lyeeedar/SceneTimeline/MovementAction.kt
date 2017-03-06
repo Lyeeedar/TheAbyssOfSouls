@@ -48,6 +48,9 @@ class MoveSourceAction : AbstractTimelineAction()
 		action.parent = parent
 		action.type = type
 
+		action.startTime = startTime
+		action.duration = duration
+
 		return action
 	}
 
@@ -79,6 +82,9 @@ class PullAction : AbstractTimelineAction()
 		val action = PullAction()
 		action.parent = parent
 		action.type = type
+
+		action.startTime = startTime
+		action.duration = duration
 
 		return action
 	}
@@ -118,6 +124,9 @@ class KnockbackAction : AbstractTimelineAction()
 		action.type = type
 		action.dist = dist
 
+		action.startTime = startTime
+		action.duration = duration
+
 		return action
 	}
 
@@ -133,6 +142,7 @@ private fun doMove(src: Tile, dst: Tile, type: MovementType)
 {
 	val entity = src.contents[SpaceSlot.ENTITY] ?: return
 	val pos = entity.pos() ?: return
+	if (!pos.moveable) return
 	val stats = entity.stats() ?: return
 	if (stats.invulnerable || stats.blocking)
 	{

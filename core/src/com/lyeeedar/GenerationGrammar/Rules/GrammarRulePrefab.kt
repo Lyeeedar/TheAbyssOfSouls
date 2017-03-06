@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Direction
 import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.GenerationGrammar.Pos
@@ -15,6 +16,8 @@ class GrammarRulePrefab : AbstractGrammarRule()
 {
 	val symbols = Array<GrammarRuleSymbol>()
 	lateinit var prefab: Array2D<Char>
+
+	lateinit var snap: Direction
 
 	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
@@ -37,8 +40,31 @@ class GrammarRulePrefab : AbstractGrammarRule()
 		val diffX = newArea.width - oldWidth
 		val diffY = newArea.height - oldHeight
 
-		newArea.x -= diffX / 2
-		newArea.y -= diffY / 2
+		if (snap.x == 0)
+		{
+			newArea.x -= diffX / 2
+		}
+		else if (snap.x < 0)
+		{
+
+		}
+		else if (snap.x > 0)
+		{
+			newArea.x = (newArea.x + oldWidth) - newArea.width
+		}
+
+		if (snap.y == 0)
+		{
+			newArea.y -= diffY / 2
+		}
+		else if (snap.y < 0)
+		{
+
+		}
+		else if (snap.y > 0)
+		{
+			newArea.y = (newArea.y + oldHeight) - newArea.height
+		}
 
 		if (newArea.isPoints)
 		{
@@ -91,5 +117,19 @@ class GrammarRulePrefab : AbstractGrammarRule()
 		}
 
 		prefab = xml.getChildByName("Prefab").toCharGrid()
+
+		for (y in 0..prefab.height/2-1)
+		{
+			for (x in 0..prefab.width-1)
+			{
+				val v1 = prefab[x, y]
+				val v2 = prefab[x, (prefab.height-1)-y]
+
+				prefab[x, y] = v2
+				prefab[x, (prefab.height-1)-y] = v1
+			}
+		}
+
+		snap = Direction.valueOf(xml.get("Snap", "Center").toUpperCase())
 	}
 }

@@ -98,8 +98,11 @@ class DialogueSystem : AbstractSystem(Family.all(DialogueComponent::class.java).
 							if (char == ']') break
 						}
 
-						val char = dialogue.text[current]
-						nextString += char
+						if (current < dialogue.text.length)
+						{
+							val char = dialogue.text[current]
+							nextString += char
+						}
 					}
 
 					dialogue.displayedText += nextString
@@ -122,7 +125,7 @@ class DialogueSystem : AbstractSystem(Family.all(DialogueComponent::class.java).
 
 			x += tileSize * 0.5f
 
-			if (entity.renderable().renderable is Sprite && (entity.renderable().renderable as Sprite).drawActualSize)
+			if (entity.renderable()?.renderable is Sprite && (entity.renderable().renderable as Sprite).drawActualSize)
 			{
 				y += tileSize * 1.5f
 			}

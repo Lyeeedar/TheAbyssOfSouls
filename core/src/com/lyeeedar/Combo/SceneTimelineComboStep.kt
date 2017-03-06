@@ -1,19 +1,21 @@
 package com.lyeeedar.Combo
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Direction
-import com.lyeeedar.Level.Tile
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.math.Matrix3
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectSet
+import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.*
+import com.lyeeedar.Direction
 import com.lyeeedar.Global
+import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.SceneTimeline.SceneTimeline
 import com.lyeeedar.SpaceSlot
-import com.lyeeedar.Util.*
+import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.random
+import com.lyeeedar.Util.toHitPointArray
 import ktx.collections.toGdxArray
 
 
@@ -59,7 +61,7 @@ class SceneTimelineComboStep : ComboStep()
 					if (e != null && e != entity)
 					{
 						val epos = e.pos() ?: continue
-						if (epos.size > parentPos.size)
+						if (!epos.moveable || epos.size > parentPos.size)
 						{
 							return false
 						}

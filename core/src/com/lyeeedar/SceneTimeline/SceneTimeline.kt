@@ -1,5 +1,6 @@
 package com.lyeeedar.SceneTimeline
 
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
@@ -12,8 +13,9 @@ import com.lyeeedar.Util.children
 class SceneTimeline
 {
 	var loop = false
-	var facing: Direction = Direction.CENTRE
+	var facing: Direction = Direction.CENTER
 
+	var parentEntity: Entity? = null
 	var sourceTile: Tile? = null
 	val destinationTiles = Array<Tile>()
 
@@ -24,12 +26,10 @@ class SceneTimeline
 	val isRunning: Boolean
 		get()
 		{
-			val blocker = blocker
-			return blocker?.isBlocked != true && !isComplete
+			return blocker == null && !isComplete
 		}
 
-	val blocker: BlockerAction?
-		get() = timelines.map { it.getExact(progression) as? BlockerAction }.firstOrNull { it != null }
+	var blocker: AbstractBlockerAction? = null
 
 	val isComplete: Boolean
 		get() = progression >= duration && timelines.all { it.actions.last().isExited }
@@ -38,10 +38,30 @@ class SceneTimeline
 
 	fun update(delta: Float)
 	{
-		if (!isRunning || isComplete) return
+		if (isComplete) return
 
 		val oldTime = progression
 		var newTime = progression + delta
+
+		blocker = null
+		for (action in timelines.flatMap { it.get(oldTime, newTime) }.sortedBy { it.startTime })
+		{
+			if (action is AbstractBlockerAction)
+			{
+				if (!action.isEntered)
+				{
+					action.enter()
+					action.isEntered = true
+				}
+
+				if (action.isBlocked)
+				{
+					newTime = action.startTime
+					blocker = action
+					break
+				}
+			}
+		}
 
 		for (timeline in timelines)
 		{
@@ -50,34 +70,14 @@ class SceneTimeline
 			{
 				if (!action.isEntered)
 				{
-					if (action is BlockerAction)
-					{
-						newTime = action.startTime
-						action.enter()
-						action.isEntered = true
-					}
+					action.isEntered = true
+					action.enter()
 				}
-			}
-		}
 
-		if (isRunning)
-		{
-			for (timeline in timelines)
-			{
-				val actions = timeline.get(oldTime, newTime)
-				for (action in actions)
+				if (action.endTime <= newTime && !action.isExited && action !is AbstractBlockerAction)
 				{
-					if (!action.isEntered)
-					{
-						action.isEntered = true
-						action.enter()
-					}
-
-					if (action.endTime <= newTime && !action.isExited)
-					{
-						action.isExited = true
-						action.exit()
-					}
+					action.isExited = true
+					action.exit()
 				}
 			}
 		}
@@ -209,6 +209,9 @@ abstract class AbstractTimelineAction()
 				"DAMAGE" -> DamageAction()
 				"SPAWN" -> SpawnAction()
 
+				"SPEECH" -> SpeechAction()
+				"INTERACTION" -> InteractionAction()
+
 				// ARGH everything broke
 				else -> throw RuntimeException("Invalid scene timeline action type: $name")
 			}
@@ -218,10 +221,13 @@ abstract class AbstractTimelineAction()
 	}
 }
 
-class BlockerAction() : AbstractTimelineAction()
+abstract class AbstractBlockerAction : AbstractTimelineAction()
 {
-	var blockOnTurn = false
 	var isBlocked = false
+}
+
+class BlockerAction() : AbstractBlockerAction()
+{
 	var blockCount = 0
 
 	lateinit var countEqn: String
@@ -230,21 +236,18 @@ class BlockerAction() : AbstractTimelineAction()
 	{
 		blockCount = countEqn.evaluate().toInt()
 
-		if (blockOnTurn)
-		{
-			Global.engine.task().onTurnEvent += fun(): Boolean {
+		Global.engine.task().onTurnEvent += fun(): Boolean {
 
-				blockCount--
-				if (blockCount == 0)
-				{
-					isExited = true
-					exit()
-					return true
-				}
-				else
-				{
-					return false
-				}
+			blockCount--
+			if (blockCount == 0)
+			{
+				isExited = true
+				exit()
+				return true
+			}
+			else
+			{
+				return false
 			}
 		}
 
@@ -260,7 +263,6 @@ class BlockerAction() : AbstractTimelineAction()
 	{
 		val action = BlockerAction()
 		action.parent = parent
-		action.blockOnTurn = blockOnTurn
 		action.startTime = startTime
 		action.duration = duration
 		action.countEqn = countEqn
@@ -269,7 +271,6 @@ class BlockerAction() : AbstractTimelineAction()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		blockOnTurn = true
 		countEqn = xml.get("Count", "1")
 	}
 }
