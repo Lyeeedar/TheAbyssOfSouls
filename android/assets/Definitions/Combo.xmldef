@@ -13,6 +13,24 @@
 			<Data Name="Defense" Keys="ComboNode" meta:RefKey="GraphReference" />
 		</Data>
 	</Definition>
+	<Definition Name="Item" AllowReferenceLinks="False" meta:RefKey="GraphStruct">
+		<Data Name="Icon" Keys="Sprite" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
+		<Data Name="Name" SkipIfDefault="False" meta:RefKey="String" />
+		<Data Name="Description" SkipIfDefault="False" meta:RefKey="MultilineString" />
+		<Data Name="ComboHint" SkipIfDefault="False" meta:RefKey="MultilineString" />
+		<Data Name="NextMode" EnumValues="Random,Keybinding" meta:RefKey="Enum" />
+		<Data Name="Combos" meta:RefKey="Collection">
+			<Data Name="Combo" Keys="Wait,Scene,Charge,Defense" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="Random" VisibleIf="NextMode==Random" meta:RefKey="Collection">
+			<Data Name="Node" Keys="ComboNode" meta:RefKey="GraphReference" />
+		</Data>
+		<Data Name="Keybinding" VisibleIf="NextMode==Keybinding" meta:RefKey="Struct">
+			<Data Name="AttackNormal" Keys="ComboNode" meta:RefKey="GraphReference" />
+			<Data Name="AttackSpecial" Keys="ComboNode" meta:RefKey="GraphReference" />
+			<Data Name="Defense" Keys="ComboNode" meta:RefKey="GraphReference" />
+		</Data>
+	</Definition>
 	<Definition Name="ComboNode" Description="{Desc}" TextColour="44,209,47" meta:RefKey="GraphStructDef">
 		<Data Name="Desc" TextColour="209,179,44" meta:RefKey="String" />
 		<Data Name="Cost" Type="Int" Min="0" VisibleIf="Root.NextMode==Keybinding" meta:RefKey="Number" />

@@ -71,7 +71,7 @@ class ComboTree
 			return load(xml)
 		}
 
-		private fun load(xml: XmlReader.Element): ComboTree
+		fun load(xml: XmlReader.Element): ComboTree
 		{
 			val isKeyBinding = xml.get("NextMode", "Random").toUpperCase() == "KEYBINDING"
 

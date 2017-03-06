@@ -21,6 +21,7 @@ abstract class AbstractInteractionAction
 				"DEFINE" -> InteractionActionDefine()
 				"NODE" -> InteractionActionNode()
 				"CHOICE" -> InteractionActionChoice()
+				"DROP" -> InteractionActionDrop()
 
 				else -> throw Exception("Unknown action type '" + xml.getAttribute("meta:RefKey") + "'!")
 			}

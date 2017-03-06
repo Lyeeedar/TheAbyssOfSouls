@@ -40,6 +40,7 @@ fun Entity.dialogue() = Mappers.dialogue.get(this)
 fun Entity.interaction() = Mappers.interaction.get(this)
 fun Entity.pit() = Mappers.pit.get(this)
 fun Entity.occludes() = Mappers.occludes.get(this)
+fun Entity.pickup() = Mappers.pickup.get(this)
 
 fun <T: AbstractComponent> Entity.hasComponent(c: Class<T>) = this.getComponent(c) != null
 
@@ -65,6 +66,7 @@ class Mappers
 		val dialogue: ComponentMapper<DialogueComponent> = ComponentMapper.getFor(DialogueComponent::class.java)
 		var interaction: ComponentMapper<InteractionComponent> = ComponentMapper.getFor(InteractionComponent::class.java)
 		val pit: ComponentMapper<PitComponent> = ComponentMapper.getFor(PitComponent::class.java)
+		val pickup: ComponentMapper<PickupComponent> = ComponentMapper.getFor(PickupComponent::class.java)
 	}
 }
 

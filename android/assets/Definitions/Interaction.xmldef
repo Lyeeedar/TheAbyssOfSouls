@@ -5,7 +5,7 @@
 	<!--Node-->
 	<Definition Name="Node" meta:RefKey="GraphCollectionDef">
 		<Data Name="Node" Keys="Node" meta:RefKey="GraphReference" />
-		<Data Name="Action" Keys="Branch,Choice,Define,Line" meta:RefKey="Reference" />
+		<Data Name="Action" Keys="Branch,Choice,Define,Line,Drop" meta:RefKey="Reference" />
 	</Definition>
 	<!--Actions-->
 	<Definition Name="Line" meta:RefKey="StructDef">
@@ -27,5 +27,8 @@
 	<Definition Name="Define" meta:RefKey="StructDef">
 		<Data Name="Key" meta:RefKey="String" />
 		<Data Name="Value" meta:RefKey="String" />
+	</Definition>
+	<Definition Name="Drop" meta:RefKey="StructDef">
+		<Data Name="Item" BasePath="Items" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
 	</Definition>
 </Definitions>

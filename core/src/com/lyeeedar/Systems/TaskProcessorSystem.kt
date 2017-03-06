@@ -4,8 +4,10 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.utils.ImmutableArray
+import com.lyeeedar.AI.Tasks.TaskMove
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Event0Arg
 
@@ -112,7 +114,7 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 
 	override fun doUpdate(deltaTime: Float)
 	{
-		if (Global.interaction != null) return
+		if (Global.interaction != null || Global.pause) return
 
 		val hasEffects = renderables.any { it.renderable()!!.renderable.animation != null && it.renderable()!!.renderable.animation!!.isBlocking }
 		var hasTimelines = false
@@ -212,6 +214,22 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 			e.pos().turnsOnTile++
 
 			e.trailing()?.updatePos(e.tile()!!)
+
+			if (e == level!!.player && t is TaskMove)
+			{
+				// do pickups
+				val destTile = e.tile()!!
+				for (slot in SpaceSlot.EntityValues)
+				{
+					val ent = destTile.contents[slot] ?: continue
+					val pickup = ent.pickup() ?: continue
+
+					if (pickup.item != null)
+					{
+						pickup.item!!.showEquipWindow(e)
+					}
+				}
+			}
 
 			return true
 		}

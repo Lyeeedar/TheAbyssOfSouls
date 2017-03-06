@@ -1,0 +1,36 @@
+<Interaction meta:X="0" meta:Y="0" GUID="e157053f-8e60-487a-a86f-0b1cab109548" xmlns:meta="Editor">
+	<Branch meta:RefKey="Branch">
+		<Branch>
+			<Condition>DaggerTaken==0</Condition>
+			<Node meta:RefKey="Node">ff111229-6743-464b-b74a-e68260cc4336</Node>
+		</Branch>
+	</Branch>
+	<Nodes>
+		<Node meta:X="256" meta:Y="0" GUID="ff111229-6743-464b-b74a-e68260cc4336">
+			<Action meta:RefKey="Line">
+				<Text>A dagger is thrust into the wood.</Text>
+			</Action>
+			<Action meta:RefKey="Choice">
+				<Choice>
+					<Text>Pull it out</Text>
+					<Node meta:RefKey="Node">21517866-806f-4df6-9d22-daf342d8f235</Node>
+				</Choice>
+				<Choice>
+					<Text>Leave it</Text>
+				</Choice>
+			</Action>
+		</Node>
+		<Node meta:X="481" meta:Y="-2" GUID="21517866-806f-4df6-9d22-daf342d8f235">
+			<Action meta:RefKey="Line">
+				<Text>You yank it out of the tree</Text>
+			</Action>
+			<Action meta:RefKey="Drop">
+				<Item>Dagger</Item>
+			</Action>
+			<Action meta:RefKey="Define">
+				<Key>DaggerTaken</Key>
+				<Value>1</Value>
+			</Action>
+		</Node>
+	</Nodes>
+</Interaction>

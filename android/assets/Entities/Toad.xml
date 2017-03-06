@@ -1,0 +1,23 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<Renderable>
+			<Renderable meta:RefKey="Sprite">
+				<Name>Oryx/uf_split/uf_heroes/toad_green</Name>
+				<DrawActualSize>true</DrawActualSize>
+			</Renderable>
+		</Renderable>
+		<Position />
+		<AI>
+			<AI>BasicMonster</AI>
+		</AI>
+		<Statistics>
+			<Faction>toad</Faction>
+			<HP>10</HP>
+			<Stamina>10</Stamina>
+			<Sight>15</Sight>
+		</Statistics>
+		<Combo>
+			<ComboTree>Entities/ToadCombo</ComboTree>
+		</Combo>
+	</Components>
+</Entity>

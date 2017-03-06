@@ -47,6 +47,8 @@ class Global
 		val settings: Settings by lazy { Settings() }
 		lateinit var engine: Engine
 
+		var pause: Boolean = false
+
 		val tilesize: Float
 			get() = engine.render().tileSize
 

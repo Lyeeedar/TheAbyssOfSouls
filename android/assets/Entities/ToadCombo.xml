@@ -1,0 +1,134 @@
+<Combo meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Combos>
+		<Combo meta:RefKey="Wait">
+			<Name>Wait</Name>
+			<Animation>idle</Animation>
+		</Combo>
+		<Combo meta:RefKey="Wait">
+			<Name>WaitTurn</Name>
+			<Animation>attack</Animation>
+			<CanTurn>true</CanTurn>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashLeft</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line>.@.</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashRight</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+							<FlipX>true</FlipX>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line>.@.</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Grab</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.5</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>SpecialBeam</Name>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Pull>
+						<Time>0.25</Time>
+						<MoveType>Leap</MoveType>
+					</Pull>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+		</Combo>
+	</Combos>
+	<Random>
+		<Node meta:X="301" meta:Y="0" meta:RefKey="ComboNode">
+			<Desc>Wait</Desc>
+			<Random>
+				<Node meta:X="532" meta:Y="-1.5241579027587255" meta:RefKey="ComboNode">
+					<Desc>Grab</Desc>
+					<Random>
+						<Node meta:X="750.80673677793027" meta:Y="1.5241579027587255" meta:RefKey="ComboNode">
+							<Desc>Wait</Desc>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+		<Node meta:X="296.42752629172384" meta:Y="176.80231672001216" meta:RefKey="ComboNode">
+			<Desc>SlashLeft</Desc>
+			<Random>
+				<Node meta:X="528.95168419448248" meta:Y="176.80231672001216" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<Random>
+						<Node meta:X="746.66178936137783" meta:Y="179.85063252552962" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Random>
+								<Node meta:X="977.66178936137783" meta:Y="179.85063252552962" meta:RefKey="ComboNode">
+									<Desc>Wait</Desc>
+									<Random>
+										<Node meta:X="1208.6617893613779" meta:Y="179.85063252552962" meta:RefKey="ComboNode">
+											<Desc>Wait</Desc>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+	</Random>
+</Combo>

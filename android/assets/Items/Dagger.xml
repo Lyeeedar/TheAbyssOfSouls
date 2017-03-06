@@ -1,0 +1,250 @@
+<Item meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Icon meta:RefKey="Sprite">
+		<Name>Oryx/uf_split/uf_items/weapon_dagger</Name>
+		<DrawActualSize>true</DrawActualSize>
+	</Icon>
+	<Name>Dagger</Name>
+	<Description>A small dagger, quick but weak</Description>
+	<ComboHint>N-&gt;N-&gt;N
+N-&gt;D-&gt;N
+N-&gt;S
+S-&gt;S
+D-&gt;D</ComboHint>
+	<NextMode>Keybinding</NextMode>
+	<Combos>
+		<Combo meta:RefKey="Wait">
+			<Name>Wait</Name>
+			<Animation>idle</Animation>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashLeft</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashRight</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+							<FlipX>true</FlipX>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Defense">
+			<Name>Roll</Name>
+			<Animation>defense</Animation>
+			<Type>Invulnerable</Type>
+			<Move>2</Move>
+			<AnimType>Roll</AnimType>
+		</Combo>
+		<Combo meta:RefKey="Defense">
+			<Name>Backstep</Name>
+			<Animation>defense</Animation>
+			<Type>Invulnerable</Type>
+			<Move>1</Move>
+			<Direction>Opposite</Direction>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Stab</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.167073175</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>SpecialBeam</Name>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+					<Damage>
+						<Time>0.167073175</Time>
+						<Amount>2</Amount>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#
+</Line>
+				<Line>#
+</Line>
+				<Line>@</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+	</Combos>
+	<Keybinding>
+		<AttackNormal meta:X="364.40877914951989" meta:Y="-245.21124828532234" meta:RefKey="ComboNode">
+			<Desc>SlashLeft</Desc>
+			<Cost>3</Cost>
+			<Keybinding>
+				<AttackNormal meta:X="676.40877914951989" meta:Y="-245.21124828532234" GUID="5f7edb52-e9c7-44c8-a82f-143363e4da39" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<Cost>3</Cost>
+					<Keybinding>
+						<AttackNormal meta:X="1130.6721536351165" meta:Y="-240.98079561042522" GUID="f6f957b1-8929-40d8-bac2-cc6765c81312" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>3</Cost>
+						</AttackNormal>
+						<AttackSpecial meta:X="1140.1330589849108" meta:Y="107.82441700960217" GUID="85c29294-79b1-49f1-9ef0-825e2135120c" meta:RefKey="ComboNode">
+							<Desc>Stab</Desc>
+							<Cost>5</Cost>
+						</AttackSpecial>
+						<Defense meta:X="787.5953360768176" meta:Y="235.3964334705075" GUID="b150325c-3c52-4d79-b4cc-6115ff194a6c" meta:RefKey="ComboNode">
+							<Desc>Backstep</Desc>
+							<Keybinding>
+								<AttackNormal meta:X="1130.6721536351165" meta:Y="-240.98079561042522" GUID="f6f957b1-8929-40d8-bac2-cc6765c81312" meta:RefKey="ComboNode">
+									<Desc>SlashLeft</Desc>
+									<Cost>3</Cost>
+								</AttackNormal>
+								<AttackSpecial meta:X="1140.1330589849108" meta:Y="107.82441700960217" GUID="85c29294-79b1-49f1-9ef0-825e2135120c" meta:RefKey="ComboNode">
+									<Desc>Stab</Desc>
+									<Cost>5</Cost>
+								</AttackSpecial>
+								<Direction meta:X="1357.5624142661179" meta:Y="655.233196159122" GUID="1fd0b88b-763e-4b52-b772-d3c77a81af72" meta:RefKey="ComboNode">
+									<Desc>Roll</Desc>
+								</Direction>
+							</Keybinding>
+						</Defense>
+						<Direction meta:X="1130.6721536351165" meta:Y="-240.98079561042522" GUID="f6f957b1-8929-40d8-bac2-cc6765c81312" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>3</Cost>
+						</Direction>
+					</Keybinding>
+				</AttackNormal>
+				<AttackSpecial meta:X="1140.1330589849108" meta:Y="107.82441700960217" GUID="85c29294-79b1-49f1-9ef0-825e2135120c" meta:RefKey="ComboNode">
+					<Desc>Stab</Desc>
+					<Cost>5</Cost>
+				</AttackSpecial>
+				<Defense meta:X="787.5953360768176" meta:Y="235.3964334705075" GUID="b150325c-3c52-4d79-b4cc-6115ff194a6c" meta:RefKey="ComboNode">
+					<Desc>Backstep</Desc>
+					<Keybinding>
+						<AttackNormal meta:X="1130.6721536351165" meta:Y="-240.98079561042522" GUID="f6f957b1-8929-40d8-bac2-cc6765c81312" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>3</Cost>
+						</AttackNormal>
+						<AttackSpecial meta:X="1140.1330589849108" meta:Y="107.82441700960217" GUID="85c29294-79b1-49f1-9ef0-825e2135120c" meta:RefKey="ComboNode">
+							<Desc>Stab</Desc>
+							<Cost>5</Cost>
+						</AttackSpecial>
+						<Direction meta:X="1357.5624142661179" meta:Y="655.233196159122" GUID="1fd0b88b-763e-4b52-b772-d3c77a81af72" meta:RefKey="ComboNode">
+							<Desc>Roll</Desc>
+						</Direction>
+					</Keybinding>
+				</Defense>
+				<Direction meta:X="676.40877914951989" meta:Y="-245.21124828532234" GUID="5f7edb52-e9c7-44c8-a82f-143363e4da39" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<Cost>3</Cost>
+					<Keybinding>
+						<AttackNormal meta:X="1130.6721536351165" meta:Y="-240.98079561042522" GUID="f6f957b1-8929-40d8-bac2-cc6765c81312" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>3</Cost>
+						</AttackNormal>
+						<AttackSpecial meta:X="1140.1330589849108" meta:Y="107.82441700960217" GUID="85c29294-79b1-49f1-9ef0-825e2135120c" meta:RefKey="ComboNode">
+							<Desc>Stab</Desc>
+							<Cost>5</Cost>
+						</AttackSpecial>
+						<Defense meta:X="787.5953360768176" meta:Y="235.3964334705075" GUID="b150325c-3c52-4d79-b4cc-6115ff194a6c" meta:RefKey="ComboNode">
+							<Desc>Backstep</Desc>
+							<Keybinding>
+								<AttackNormal meta:X="1130.6721536351165" meta:Y="-240.98079561042522" GUID="f6f957b1-8929-40d8-bac2-cc6765c81312" meta:RefKey="ComboNode">
+									<Desc>SlashLeft</Desc>
+									<Cost>3</Cost>
+								</AttackNormal>
+								<AttackSpecial meta:X="1140.1330589849108" meta:Y="107.82441700960217" GUID="85c29294-79b1-49f1-9ef0-825e2135120c" meta:RefKey="ComboNode">
+									<Desc>Stab</Desc>
+									<Cost>5</Cost>
+								</AttackSpecial>
+								<Direction meta:X="1357.5624142661179" meta:Y="655.233196159122" GUID="1fd0b88b-763e-4b52-b772-d3c77a81af72" meta:RefKey="ComboNode">
+									<Desc>Roll</Desc>
+								</Direction>
+							</Keybinding>
+						</Defense>
+						<Direction meta:X="1130.6721536351165" meta:Y="-240.98079561042522" GUID="f6f957b1-8929-40d8-bac2-cc6765c81312" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>3</Cost>
+						</Direction>
+					</Keybinding>
+				</Direction>
+			</Keybinding>
+		</AttackNormal>
+		<AttackSpecial meta:X="369.49794238683131" meta:Y="32.921810699588477" meta:RefKey="ComboNode">
+			<Desc>Stab</Desc>
+			<Cost>5</Cost>
+			<Keybinding>
+				<AttackSpecial meta:X="1140.1330589849108" meta:Y="107.82441700960217" GUID="85c29294-79b1-49f1-9ef0-825e2135120c" meta:RefKey="ComboNode">
+					<Desc>Stab</Desc>
+					<Cost>5</Cost>
+				</AttackSpecial>
+				<Defense meta:X="787.5953360768176" meta:Y="235.3964334705075" GUID="b150325c-3c52-4d79-b4cc-6115ff194a6c" meta:RefKey="ComboNode">
+					<Desc>Backstep</Desc>
+					<Keybinding>
+						<AttackNormal meta:X="1130.6721536351165" meta:Y="-240.98079561042522" GUID="f6f957b1-8929-40d8-bac2-cc6765c81312" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Cost>3</Cost>
+						</AttackNormal>
+						<AttackSpecial meta:X="1140.1330589849108" meta:Y="107.82441700960217" GUID="85c29294-79b1-49f1-9ef0-825e2135120c" meta:RefKey="ComboNode">
+							<Desc>Stab</Desc>
+							<Cost>5</Cost>
+						</AttackSpecial>
+						<Direction meta:X="1357.5624142661179" meta:Y="655.233196159122" GUID="1fd0b88b-763e-4b52-b772-d3c77a81af72" meta:RefKey="ComboNode">
+							<Desc>Roll</Desc>
+						</Direction>
+					</Keybinding>
+				</Defense>
+				<Direction meta:X="1140.1330589849108" meta:Y="107.82441700960217" GUID="85c29294-79b1-49f1-9ef0-825e2135120c" meta:RefKey="ComboNode">
+					<Desc>Stab</Desc>
+					<Cost>5</Cost>
+				</Direction>
+			</Keybinding>
+		</AttackSpecial>
+		<Defense meta:X="1045.5624142661179" meta:Y="655.233196159122" meta:RefKey="ComboNode">
+			<Desc>Roll</Desc>
+			<Cost>4</Cost>
+			<Keybinding>
+				<Defense meta:X="1357.5624142661179" meta:Y="655.233196159122" GUID="1fd0b88b-763e-4b52-b772-d3c77a81af72" meta:RefKey="ComboNode">
+					<Desc>Roll</Desc>
+				</Defense>
+				<Direction meta:X="1357.5624142661179" meta:Y="655.233196159122" GUID="1fd0b88b-763e-4b52-b772-d3c77a81af72" meta:RefKey="ComboNode">
+					<Desc>Roll</Desc>
+				</Direction>
+			</Keybinding>
+		</Defense>
+	</Keybinding>
+</Item>

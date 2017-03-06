@@ -63,7 +63,7 @@
 				<Data Name="Faction" meta:RefKey="String" />
 				<Data Name="HP" Type="Int" Min="-999999" Default="10" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="Stamina" Type="Int" Min="-999999" Default="10" SkipIfDefault="False" meta:RefKey="Number" />
-				<Data Name="Sight" Default="5" SkipIfDefault="False" meta:RefKey="Number" />
+				<Data Name="Sight" Default="15" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="DisplayHP" Default="True" meta:RefKey="Boolean" />
 			</Data>
 			<Data Name="Trailing" meta:RefKey="Struct">
