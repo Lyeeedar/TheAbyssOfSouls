@@ -10,10 +10,14 @@ import com.lyeeedar.Level.Tile
 
 class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::class.java).get())
 {
+	private val processedTimelines = Array<SceneTimeline>()
+	
 	override fun doUpdate(deltaTime: Float)
 	{
 		if (Global.interaction != null) return
 
+		processedTimelines.clear()
+		
 		for (entity in entities)
 		{
 			processEntity(entity, deltaTime)
@@ -23,17 +27,41 @@ class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::c
 	fun processEntity(entity: Entity?, deltaTime: Float)
 	{
 		val timeline = entity!!.sceneTimeline() ?: return
-
-		if (timeline.hitPoints.size > 0 && entity.tile() != null)
+		if (processedTimelines.contains(timeline)) return
+		
+		if (timeline.isShared)
 		{
-			val tile = entity.tile()!!
-			timeline.sceneTimeline.sourceTile = tile
 			timeline.sceneTimeline.destinationTiles.clear()
-
-			for (point in timeline.hitPoints)
+			
+			for (entity in timeline.sharingEntities)
 			{
-				val t = tile.level.getTile(tile, point) ?: continue
-				timeline.sceneTimeline.destinationTiles.add(t)
+				val tile = entity.tile()!!
+				
+				for (point in timeline.hitPoints)
+				{
+					val t = tile.level.getTile(tile, point) ?: continue
+					if (!timeline.sceneTimeline.destinationTiles.contains(t))
+					{
+						timeline.sceneTimeline.destinationTiles.add(t)
+					}
+				}
+			}
+			
+			processedTimelines.add(timeline)
+		}
+		else
+		{
+			if (timeline.hitPoints.size > 0 && entity.tile() != null)
+			{
+				val tile = entity.tile()!!
+				timeline.sceneTimeline.sourceTile = tile
+				timeline.sceneTimeline.destinationTiles.clear()
+
+				for (point in timeline.hitPoints)
+				{
+					val t = tile.level.getTile(tile, point) ?: continue
+					timeline.sceneTimeline.destinationTiles.add(t)
+				}
 			}
 		}
 
