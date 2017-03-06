@@ -27,13 +27,13 @@ class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::c
 	fun processEntity(entity: Entity?, deltaTime: Float)
 	{
 		val timeline = entity!!.sceneTimeline() ?: return
-		if (processedTimelines.contains(timeline)) return
+		if (processedTimelines.contains(timeline.sceneTimeline)) return
 		
 		if (timeline.isShared)
 		{
 			timeline.sceneTimeline.destinationTiles.clear()
 			
-			for (entity in timeline.sharingEntities)
+			for (entity in timeline.sceneTimeline.sharingEntities)
 			{
 				val tile = entity.tile()!!
 				
@@ -47,7 +47,7 @@ class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::c
 				}
 			}
 			
-			processedTimelines.add(timeline)
+			processedTimelines.add(timeline.sceneTimeline)
 		}
 		else
 		{
