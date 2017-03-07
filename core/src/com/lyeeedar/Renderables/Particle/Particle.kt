@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.BlendMode
 import com.lyeeedar.Direction
 import com.lyeeedar.Util.*
+import ktx.math.div
 
 /**
  * Created by Philip on 14-Aug-16.
@@ -30,6 +31,7 @@ class Particle(val emitter: Emitter)
 	private val normal = Vector2()
 	private val reflection = Vector2()
 	private val temp = Vector2()
+	private val temp2 = Vector2()
 	private val collisionList = Array<Direction>(false, 16)
 
 	val particles = Array<ParticleData>(false, 16)
@@ -92,18 +94,19 @@ class Particle(val emitter: Emitter)
 
 				if (brownian > 0f)
 				{
-					val direction = particle.velocity.normalise()
-					val length = particle.velocity.length()
+					val direction = temp2.set(particle.velocity)
+					val length = particle.velocity.len()
 
-					val impulseVector = temp.set(Random.random(1f)-0.5f, Random.random(1f)-0.5f, Random.random(1f)-0.5f)
-					impulseVector.normalise()
-					
-					direction = direction.lerp(impulseVector, brownianFactor * delta)
-					direction.normalise()					
+					if (length != 0f) direction.div(length)
 
-					particle.velocity.set(direction).mul(length)
+					val impulseVector = temp.set(Random.random()-0.5f, Random.random()-0.5f)
+					impulseVector.nor()
+
+					direction.lerp(impulseVector, brownian * delta)
+					direction.nor()
+
+					particle.velocity.set(direction).scl(length)
 				}
-
 
 				moveVec.set(particle.velocity).scl(delta)
 
@@ -310,6 +313,7 @@ class Particle(val emitter: Emitter)
 			particle.drag = xml.getFloat("Drag", 0f)
 			particle.velocityAligned = xml.getBoolean("VelocityAligned", false)
 			particle.allowResize = xml.getBoolean("AllowResize", true)
+			particle.brownian = xml.getFloat("Brownian", 0f)
 
 			particle.blendKeyframes = xml.getBoolean("BlendKeyframes", false)
 

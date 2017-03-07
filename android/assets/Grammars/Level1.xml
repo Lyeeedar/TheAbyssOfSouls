@@ -1,7 +1,7 @@
 <GenerationGrammar meta:X="-353.12057495117187" meta:Y="4.7794466018676758" GUID="ab4f5e8c-8fe7-4708-bc53-cafdcae905f9" xmlns:meta="Editor">
 	<Width>200</Width>
 	<Height>50</Height>
-	<Ambient>59,59,59,255</Ambient>
+	<Ambient>94,94,94,255</Ambient>
 	<Root meta:RefKey="Node">9f7e0b6b-b265-4dfb-9d73-9a7aee0d2127</Root>
 	<Rules>
 		<Node meta:X="-231.12059020996094" meta:Y="4.7794466018676758" GUID="9f7e0b6b-b265-4dfb-9d73-9a7aee0d2127">

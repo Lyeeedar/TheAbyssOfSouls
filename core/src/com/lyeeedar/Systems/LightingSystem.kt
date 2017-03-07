@@ -73,7 +73,7 @@ class LightingSystem(): AbstractSystem(Family.all(PositionComponent::class.java,
 					val dst2 = tile.euclideanDist2(x.toFloat(), y.toFloat())
 
 					var alpha = 1f - dst2 / ( light.dist * light.dist )
-					if (alpha < 0) alpha = 0f
+					if (alpha < 0.001f) alpha = 0f
 
 					temp.set(light.col)
 					temp *= alpha
@@ -82,7 +82,6 @@ class LightingSystem(): AbstractSystem(Family.all(PositionComponent::class.java,
 					temp.a = 1f
 
 					tile.light += temp
-					tile.light.a = 1f
 				}
 			}
 		}

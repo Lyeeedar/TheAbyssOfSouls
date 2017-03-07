@@ -231,6 +231,12 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 				}
 			}
 
+			if (e.stats().regeneratingHP > 0f)
+			{
+				val toregen = Math.min(0.5f, e.stats().regeneratingHP)
+				e.stats().hp += toregen
+			}
+
 			return true
 		}
 		else

@@ -97,29 +97,30 @@
 		<Node meta:X="301" meta:Y="0" meta:RefKey="ComboNode">
 			<Desc>Wait</Desc>
 			<Random>
-				<Node meta:X="532" meta:Y="-1.5241579027587255" meta:RefKey="ComboNode">
+				<Node meta:X="532" meta:Y="-1.5241578817367554" meta:RefKey="ComboNode">
 					<Desc>Grab</Desc>
 					<Random>
-						<Node meta:X="750.80673677793027" meta:Y="1.5241579027587255" meta:RefKey="ComboNode">
+						<Node meta:X="750.8067626953125" meta:Y="1.5241578817367554" meta:RefKey="ComboNode">
 							<Desc>Wait</Desc>
 						</Node>
 					</Random>
 				</Node>
 			</Random>
 		</Node>
-		<Node meta:X="296.42752629172384" meta:Y="176.80231672001216" meta:RefKey="ComboNode">
+		<Node meta:X="296.42752075195312" meta:Y="176.80232238769531" meta:RefKey="ComboNode">
 			<Desc>SlashLeft</Desc>
+			<Weight>4</Weight>
 			<Random>
-				<Node meta:X="528.95168419448248" meta:Y="176.80231672001216" meta:RefKey="ComboNode">
+				<Node meta:X="528.95166015625" meta:Y="176.80232238769531" meta:RefKey="ComboNode">
 					<Desc>SlashRight</Desc>
 					<Random>
-						<Node meta:X="746.66178936137783" meta:Y="179.85063252552962" meta:RefKey="ComboNode">
+						<Node meta:X="746.66180419921875" meta:Y="179.85063171386719" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
 							<Random>
-								<Node meta:X="977.66178936137783" meta:Y="179.85063252552962" meta:RefKey="ComboNode">
+								<Node meta:X="977.66180419921875" meta:Y="179.85063171386719" meta:RefKey="ComboNode">
 									<Desc>Wait</Desc>
 									<Random>
-										<Node meta:X="1208.6617893613779" meta:Y="179.85063252552962" meta:RefKey="ComboNode">
+										<Node meta:X="1208.6617431640625" meta:Y="179.85063171386719" meta:RefKey="ComboNode">
 											<Desc>Wait</Desc>
 										</Node>
 									</Random>

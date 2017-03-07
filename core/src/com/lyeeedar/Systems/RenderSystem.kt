@@ -2,6 +2,7 @@ package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Components.*
@@ -303,7 +304,12 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 
 				for (i in 0..maxhp-1)
 				{
-					val pip = if(i < hp) hp_full else hp_empty
+					val pip: TextureRegion
+
+					if (i >= hp && i < hp+stats.regeneratingHP) pip = hp_full_red
+					else if(i < hp) pip = hp_full
+					else pip = hp_empty
+
 					renderer.queueTexture(pip, ax+i*spacePerPip, ay+overhead, pos.slot.ordinal, 1, width = solid, height = 0.1f, sortX = ax, sortY = ay)
 				}
 

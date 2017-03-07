@@ -1,7 +1,7 @@
 <GenerationGrammar meta:X="0" meta:Y="0" GUID="f903bf32-cf15-44df-b207-7272a4184734" xmlns:meta="Editor">
 	<Width>100</Width>
 	<Height>100</Height>
-	<Ambient>55,132,143,171</Ambient>
+	<Ambient>55,132,143,200</Ambient>
 	<Root meta:RefKey="Node">99873eb0-48fc-4265-8df3-439cf61ae919</Root>
 	<Rules>
 		<Node meta:X="535.4300537109375" meta:Y="-174.52914428710937" GUID="ffb61d99-817a-4a8d-b87d-5c17aec399a6">
@@ -299,7 +299,7 @@
 					<Line>...######,######..~</Line>
 					<Line>~.#######,#######..</Line>
 					<Line>..#######,#######..</Line>
-					<Line>..###....,....###..</Line>
+					<Line>..###.........###..</Line>
 					<Line>..................~</Line>
 					<Line>~..~~............~~</Line>
 					<Line>~~..~...~..~..~~...</Line>

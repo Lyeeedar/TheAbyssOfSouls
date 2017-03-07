@@ -46,6 +46,7 @@
 						<Data Name="BlendMode" EnumValues="Additive,Multiplicative" SkipIfDefault="False" meta:RefKey="Enum" />
 						<Data Name="Collision" EnumValues="None,Slide,Bounce,Die" meta:RefKey="Enum" />
 						<Data Name="Drag" meta:RefKey="Number" />
+						<Data Name="Brownian" Min="0" meta:RefKey="Number" />
 						<Data Name="VelocityAligned" meta:RefKey="Boolean" />
 						<Data Name="AllowResize" Default="True" meta:RefKey="Boolean" />
 						<Data Name="BlendKeyframes" meta:RefKey="Boolean" />

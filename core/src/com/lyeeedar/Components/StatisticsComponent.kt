@@ -52,12 +52,11 @@ class StatisticsComponent: AbstractComponent()
 			{
 				tookDamage = true
 
-				regeneratingHP = field - v
+				regeneratingHP = Math.max(-diff, regeneratingHP)
 			}
 			else
 			{
-				regeneratingHP = Math.min(0f, regeneratingHP-diff)
-				yo make this work
+				regeneratingHP = Math.max(0f, regeneratingHP-diff)
 			}
 
 			field = v

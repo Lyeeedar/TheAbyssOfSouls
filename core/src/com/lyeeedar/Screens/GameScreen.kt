@@ -3,10 +3,7 @@ package com.lyeeedar.Screens
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.lyeeedar.Components.EntityLoader
-import com.lyeeedar.Components.name
-import com.lyeeedar.Components.pos
-import com.lyeeedar.Components.renderable
+import com.lyeeedar.Components.*
 import com.lyeeedar.GenerationGrammar.GenerationGrammar
 import com.lyeeedar.Global
 import com.lyeeedar.Level.LevelData
@@ -181,6 +178,12 @@ class GameScreen : AbstractScreen()
 			}
 
 			return false
+		})
+
+		DebugConsole.register("Suicide", "", fun (args, console): Boolean {
+			Global.engine.level!!.player.stats().hp = 0f
+
+			return true
 		})
 
 		DebugConsole.register("Select", "", fun (args, console): Boolean {

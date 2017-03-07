@@ -156,6 +156,8 @@ class GenerationGrammar
 			}
 
 			grammar.ambient = AssetManager.loadColour(xml.getChildByName("Ambient"))
+			grammar.ambient.times(grammar.ambient.a)
+			grammar.ambient.a = 1f
 
 			return grammar
 		}

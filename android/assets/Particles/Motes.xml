@@ -13,6 +13,7 @@
 				<Particle>
 					<Lifetime>2,4</Lifetime>
 					<BlendMode>Additive</BlendMode>
+					<Brownian>10</Brownian>
 					<TextureKeyframes>
 						<Stream>
 							<Keyframe>0|Particle/glow</Keyframe>
