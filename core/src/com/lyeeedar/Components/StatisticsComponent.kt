@@ -51,11 +51,20 @@ class StatisticsComponent: AbstractComponent()
 			if (v < field)
 			{
 				tookDamage = true
+
+				regeneratingHP = field - v
+			}
+			else
+			{
+				regeneratingHP = Math.min(0f, regeneratingHP-diff)
+				yo make this work
 			}
 
 			field = v
 			if (godMode && field < 1) field = 1f
 		}
+
+	var regeneratingHP: Float = 0f
 
 	var maxHP: Float = 0f
 		get() = field
