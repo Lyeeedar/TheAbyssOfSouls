@@ -10,7 +10,9 @@ import com.lyeeedar.Renderables.Animation.ExpandAnimation
 import com.lyeeedar.Renderables.Animation.LeapAnimation
 import com.lyeeedar.Renderables.Animation.SpinAnimation
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.random
+import ktx.collections.set
 
 class InteractionActionDrop : AbstractInteractionAction()
 {
@@ -23,6 +25,11 @@ class InteractionActionDrop : AbstractInteractionAction()
 
 		val dropEntity = Entity()
 		dropEntity.add(RenderableComponent(item.icon))
+
+		val particle = AssetManager.loadParticleEffect("PickupTwinkle")
+		val additional = AdditionalRenderableComponent()
+		additional.above["twinkle"] = particle
+		dropEntity.add(additional)
 
 		val pos = PositionComponent()
 		pos.slot = SpaceSlot.BELOWENTITY

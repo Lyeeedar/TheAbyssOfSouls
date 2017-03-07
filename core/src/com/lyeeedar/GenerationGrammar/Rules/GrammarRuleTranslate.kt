@@ -13,8 +13,15 @@ import com.lyeeedar.Util.freeTS
 
 class GrammarRuleTranslate : AbstractGrammarRule()
 {
+	enum class Mode
+	{
+		RELATIVE,
+		ABSOLUTE
+	}
+
 	lateinit var xEqn: String
 	lateinit var yEqn: String
+	lateinit var mode: Mode
 
 	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
 	{
@@ -26,12 +33,28 @@ class GrammarRuleTranslate : AbstractGrammarRule()
 
 		rng.freeTS()
 
-		area.x += x
-		area.y += y
-
-		if (area.isPoints)
+		if (mode == Mode.RELATIVE)
 		{
-			area.points.forEachIndexed { i, pos -> area.points[i] = Pos(pos.x + x, pos.y + y) }
+			area.x += x
+			area.y += y
+
+			if (area.isPoints)
+			{
+				area.points.forEachIndexed { i, pos -> area.points[i] = Pos(pos.x + x, pos.y + y) }
+			}
+		}
+		else if (mode == Mode.ABSOLUTE)
+		{
+			val dx = x - area.x
+			val dy = y - area.y
+
+			area.x += dx
+			area.y += dy
+
+			if (area.isPoints)
+			{
+				area.points.forEachIndexed { i, pos -> area.points[i] = Pos(pos.x + dx, pos.y + dy) }
+			}
 		}
 	}
 
@@ -39,6 +62,7 @@ class GrammarRuleTranslate : AbstractGrammarRule()
 	{
 		xEqn = xml.get("X", "0")
 		yEqn = xml.get("Y", "0")
+		mode = Mode.valueOf(xml.get("Mode", "Relative").toUpperCase())
 	}
 
 }

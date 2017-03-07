@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Components.MarkedForDeletionComponent
 import com.lyeeedar.Components.pos
 import com.lyeeedar.Components.trailing
+import com.lyeeedar.Level.World
 
 class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::class.java).get())
 {
@@ -49,5 +50,13 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 		}
 
 		engine.removeEntity(entity)
+
+		if (entity == level!!.player)
+		{
+			val current = World.world.currentLevel
+			val next = current.connections["death"]
+
+			World.world.changeLevel(next)
+		}
 	}
 }

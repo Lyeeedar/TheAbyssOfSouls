@@ -1,0 +1,328 @@
+<GenerationGrammar meta:X="0" meta:Y="0" GUID="f903bf32-cf15-44df-b207-7272a4184734" xmlns:meta="Editor">
+	<Width>100</Width>
+	<Height>100</Height>
+	<Ambient>55,132,143,171</Ambient>
+	<Root meta:RefKey="Node">99873eb0-48fc-4265-8df3-439cf61ae919</Root>
+	<Rules>
+		<Node meta:X="535.4300537109375" meta:Y="-174.52914428710937" GUID="ffb61d99-817a-4a8d-b87d-5c17aec399a6">
+			<!--Define base symbols-->
+			<Rule meta:RefKey="Symbol">
+				<Character>.</Character>
+				<Floor>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/uf_split/uf_terrain/ground_crusted_1</Name>
+							</Renderable>
+							<Variants>
+								<Variant>
+									<Chance>chance(1, 20)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/ground_crusted_2</Name>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1, 30)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/ground_crusted_3</Name>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1, 20)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/ground_crusted_4</Name>
+									</Renderable>
+								</Variant>
+							</Variants>
+						</Renderable>
+					</Components>
+				</Floor>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>~</Character>
+				<Floor>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+							</Renderable>
+						</Renderable>
+						<Water>
+							<FlowChance>0</FlowChance>
+							<Depth>0.3</Depth>
+						</Water>
+					</Components>
+				</Floor>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>#</Character>
+				<Wall>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="TilingSprite">
+								<Name>wall</Name>
+								<Mode>Premade</Mode>
+								<Front meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/wall_crusted_1</Name>
+								</Front>
+								<Top meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/wall_crusted_top_1</Name>
+								</Top>
+								<Overhang meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/wall_crusted_overhang_1</Name>
+								</Overhang>
+							</Renderable>
+							<Variants>
+								<Variant>
+									<Chance>chance(1,10)</Chance>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>wall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_3</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_top_2</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_overhang_1</Name>
+										</Overhang>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1,20)</Chance>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>wall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_2</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_top_3</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/wall_crusted_overhang_1</Name>
+										</Overhang>
+									</Renderable>
+								</Variant>
+							</Variants>
+						</Renderable>
+					</Components>
+				</Wall>
+			</Rule>
+		</Node>
+		<Node meta:X="261.4444580078125" meta:Y="-2.2222223281860352" GUID="99873eb0-48fc-4265-8df3-439cf61ae919">
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">ffb61d99-817a-4a8d-b87d-5c17aec399a6</Rule>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>~</Character>
+			</Rule>
+			<Rule Axis="Y" Parallel="True" meta:RefKey="Divide">
+				<Division>
+					<Size>20</Size>
+					<Rule meta:RefKey="Node">4a830b3a-8726-4e58-b8f8-0c788dfed739</Rule>
+				</Division>
+				<Division>
+					<Size>size-20</Size>
+					<Rule meta:RefKey="Node">460153e7-99c7-4df0-b009-ac0168bfc791</Rule>
+				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="937.62335205078125" meta:Y="292.61166381835937" GUID="2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac">
+			<!--Island-->
+			<Rule meta:RefKey="Scale">
+				<Mode>Absolute</Mode>
+				<X>7+rnd(5)</X>
+				<Y>7+rnd(5)</Y>
+				<Snap>NorthEast</Snap>
+			</Rule>
+			<Rule meta:RefKey="Translate">
+				<X>rnd(x)</X>
+				<Y>rnd(y)</Y>
+				<Mode>Absolute</Mode>
+			</Rule>
+			<Rule meta:RefKey="Take">
+				<Count>60%</Count>
+				<Rule meta:RefKey="Node">683063da-a4f5-4750-ac6f-a59e439e1e59</Rule>
+			</Rule>
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">d0f77ec0-f861-423b-af26-5a3fde4599b7</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1211.6234130859375" meta:Y="516.6116943359375" GUID="d0f77ec0-f861-423b-af26-5a3fde4599b7">
+			<Rule meta:RefKey="Scale">
+				<X>-2</X>
+				<Y>-2</Y>
+			</Rule>
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">683063da-a4f5-4750-ac6f-a59e439e1e59</Rule>
+			</Rule>
+			<Rule meta:RefKey="Scale">
+				<X>-1</X>
+				<Y>-1</Y>
+			</Rule>
+			<Rule meta:RefKey="Split">
+				<Split>
+					<Rule meta:RefKey="Node">8212fa1e-d8d6-4ae2-8aaf-4ed79dc961e3</Rule>
+				</Split>
+				<Split>
+					<Side>South</Side>
+					<Rule meta:RefKey="Node">8212fa1e-d8d6-4ae2-8aaf-4ed79dc961e3</Rule>
+				</Split>
+				<Split>
+					<Side>East</Side>
+					<Rule meta:RefKey="Node">8212fa1e-d8d6-4ae2-8aaf-4ed79dc961e3</Rule>
+				</Split>
+				<Split>
+					<Side>West</Side>
+					<Rule meta:RefKey="Node">8212fa1e-d8d6-4ae2-8aaf-4ed79dc961e3</Rule>
+				</Split>
+			</Rule>
+		</Node>
+		<Node meta:X="1503.6234130859375" meta:Y="422.61166381835937" GUID="683063da-a4f5-4750-ac6f-a59e439e1e59">
+			<Rule meta:RefKey="Fill">
+				<Character>.</Character>
+				<Overwrite>true</Overwrite>
+			</Rule>
+		</Node>
+		<Node meta:X="1532.6234130859375" meta:Y="597.6116943359375" GUID="8212fa1e-d8d6-4ae2-8aaf-4ed79dc961e3">
+			<Rule meta:RefKey="Take">
+				<Count>50%</Count>
+				<Rule meta:RefKey="Node">3bb4af64-875f-4fac-8f78-f5d3c4984ea0</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1790.6234130859375" meta:Y="597.6116943359375" GUID="3bb4af64-875f-4fac-8f78-f5d3c4984ea0">
+			<Rule meta:RefKey="Fill">
+				<Character>#</Character>
+				<Overwrite>true</Overwrite>
+			</Rule>
+		</Node>
+		<Node meta:X="547.4444580078125" meta:Y="63.824619293212891" GUID="4a830b3a-8726-4e58-b8f8-0c788dfed739">
+			<!--Fortress-->
+			<Rule meta:RefKey="DataScope">
+				<Rule meta:RefKey="Node">35a5ec42-da60-43e7-9761-2ea2c8424df2</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="858.753662109375" meta:Y="43.845439910888672" GUID="35a5ec42-da60-43e7-9761-2ea2c8424df2">
+			<Rule meta:RefKey="Prefab">
+				<Symbols>
+					<Symbol meta:RefKey="Symbol">
+						<Character>#</Character>
+						<Wall>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>castlewall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_dungeon_14</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_dungeon_7</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_dungeon_1</Name>
+										</Overhang>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Wall>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>,</Character>
+						<Floor>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/floor_set_grey_6</Name>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Floor>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>D</Character>
+						<Extends>,</Extends>
+						<Wall>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/door_metal_4</Name>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Wall>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>s</Character>
+						<Extends>,</Extends>
+						<BelowEntity>
+							<Components>
+								<MetaRegion>
+									<Key>playerspawn</Key>
+								</MetaRegion>
+							</Components>
+						</BelowEntity>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>W</Character>
+						<Extends>,</Extends>
+						<Entity>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_heroes/warden</Name>
+										<DrawActualSize>true</DrawActualSize>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Entity>
+					</Symbol>
+				</Symbols>
+				<Prefab>
+					<Line>~~~......~~~.....~.</Line>
+					<Line>.~......~........~.</Line>
+					<Line>~.###.........###..</Line>
+					<Line>..###############~.</Line>
+					<Line>..###,#,,,,,#,###~~</Line>
+					<Line>...#,,##D#D##,,#...</Line>
+					<Line>...####,,,,,####..~</Line>
+					<Line>...#,,#,,W,,#,,#..~</Line>
+					<Line>~..##D#,,,,,#D##..~</Line>
+					<Line>~..#,,,,,s,,,,,#...</Line>
+					<Line>~..##D#,,,,,#D##...</Line>
+					<Line>...#,,#,,,,,#,,#...</Line>
+					<Line>...######,######..~</Line>
+					<Line>~.#######,#######..</Line>
+					<Line>..#######,#######..</Line>
+					<Line>..###....,....###..</Line>
+					<Line>..................~</Line>
+					<Line>~..~~............~~</Line>
+					<Line>~~..~...~..~..~~...</Line>
+				</Prefab>
+			</Rule>
+		</Node>
+		<Node meta:X="692.49578857421875" meta:Y="268.26611328125" GUID="460153e7-99c7-4df0-b009-ac0168bfc791">
+			<!--Islands-->
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac</Rule>
+			</Rule>
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac</Rule>
+			</Rule>
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac</Rule>
+			</Rule>
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac</Rule>
+			</Rule>
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac</Rule>
+			</Rule>
+		</Node>
+	</Rules>
+</GenerationGrammar>

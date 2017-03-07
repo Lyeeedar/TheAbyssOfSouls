@@ -1,0 +1,14 @@
+<Definitions xmlns:meta="Editor">
+	<Definition Name="World" AllowReferenceLinks="False" meta:RefKey="GraphStruct">
+		<Data Name="Root" Keys="Level" meta:RefKey="GraphReference" />
+	</Definition>
+	<Definition Name="Level" meta:RefKey="GraphStructDef">
+		<Data Name="Grammar" BasePath="Grammars" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
+		<Data Name="Connected" meta:RefKey="Collection">
+			<Data Name="Level" Description="{Key}" meta:RefKey="Struct">
+				<Data Name="Key" meta:RefKey="String" />
+				<Data Name="Next" Keys="Level" UseParentDescription="True" meta:RefKey="GraphReference" />
+			</Data>
+		</Data>
+	</Definition>
+</Definitions>

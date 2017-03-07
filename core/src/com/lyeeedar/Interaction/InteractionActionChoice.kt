@@ -4,6 +4,9 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Components.DialogueComponent
+import com.lyeeedar.Components.dialogue
+import com.lyeeedar.Components.hasComponent
 import com.lyeeedar.Global
 import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.UI.ButtonKeyboardHelper
@@ -14,10 +17,31 @@ import ktx.scene2d.textButton
 
 class InteractionActionChoice : AbstractInteractionAction()
 {
+	lateinit var text: String
 	val choices = Array<Choice>()
 
 	override fun interact(entity: Entity, interaction: Interaction): Boolean
 	{
+		if (!entity.hasComponent(DialogueComponent::class.java))
+		{
+			entity.add(DialogueComponent())
+		}
+
+		val dialogue = entity.dialogue()
+
+		if (dialogue.text != text)
+		{
+			dialogue.remove = false
+			dialogue.text = text
+			dialogue.displayedText = ""
+
+			Global.controls.onInput += fun (key): Boolean
+			{
+				dialogue.displayedText = dialogue.text
+				return true
+			}
+		}
+
 		val keyboardHelper = ButtonKeyboardHelper()
 
 		val table = table {
@@ -33,6 +57,8 @@ class InteractionActionChoice : AbstractInteractionAction()
 						{
 							interaction.interactionStack.add(com.lyeeedar.Interaction.InteractionNodeData(choice.node, 0))
 						}
+
+						dialogue.remove = true
 
 						interaction.interact(entity)
 					}
@@ -56,7 +82,10 @@ class InteractionActionChoice : AbstractInteractionAction()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		for (el in xml.children())
+		text = xml.get("Text")
+
+		val choicesEl = xml.getChildByName("Choices")
+		for (el in choicesEl.children())
 		{
 			val text = el.get("Text")
 			val key = el.get("Node", "")

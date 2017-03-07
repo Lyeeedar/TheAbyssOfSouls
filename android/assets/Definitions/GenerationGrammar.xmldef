@@ -38,6 +38,7 @@
 	<Definition Name="Translate" meta:RefKey="StructDef">
 		<Data Name="X" Default="0" meta:RefKey="String" />
 		<Data Name="Y" Default="0" meta:RefKey="String" />
+		<Data Name="Mode" EnumValues="Relative,Absolute" meta:RefKey="Enum" />
 	</Definition>
 	<!--Chain Rules-->
 	<Definition Name="Condition" MinCount="1" meta:RefKey="CollectionDef">

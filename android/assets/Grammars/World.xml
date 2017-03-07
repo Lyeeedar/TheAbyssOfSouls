@@ -1,0 +1,13 @@
+<World meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Root meta:X="192" meta:Y="-33" meta:RefKey="Level">
+		<Grammar>Level1</Grammar>
+		<Connected>
+			<Level>
+				<Key>death</Key>
+				<Next meta:X="466" meta:Y="-26" meta:RefKey="Level">
+					<Grammar>Level2</Grammar>
+				</Next>
+			</Level>
+		</Connected>
+	</Root>
+</World>

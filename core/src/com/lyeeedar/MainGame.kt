@@ -2,18 +2,19 @@ package com.lyeeedar
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
-import com.lyeeedar.Screens.*
-
-import javax.swing.*
+import com.lyeeedar.Screens.AbstractScreen
+import com.lyeeedar.Screens.GameScreen
+import com.lyeeedar.Screens.ParticleEditorScreen
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.util.HashMap
+import java.util.*
+import javax.swing.JOptionPane
 
 class MainGame : Game()
 {
 	enum class ScreenEnum
 	{
-		TEST
+		GAME
 	}
 
 	private val screens = HashMap<ScreenEnum, AbstractScreen>()
@@ -47,7 +48,7 @@ class MainGame : Game()
 			Thread.currentThread().uncaughtExceptionHandler = handler
 		}
 
-		screens.put(ScreenEnum.TEST, TestCombatScreen())
+		screens.put(ScreenEnum.GAME, GameScreen())
 
 		if (Global.PARTICLE_EDITOR)
 		{
@@ -55,7 +56,7 @@ class MainGame : Game()
 		}
 		else
 		{
-			switchScreen(ScreenEnum.TEST)
+			switchScreen(ScreenEnum.GAME)
 		}
 	}
 

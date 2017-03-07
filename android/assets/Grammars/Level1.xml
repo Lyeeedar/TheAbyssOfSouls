@@ -424,110 +424,6 @@
 				<Snap>East</Snap>
 			</Rule>
 		</Node>
-		<Node meta:X="968.569091796875" meta:Y="274.69229125976562" GUID="9dea48ad-ac4f-4966-bd88-a68e7c004f70">
-			<!--Player spawn + tutorial-->
-			<Rule meta:RefKey="Prefab">
-				<Symbols>
-					<Symbol meta:RefKey="Symbol">
-						<Character>@</Character>
-						<BelowEntity>
-							<Components>
-								<SceneTimeline>
-									<SceneTimeline meta:RefKey="SceneTimeline">
-										<Timeline>
-											<Interaction>
-												<Time>0.005152261</Time>
-												<Interaction>StartGame</Interaction>
-											</Interaction>
-											<Speech>
-												<Time>0.104364328</Time>
-												<Duration LockDuration="False">0.145693421</Duration>
-												<Text>[GREEN]To move use wasd or the arrow keys.[]</Text>
-											</Speech>
-										</Timeline>
-										<Timeline>
-											<Blocker>
-												<Time>0.145558789</Time>
-											</Blocker>
-										</Timeline>
-									</SceneTimeline>
-								</SceneTimeline>
-							</Components>
-						</BelowEntity>
-						<Entity>
-							<Extends>player</Extends>
-							<IsPlayer>true</IsPlayer>
-							<!--Components-->
-						</Entity>
-					</Symbol>
-					<Symbol meta:RefKey="Symbol">
-						<Character>L</Character>
-						<Entity>
-							<Components>
-								<Renderable>
-									<Renderable meta:RefKey="Sprite">
-										<Name>Oryx/Custom/terrain/treeglowing</Name>
-										<DrawActualSize>true</DrawActualSize>
-									</Renderable>
-								</Renderable>
-								<SceneTimeline>
-									<SceneTimeline meta:RefKey="SceneTimeline">
-										<Timeline>
-											<Speech>
-												<Time>0.09964476</Time>
-												<Duration LockDuration="False">0.151119441</Duration>
-												<Text>That there looks like some sort of weapon.
-[GREEN]*Walk into objects to interact with them.*[]</Text>
-											</Speech>
-											<Speech>
-												<Time>0.411396027</Time>
-												<Duration LockDuration="False">0.187403858</Duration>
-												<Text>[GREEN]*To attack with a weapon hold CTRL then press a direction. This starts a normal combo. Press the Normal (CTRL), Special (INS), Defense(SHIFT) or Direction keys to continue the combo.* 
-*You can also press the Special and Defense keys to start other combos.*
-*Keys can be rebound in the options menu.*
-*Combos differ per weapon, press ? to see the available combos for the current weapon.*[]</Text>
-											</Speech>
-										</Timeline>
-										<Timeline>
-											<Blocker>
-												<Count>4</Count>
-											</Blocker>
-											<Blocker>
-												<Time>0.169709727</Time>
-												<Count>3</Count>
-											</Blocker>
-											<Blocker>
-												<Time>0.30787766</Time>
-												<Count>2</Count>
-											</Blocker>
-											<Blocker>
-												<Time>0.5006359</Time>
-												<Count>15</Count>
-											</Blocker>
-										</Timeline>
-									</SceneTimeline>
-								</SceneTimeline>
-								<Interaction>
-									<Interaction>WeaponTutorial</Interaction>
-								</Interaction>
-							</Components>
-						</Entity>
-					</Symbol>
-				</Symbols>
-				<Prefab>
-					<Line>...##....</Line>
-					<Line>..######.</Line>
-					<Line>###....#.</Line>
-					<Line>##...L.#.</Line>
-					<Line>#......#.</Line>
-					<Line>#......##</Line>
-					<Line>#.@....##</Line>
-					<Line>##....##.</Line>
-					<Line>########.</Line>
-					<Line>...##....</Line>
-				</Prefab>
-			</Rule>
-		</Node>
 		<Node meta:X="1746.9466552734375" meta:Y="-420.63546752929687" GUID="d501c911-3ee0-4c52-82d1-89c5b8df989c">
 			<!--EdgeWall-->
 			<Rule meta:RefKey="DataScope">
@@ -861,14 +757,14 @@
 				<Character>T</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="2552.9238830162312" meta:Y="916.48312348691513" GUID="e775ad86-f5fc-4685-af99-84bea5159ec1">
+		<Node meta:X="2552.923828125" meta:Y="916.48309326171875" GUID="e775ad86-f5fc-4685-af99-84bea5159ec1">
 			<!--Motes-->
 			<Rule meta:RefKey="Take">
 				<Count>0.5%</Count>
 				<Rule meta:RefKey="Node">05202874-385a-49ef-94e7-3e87d48194c5</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="2804.9238830162312" meta:Y="916.48312348691513" GUID="05202874-385a-49ef-94e7-3e87d48194c5">
+		<Node meta:X="2804.923828125" meta:Y="916.48309326171875" GUID="05202874-385a-49ef-94e7-3e87d48194c5">
 			<Rule meta:RefKey="Symbol">
 				<Character>M</Character>
 				<AboveEntity>
@@ -887,6 +783,92 @@
 			</Rule>
 			<Rule meta:RefKey="Fill">
 				<Character>M</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="968.569091796875" meta:Y="274.69229125976562" GUID="9dea48ad-ac4f-4966-bd88-a68e7c004f70">
+			<!--Player spawn + tutorial-->
+			<Rule meta:RefKey="Prefab">
+				<Symbols>
+					<Symbol meta:RefKey="Symbol">
+						<Character>@</Character>
+						<BelowEntity>
+							<Components>
+								<SceneTimeline>
+									<SceneTimeline meta:RefKey="SceneTimeline">
+										<Timeline>
+											<Interaction>
+												<Time>0.005152261</Time>
+												<Interaction>StartGame</Interaction>
+											</Interaction>
+											<Speech>
+												<Time>0.104364328</Time>
+												<Duration LockDuration="False">0.145693421</Duration>
+												<Text>[GREEN]To move use wasd or the arrow keys.[]</Text>
+											</Speech>
+										</Timeline>
+										<Timeline>
+											<Blocker>
+												<Time>0.145558789</Time>
+											</Blocker>
+										</Timeline>
+									</SceneTimeline>
+								</SceneTimeline>
+								<MetaRegion>
+									<Key>playerspawn</Key>
+								</MetaRegion>
+							</Components>
+						</BelowEntity>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>L</Character>
+						<Entity>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/Custom/terrain/treeglowing</Name>
+										<DrawActualSize>true</DrawActualSize>
+									</Renderable>
+								</Renderable>
+								<SceneTimeline>
+									<SceneTimeline meta:RefKey="SceneTimeline">
+										<Timeline>
+											<Speech>
+												<Time>0.09964476</Time>
+												<Duration LockDuration="False">0.151119441</Duration>
+												<Text>That there looks like some sort of weapon.
+[GREEN]*Walk into objects to interact with them.*[]</Text>
+											</Speech>
+										</Timeline>
+										<Timeline>
+											<Blocker>
+												<Count>4</Count>
+											</Blocker>
+											<Blocker>
+												<Time>0.169709727</Time>
+												<Count>3</Count>
+											</Blocker>
+										</Timeline>
+									</SceneTimeline>
+								</SceneTimeline>
+								<Interaction>
+									<Interaction>WeaponTutorial</Interaction>
+								</Interaction>
+							</Components>
+						</Entity>
+					</Symbol>
+				</Symbols>
+				<Prefab>
+					<Line>...##....</Line>
+					<Line>..######.</Line>
+					<Line>###....#.</Line>
+					<Line>##...L.#.</Line>
+					<Line>#......#.</Line>
+					<Line>#......##</Line>
+					<Line>#.@....##</Line>
+					<Line>##....##.</Line>
+					<Line>########.</Line>
+					<Line>...##....</Line>
+				</Prefab>
 			</Rule>
 		</Node>
 	</Rules>

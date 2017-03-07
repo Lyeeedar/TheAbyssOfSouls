@@ -10,7 +10,6 @@
 	<!--Actions-->
 	<Definition Name="Line" meta:RefKey="StructDef">
 		<Data Name="Text" meta:RefKey="MultilineString" />
-		<Data Name="Italics" meta:RefKey="Boolean" />
 	</Definition>
 	<Definition Name="Branch" meta:RefKey="CollectionDef">
 		<Data Name="Branch" Description="{Condition}" meta:RefKey="Struct">
@@ -18,10 +17,13 @@
 			<Data Name="Node" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 		</Data>
 	</Definition>
-	<Definition Name="Choice" meta:RefKey="CollectionDef">
-		<Data Name="Choice" Description="{Text}" meta:RefKey="Struct">
-			<Data Name="Text" meta:RefKey="String" />
-			<Data Name="Node" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
+	<Definition Name="Choice" meta:RefKey="StructDef">
+		<Data Name="Text" meta:RefKey="MultilineString" />
+		<Data Name="Choices" meta:RefKey="Collection">
+			<Data Name="Choice" Description="{Text}" meta:RefKey="Struct">
+				<Data Name="Text" meta:RefKey="String" />
+				<Data Name="Node" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
+			</Data>
 		</Data>
 	</Definition>
 	<Definition Name="Define" meta:RefKey="StructDef">

@@ -1,14 +1,16 @@
 package com.lyeeedar.GenerationGrammar
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
 import com.exp4j.Helpers.unescapeCharacters
-import com.lyeeedar.Components.*
+import com.lyeeedar.Components.EntityLoader
+import com.lyeeedar.Components.PositionComponent
+import com.lyeeedar.Components.SceneTimelineComponent
+import com.lyeeedar.Components.pos
 import com.lyeeedar.GenerationGrammar.Rules.AbstractGrammarRule
 import com.lyeeedar.GenerationGrammar.Rules.DeferredRule
 import com.lyeeedar.Global
@@ -129,14 +131,6 @@ class GenerationGrammar
 				}
 				print('\n')
 			}
-		}
-
-		if (createEntities)
-		{
-			val namedEntities = engine.getEntitiesFor(Family.one(NameComponent::class.java).get())
-			val player = namedEntities.firstOrNull { it.name()!!.isPlayer } ?: throw Exception("No player on level!")
-
-			level.player = player
 		}
 
 		level.ambient.set(ambient)

@@ -3,12 +3,15 @@ package com.lyeeedar.Screens
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.lyeeedar.Components.EntityLoader
 import com.lyeeedar.Components.name
 import com.lyeeedar.Components.pos
 import com.lyeeedar.Components.renderable
 import com.lyeeedar.GenerationGrammar.GenerationGrammar
 import com.lyeeedar.Global
+import com.lyeeedar.Level.LevelData
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Level.World
 import com.lyeeedar.Save.SaveGame
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Systems.level
@@ -16,8 +19,9 @@ import com.lyeeedar.Systems.systemList
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.UI.IDebugCommandProvider
 import com.lyeeedar.Util.Future
+import com.lyeeedar.Util.Point
 
-class TestCombatScreen : AbstractScreen()
+class GameScreen : AbstractScreen()
 {
 	lateinit var font: BitmapFont
 	lateinit var batch: SpriteBatch
@@ -34,21 +38,42 @@ class TestCombatScreen : AbstractScreen()
 	var selectedEntity: Entity? = null
 	var selectedComponent: IDebugCommandProvider? = null
 
+	init
+	{
+		instance = this
+	}
+
 	override fun create()
 	{
-		val grammar = GenerationGrammar.load("Level1")
+		loadLevel(World.world.root)
+
+		font = Global.skin.getFont("default")
+		batch = SpriteBatch()
+	}
+
+	fun loadLevel(level: LevelData)
+	{
+		Global.engine.removeAllEntities()
+
+		val grammar = GenerationGrammar.load(level.grammar)
 
 		val start = System.nanoTime()
 		val level = grammar.generate(10, Global.engine, true)
 		val end = System.nanoTime()
 
+		level.updateMetaRegions()
+
+		val player = EntityLoader.load("player")
+		Global.engine.addEntity(player)
+		val spawnTile = level.getClosestMetaRegion("playerspawn", Point.ZERO)!!
+		player.pos().position = spawnTile
+		spawnTile.contents[SpaceSlot.ENTITY] = player
+
+		level.player = player
+
 		println("Time: " + ((end - start)/1000000f))
-		// 1300 abouts for single thread
 
 		Global.engine.level = level
-
-		font = Global.skin.getFont("default")
-		batch = SpriteBatch()
 	}
 
 	override fun doRender(delta: Float)
@@ -319,4 +344,9 @@ class TestCombatScreen : AbstractScreen()
 	var mousey: Int = 0
 
 	var systemUpdateAccumulator = 0f
+
+	companion object
+	{
+		lateinit var instance: GameScreen
+	}
 }

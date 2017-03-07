@@ -158,7 +158,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 
 		val player = level!!.player
 		val playerPos = player.pos()
-		val playerSprite = player.renderable().renderable ?: return
+		val playerSprite = player.renderable().renderable
 		renderer.update(playerSprite, deltaTime)
 
 		var offsetx = Global.resolution.x / 2 - playerPos.position.x * tileSize - tileSize / 2
