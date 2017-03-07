@@ -38,6 +38,7 @@ class Particle(val emitter: Emitter)
 	lateinit var lifetime: Range
 	lateinit var blend: BlendMode
 	var drag = 0f
+	var brownian = 0f
 	var velocityAligned = false
 	lateinit var collision: CollisionAction
 	var blendKeyframes = false
@@ -88,6 +89,21 @@ class Particle(val emitter: Emitter)
 				particle.velocity.sub(temp)
 
 				particle.velocity.y += gravity * delta
+
+				if (brownian > 0f)
+				{
+					val direction = particle.velocity.normalise()
+					val length = particle.velocity.length()
+
+					val impulseVector = temp.set(Random.random(1f)-0.5f, Random.random(1f)-0.5f, Random.random(1f)-0.5f)
+					impulseVector.normalise()
+					
+					direction = direction.lerp(impulseVector, brownianFactor * delta)
+					direction.normalise()					
+
+					particle.velocity.set(direction).mul(length)
+				}
+
 
 				moveVec.set(particle.velocity).scl(delta)
 
