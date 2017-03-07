@@ -20,7 +20,7 @@ class SceneTimeline
 	var sourceTile: Tile? = null
 	val destinationTiles = Array<Tile>()
 
-	private val timelines = Array<Timeline>()
+	val timelines = Array<Timeline>()
 
 	var progression: Float = 0f
 

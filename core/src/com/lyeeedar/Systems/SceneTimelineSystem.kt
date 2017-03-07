@@ -85,7 +85,7 @@ class SceneTimelineSystem(): AbstractSystem(Family.all(SceneTimelineComponent::c
 			{
 				timeline.sceneTimeline.reset()
 			}
-			else
+			else if (timeline.canRemove)
 			{
 				entity.remove(SceneTimelineComponent::class.java)
 

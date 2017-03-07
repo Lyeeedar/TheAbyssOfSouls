@@ -12,7 +12,7 @@ import com.lyeeedar.Util.children
 import ktx.collections.set
 
 fun Entity.pos() = Mappers.position.get(this)
-fun Entity.tile() = Mappers.position.get(this).position as? Tile
+fun Entity.tile() = Mappers.position.get(this)?.position as? Tile
 fun Entity.stats() = Mappers.stats.get(this)
 fun Entity.renderable() = Mappers.renderable.get(this)
 fun Entity.additionalRenderable() = Mappers.additionalRenderable.get(this)
@@ -42,6 +42,7 @@ fun Entity.pit() = Mappers.pit.get(this)
 fun Entity.occludes() = Mappers.occludes.get(this)
 fun Entity.pickup() = Mappers.pickup.get(this)
 fun Entity.metaregion() = Mappers.metaregion.get(this)
+fun Entity.loaddata() = Mappers.loaddata.get(this)
 
 fun <T: AbstractComponent> Entity.hasComponent(c: Class<T>) = this.getComponent(c) != null
 
@@ -69,6 +70,7 @@ class Mappers
 		val pit: ComponentMapper<PitComponent> = ComponentMapper.getFor(PitComponent::class.java)
 		val pickup: ComponentMapper<PickupComponent> = ComponentMapper.getFor(PickupComponent::class.java)
 		val metaregion: ComponentMapper<MetaRegionComponent> = ComponentMapper.getFor(MetaRegionComponent::class.java)
+		val loaddata: ComponentMapper<LoadDataComponent> = ComponentMapper.getFor(LoadDataComponent::class.java)
 	}
 }
 
@@ -109,6 +111,8 @@ class EntityLoader()
 		@JvmStatic fun load(xml: XmlReader.Element): Entity
 		{
 			val entity = if (xml.get("Extends", null) != null) load(xml.get("Extends")) else Entity()
+
+			entity.add(LoadDataComponent(xml))
 
 			val componentsEl = xml.getChildByName("Components") ?: return entity
 

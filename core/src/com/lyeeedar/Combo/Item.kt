@@ -25,6 +25,8 @@ import ktx.scene2d.textButton
 
 class Item
 {
+	lateinit var loadData: XmlReader.Element
+
 	lateinit var icon: Sprite
 	lateinit var name: String
 	lateinit var description: String
@@ -120,6 +122,8 @@ class Item
 
 	fun parse(xml: XmlReader.Element)
 	{
+		loadData = xml
+
 		icon = AssetManager.loadSprite(xml.getChildByName("Icon"))
 		name = xml.get("Name")
 		description = xml.get("Description")
@@ -131,8 +135,13 @@ class Item
 	{
 		fun load(path: String): Item
 		{
-			val item = Item()
 			val xml = getXml("Items/$path")
+			return load(xml)
+		}
+
+		fun load(xml: XmlReader.Element): Item
+		{
+			val item = Item()
 			item.parse(xml)
 			return item
 		}

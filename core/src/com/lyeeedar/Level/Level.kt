@@ -16,7 +16,7 @@ import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Point
 import ktx.collections.set
 
-class Level
+class Level(val seed: Long, val grammarName: String)
 {
 	// ----------------------------------------------------------------------
 	var grid: Array2D<Tile> = Array2D()

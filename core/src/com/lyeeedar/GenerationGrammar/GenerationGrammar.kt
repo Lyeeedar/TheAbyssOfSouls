@@ -24,13 +24,14 @@ import ktx.collections.set
 
 class GenerationGrammar
 {
+	lateinit var name: String
 	val ruleTable = ObjectMap<String, AbstractGrammarRule>()
 	lateinit var width: String
 	lateinit var height: String
 	lateinit var rootRule: String
 	lateinit var ambient: Colour
 
-	fun generate(seed: Long, engine: Engine): Level
+	fun generate(seed: Long, engine: Engine, createEntities: Boolean): Level
 	{
 		SceneTimelineComponent.sharedTimelines.clear()
 
@@ -71,8 +72,10 @@ class GenerationGrammar
 			deferred = newDeferred
 		}
 
-		val level = Level()
+		val level = Level(seed, name)
 		level.grid = Array2D(width, height) { x, y -> Tile() }
+
+		val spaceValues = if (createEntities) SpaceSlot.Values else SpaceSlot.BasicValues
 
 		runBlocking {
 			val jobs = Array<Job>(width * height)
@@ -82,7 +85,7 @@ class GenerationGrammar
 				{
 					val job = launch(CommonPool)
 					{
-						for (slot in SpaceSlot.Values)
+						for (slot in spaceValues)
 						{
 							if (symbolGrid[x, y].contents.containsKey(slot))
 							{
@@ -128,10 +131,14 @@ class GenerationGrammar
 			}
 		}
 
-		val namedEntities = engine.getEntitiesFor(Family.one(NameComponent::class.java).get())
-		val player = namedEntities.firstOrNull { it.name()!!.isPlayer } ?: throw Exception("No player on level!")
+		if (createEntities)
+		{
+			val namedEntities = engine.getEntitiesFor(Family.one(NameComponent::class.java).get())
+			val player = namedEntities.firstOrNull { it.name()!!.isPlayer } ?: throw Exception("No player on level!")
 
-		level.player = player
+			level.player = player
+		}
+
 		level.ambient.set(ambient)
 
 		return level
@@ -139,7 +146,7 @@ class GenerationGrammar
 
 	companion object
 	{
-		fun load(xml: XmlReader.Element): GenerationGrammar
+		private fun load(xml: XmlReader.Element): GenerationGrammar
 		{
 			val grammar = GenerationGrammar()
 			grammar.width = xml.get("Width").unescapeCharacters()
@@ -162,7 +169,9 @@ class GenerationGrammar
 		fun load(path: String): GenerationGrammar
 		{
 			val xml = getXml("Grammars/$path")
-			return load(xml)
+			val grammar = load(xml)
+			grammar.name = path
+			return grammar
 		}
 	}
 }

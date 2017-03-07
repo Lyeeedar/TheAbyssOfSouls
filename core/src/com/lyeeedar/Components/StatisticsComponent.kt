@@ -4,6 +4,9 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.OrderedSet
 import com.badlogic.gdx.utils.XmlReader
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.io.Input
+import com.esotericsoftware.kryo.io.Output
 import com.lyeeedar.ElementType
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.ciel
@@ -138,5 +141,19 @@ class StatisticsComponent: AbstractComponent()
 		variableMap.put("maxstamina", maxStamina)
 
 		return variableMap
+	}
+
+	override fun saveData(kryo: Kryo, output: Output)
+	{
+		output.writeFloat(hp)
+		output.writeFloat(stamina)
+	}
+
+	override fun loadData(kryo: Kryo, input: Input)
+	{
+		hp = input.readFloat()
+		stamina = input.readFloat()
+
+		tookDamage = false
 	}
 }

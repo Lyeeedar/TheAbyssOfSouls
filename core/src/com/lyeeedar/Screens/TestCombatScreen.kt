@@ -9,6 +9,7 @@ import com.lyeeedar.Components.renderable
 import com.lyeeedar.GenerationGrammar.GenerationGrammar
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Save.SaveGame
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Systems.level
 import com.lyeeedar.Systems.systemList
@@ -38,7 +39,7 @@ class TestCombatScreen : AbstractScreen()
 		val grammar = GenerationGrammar.load("Level1")
 
 		val start = System.nanoTime()
-		val level = grammar.generate(10, Global.engine)
+		val level = grammar.generate(10, Global.engine, true)
 		val end = System.nanoTime()
 
 		println("Time: " + ((end - start)/1000000f))
@@ -220,6 +221,23 @@ class TestCombatScreen : AbstractScreen()
 			}
 
 			return false
+		})
+
+		DebugConsole.register("Save", "", fun (args, console): Boolean {
+			SaveGame.save(Global.engine.level!!)
+
+			return true
+		})
+
+		DebugConsole.register("Load", "", fun (args, console): Boolean {
+
+			Future.call({
+							Global.engine.removeAllEntities()
+							val level = SaveGame.load()
+							Global.engine.level = level
+						}, 0.01f)
+
+			return true
 		})
 
 		super.show()

@@ -4,6 +4,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.io.Input
+import com.esotericsoftware.kryo.io.Output
+import com.lyeeedar.SceneTimeline.BlockerAction
 import com.lyeeedar.SceneTimeline.SceneTimeline
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.UI.IDebugCommandProvider
@@ -17,6 +21,7 @@ class SceneTimelineComponent() : AbstractComponent(), IDebugCommandProvider
 	val hitPoints = Array<Point>()
 
 	var isShared = false
+	var canRemove = true
 
 	constructor(sceneTimeline: SceneTimeline) : this()
 	{
@@ -25,6 +30,8 @@ class SceneTimelineComponent() : AbstractComponent(), IDebugCommandProvider
 
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{
+		canRemove = false
+
 		val timelinexml = xml.getChildByName("SceneTimeline")
 
 		isShared = xml.getBoolean("IsShared", false)
@@ -81,6 +88,67 @@ class SceneTimelineComponent() : AbstractComponent(), IDebugCommandProvider
 	override fun detachCommands()
 	{
 		DebugConsole.unregister("SceneState")
+	}
+
+	override fun saveData(kryo: Kryo, output: Output)
+	{
+		output.writeFloat(sceneTimeline.progression)
+
+		for (timeline in sceneTimeline.timelines)
+		{
+			for (action in timeline.actions)
+			{
+				if (action.isExited)
+				{
+					output.writeInt(2, true)
+				}
+				else if (action.isEntered)
+				{
+					output.writeInt(1, true)
+
+					if (action is BlockerAction)
+					{
+						output.writeInt(action.blockCount, true)
+					}
+				}
+				else
+				{
+					output.writeInt(0, true)
+				}
+			}
+		}
+	}
+
+	override fun loadData(kryo: Kryo, input: Input)
+	{
+		sceneTimeline.progression = input.readFloat()
+
+		for (timeline in sceneTimeline.timelines)
+		{
+			for (action in timeline.actions)
+			{
+				val state = input.readInt(true)
+
+				if (state == 2)
+				{
+					action.isEntered = true
+					action.isExited = true
+				}
+				else if (state == 1)
+				{
+					action.enter()
+
+					if (action is BlockerAction)
+					{
+						action.blockCount = input.readInt(true)
+					}
+				}
+				else
+				{
+
+				}
+			}
+		}
 	}
 
 	companion object

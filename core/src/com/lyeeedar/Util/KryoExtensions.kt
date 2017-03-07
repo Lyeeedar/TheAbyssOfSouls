@@ -1,8 +1,9 @@
 package com.lyeeedar.Util
 
+import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
-import com.badlogic.gdx.utils.Array
 import com.esotericsoftware.kryo.Kryo
 import com.esotericsoftware.kryo.Serializer
 import com.esotericsoftware.kryo.io.Input
@@ -152,6 +153,40 @@ fun Kryo.registerGdxSerialisers()
 			{
 				kryo.writeClassAndObject(output, entry.key)
 				kryo.writeClassAndObject(output, entry.value)
+			}
+		}
+	})
+
+	kryo.register(ObjectFloatMap::class.java, object : Serializer<ObjectFloatMap<*>>()
+	{
+		override fun read(kryo: Kryo, input: Input, type: Class<ObjectFloatMap<*>>): ObjectFloatMap<*>
+		{
+			val map = ObjectFloatMap<Any>()
+			kryo.reference(map)
+
+			val length = input.readInt(true)
+			map.ensureCapacity(length)
+
+			for (i in 0..length-1)
+			{
+				val key = kryo.readClassAndObject(input)
+				val value = input.readFloat()
+
+				map.put(key, value)
+			}
+
+			return map
+		}
+
+		override fun write(kryo: Kryo, output: Output, map: ObjectFloatMap<*>)
+		{
+			val length = map.size
+			output.writeInt(length, true)
+
+			for (entry in map)
+			{
+				kryo.writeClassAndObject(output, entry.key)
+				output.writeFloat(entry.value)
 			}
 		}
 	})
