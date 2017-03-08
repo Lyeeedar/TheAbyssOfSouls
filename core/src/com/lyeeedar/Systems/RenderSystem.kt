@@ -193,7 +193,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				val effect = renderable
 				if (effect.completed && effect.complete() && entity.components.size() == 2)
 				{
-					entity.add(MarkedForDeletionComponent())
+ 					entity.add(MarkedForDeletionComponent())
 				}
 			}
 

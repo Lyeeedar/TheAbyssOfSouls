@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Components.combo
-import com.lyeeedar.Components.pickup
-import com.lyeeedar.Components.renderable
-import com.lyeeedar.Components.tile
+import com.lyeeedar.Components.*
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Screens.AbstractScreen
@@ -96,6 +93,9 @@ class AtonementSpirit : Item()
 
 	override fun steppedOn(entity: Entity, floorEntity: Entity)
 	{
+		val sin = entity.sin() ?: return
+		sin.sins[this.sin] = Math.max(0, sin.sins[this.sin]-1)
+
 		val tile = floorEntity.tile()!!
 		tile.contents[SpaceSlot.BELOWENTITY] = null
 
@@ -104,9 +104,12 @@ class AtonementSpirit : Item()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		icon = AssetManager.loadSprite(xml.getChildByName("Icon"))
 		name = xml.get("Sin")
 		sin = Sin.valueOf(name.toUpperCase())
+
+		icon = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_cloud")
+		icon.drawActualSize = true
+		icon.colour = sin.colour
 	}
 }
 

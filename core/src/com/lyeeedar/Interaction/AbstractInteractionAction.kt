@@ -22,6 +22,9 @@ abstract class AbstractInteractionAction
 				"NODE" -> InteractionActionNode()
 				"CHOICE" -> InteractionActionChoice()
 				"DROP" -> InteractionActionDrop()
+				"CHANGELEVEL" -> InteractionActionChangeLevel()
+				"COMPLETEGAME" -> InteractionActionCompleteGame()
+				"CHANGESPRITE" -> InteractionActionChangeSprite()
 
 				else -> throw Exception("Unknown action type '" + xml.getAttribute("meta:RefKey") + "'!")
 			}

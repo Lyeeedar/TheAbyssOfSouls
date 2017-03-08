@@ -53,6 +53,7 @@ fun Actor.addClickListener(func: () -> Unit)
 		}
 	})
 }
+
 fun Actor.addToolTip(title: String, body: String, stage: Stage)
 {
 	val titleLabel = Label(title, Global.skin, "title")

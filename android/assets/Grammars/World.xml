@@ -1,13 +1,23 @@
-<World meta:X="0" meta:Y="0" xmlns:meta="Editor">
-	<Root meta:X="192" meta:Y="-33" meta:RefKey="Level">
-		<Grammar>Level1</Grammar>
-		<Connected>
-			<Level>
-				<Key>death</Key>
-				<Next meta:X="466" meta:Y="-26" meta:RefKey="Level">
-					<Grammar>Level2</Grammar>
-				</Next>
-			</Level>
-		</Connected>
-	</Root>
+<World meta:X="0" meta:Y="0" GUID="545cc915-5da5-485b-85c9-289462c76321" xmlns:meta="Editor">
+	<Root meta:RefKey="Level">93edfabf-c763-4e64-80bd-4d6e44bcec05</Root>
+	<Levels>
+		<Level meta:X="211" meta:Y="-18" GUID="93edfabf-c763-4e64-80bd-4d6e44bcec05">
+			<Grammar>Level1</Grammar>
+			<Connected>
+				<Level>
+					<Key>death</Key>
+					<Next meta:RefKey="Level">8b251f47-2663-47c9-81a0-00cdd7898197</Next>
+				</Level>
+			</Connected>
+		</Level>
+		<Level meta:X="509" meta:Y="-18" GUID="8b251f47-2663-47c9-81a0-00cdd7898197">
+			<Grammar>Level2</Grammar>
+			<Connected>
+				<Level>
+					<Key>ascend</Key>
+					<Next meta:RefKey="Level">93edfabf-c763-4e64-80bd-4d6e44bcec05</Next>
+				</Level>
+			</Connected>
+		</Level>
+	</Levels>
 </World>

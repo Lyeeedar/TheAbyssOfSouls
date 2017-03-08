@@ -1,23 +1,19 @@
 package com.lyeeedar.Renderables.Sprite
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Colors
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.XmlReader.Element
-import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Direction
 import com.lyeeedar.Renderables.Renderable
+import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.EnumBitflag
+import com.lyeeedar.Util.children
 
 // Naming priority: NSEW
 class TilingSprite() : Renderable()
 {
-
 	constructor(name: String, texture: String, mask: String) : this()
 	{
 		val spriteBase = Element("Sprite", null)
@@ -91,6 +87,34 @@ class TilingSprite() : Renderable()
 			hasAllElements = true
 		}
 
+		val directionsEl = xml.getChildByName("Directions")
+		if (directionsEl != null)
+		{
+			for (el in directionsEl.children())
+			{
+				val dir = Direction.valueOf(el.name.toUpperCase())
+				val sprite = AssetManager.loadSprite(el)
+
+				val bitflag = when (dir)
+				{
+					Direction.CENTER -> CENTER
+					Direction.NORTH -> NORTH
+					Direction.SOUTH -> SOUTH
+					Direction.EAST -> EAST
+					Direction.WEST -> WEST
+					Direction.NORTHEAST -> NORTHEAST
+					Direction.NORTHWEST -> NORTHWEST
+					Direction.SOUTHEAST -> SOUTHEAST
+					Direction.SOUTHWEST -> SOUTHWEST
+					else -> CENTER
+				}
+
+				sprites.put(bitflag, sprite)
+			}
+
+			hasAllElements = true
+		}
+
 		val spriteElement = xml.getChildByName("Sprite") ?: this.spriteBase
 		val texName = spriteElement.get("Name", null)
 		val maskName = xml.get("Mask", "")
@@ -113,15 +137,43 @@ class TilingSprite() : Renderable()
 	{
 		if (hasAllElements)
 		{
-			if (emptyDirections.contains(Direction.NORTH) && emptyDirections.contains(Direction.SOUTH))
+			if (emptyDirections.bitFlag == 0 || (emptyDirections.contains(Direction.NORTH) && emptyDirections.contains(Direction.SOUTH) && emptyDirections.contains(Direction.EAST) && emptyDirections.contains(Direction.WEST)))
+			{
+				return sprites.get(CENTER)
+			}
+			else if (emptyDirections.contains(Direction.NORTH) && emptyDirections.contains(Direction.SOUTH) && sprites.containsKey(NORTHSOUTH))
 			{
 				return sprites.get(NORTHSOUTH)
 			}
-			else if (emptyDirections.contains(Direction.NORTH))
+			else if (emptyDirections.contains(Direction.NORTH) && emptyDirections.contains(Direction.EAST) && sprites.containsKey(NORTHEAST))
+			{
+				return sprites.get(NORTHEAST)
+			}
+			else if (emptyDirections.contains(Direction.NORTH) && emptyDirections.contains(Direction.WEST) && sprites.containsKey(NORTHWEST))
+			{
+				return sprites.get(NORTHWEST)
+			}
+			else if (emptyDirections.contains(Direction.SOUTH) && emptyDirections.contains(Direction.EAST) && sprites.containsKey(SOUTHEAST))
+			{
+				return sprites.get(SOUTHEAST)
+			}
+			else if (emptyDirections.contains(Direction.SOUTH) && emptyDirections.contains(Direction.WEST) && sprites.containsKey(SOUTHWEST))
+			{
+				return sprites.get(SOUTHWEST)
+			}
+			else if (emptyDirections.contains(Direction.WEST) && sprites.containsKey(WEST))
+			{
+				return sprites.get(WEST)
+			}
+			else if (emptyDirections.contains(Direction.EAST) && sprites.containsKey(EAST))
+			{
+				return sprites.get(EAST)
+			}
+			else if (emptyDirections.contains(Direction.NORTH) && sprites.containsKey(NORTH))
 			{
 				return sprites.get(NORTH)
 			}
-			else if (emptyDirections.contains(Direction.SOUTH))
+			else if (emptyDirections.contains(Direction.SOUTH) && sprites.containsKey(SOUTH))
 			{
 				return sprites.get(SOUTH)
 			}
@@ -185,7 +237,13 @@ class TilingSprite() : Renderable()
 		private val CENTER = 1 shl Direction.CENTER.ordinal + 1
 		private val SOUTH = 1 shl Direction.SOUTH.ordinal + 1
 		private val NORTH = 1 shl Direction.NORTH.ordinal + 1
+		private val EAST = 1 shl Direction.EAST.ordinal + 1
+		private val WEST = 1 shl Direction.WEST.ordinal + 1
 		private val NORTHSOUTH = 0 or NORTH or SOUTH
+		private val NORTHEAST = 0 or NORTH or EAST
+		private val NORTHWEST = 0 or NORTH or WEST
+		private val SOUTHEAST = 0 or SOUTH or EAST
+		private val SOUTHWEST = 0 or SOUTH or WEST
 
 		fun load(xml: Element): TilingSprite
 		{

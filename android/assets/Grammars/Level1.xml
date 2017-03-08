@@ -199,8 +199,12 @@
 					<Rule meta:RefKey="Node">50adc6ea-e463-47f0-a08e-de98a3c3129f</Rule>
 				</Division>
 				<Division>
-					<Size>size-40</Size>
+					<Size>size-50</Size>
 					<Rule meta:RefKey="Node">87ef0faa-478c-46a6-b7cb-2cefeebd7584</Rule>
+				</Division>
+				<Division>
+					<Size>10</Size>
+					<Rule meta:RefKey="Node">02b2807e-70e2-49df-9e73-436077948dee</Rule>
 				</Division>
 				<Division>
 					<Size>20</Size>
@@ -254,7 +258,7 @@
 				</Division>
 			</Rule>
 		</Node>
-		<Node meta:X="156.50634765625" meta:Y="676.86614990234375" GUID="ced1df3a-7a56-4881-ad20-28c21fe579c3">
+		<Node meta:X="-6.8252291679382324" meta:Y="1015.2891845703125" GUID="ced1df3a-7a56-4881-ad20-28c21fe579c3">
 			<!--Exit Whirlpool-->
 			<Rule meta:RefKey="Prefab">
 				<Symbols>
@@ -801,8 +805,8 @@
 												<Interaction>StartGame</Interaction>
 											</Interaction>
 											<Speech>
-												<Duration LockDuration="False">0.145693421</Duration>
 												<Time>0.104364328</Time>
+												<Duration LockDuration="False">0.145693421</Duration>
 												<Text>[GREEN]To move use wasd or the arrow keys.[]</Text>
 											</Speech>
 										</Timeline>
@@ -814,7 +818,7 @@
 									</SceneTimeline>
 								</SceneTimeline>
 								<MetaRegion>
-									<Key>playerspawn</Key>
+									<Key>playerspawns</Key>
 								</MetaRegion>
 							</Components>
 						</BelowEntity>
@@ -825,7 +829,7 @@
 							<Components>
 								<Renderable>
 									<Renderable meta:RefKey="Sprite">
-										<Name>Oryx/Custom/terrain/treeglowing</Name>
+										<Name>Oryx/Custom/terrain/stump_dagger</Name>
 										<DrawActualSize>true</DrawActualSize>
 									</Renderable>
 								</Renderable>
@@ -833,8 +837,8 @@
 									<SceneTimeline meta:RefKey="SceneTimeline">
 										<Timeline>
 											<Speech>
-												<Duration LockDuration="False">0.151119441</Duration>
 												<Time>0.09964476</Time>
+												<Duration LockDuration="False">0.151119441</Duration>
 												<Text>That there looks like some sort of weapon.
 [GREEN]*Walk into objects to interact with them.*[]</Text>
 											</Speech>
@@ -868,6 +872,240 @@
 					<Line>##....##.</Line>
 					<Line>########.</Line>
 					<Line>...##....</Line>
+				</Prefab>
+			</Rule>
+		</Node>
+		<Node meta:X="149.84939575195312" meta:Y="844.8226318359375" GUID="02b2807e-70e2-49df-9e73-436077948dee">
+			<!--Shrine-->
+			<Rule meta:RefKey="Prefab">
+				<Symbols>
+					<Symbol meta:RefKey="Symbol">
+						<Character>#</Character>
+						<Wall>
+							<Components>
+								<Renderable>
+									<IsShared>true</IsShared>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>wall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/light_brick_wall</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/light_brick_wall_top</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/light_brick_wall_overhang</Name>
+										</Overhang>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Wall>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>,</Character>
+						<Floor>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/floor_extra_2</Name>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Floor>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>t</Character>
+						<Extends>#</Extends>
+						<WallDetail>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/torch1</Name>
+										<DrawActualSize>true</DrawActualSize>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</WallDetail>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>c</Character>
+						<Extends>,</Extends>
+						<FloorDetail>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>carpet</Name>
+										<Mode>PremadeDirectional</Mode>
+										<Directions>
+											<Center meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_9</Name>
+											</Center>
+											<North meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_6</Name>
+											</North>
+											<South meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_7</Name>
+											</South>
+											<East meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_8</Name>
+											</East>
+											<West meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_5</Name>
+											</West>
+											<NorthEast meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_1</Name>
+											</NorthEast>
+											<NorthWest meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_10</Name>
+											</NorthWest>
+											<SouthEast meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_3</Name>
+											</SouthEast>
+											<SouthWest meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_2</Name>
+											</SouthWest>
+										</Directions>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</FloorDetail>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>A</Character>
+						<Extends>c</Extends>
+						<Entity>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/Custom/terrain/altar_fancy</Name>
+										<DrawActualSize>true</DrawActualSize>
+									</Renderable>
+								</Renderable>
+								<Position>
+									<Moveable>false</Moveable>
+								</Position>
+								<Interaction>
+									<Interaction>CompleteGameAltar</Interaction>
+								</Interaction>
+							</Components>
+						</Entity>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>v</Character>
+						<Extends>c</Extends>
+						<Entity>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_heroes/valkyrie_a</Name>
+										<DrawActualSize>true</DrawActualSize>
+									</Renderable>
+								</Renderable>
+								<Position>
+									<Moveable>false</Moveable>
+								</Position>
+								<SceneTimeline>
+									<Loop>true</Loop>
+									<SceneTimeline meta:RefKey="SceneTimeline">
+										<Timeline>
+											<Proximity>
+												<Range>4</Range>
+												<Type>PlayerOnly</Type>
+											</Proximity>
+											<Speech>
+												<Time>0.0845122</Time>
+												<Duration LockDuration="False">0.123414628</Duration>
+												<Text>Hello lost soul</Text>
+											</Speech>
+											<Blocker>
+												<Time>0.258470237</Time>
+												<Count>10</Count>
+											</Blocker>
+										</Timeline>
+										<Timeline>
+											<Blocker>
+												<Time>0.136944473</Time>
+												<Count>3</Count>
+											</Blocker>
+										</Timeline>
+									</SceneTimeline>
+								</SceneTimeline>
+								<Interaction>
+									<Interaction>Valkyrie</Interaction>
+								</Interaction>
+							</Components>
+						</Entity>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>s</Character>
+						<Extends>.</Extends>
+						<BelowEntity>
+							<Components>
+								<MetaRegion>
+									<Key>playerspawn</Key>
+								</MetaRegion>
+							</Components>
+						</BelowEntity>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>~</Character>
+						<Floor>
+							<Components>
+								<Renderable>
+									<IsShared>true</IsShared>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+									</Renderable>
+								</Renderable>
+								<Water>
+									<Direction>East</Direction>
+									<FlowChance>0.2</FlowChance>
+									<Depth>0.5</Depth>
+								</Water>
+								<Light>
+									<Colour>10,212,240,41</Colour>
+									<Distance>3</Distance>
+								</Light>
+							</Components>
+						</Floor>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>l</Character>
+						<Extends>,</Extends>
+						<FloorDetail>
+							<Components>
+								<Light>
+									<Colour>250,243,75,106</Colour>
+									<Distance>5</Distance>
+								</Light>
+							</Components>
+						</FloorDetail>
+					</Symbol>
+				</Symbols>
+				<Prefab>
+					<Line>.##t#t##..</Line>
+					<Line>#t,l,l,t#.</Line>
+					<Line>#l,ccc,l#.</Line>
+					<Line>#,,cAc,,#.</Line>
+					<Line>#,,ccc,,#.</Line>
+					<Line>#,,ccc,,#.</Line>
+					<Line>#,,ccc,,#.</Line>
+					<Line>#l,cvc,l#.</Line>
+					<Line>##,,,,,##.</Line>
+					<Line>~##~~~##~~</Line>
+					<Line>~~~~~~~~~~</Line>
+					<Line>~~~~~~~~~~</Line>
+					<Line>~~~~~~~~~~</Line>
+					<Line>..........</Line>
+					<Line>..........</Line>
+					<Line>....s.....</Line>
+					<Line>..........</Line>
+					<Line>..........</Line>
+					<Line>..........</Line>
+					<Line>..........</Line>
+					<Line>..........</Line>
+					<Line>..........</Line>
 				</Prefab>
 			</Rule>
 		</Node>

@@ -1,0 +1,52 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<Drop>
+			<Drop>
+				<Drop meta:RefKey="AtonementSpirit">
+					<Sin>Anger</Sin>
+				</Drop>
+			</Drop>
+		</Drop>
+		<AI>
+			<AI>BasicMonster</AI>
+		</AI>
+		<Position>
+			<Size>2</Size>
+		</Position>
+		<Statistics>
+			<Faction>prisoner</Faction>
+			<HP>10</HP>
+			<Stamina>10</Stamina>
+			<Sight>15</Sight>
+		</Statistics>
+		<Combo>
+			<ComboTree>Entities/EscapedPrisonerCombo</ComboTree>
+		</Combo>
+		<DirectionalSprite>
+			<Animations>
+				<Animation>
+					<Name>idle</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/prisoner_idle</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/prisoner_idle</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+				<Animation>
+					<Name>attack</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/prisoner_attack</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/prisoner_attack</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+			</Animations>
+		</DirectionalSprite>
+	</Components>
+</Entity>

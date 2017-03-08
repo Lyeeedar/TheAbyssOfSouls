@@ -1,0 +1,169 @@
+<Combo meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Combos>
+		<Combo meta:RefKey="Wait">
+			<Name>WaitEnd</Name>
+			<Animation>idle</Animation>
+		</Combo>
+		<Combo meta:RefKey="Wait">
+			<Name>Wait</Name>
+			<Animation>attack</Animation>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashLeft</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+						<Amount>2</Amount>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line>.@.</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashRight</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+							<FlipX>true</FlipX>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+						<Amount>2</Amount>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line>.@.</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Stomp</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.4863842</Duration>
+						<Time>0.006440281</Time>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>Stomp</Name>
+							<UseFacing>false</UseFacing>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.353884459</Time>
+						<Amount>3</Amount>
+					</Damage>
+					<Knockback>
+						<Time>0.391135454</Time>
+						<MoveType>Leap</MoveType>
+						<Dist>2</Dist>
+					</Knockback>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+		</Combo>
+		<Combo meta:RefKey="Wait">
+			<Name>WaitShout</Name>
+			<Animation>attack</Animation>
+			<Particle>
+				<Name>Shout</Name>
+				<Colour>245,165,165,255</Colour>
+			</Particle>
+		</Combo>
+	</Combos>
+	<Random>
+		<Node meta:X="292.76480102539062" meta:Y="67.547904968261719" meta:RefKey="ComboNode">
+			<Desc>WaitShout</Desc>
+			<Random>
+				<Node meta:X="528.76483154296875" meta:Y="67.547904968261719" meta:RefKey="ComboNode">
+					<Desc>Wait</Desc>
+					<Random>
+						<Node meta:X="759.76483154296875" meta:Y="67.547904968261719" meta:RefKey="ComboNode">
+							<Desc>Stomp</Desc>
+							<Random>
+								<Node meta:X="990.76483154296875" meta:Y="67.547904968261719" meta:RefKey="ComboNode">
+									<Desc>WaitEnd</Desc>
+									<Random>
+										<Node meta:X="1221.7647705078125" meta:Y="67.547904968261719" meta:RefKey="ComboNode">
+											<Desc>WaitEnd</Desc>
+											<Random>
+												<Node meta:X="1452.7647705078125" meta:Y="67.547904968261719" meta:RefKey="ComboNode">
+													<Desc>WaitEnd</Desc>
+												</Node>
+											</Random>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+		<Node meta:X="291.8724365234375" meta:Y="295.08108520507812" meta:RefKey="ComboNode">
+			<Desc>SlashLeft</Desc>
+			<Random>
+				<Node meta:X="462.12188720703125" meta:Y="296.0947265625" meta:RefKey="ComboNode">
+					<Desc>Wait</Desc>
+					<Random>
+						<Node meta:X="632.94830322265625" meta:Y="295.08108520507812" meta:RefKey="ComboNode">
+							<Desc>SlashRight</Desc>
+							<Random>
+								<Node meta:X="795.44879150390625" meta:Y="295.08108520507812" meta:RefKey="ComboNode">
+									<Desc>Wait</Desc>
+									<Random>
+										<Node meta:X="964.14910888671875" meta:Y="295.08108520507812" meta:RefKey="ComboNode">
+											<Desc>SlashLeft</Desc>
+											<Random>
+												<Node meta:X="1138.1092529296875" meta:Y="293.59356689453125" meta:RefKey="ComboNode">
+													<Desc>WaitEnd</Desc>
+													<Random>
+														<Node meta:X="1315.558837890625" meta:Y="299.54360961914062" meta:RefKey="ComboNode">
+															<Desc>WaitEnd</Desc>
+														</Node>
+													</Random>
+												</Node>
+											</Random>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+	</Random>
+</Combo>

@@ -15,7 +15,7 @@ class LightComponent() : AbstractComponent()
 	var x: Float = 0f
 	var y: Float = 0f
 
-	val cache: ShadowCastCache = ShadowCastCache(fovType = FOV.RIPPLE_TIGHT)
+	val cache: ShadowCastCache = ShadowCastCache(fovType = FOV.RIPPLE)
 
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{

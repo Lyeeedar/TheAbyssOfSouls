@@ -1,5 +1,5 @@
 <Definitions xmlns:meta="Editor">
-	<Definition Name="World" AllowReferenceLinks="False" meta:RefKey="GraphStruct">
+	<Definition Name="World" AllowCircularLinks="True" FlattenData="True" NodeStoreName="Levels" meta:RefKey="GraphStruct">
 		<Data Name="Root" Keys="Level" meta:RefKey="GraphReference" />
 	</Definition>
 	<Definition Name="Level" meta:RefKey="GraphStructDef">

@@ -577,6 +577,7 @@ void main()
 
 	vec4 outCol = lerp(col1, col2, v_blendAlpha);
 
+	v_color.a = min(1, v_color.a);
 	gl_FragColor = v_color * outCol;
 }
 """

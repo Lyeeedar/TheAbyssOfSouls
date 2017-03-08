@@ -1,32 +1,68 @@
 package com.lyeeedar.Level
 
+import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.scenes.scene2d.actions.Actions
+import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Global
 import com.lyeeedar.Screens.GameScreen
+import com.lyeeedar.UI.lamda
+import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.getXml
+import ktx.actors.alpha
+import ktx.actors.plus
+import ktx.actors.then
 import ktx.collections.set
 
 class World
 {
-	lateinit var root: LevelData
+	val levels = ObjectMap<String, LevelData>()
 
+	lateinit var root: LevelData
 	lateinit var currentLevel: LevelData
 
 	init
 	{
 		val xml = getXml("Grammars/World")
-		val rootEl = xml.getChildByName("Root")
-		root = LevelData.load(rootEl)
+
+		val levelsEl = xml.getChildByName("Levels")
+		for (el in levelsEl.children())
+		{
+			val level = LevelData.load(el)
+			levels[el.getAttribute("GUID")] = level
+		}
+
+		val rootKey = xml.get("Root")
+		root = levels[rootKey]
 
 		currentLevel = root
 	}
 
-	fun changeLevel(level: LevelData)
+	fun changeLevel(key: String, lastPlayer: Entity)
 	{
-		currentLevel = level
+		val level = levels[currentLevel.connections[key]]
 
-		GameScreen.instance.loadLevel(level)
+		Global.pause = true
+
+		val fadeTable = Table()
+		fadeTable.background = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/white.png")).tint(Color.BLACK)
+		fadeTable.alpha = 0f
+
+		val sequence = Actions.alpha(0f) then Actions.fadeIn(1f) then lamda {
+			currentLevel = level
+
+			GameScreen.instance.loadLevel(level, lastPlayer)
+
+		} then Actions.fadeOut(1f) then lamda { Global.pause = false } then Actions.removeActor()
+
+		fadeTable + sequence
+
+		Global.stage.addActor(fadeTable)
+		fadeTable.setFillParent(true)
 	}
 
 	companion object
@@ -40,8 +76,7 @@ class LevelData
 	// insert kryo save here
 
 	lateinit var grammar: String
-	var parent: LevelData? = null
-	val connections = ObjectMap<String, LevelData>()
+	val connections = ObjectMap<String, String>()
 
 	companion object
 	{
@@ -56,11 +91,9 @@ class LevelData
 				for (el in connectionsEl.children())
 				{
 					val key = el.get("Key")
-					val next = el.getChildByName("Next")
-					val nlevel = load(next)
-					nlevel.parent = level
+					val next = el.get("Next")
 
-					level.connections[key] = nlevel
+					level.connections[key] = next
 				}
 			}
 

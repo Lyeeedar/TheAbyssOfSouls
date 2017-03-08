@@ -10,6 +10,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.Event0Arg
+import com.lyeeedar.Util.Event1Arg
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -21,6 +22,7 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 	lateinit var timelines: ImmutableArray<Entity>
 
 	val onTurnEvent = Event0Arg()
+	val signalEvent = Event1Arg<String>()
 
 	var lastState = "---"
 	var printTasks = false

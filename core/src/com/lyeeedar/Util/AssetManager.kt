@@ -162,6 +162,7 @@ class AssetManager
 
 			effect.flipX = xml.getBoolean("FlipX", false)
 			effect.flipY = xml.getBoolean("FlipY", false)
+			effect.useFacing = xml.getBoolean("UseFacing", true)
 
 			return effect
 		}

@@ -5,7 +5,7 @@
 	<!--Node-->
 	<Definition Name="Node" meta:RefKey="GraphCollectionDef">
 		<Data Name="Node" Keys="Node" meta:RefKey="GraphReference" />
-		<Data Name="Action" Keys="Branch,Choice,Define,Line,Drop" meta:RefKey="Reference" />
+		<Data Name="Action" Keys="Branch,Choice,Define,Line,Drop,ChangeLevel,CompleteGame,ChangeSprite" meta:RefKey="Reference" />
 	</Definition>
 	<!--Actions-->
 	<Definition Name="Line" meta:RefKey="StructDef">
@@ -32,5 +32,12 @@
 	</Definition>
 	<Definition Name="Drop" meta:RefKey="StructDef">
 		<Data Name="Drop" Keys="AtonementSpirit,SellableItem,Equipment" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="ChangeLevel" meta:RefKey="StructDef">
+		<Data Name="Level" meta:RefKey="String" />
+	</Definition>
+	<Definition Name="CompleteGame" SkipIfDefault="False" meta:RefKey="StructDef" />
+	<Definition Name="ChangeSprite" meta:RefKey="StructDef">
+		<Data Name="Sprite" Keys="Sprite" meta:RefKey="Reference" />
 	</Definition>
 </Definitions>

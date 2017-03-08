@@ -1,4 +1,5 @@
 <Effect xmlns:meta="Editor">
+	<Loop>false</Loop>
 	<Emitters>
 		<Emitter>
 			<Width>0</Width>

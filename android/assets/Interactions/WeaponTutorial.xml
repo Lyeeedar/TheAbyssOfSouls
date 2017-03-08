@@ -28,6 +28,12 @@
 			<Action meta:RefKey="Line">
 				<Text>You yank it out of the tree</Text>
 			</Action>
+			<Action meta:RefKey="ChangeSprite">
+				<Sprite meta:RefKey="Sprite">
+					<Name>Oryx/Custom/terrain/stump</Name>
+					<DrawActualSize>true</DrawActualSize>
+				</Sprite>
+			</Action>
 			<Action meta:RefKey="Drop">
 				<Drop meta:RefKey="Equipment">
 					<Weapon>Dagger</Weapon>

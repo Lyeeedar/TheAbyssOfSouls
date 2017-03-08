@@ -8,6 +8,7 @@ import com.esotericsoftware.kryo.io.Output
 import com.lyeeedar.Combo.ComboTree
 import com.lyeeedar.Combo.Item
 import com.lyeeedar.Combo.Weapon
+import com.lyeeedar.Util.getXml
 
 class ComboComponent(): AbstractComponent()
 {
@@ -18,7 +19,16 @@ class ComboComponent(): AbstractComponent()
 
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{
-		combos = ComboTree.load(xml.get("ComboTree"))
+		val refxml = getXml(xml.get("ComboTree"))
+
+		if (refxml.name == "Weapon")
+		{
+			val weapon = Weapon()
+			weapon.parse(refxml)
+			comboSource = weapon
+		}
+
+		combos = ComboTree.load(refxml)
 	}
 
 	override fun saveData(kryo: Kryo, output: Output)

@@ -3,11 +3,8 @@ package com.lyeeedar.SceneTimeline
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
-import com.exp4j.Helpers.evaluate
 import com.lyeeedar.Direction
-import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
-import com.lyeeedar.Systems.task
 import com.lyeeedar.Util.children
 
 class SceneTimeline
@@ -198,6 +195,8 @@ abstract class AbstractTimelineAction()
 			val uname = name.toUpperCase()
 			val instance = when(uname) {
 				"BLOCKER" -> BlockerAction()
+				"PROXIMITY" -> ProximityAction()
+				"SIGNAL" -> SignalAction()
 
 				"DESTINATIONRENDERABLE" -> DestinationRenderableAction()
 				"MOVEMENTRENDERABLE" -> MovementRenderableAction()
@@ -220,59 +219,5 @@ abstract class AbstractTimelineAction()
 
 			return instance
 		}
-	}
-}
-
-abstract class AbstractBlockerAction : AbstractTimelineAction()
-{
-	var isBlocked = false
-}
-
-class BlockerAction() : AbstractBlockerAction()
-{
-	var blockCount = 0
-
-	lateinit var countEqn: String
-
-	override fun enter()
-	{
-		blockCount = countEqn.evaluate().toInt()
-
-		Global.engine.task().onTurnEvent += fun(): Boolean {
-
-			blockCount--
-			if (blockCount == 0)
-			{
-				isExited = true
-				exit()
-				return true
-			}
-			else
-			{
-				return false
-			}
-		}
-
-		isBlocked = true
-	}
-
-	override fun exit()
-	{
-		isBlocked = false
-	}
-
-	override fun copy(parent: SceneTimeline): AbstractTimelineAction
-	{
-		val action = BlockerAction()
-		action.parent = parent
-		action.startTime = startTime
-		action.duration = duration
-		action.countEqn = countEqn
-		return action
-	}
-
-	override fun parse(xml: XmlReader.Element)
-	{
-		countEqn = xml.get("Count", "1")
 	}
 }

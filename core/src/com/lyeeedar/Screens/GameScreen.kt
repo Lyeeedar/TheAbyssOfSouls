@@ -15,6 +15,7 @@ import com.lyeeedar.Systems.level
 import com.lyeeedar.Systems.systemList
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.UI.IDebugCommandProvider
+import com.lyeeedar.UI.StatsWidget
 import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Point
 
@@ -35,6 +36,8 @@ class GameScreen : AbstractScreen()
 	var selectedEntity: Entity? = null
 	var selectedComponent: IDebugCommandProvider? = null
 
+	val statsWidget = StatsWidget()
+
 	init
 	{
 		instance = this
@@ -42,13 +45,16 @@ class GameScreen : AbstractScreen()
 
 	override fun create()
 	{
-		loadLevel(World.world.root)
+		loadLevel(World.world.root, null)
 
 		font = Global.skin.getFont("default")
 		batch = SpriteBatch()
+
+		stage.addActor(statsWidget)
+		statsWidget.setPosition(5f, stage.height-statsWidget.height-5f)
 	}
 
-	fun loadLevel(level: LevelData)
+	fun loadLevel(level: LevelData, lastPlayer: Entity?)
 	{
 		Global.engine.removeAllEntities()
 
@@ -66,7 +72,24 @@ class GameScreen : AbstractScreen()
 		player.pos().position = spawnTile
 		spawnTile.contents[SpaceSlot.ENTITY] = player
 
+		if (lastPlayer != null)
+		{
+			if (lastPlayer.stats().hp <= 0f)
+			{
+				// only copy sins over
+				player.add(lastPlayer.sin())
+			}
+			else
+			{
+				// copy sins, combos, inventory
+				player.add(lastPlayer.sin())
+				player.add(lastPlayer.combo())
+			}
+		}
+
 		level.player = player
+
+		statsWidget.entity = player
 
 		println("Time: " + ((end - start)/1000000f))
 
@@ -99,7 +122,7 @@ class GameScreen : AbstractScreen()
 
 		batch.begin()
 
-		font.draw(batch, "$mousex,$mousey", 20f, Global.resolution.y - 20f)
+		//font.draw(batch, "$mousex,$mousey", 20f, Global.resolution.y - 20f)
 
 		if (showFPS)
 		{

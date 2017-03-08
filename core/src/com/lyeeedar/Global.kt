@@ -40,8 +40,8 @@ class Global
 
 		lateinit var skin: Skin
 		var fps = 60
-		var android = false
-		var release = false
+		val android = false
+		val release = false
 		lateinit var game: MainGame
 		lateinit var applicationChanger: AbstractApplicationChanger
 		val settings: Settings by lazy { Settings() }
@@ -83,7 +83,12 @@ class Global
 			engine = createEngine()
 			controls = Controls()
 
-			Colors.put("Important", Color(0.6f, 1f, 0.9f, 1f))
+			Colors.put("IMPORTANT", Color(0.6f, 1f, 0.9f, 1f))
+
+			for (sin in Sin.Values)
+			{
+				Colors.put(sin.toString().toUpperCase(), sin.colour.color())
+			}
 		}
 
 		private fun loadSkin(): Skin

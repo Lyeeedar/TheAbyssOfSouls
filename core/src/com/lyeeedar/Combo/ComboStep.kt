@@ -84,13 +84,18 @@ class ComboTree
 				descMap[desc.name.toUpperCase()] = desc
 			}
 
-			fun recursiveParse(el: XmlReader.Element): ComboTree
+			fun recursiveParse(el: XmlReader.Element, isRoot: Boolean): ComboTree
 			{
-				val descName = el.get("Desc", null)
-				val desc = if (descName != null) descMap[descName.toUpperCase()] else null
-
 				val current = ComboTree()
-				if (desc != null) current.comboStep = desc
+
+				if (!isRoot)
+				{
+					val descName = el.get("Desc")
+					val desc = descMap[descName.toUpperCase()] ?: throw Exception("Reference combo '$descName' does not exist!")
+
+					current.comboStep = desc
+				}
+
 				current.cost = el.getInt("Cost", 0)
 				current.weight = el.getInt("Weight", 1)
 
@@ -101,7 +106,7 @@ class ComboTree
 					{
 						for (childEl in nodesEl.children())
 						{
-							val child = recursiveParse(childEl)
+							val child = recursiveParse(childEl, false)
 
 							val key = ComboKey.valueOf(childEl.name.toUpperCase())
 							current.keybinding[key] = child
@@ -115,7 +120,7 @@ class ComboTree
 					{
 						for (childEl in nodesEl.children())
 						{
-							val child = recursiveParse(childEl)
+							val child = recursiveParse(childEl, false)
 							current.random.add(child)
 						}
 					}
@@ -124,7 +129,7 @@ class ComboTree
 				return current
 			}
 
-			return recursiveParse(xml)
+			return recursiveParse(xml, true)
 		}
 	}
 }

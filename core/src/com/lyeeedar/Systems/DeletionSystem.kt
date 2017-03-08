@@ -7,6 +7,7 @@ import com.lyeeedar.Components.*
 import com.lyeeedar.Global
 import com.lyeeedar.Level.World
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Random
 
 class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::class.java).get())
@@ -64,7 +65,7 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 			}
 		}
 
-		if (entity.task() != null)
+		if (entity.task() != null && entity.stats().hp <= 0f)
 		{
 			val effect = deathEffect.copy()
 			val effectEntity = Entity()
@@ -83,10 +84,11 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 
 		if (entity == level!!.player)
 		{
-			val current = World.world.currentLevel
-			val next = current.connections["death"]
-
-			World.world.changeLevel(next)
+			Global.pause = true
+			Future.call(
+			{
+				World.world.changeLevel("death", level!!.player)
+			}, 0.5f)
 		}
 	}
 }

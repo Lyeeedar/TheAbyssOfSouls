@@ -1,0 +1,30 @@
+<Interaction meta:X="0" meta:Y="0" GUID="bc8e3a87-a1e2-4faf-9ba0-79ca6a159911" xmlns:meta="Editor">
+	<Branch meta:RefKey="Branch">
+		<Branch>
+			<Condition>anger==0</Condition>
+			<Node meta:RefKey="Node">e1e1dc9f-c6fe-4019-aa6e-5eaee063f5b7</Node>
+		</Branch>
+		<Branch>
+			<Condition>anger!=0</Condition>
+			<Node meta:RefKey="Node">91a6c4a7-3e90-4469-88a7-7c9eb177e275</Node>
+		</Branch>
+	</Branch>
+	<Nodes>
+		<Node meta:X="359" meta:Y="175" GUID="91a6c4a7-3e90-4469-88a7-7c9eb177e275">
+			<Action meta:RefKey="Line">
+				<Text>Greetings [IMPORTANT]corrupt soul[], you have arrived at a most opportune time.</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>Many of the dreadful sinners kept in this prison have broken free and are roaming this ring unhindered.</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>Defeat them and you may be able to lift the sins of [ANGER]anger[] from your soul.</Text>
+			</Action>
+		</Node>
+		<Node meta:X="341" meta:Y="-1" GUID="e1e1dc9f-c6fe-4019-aa6e-5eaee063f5b7">
+			<Action meta:RefKey="Line">
+				<Text>Greetings [IMPORTANT]calmed soul[]. You may use the altar behind me to ascend.</Text>
+			</Action>
+		</Node>
+	</Nodes>
+</Interaction>

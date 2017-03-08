@@ -1,14 +1,10 @@
 package com.lyeeedar.Renderables.Particle
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
@@ -37,6 +33,7 @@ class ParticleEffect : Renderable()
 	// local stuff
 	val position = Vector2()
 	var facing: Direction = Direction.NORTH
+	var useFacing = true
 
 	var collisionGrid: Array2D<Boolean>? = null
 	var collisionFun: ((x: Int, y: Int) -> Unit)? = null
@@ -49,6 +46,7 @@ class ParticleEffect : Renderable()
 		for (emitter in emitters)
 		{
 			emitter.time = 0f
+			emitter.emitted = false
 			emitter.start()
 		}
 	}
@@ -113,6 +111,7 @@ class ParticleEffect : Renderable()
 				completed = true
 
 				if (!loop) stop()
+				else for (emitter in emitters) emitter.emitted = false
 			}
 			else
 			{
@@ -279,6 +278,7 @@ class ParticleEffect : Renderable()
 		effect.loop = loop
 		effect.flipX = flipX
 		effect.flipY = flipY
+		effect.useFacing = useFacing
 		effect.size[0] = size[0]
 		effect.size[1] = size[1]
 		return effect

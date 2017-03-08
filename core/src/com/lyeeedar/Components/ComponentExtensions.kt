@@ -44,6 +44,7 @@ fun Entity.pickup() = Mappers.pickup.get(this)
 fun Entity.metaregion() = Mappers.metaregion.get(this)
 fun Entity.loaddata() = Mappers.loaddata.get(this)
 fun Entity.drop() = Mappers.drop.get(this)
+fun Entity.sin() = Mappers.sin.get(this)
 
 fun <T: AbstractComponent> Entity.hasComponent(c: Class<T>) = this.getComponent(c) != null
 
@@ -73,6 +74,7 @@ class Mappers
 		val metaregion: ComponentMapper<MetaRegionComponent> = ComponentMapper.getFor(MetaRegionComponent::class.java)
 		val loaddata: ComponentMapper<LoadDataComponent> = ComponentMapper.getFor(LoadDataComponent::class.java)
 		val drop: ComponentMapper<DropComponent> = ComponentMapper.getFor(DropComponent::class.java)
+		val sin: ComponentMapper<SinComponent> = ComponentMapper.getFor(SinComponent::class.java)
 	}
 }
 
@@ -125,6 +127,7 @@ class EntityLoader()
 					"ADDITIONALRENDERABLES" -> AdditionalRenderableComponent()
 					"COMBO" -> ComboComponent()
 					"DIRECTIONALSPRITE" -> DirectionalSpriteComponent()
+					"DROP" -> DropComponent()
 					"INTERACTION" -> InteractionComponent()
 					"LIGHT" -> LightComponent()
 					"METAREGION" -> MetaRegionComponent()
@@ -136,6 +139,7 @@ class EntityLoader()
 					"SCENETIMELINE" -> SceneTimelineComponent()
 					"STATISTICS" -> StatisticsComponent()
 					"AI" -> TaskComponent()
+					"SIN" -> SinComponent()
 					"TRAILING" -> TrailingEntityComponent()
 					"WATER" -> WaterComponent()
 

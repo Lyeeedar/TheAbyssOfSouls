@@ -1,0 +1,27 @@
+<Interaction meta:X="0" meta:Y="0" GUID="d4fb1aa0-87f3-42d9-834f-e89786f08899" xmlns:meta="Editor">
+	<Branch meta:RefKey="Branch">
+		<Branch>
+			<Condition>sinful==0</Condition>
+			<Node meta:RefKey="Node">7bec5bef-cac2-4bc4-9e20-e6d80efe8dba</Node>
+		</Branch>
+		<Branch>
+			<Condition>sinful!=0</Condition>
+			<Node meta:RefKey="Node">b9042aa1-5522-496c-877e-b8a56b72fa1d</Node>
+		</Branch>
+	</Branch>
+	<Nodes>
+		<Node meta:X="278" meta:Y="0" GUID="7bec5bef-cac2-4bc4-9e20-e6d80efe8dba">
+			<Action meta:RefKey="Line">
+				<Text>Welcome [IMPORTANT]cleansed soul[], your final ascension awaits. Simply place your hands on the altar to receive your eternal reward.</Text>
+			</Action>
+		</Node>
+		<Node meta:X="288" meta:Y="110" GUID="b9042aa1-5522-496c-877e-b8a56b72fa1d">
+			<Action meta:RefKey="Line">
+				<Text>Begone! Your souls is too [IMPORTANT]corrupt[] for this holy place. Atone for your wordly sins below by stepping into the whirlpool.</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>Return once you are a [IMPORTANT]cleansed soul[].</Text>
+			</Action>
+		</Node>
+	</Nodes>
+</Interaction>

@@ -70,7 +70,7 @@ class DestinationRenderableAction() : AbstractTimelineAction()
 			r.size[0] = (pos.max.x - pos.min.x) + 1
 			r.size[1] = (pos.max.y - pos.min.y) + 1
 
-			if (r is ParticleEffect)
+			if (r is ParticleEffect && r.useFacing)
 			{
 				r.rotation = pos.facing.angle
 				r.facing = pos.facing
@@ -96,7 +96,10 @@ class DestinationRenderableAction() : AbstractTimelineAction()
 			val renderable = entity.renderable()!!.renderable
 			if (renderable is ParticleEffect)
 			{
-				if (killOnEnd) Global.engine.removeEntity(entity)
+				if (killOnEnd)
+				{
+					Global.engine.removeEntity(entity)
+				}
 				else
 				{
 					renderable.stop()
@@ -114,8 +117,12 @@ class DestinationRenderableAction() : AbstractTimelineAction()
 	{
 		val out = DestinationRenderableAction()
 		out.parent = parent
+
 		out.renderable = renderable.copy()
 		out.slot = slot
+		out.killOnEnd = killOnEnd
+		out.entityPerTile = entityPerTile
+
 		out.startTime = startTime
 		out.duration = duration
 		return out

@@ -78,7 +78,6 @@ class Emitter(val particleEffect: ParticleEffect)
 		set(value)
 		{
 			field = value
-			if (value == 0f) emitted = false
 		}
 
 	var emissionAccumulator: Float = 0f
@@ -87,7 +86,18 @@ class Emitter(val particleEffect: ParticleEffect)
 	var stopped = false
 
 	fun lifetime() = emissionRate.length().toFloat() + particles.maxBy { it.lifetime.v2 }!!.lifetime.v2
-	fun complete() = (time >= emissionRate.length() || stopped) && particles.all{ it.complete() }
+	fun complete(): Boolean
+	{
+		if (singleBurst)
+		{
+			return emitted && particles.all { it.complete() }
+		}
+		else
+		{
+			return (time >= emissionRate.length() || stopped) && particles.all { it.complete() }
+		}
+	}
+
 	fun stop() { stopped = true }
 	fun start() { stopped = false }
 
@@ -97,18 +107,18 @@ class Emitter(val particleEffect: ParticleEffect)
 
 		val scaledDelta = Math.min(delta, MAX_DELTA)
 
-		if (!stopped)
+		if (!stopped || (singleBurst && !emitted))
 		{
 			val duration = emissionRate.length()
 			val rate = emissionRate.valAt(0, time)
 
-			if (duration == 0f || time <= duration)
+			if (duration == 0f || (singleBurst && !emitted) || time <= duration)
 			{
 				if (type == EmissionType.ABSOLUTE || singleBurst)
 				{
 					if (singleBurst)
 					{
-						if (!emitted)
+						if (!emitted && time >= emissionRate.streams[0][0].first)
 						{
 							emitted = true
 
@@ -121,6 +131,8 @@ class Emitter(val particleEffect: ParticleEffect)
 					}
 					else
 					{
+						emitted = true
+
 						val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).ciel()
 						for (i in 1..toSpawn)
 						{
@@ -131,6 +143,7 @@ class Emitter(val particleEffect: ParticleEffect)
 				else
 				{
 					emissionAccumulator += scaledDelta * rate
+					emitted = true
 
 					while (emissionAccumulator > 1f)
 					{

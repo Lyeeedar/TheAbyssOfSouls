@@ -8,11 +8,22 @@
 	</Definition>
 	<Definition Name="TilingSprite" IsGlobal="True" meta:RefKey="StructDef">
 		<Data Name="Name" SkipIfDefault="False" meta:RefKey="String" />
-		<Data Name="Mode" EnumValues="Premade,Masked" SkipIfDefault="False" meta:RefKey="Enum" />
+		<Data Name="Mode" EnumValues="Premade,PremadeDirectional,Masked" SkipIfDefault="False" meta:RefKey="Enum" />
 		<Data Name="Mask" BasePath="Sprites" StripExtension="True" AllowedFileTypes="png" VisibleIf="Mode == Masked" meta:RefKey="File" />
 		<Data Name="Front" Keys="Sprite" VisibleIf="Mode == Premade" meta:RefKey="Reference" />
 		<Data Name="Top" Keys="Sprite" VisibleIf="Mode == Premade" meta:RefKey="Reference" />
 		<Data Name="Overhang" Keys="Sprite" VisibleIf="Mode == Premade" meta:RefKey="Reference" />
+		<Data Name="Directions" ChildrenAreUnique="True" VisibleIf="Mode == PremadeDirectional" meta:RefKey="Collection">
+			<Data Name="Center" Keys="Sprite" meta:RefKey="Reference" />
+			<Data Name="North" Keys="Sprite" meta:RefKey="Reference" />
+			<Data Name="South" Keys="Sprite" meta:RefKey="Reference" />
+			<Data Name="East" Keys="Sprite" meta:RefKey="Reference" />
+			<Data Name="West" Keys="Sprite" meta:RefKey="Reference" />
+			<Data Name="NorthEast" Keys="Sprite" meta:RefKey="Reference" />
+			<Data Name="NorthWest" Keys="Sprite" meta:RefKey="Reference" />
+			<Data Name="SouthEast" Keys="Sprite" meta:RefKey="Reference" />
+			<Data Name="SouthWest" Keys="Sprite" meta:RefKey="Reference" />
+		</Data>
 	</Definition>
 	<Definition Name="DirectedSprite" Collapse="True" IsGlobal="True" meta:RefKey="StructDef">
 		<Data Name="Path" BasePath="Sprites" StripExtension="True" AllowedFileTypes="png" SkipIfDefault="False" meta:RefKey="File" />
@@ -26,6 +37,7 @@
 		<Data Name="Colour" HasAlpha="True" meta:RefKey="Colour" />
 		<Data Name="FlipX" meta:RefKey="Boolean" />
 		<Data Name="FlipY" meta:RefKey="Boolean" />
+		<Data Name="UseFacing" Default="True" meta:RefKey="Boolean" />
 	</Definition>
 	<Definition Name="DirectionalSprite" IsGlobal="True" meta:RefKey="StructDef">
 		<Data Name="Animations" meta:RefKey="Collection">

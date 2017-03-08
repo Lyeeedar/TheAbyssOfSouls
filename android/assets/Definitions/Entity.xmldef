@@ -69,6 +69,7 @@
 				<Data Name="SceneTimeline" Keys="SceneTimeline" meta:RefKey="Reference" />
 				<Data Name="IsShared" meta:RefKey="Boolean" />
 			</Data>
+			<Data Name="Sin" SkipIfDefault="False" meta:RefKey="Struct" />
 			<Data Name="Statistics" meta:RefKey="Struct">
 				<Data Name="Faction" meta:RefKey="String" />
 				<Data Name="HP" Type="Int" Min="-999999" Default="10" SkipIfDefault="False" meta:RefKey="Number" />

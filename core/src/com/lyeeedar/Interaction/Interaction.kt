@@ -5,7 +5,10 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Components.sin
 import com.lyeeedar.Global
+import com.lyeeedar.Sin
+import com.lyeeedar.Systems.level
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.getXml
 import ktx.collections.set
@@ -65,6 +68,21 @@ class Interaction
 
 	fun getVariables(): ObjectFloatMap<String>
 	{
+		val player = Global.engine.level!!.player
+		val sins = player.sin()
+
+		variableMap.put("sinful", 0f)
+		for (sin in Sin.Values)
+		{
+			val sinVal = sins.sins[sin]?.toFloat() ?: 0f
+			variableMap.put(sin.toString().toLowerCase(), sinVal)
+
+			if (sinVal > 0f)
+			{
+				variableMap.put("sinful", 1f)
+			}
+		}
+
 		return variableMap
 	}
 

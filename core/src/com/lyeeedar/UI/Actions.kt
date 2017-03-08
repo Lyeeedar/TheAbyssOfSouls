@@ -1,6 +1,5 @@
 package com.lyeeedar.UI
 
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Action
 import com.lyeeedar.Util.Random
 
@@ -37,3 +36,15 @@ class ShakeAction(val amount: Float, val speed: Float, val duration: Float) : Ac
 }
 
 fun shake(amount: Float, speed: Float, duration: Float): ShakeAction = ShakeAction(amount, speed, duration)
+
+class LambdaAction(val lambda: ()->Unit) : Action()
+{
+	override fun act(delta: Float): Boolean
+	{
+		lambda.invoke()
+
+		return true
+	}
+}
+
+fun lamda(lambda: ()->Unit): LambdaAction = LambdaAction(lambda)

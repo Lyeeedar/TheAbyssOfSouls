@@ -6,23 +6,32 @@
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="Count" Default="1" meta:RefKey="String" />
 			</Keyframe>
+			<Keyframe Name="Proximity" Background="199,199,199,148" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Data Name="Range" Default="1" meta:RefKey="String" />
+				<Data Name="Type" EnumValues="All,PlayerOnly" meta:RefKey="Enum" />
+			</Keyframe>
+			<Keyframe Name="Signal" Background="171,171,171,148" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Data Name="Key" meta:RefKey="String" />
+			</Keyframe>
 			<!--Renderable-->
 			<Keyframe Name="DestinationRenderable" Background="75,166,173,101" HasDuration="True" meta:RefKey="Keyframe">
-				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="RenderablePerTile" meta:RefKey="Boolean" />
 				<Data Name="KillOnEnd" Default="True" meta:RefKey="Boolean" />
 			</Keyframe>
 			<Keyframe Name="MovementRenderable" Background="49,181,114,94" HasDuration="True" meta:RefKey="Keyframe">
-				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="UseLeap" meta:RefKey="Boolean" />
 			</Keyframe>
 			<Keyframe Name="Screenshake" Background="85,94,232,81" HasDuration="True" meta:RefKey="Keyframe">
-				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Data Name="Strength" meta:RefKey="Number" />
 				<Data Name="Speed" Min="1" Default="10" meta:RefKey="Number" />
 			</Keyframe>
@@ -38,11 +47,15 @@
 				<Data Name="Chance" Min="0" Max="1" Default="1" meta:RefKey="Number" />
 			</Keyframe>
 			<Keyframe Name="Spawn" Background="237,245,87,60" HasDuration="True" meta:RefKey="Keyframe">
-				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Data Name="DeleteOnExit" meta:RefKey="Boolean" />
 				<Data Name="IgnoreWall" meta:RefKey="Boolean" />
 				<Data Name="Entity" Extends="Entity" meta:RefKey="Struct" />
+			</Keyframe>
+			<Keyframe Name="SendSignal" Background="154,156,131,60" meta:RefKey="Keyframe">
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Data Name="Key" meta:RefKey="String" />
 			</Keyframe>
 			<!--Movement-->
 			<Keyframe Name="MoveSource" Background="227,101,203,118" meta:RefKey="Keyframe">
@@ -60,8 +73,8 @@
 			</Keyframe>
 			<!--Interaction-->
 			<Keyframe Name="Speech" Background="128,209,195,75" HasDuration="True" meta:RefKey="Keyframe">
-				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Data Name="Text" meta:RefKey="MultilineString" />
 			</Keyframe>
 			<Keyframe Name="Interaction" Background="90,214,193,125" meta:RefKey="Keyframe">
