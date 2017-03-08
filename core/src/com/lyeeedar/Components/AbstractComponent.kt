@@ -9,6 +9,8 @@ import com.esotericsoftware.kryo.io.Output
 
 abstract class AbstractComponent : Component
 {
+	var fromLoad = false
+
 	abstract fun parse(xml: XmlReader.Element, entity: Entity)
 
 	open fun saveData(kryo: Kryo, output: Output)

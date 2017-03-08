@@ -137,7 +137,7 @@ class TilingSprite() : Renderable()
 	{
 		if (hasAllElements)
 		{
-			if (emptyDirections.bitFlag == 0 || (emptyDirections.contains(Direction.NORTH) && emptyDirections.contains(Direction.SOUTH) && emptyDirections.contains(Direction.EAST) && emptyDirections.contains(Direction.WEST)))
+			if (emptyDirections.bitFlag == 0)
 			{
 				return sprites.get(CENTER)
 			}
@@ -161,6 +161,14 @@ class TilingSprite() : Renderable()
 			{
 				return sprites.get(SOUTHWEST)
 			}
+			else if (emptyDirections.contains(Direction.SOUTH) && sprites.containsKey(SOUTH))
+			{
+				return sprites.get(SOUTH)
+			}
+			else if (emptyDirections.contains(Direction.NORTH) && sprites.containsKey(NORTH))
+			{
+				return sprites.get(NORTH)
+			}
 			else if (emptyDirections.contains(Direction.WEST) && sprites.containsKey(WEST))
 			{
 				return sprites.get(WEST)
@@ -168,14 +176,6 @@ class TilingSprite() : Renderable()
 			else if (emptyDirections.contains(Direction.EAST) && sprites.containsKey(EAST))
 			{
 				return sprites.get(EAST)
-			}
-			else if (emptyDirections.contains(Direction.NORTH) && sprites.containsKey(NORTH))
-			{
-				return sprites.get(NORTH)
-			}
-			else if (emptyDirections.contains(Direction.SOUTH) && sprites.containsKey(SOUTH))
-			{
-				return sprites.get(SOUTH)
 			}
 			else
 			{

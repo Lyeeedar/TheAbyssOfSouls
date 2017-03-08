@@ -23,8 +23,7 @@ class ComboComponent(): AbstractComponent()
 
 		if (refxml.name == "Weapon")
 		{
-			val weapon = Weapon()
-			weapon.parse(refxml)
+			val weapon = Item.load(refxml) as Weapon
 			comboSource = weapon
 		}
 
@@ -33,14 +32,11 @@ class ComboComponent(): AbstractComponent()
 
 	override fun saveData(kryo: Kryo, output: Output)
 	{
+		output.writeBoolean(comboSource != null)
+
 		if (comboSource != null)
 		{
-			output.writeBoolean(true)
-			kryo.writeObject(output, comboSource!!.loadData)
-		}
-		else
-		{
-			output.writeBoolean(false)
+			kryo.writeClassAndObject(output, comboSource!!.loadData)
 		}
 	}
 
@@ -50,7 +46,7 @@ class ComboComponent(): AbstractComponent()
 
 		if (hasItem)
 		{
-			val xml = kryo.readObject(input, XmlReader.Element::class.java)
+			val xml = kryo.readClassAndObject(input) as XmlReader.Element
 			val item = Item.load(xml) as Weapon
 			comboSource = item
 			combos = item.combos

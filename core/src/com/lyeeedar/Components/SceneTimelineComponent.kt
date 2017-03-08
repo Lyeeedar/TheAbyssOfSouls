@@ -11,6 +11,7 @@ import com.lyeeedar.SceneTimeline.BlockerAction
 import com.lyeeedar.SceneTimeline.SceneTimeline
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.UI.IDebugCommandProvider
+import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.toHitPointArray
 import ktx.collections.set
@@ -136,7 +137,7 @@ class SceneTimelineComponent() : AbstractComponent(), IDebugCommandProvider
 				}
 				else if (state == 1)
 				{
-					action.enter()
+					Future.call({action.enter()}, 0f)
 
 					if (action is BlockerAction)
 					{

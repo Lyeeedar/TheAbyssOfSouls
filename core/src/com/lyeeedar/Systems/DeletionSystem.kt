@@ -6,14 +6,11 @@ import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
 import com.lyeeedar.Level.World
-import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Random
 
 class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::class.java).get())
 {
-	val deathEffect = AssetManager.loadParticleEffect("Death")
-
 	override fun doUpdate(deltaTime: Float)
 	{
 		deletedEntities.clear()
@@ -65,9 +62,9 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 			}
 		}
 
-		if (entity.task() != null && entity.stats().hp <= 0f)
+		if (entity.stats() != null && entity.stats().hp <= 0f && entity.stats().deathEffect != null)
 		{
-			val effect = deathEffect.copy()
+			val effect = entity.stats().deathEffect!!.copy()
 			val effectEntity = Entity()
 
 			effectEntity.add(RenderableComponent(effect))

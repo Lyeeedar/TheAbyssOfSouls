@@ -56,6 +56,8 @@ class GameScreen : AbstractScreen()
 
 	fun loadLevel(level: LevelData, lastPlayer: Entity?)
 	{
+		Global.engine.level?.destroyingLevel = true
+
 		Global.engine.removeAllEntities()
 
 		val grammar = GenerationGrammar.load(level.grammar)
@@ -283,10 +285,11 @@ class GameScreen : AbstractScreen()
 		DebugConsole.register("Load", "", fun (args, console): Boolean {
 
 			Future.call({
-							Global.engine.removeAllEntities()
-							val level = SaveGame.load()
-							Global.engine.level = level
-						}, 0.01f)
+				Global.engine.level?.destroyingLevel = true
+				Global.engine.removeAllEntities()
+				val level = SaveGame.load()
+				Global.engine.level = level
+			}, 0f)
 
 			return true
 		})

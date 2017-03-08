@@ -82,16 +82,23 @@ class Level(val seed: Long, val grammarName: String)
 	val ambient: Colour = Colour(0.1f, 0.1f, 0.1f, 1f)
 
 	// ----------------------------------------------------------------------
+	var destroyingLevel = false
+
+	// ----------------------------------------------------------------------
 	init
 	{
 		Global.engine.addEntityListener(Family.all(MetaRegionComponent::class.java).get(), object : EntityListener {
 			override fun entityRemoved(entity: Entity?)
 			{
+				if (destroyingLevel) return
+
 				Future.call( {updateMetaRegions()}, 0.5f, metaregions)
 			}
 
 			override fun entityAdded(entity: Entity?)
 			{
+				if (destroyingLevel) return
+
 				Future.call( {updateMetaRegions()}, 0.5f, metaregions)
 			}
 		})

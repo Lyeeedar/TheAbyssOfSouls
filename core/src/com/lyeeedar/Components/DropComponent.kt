@@ -10,10 +10,8 @@ import com.lyeeedar.Renderables.Animation.ExpandAnimation
 import com.lyeeedar.Renderables.Animation.LeapAnimation
 import com.lyeeedar.Renderables.Animation.SpinAnimation
 import com.lyeeedar.SpaceSlot
-import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.random
-import ktx.collections.set
 
 class DropComponent : AbstractComponent()
 {
@@ -53,22 +51,13 @@ class DropComponent : AbstractComponent()
 
 		fun addToTile(tile: Tile, sourceTile: Tile, item: Item)
 		{
-			val dropEntity = Entity()
-			dropEntity.add(RenderableComponent(item.icon))
+			val dropEntity = EntityLoader.load("Pickup")
+			dropEntity.renderable().renderable = item.icon
+			dropEntity.renderable().overrideSprite = true
 
-			val particle = AssetManager.loadParticleEffect("PickupTwinkle")
-			val additional = AdditionalRenderableComponent()
-			additional.above["twinkle"] = particle
-			dropEntity.add(additional)
+			dropEntity.pos().position = tile
 
-			val pos = PositionComponent()
-			pos.slot = SpaceSlot.BELOWENTITY
-			pos.position = tile
-			dropEntity.add(pos)
-
-			val pickup = PickupComponent()
-			pickup.item = item
-			dropEntity.add(pickup)
+			dropEntity.pickup().item = item
 
 			tile.contents[SpaceSlot.BELOWENTITY] = dropEntity
 

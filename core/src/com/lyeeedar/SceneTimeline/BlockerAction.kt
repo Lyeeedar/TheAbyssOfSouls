@@ -86,6 +86,8 @@ class ProximityAction() : AbstractBlockerAction()
 
 		Global.engine.task().onTurnEvent += fun(): Boolean {
 
+			if (parent.sourceTile == null) return false
+
 			val visible = shadowCast!!.getShadowCast(parent.sourceTile!!.level.grid, parent.sourceTile!!.x, parent.sourceTile!!.y, range, parent.parentEntity)
 
 			if (type == Type.PLAYERONLY)

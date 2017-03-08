@@ -1,4 +1,5 @@
 <Effect xmlns:meta="Editor">
+	<Warmup>5</Warmup>
 	<Emitters>
 		<Emitter>
 			<Type>Accumulated</Type>

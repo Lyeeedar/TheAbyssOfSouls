@@ -9,6 +9,7 @@ import com.lyeeedar.Components.tile
 import com.lyeeedar.Components.trailing
 import com.lyeeedar.Direction
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.random
 
 /**
  * Created by Philip on 21-Mar-16.
@@ -25,7 +26,8 @@ class ActionSetValue(): AbstractAction()
 		{
 			val split = value.split(' ')
 			val pointKey = split[1]
-			val direction = Direction.valueOf(split[2].toUpperCase())
+			val dir = split[2]
+			val direction = if (dir == "random") Direction.CardinalValues.asSequence().random()!! else Direction.valueOf(split[2].toUpperCase())
 			val dist = split[3].toInt()
 
 			val point = getData(pointKey, entity.tile())!!

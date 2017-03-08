@@ -12,8 +12,17 @@ class Future
 	{
 		private val pendingCalls = Array<CallData>(false, 8)
 
+		private val queuedActions = Array<()->Unit>(false, 8)
+
+		private var processing = false
+
 		fun update(delta: Float)
 		{
+			if (processing)
+				throw Exception("Nested update call!")
+
+			processing = true
+
 			val itr = pendingCalls.iterator()
 			while (itr.hasNext())
 			{
@@ -26,28 +35,54 @@ class Future
 					item.function.invoke()
 				}
 			}
+
+			processing = false
+
+			for (queued in queuedActions)
+			{
+				queued.invoke()
+			}
+			queuedActions.clear()
 		}
 
 		fun call(function: () -> Unit, delay: Float, token: Any? = null)
 		{
-			if (token != null)
+			if (processing)
 			{
-				cancel(token)
+				queuedActions.add {
+					call(function, delay, token)
+				}
 			}
+			else
+			{
+				if (token != null)
+				{
+					cancel(token)
+				}
 
-			pendingCalls.add(CallData(function, delay, token))
+				pendingCalls.add(CallData(function, delay, token))
+			}
 		}
 
 		fun cancel(token: Any)
 		{
-			val itr = pendingCalls.iterator()
-			while (itr.hasNext())
+			if (processing)
 			{
-				val item = itr.next()
-
-				if (item.token == token)
+				queuedActions.add {
+					cancel(token)
+				}
+			}
+			else
+			{
+				val itr = pendingCalls.iterator()
+				while (itr.hasNext())
 				{
-					itr.remove()
+					val item = itr.next()
+
+					if (item.token == token)
+					{
+						itr.remove()
+					}
 				}
 			}
 		}

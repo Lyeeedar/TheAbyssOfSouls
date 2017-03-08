@@ -399,6 +399,9 @@
 															<Stamina>4</Stamina>
 															<Sight>0</Sight>
 															<DisplayHP>false</DisplayHP>
+															<Death meta:RefKey="ParticleEffect">
+																<Name>Death</Name>
+															</Death>
 														</Statistics>
 														<Position />
 													</Components>

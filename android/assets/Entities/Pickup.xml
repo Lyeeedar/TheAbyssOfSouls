@@ -1,0 +1,23 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<AdditionalRenderables>
+			<Above>
+				<Renderable>
+					<Key>twinkle</Key>
+					<Renderable meta:RefKey="ParticleEffect">
+						<Name>PickupTwinkle</Name>
+					</Renderable>
+				</Renderable>
+			</Above>
+		</AdditionalRenderables>
+		<Renderable>
+			<Renderable meta:RefKey="Sprite">
+				<Name>white</Name>
+			</Renderable>
+		</Renderable>
+		<Pickup />
+		<Position>
+			<SpaceSlot>BelowEntity</SpaceSlot>
+		</Position>
+	</Components>
+</Entity>

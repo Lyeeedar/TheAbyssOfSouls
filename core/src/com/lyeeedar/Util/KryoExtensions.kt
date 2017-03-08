@@ -197,9 +197,16 @@ fun Kryo.registerGdxSerialisers()
 		{
 			val xml = input.readString()
 
-			val reader = XmlReader()
-			val element = reader.parse(xml)
-			return element
+			try
+			{
+				val reader = XmlReader()
+				val element = reader.parse(xml)
+				return element
+			}
+			catch (ex: Exception)
+			{
+				return XmlReader.Element("", null)
+			}
 		}
 
 		override fun write(kryo: Kryo, output: Output, element: XmlReader.Element)

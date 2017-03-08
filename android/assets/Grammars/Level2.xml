@@ -185,7 +185,7 @@
 				</Split>
 			</Rule>
 		</Node>
-		<Node meta:X="1447.5375654650604" meta:Y="736.86577211494182" GUID="2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac">
+		<Node meta:X="1447.53759765625" meta:Y="736.86578369140625" GUID="2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac">
 			<Rule meta:RefKey="Scale">
 				<Mode>Absolute</Mode>
 				<X>7+rnd(5)</X>
@@ -199,7 +199,7 @@
 				<Rule meta:RefKey="Node">d0f77ec0-f861-423b-af26-5a3fde4599b7</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1645.0821513671403" meta:Y="947.63312424410287" GUID="d0f77ec0-f861-423b-af26-5a3fde4599b7">
+		<Node meta:X="1645.0821533203125" meta:Y="947.63311767578125" GUID="d0f77ec0-f861-423b-af26-5a3fde4599b7">
 			<Rule meta:RefKey="Scale">
 				<X>-2</X>
 				<Y>-2</Y>
@@ -229,31 +229,31 @@
 				</Split>
 			</Rule>
 		</Node>
-		<Node meta:X="1937.0821513671403" meta:Y="853.63309372652475" GUID="683063da-a4f5-4750-ac6f-a59e439e1e59">
+		<Node meta:X="1937.0821533203125" meta:Y="853.63311767578125" GUID="683063da-a4f5-4750-ac6f-a59e439e1e59">
 			<Rule meta:RefKey="Fill">
 				<Character>.</Character>
 				<Overwrite>true</Overwrite>
 			</Rule>
 		</Node>
-		<Node meta:X="1966.0821513671403" meta:Y="1028.6331242441029" GUID="8212fa1e-d8d6-4ae2-8aaf-4ed79dc961e3">
+		<Node meta:X="1966.0821533203125" meta:Y="1028.6331787109375" GUID="8212fa1e-d8d6-4ae2-8aaf-4ed79dc961e3">
 			<Rule meta:RefKey="Take">
 				<Count>50%</Count>
 				<Rule meta:RefKey="Node">3bb4af64-875f-4fac-8f78-f5d3c4984ea0</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="2224.0821513671408" meta:Y="1028.6331242441029" GUID="3bb4af64-875f-4fac-8f78-f5d3c4984ea0">
+		<Node meta:X="2224.08203125" meta:Y="1028.6331787109375" GUID="3bb4af64-875f-4fac-8f78-f5d3c4984ea0">
 			<Rule meta:RefKey="Fill">
 				<Character>#</Character>
 				<Overwrite>true</Overwrite>
 			</Rule>
 		</Node>
-		<Node meta:X="877.98236437910487" meta:Y="494.84604920137821" GUID="4a830b3a-8726-4e58-b8f8-0c788dfed739">
+		<Node meta:X="877.98236083984375" meta:Y="494.84603881835937" GUID="4a830b3a-8726-4e58-b8f8-0c788dfed739">
 			<!--Fortress-->
 			<Rule meta:RefKey="DataScope">
 				<Rule meta:RefKey="Node">35a5ec42-da60-43e7-9761-2ea2c8424df2</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1189.2915684806674" meta:Y="474.866869819054" GUID="35a5ec42-da60-43e7-9761-2ea2c8424df2">
+		<Node meta:X="1189.2916259765625" meta:Y="474.86688232421875" GUID="35a5ec42-da60-43e7-9761-2ea2c8424df2">
 			<Rule meta:RefKey="Prefab">
 				<Symbols>
 					<Symbol meta:RefKey="Symbol">
@@ -411,7 +411,7 @@
 				</Prefab>
 			</Rule>
 		</Node>
-		<Node meta:X="1023.0336949455111" meta:Y="699.28754318941537" GUID="460153e7-99c7-4df0-b009-ac0168bfc791">
+		<Node meta:X="1023.03369140625" meta:Y="699.28753662109375" GUID="460153e7-99c7-4df0-b009-ac0168bfc791">
 			<!--Islands-->
 			<Rule meta:RefKey="Repeat">
 				<Axis>Y</Axis>
@@ -419,14 +419,8 @@
 				<Size>13+rnd(7)</Size>
 				<Rule meta:RefKey="Node">f07a882b-e6ce-4da0-af74-0a20cfec37b6</Rule>
 			</Rule>
-			<!--Creatures-->
-			<Rule meta:RefKey="Filter">
-				<Mode>Character</Mode>
-				<Character>~</Character>
-				<Rule meta:RefKey="Node">5b766fef-9357-4633-abc1-ebd81b4a4401</Rule>
-			</Rule>
 		</Node>
-		<Node meta:X="509.74578087261625" meta:Y="484.160436302132" GUID="1f062dab-9be9-4f64-b8ab-eccf255cbe13">
+		<Node meta:X="509.74578857421875" meta:Y="484.16043090820312" GUID="1f062dab-9be9-4f64-b8ab-eccf255cbe13">
 			<Rule Axis="Y" Parallel="True" meta:RefKey="Divide">
 				<Division>
 					<Size>20</Size>
@@ -438,26 +432,26 @@
 				</Division>
 			</Rule>
 		</Node>
-		<Node meta:X="832.2157801216581" meta:Y="62.902529951168532" GUID="0acc92c2-f458-4f00-addf-6e60a173b231">
+		<Node meta:X="832.21575927734375" meta:Y="62.902530670166016" GUID="0acc92c2-f458-4f00-addf-6e60a173b231">
 			<Rule meta:RefKey="Fill">
 				<Character>-</Character>
 				<Overwrite>true</Overwrite>
 			</Rule>
 		</Node>
-		<Node meta:X="614.66346392767628" meta:Y="183.30884331639126" GUID="90743e15-7984-4b79-aadc-38d091ea6da4">
+		<Node meta:X="614.6634521484375" meta:Y="183.308837890625" GUID="90743e15-7984-4b79-aadc-38d091ea6da4">
 			<Rule meta:RefKey="Take">
 				<Count>50%</Count>
 				<Rule meta:RefKey="Node">0acc92c2-f458-4f00-addf-6e60a173b231</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1250.8541320047586" meta:Y="1256.0905593203061" GUID="5b766fef-9357-4633-abc1-ebd81b4a4401">
+		<Node meta:X="1250.8541259765625" meta:Y="1256.090576171875" GUID="5b766fef-9357-4633-abc1-ebd81b4a4401">
 			<Rule meta:RefKey="Take">
-				<Count>10</Count>
+				<Count>3</Count>
 				<Rule meta:RefKey="Node">13ea1b2a-ab92-497a-be8d-13aac485ff13</Rule>
 				<Remainder meta:RefKey="Node">618023a9-52f9-4b38-ba1e-d5bb4c3e079e</Remainder>
 			</Rule>
 		</Node>
-		<Node meta:X="1440.5840489212933" meta:Y="1337.6686756371575" GUID="13ea1b2a-ab92-497a-be8d-13aac485ff13">
+		<Node meta:X="1440.5841064453125" meta:Y="1337.668701171875" GUID="13ea1b2a-ab92-497a-be8d-13aac485ff13">
 			<Rule meta:RefKey="Symbol">
 				<Character>L</Character>
 				<BelowEntity>
@@ -467,7 +461,7 @@
 							<SceneTimeline meta:RefKey="SceneTimeline">
 								<Timeline>
 									<Blocker>
-										<Count>20+rnd(20)</Count>
+										<Count>30+rnd(50)</Count>
 									</Blocker>
 									<Spawn>
 										<Time>0.09150613</Time>
@@ -485,8 +479,14 @@
 													<Stamina>4</Stamina>
 													<Sight>0</Sight>
 													<DisplayHP>false</DisplayHP>
+													<Death meta:RefKey="ParticleEffect">
+														<Name>Death</Name>
+													</Death>
 												</Statistics>
 												<Position />
+												<AI>
+													<AI>RandomWander</AI>
+												</AI>
 											</Components>
 										</Entity>
 									</Spawn>
@@ -500,13 +500,14 @@
 				<Character>L</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="1410.8015620119666" meta:Y="1555.2103191487613" GUID="618023a9-52f9-4b38-ba1e-d5bb4c3e079e">
+		<Node meta:X="1410.801513671875" meta:Y="1555.2103271484375" GUID="618023a9-52f9-4b38-ba1e-d5bb4c3e079e">
 			<Rule meta:RefKey="Take">
-				<Count>5</Count>
+				<Count>1</Count>
 				<Rule meta:RefKey="Node">2d28706f-391a-4e10-8843-4ebeab026753</Rule>
+				<Remainder meta:RefKey="Node">c7d8c53d-55fd-4bd2-a058-4386048be6d2</Remainder>
 			</Rule>
 		</Node>
-		<Node meta:X="1638.5577639248972" meta:Y="1565.5694450302663" GUID="2d28706f-391a-4e10-8843-4ebeab026753">
+		<Node meta:X="1638.5577392578125" meta:Y="1565.5694580078125" GUID="2d28706f-391a-4e10-8843-4ebeab026753">
 			<Rule meta:RefKey="Symbol">
 				<Character>P</Character>
 				<Entity>
@@ -517,7 +518,7 @@
 				<Character>P</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="1249.3346717071602" meta:Y="710.24121564248321" GUID="f07a882b-e6ce-4da0-af74-0a20cfec37b6">
+		<Node meta:X="1249.334716796875" meta:Y="710.2412109375" GUID="f07a882b-e6ce-4da0-af74-0a20cfec37b6">
 			<!--Island-->
 			<Rule meta:RefKey="Divide">
 				<Division>
@@ -525,8 +526,46 @@
 				</Division>
 				<Division>
 					<Size>13</Size>
+					<!--Creatures-->
 					<Rule meta:RefKey="Node">2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac</Rule>
 				</Division>
+			</Rule>
+			<!--Creatures-->
+			<Rule meta:RefKey="Filter">
+				<Mode>Character</Mode>
+				<Character>~</Character>
+				<Rule meta:RefKey="Node">5b766fef-9357-4633-abc1-ebd81b4a4401</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1655.6704001924811" meta:Y="1809.7636616979073" GUID="c7d8c53d-55fd-4bd2-a058-4386048be6d2">
+			<Rule meta:RefKey="Take">
+				<Count>6</Count>
+				<Rule meta:RefKey="Node">9546b583-56b8-4c44-8b1b-7ee86275104b</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1897.6704001924811" meta:Y="1809.7636616979073" GUID="9546b583-56b8-4c44-8b1b-7ee86275104b">
+			<Rule meta:RefKey="Symbol">
+				<Character>M</Character>
+				<AboveEntity>
+					<Components>
+						<Renderable>
+							<Renderable meta:RefKey="ParticleEffect">
+								<Name>Motes</Name>
+								<Colour>78,242,255,255</Colour>
+							</Renderable>
+						</Renderable>
+						<Light>
+							<Colour>37,212,247,156</Colour>
+							<Distance>4</Distance>
+						</Light>
+						<AI>
+							<AI>RandomWander</AI>
+						</AI>
+					</Components>
+				</AboveEntity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>M</Character>
 			</Rule>
 		</Node>
 	</Rules>

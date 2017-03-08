@@ -23,6 +23,9 @@ class SaveGame
 {
 	companion object
 	{
+		//val writtenOrder = Array<Component>()
+		//val readOrder = Array<Component>()
+
 		val kryo: Kryo by lazy { initKryo() }
 		fun initKryo(): Kryo
 		{
@@ -38,6 +41,8 @@ class SaveGame
 
 		fun save(level: Level)
 		{
+			//writtenOrder.clear()
+
 			val attemptFile = Gdx.files.local("save.dat")
 
 			var output: Output? = null
@@ -58,6 +63,8 @@ class SaveGame
 
 		fun load(): Level?
 		{
+			//readOrder.clear()
+
 			var input: com.esotericsoftware.kryo.io.Input? = null
 			var level: Level? = null
 
@@ -93,11 +100,20 @@ class SaveGame
 					val xml = kryo.readObject(input, XmlReader.Element::class.java)
 					val entity = EntityLoader.load(xml)
 
-					for (component in entity.components)
+					for (component in entity.components.sortedBy { it.javaClass.simpleName })
 					{
-						if (component is AbstractComponent)
+						if (component is AbstractComponent && component.fromLoad)
 						{
+							val compName = input.readString()
+							if (compName != component.javaClass.simpleName)
+								throw Exception("Component load mismatch!")
+
 							component.loadData(kryo, input)
+
+							//readOrder.add(component)
+
+							//if (writtenOrder[readOrder.size-1].javaClass != readOrder[readOrder.size-1].javaClass)
+							//	throw Exception("Out of order!")
 						}
 					}
 
@@ -110,11 +126,14 @@ class SaveGame
 				{
 					kryo.writeObject(output, entity.loaddata().xml)
 
-					for (component in entity.components)
+					for (component in entity.components.sortedBy { it.javaClass.simpleName })
 					{
-						if (component is AbstractComponent)
+						if (component is AbstractComponent && component.fromLoad)
 						{
+							output.writeString(component.javaClass.simpleName)
 							component.saveData(kryo, output)
+
+							//writtenOrder.add(component)
 						}
 					}
 				}
@@ -127,6 +146,7 @@ class SaveGame
 					output.writeString(level.grammarName)
 					output.writeInt(level.width, true)
 					output.writeInt(level.height, true)
+
 					for (x in 0..level.width-1)
 					{
 						for (y in 0..level.height-1)
@@ -138,6 +158,11 @@ class SaveGame
 							{
 								var contents = tile.contents[slot]
 								if (contents?.loaddata() == null) contents = null
+
+								if (contents != null && contents.pos().position != tile)
+								{
+									contents = null
+								}
 
 								kryo.writeObjectOrNull(output, contents, Entity::class.java)
 							}
@@ -155,6 +180,8 @@ class SaveGame
 
 					val width = input.readInt(true)
 					val height = input.readInt(true)
+
+					if (width != level.width || height != level.height) throw Exception("Level didnt generate consistently!")
 
 					for (x in 0..level.width-1)
 					{

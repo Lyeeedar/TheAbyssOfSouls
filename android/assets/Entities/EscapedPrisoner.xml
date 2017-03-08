@@ -18,6 +18,9 @@
 			<HP>10</HP>
 			<Stamina>10</Stamina>
 			<Sight>15</Sight>
+			<Death meta:RefKey="ParticleEffect">
+				<Name>Death</Name>
+			</Death>
 		</Statistics>
 		<Combo>
 			<ComboTree>Entities/EscapedPrisonerCombo</ComboTree>

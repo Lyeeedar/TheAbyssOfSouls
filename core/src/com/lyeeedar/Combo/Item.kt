@@ -38,25 +38,33 @@ abstract class Item
 		{
 			val item: Item
 
-			val type = xml.getAttribute("meta:RefKey").toUpperCase()
-			if (type == "EQUIPMENT")
+			if (xml.name == "Weapon")
 			{
 				item = Weapon()
+				item.parse(xml)
+			}
+			else
+			{
+				val type = xml.getAttribute("meta:RefKey").toUpperCase()
+				if (type == "EQUIPMENT")
+				{
+					item = Weapon()
 
-				val weaponxml = getXml("Items/" + xml.get("Weapon"))
-				item.parse(weaponxml)
+					val weaponxml = getXml("Items/" + xml.get("Weapon"))
+					item.parse(weaponxml)
+				}
+				else if (type == "ATONEMENTSPIRIT")
+				{
+					item = AtonementSpirit()
+					item.parse(xml)
+				}
+				else if (type == "SELLABLEITEM")
+				{
+					item = SellableItem()
+					item.parse(xml)
+				}
+				else throw Exception("Unknown item type '$type'")
 			}
-			else if (type == "ATONEMENTSPIRIT")
-			{
-				item = AtonementSpirit()
-				item.parse(xml)
-			}
-			else if (type == "SELLABLEITEM")
-			{
-				item = SellableItem()
-				item.parse(xml)
-			}
-			else throw Exception("Unknown item type '$type'")
 
 			item.loadData = xml
 			return item
@@ -94,7 +102,7 @@ class AtonementSpirit : Item()
 	override fun steppedOn(entity: Entity, floorEntity: Entity)
 	{
 		val sin = entity.sin() ?: return
-		sin.sins[this.sin] = Math.max(0, sin.sins[this.sin]-1)
+		sin.sins[this.sin] = Math.max(0, (sin.sins[this.sin] ?: 0)-1)
 
 		val tile = floorEntity.tile()!!
 		tile.contents[SpaceSlot.BELOWENTITY] = null

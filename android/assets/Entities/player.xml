@@ -62,6 +62,9 @@
 			<Stamina>10</Stamina>
 			<Sight>12</Sight>
 			<CanRegenerate>true</CanRegenerate>
+			<Death meta:RefKey="ParticleEffect">
+				<Name>Death</Name>
+			</Death>
 		</Statistics>
 		<Combo>
 			<ComboTree>Entities/PlayerCombo</ComboTree>

@@ -958,14 +958,14 @@ Particle/boot-stomp
   index: -1
 Particle/droplet
   rotate: false
-  xy: 730, 82
+  xy: 750, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/ember_2
   rotate: false
-  xy: 650, 82
+  xy: 670, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -986,14 +986,14 @@ Particle/foot
   index: -1
 Particle/glow
   rotate: false
-  xy: 670, 82
+  xy: 690, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/line
   rotate: false
-  xy: 690, 82
+  xy: 710, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -1007,21 +1007,21 @@ Particle/oval
   index: -1
 Particle/plasma_1
   rotate: false
-  xy: 590, 82
+  xy: 610, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_2
   rotate: false
-  xy: 610, 82
+  xy: 630, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_3
   rotate: false
-  xy: 630, 82
+  xy: 650, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -1042,21 +1042,21 @@ Particle/shockwave
   index: -1
 Particle/slash
   rotate: false
-  xy: 710, 82
+  xy: 730, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/spark
   rotate: false
-  xy: 550, 82
+  xy: 570, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/star
   rotate: false
-  xy: 570, 82
+  xy: 590, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -1077,7 +1077,7 @@ blank
   index: -1
 white
   rotate: false
-  xy: 750, 82
+  xy: 550, 82
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

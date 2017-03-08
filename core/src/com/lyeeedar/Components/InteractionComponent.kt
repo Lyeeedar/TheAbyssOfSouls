@@ -19,12 +19,12 @@ class InteractionComponent : AbstractComponent()
 
 	override fun saveData(kryo: Kryo, output: Output)
 	{
-		kryo.writeObject(output, interaction.variableMap)
+		kryo.writeClassAndObject(output, interaction.variableMap)
 	}
 
 	override fun loadData(kryo: Kryo, input: Input)
 	{
-		val variables = kryo.readObject(input, ObjectFloatMap::class.java) as ObjectFloatMap<String>
+		val variables = kryo.readClassAndObject(input) as ObjectFloatMap<String>
 		variables.forEach { interaction.variableMap.put(it.key, it.value) }
 	}
 }

@@ -181,10 +181,19 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 			val pos = entity.pos() ?: continue
 			val tile = entity.tile()
 
-			if (pos.position.taxiDist(level!!.player.tile()!!) > 100)
+			if (pos.position.taxiDist(level!!.player.tile()!!) > 50)
 			{
-				renderer.update(renderable)
+				renderable.animation = null
 
+				if (renderable is ParticleEffect)
+				{
+					if (entity.components.size() == 2)
+					{
+						entity.add(MarkedForDeletionComponent())
+					}
+				}
+
+				//renderer.update(renderable)
 				continue
 			}
 

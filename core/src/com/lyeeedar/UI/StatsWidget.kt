@@ -1,15 +1,18 @@
 package com.lyeeedar.UI
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.NinePatch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
+import com.badlogic.gdx.utils.Align
 import com.lyeeedar.Components.combo
+import com.lyeeedar.Components.sin
 import com.lyeeedar.Components.stats
 import com.lyeeedar.Global
+import com.lyeeedar.Sin
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.floor
+import com.lyeeedar.Util.romanNumerals
 
 class StatsWidget() : Widget()
 {
@@ -19,6 +22,9 @@ class StatsWidget() : Widget()
 	val hp_empty = AssetManager.loadTextureRegion("Sprites/GUI/health_empty.png")!!
 
 	val barback = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarBack.png"), 4, 4, 4, 4)
+
+	val font: BitmapFont = Global.skin.getFont("default")
+	val glyphLayout = GlyphLayout()
 
 	val pipWidth = 16f
 
@@ -53,7 +59,7 @@ class StatsWidget() : Widget()
 	{
 		super.draw(batch, parentAlpha)
 
-		if (entity == null || Global.interaction != null || Global.pause) return
+		if (entity == null || Global.interaction != null || Global.pause || batch == null) return
 		val entity = entity!!
 
 		invalidate()
@@ -62,7 +68,8 @@ class StatsWidget() : Widget()
 		val combo = entity.combo()!!
 		val icon = combo.comboSource!!.icon
 
-		barback.draw(batch!!, x, y+10f, 48f, 48f)
+		batch.color = Color.WHITE
+		barback.draw(batch, x, y+10f, 48f, 48f)
 		icon.render(batch, x, y+10f, 48f, 48f)
 
 		// draw hp
@@ -111,6 +118,21 @@ class StatsWidget() : Widget()
 			}
 
 			batch.draw(pip, x+48f+5f+i*spacePerPip, y+height-pipWidth*2-1, solid, pipWidth)
+		}
+
+		// draw sins
+
+		val sins = entity.sin()!!
+
+		var current = x + 48 + 5
+		for (sin in Sin.Values)
+		{
+			batch.color = sin.colour.color()
+
+			glyphLayout.setText(font, sins.sins[sin].romanNumerals(), sin.colour.color(), 20f, Align.center, false)
+			font.draw(batch, glyphLayout, current, y+glyphLayout.height+10f)
+
+			current += 25
 		}
 	}
 }

@@ -8,6 +8,8 @@ import com.esotericsoftware.kryo.Kryo
 import com.esotericsoftware.kryo.io.Input
 import com.esotericsoftware.kryo.io.Output
 import com.lyeeedar.ElementType
+import com.lyeeedar.Renderables.Particle.ParticleEffect
+import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.ciel
 import ktx.collections.toGdxArray
@@ -98,6 +100,8 @@ class StatisticsComponent: AbstractComponent()
 
 	val resistances = FastEnumMap<ElementType, Int>(ElementType::class.java)
 
+	var deathEffect: ParticleEffect? = null
+
 	var sight: Float = 0f
 
 	var showHp = true
@@ -121,6 +125,9 @@ class StatisticsComponent: AbstractComponent()
 		sight += xml.getInt("Sight")
 		showHp = xml.getBoolean("DisplayHP", true)
 		canRegenerate = xml.getBoolean("CanRegenerate", false)
+
+		val deathEl = xml.getChildByName("Death")
+		if (deathEl != null) deathEffect = AssetManager.loadParticleEffect(deathEl)
 	}
 
 	fun dealDamage(amount: Int, element: ElementType, elementalConversion: Float)

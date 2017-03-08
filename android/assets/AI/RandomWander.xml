@@ -1,0 +1,10 @@
+<AI meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Root meta:X="210" meta:Y="-13" meta:RefKey="Random">
+		<Node meta:X="411" meta:Y="-19.666666666666686" meta:RefKey="Sequence">
+			<Action Key="pos" Value="move entityPos random 1" meta:RefKey="SetValue" />
+			<Action Key="pos" meta:RefKey="MoveTo" />
+		</Node>
+		<Action meta:RefKey="Wait" />
+		<Action meta:RefKey="Wait" />
+	</Root>
+</AI>

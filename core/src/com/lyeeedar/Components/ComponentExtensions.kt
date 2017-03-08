@@ -107,7 +107,12 @@ class EntityLoader()
 			val xml = XmlReader().parse(files[path.toUpperCase()])
 			val entity = load(xml)
 
-			if (entity.name() == null) entity.add(NameComponent(path))
+			if (entity.name() == null)
+			{
+				val name = NameComponent(path)
+				name.fromLoad = true
+				entity.add(name)
+			}
 
 			return entity
 		}
@@ -134,6 +139,7 @@ class EntityLoader()
 					"NAME" -> NameComponent()
 					"OCCLUDES" -> OccludesComponent()
 					"POSITION" -> PositionComponent()
+					"PICKUP" -> PickupComponent()
 					"PIT" -> PitComponent()
 					"RENDERABLE" -> RenderableComponent()
 					"SCENETIMELINE" -> SceneTimelineComponent()
@@ -146,6 +152,7 @@ class EntityLoader()
 					else -> throw Exception("Unknown component type '" + componentEl.name + "'!")
 				}
 
+				component.fromLoad = true
 				component.parse(componentEl, entity)
 				entity.add(component)
 			}
@@ -154,6 +161,7 @@ class EntityLoader()
 			{
 				val name = entity.name() ?: NameComponent("player")
 				name.isPlayer = true
+				name.fromLoad = true
 				entity.add(name)
 			}
 

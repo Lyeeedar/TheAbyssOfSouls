@@ -23,6 +23,14 @@ class DialogueComponent : AbstractComponent()
 			textFade = 0.5f
 		}
 
+//	val createCallstack: Array<StackTraceElement>
+//
+//	init
+//	{
+//		createCallstack = Thread.currentThread().getStackTrace()
+//		if (Global.release) throw Exception("Debug code needs to be removed!")
+//	}
+
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{
 

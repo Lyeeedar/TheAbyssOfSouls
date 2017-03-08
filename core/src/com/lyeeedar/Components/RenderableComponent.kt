@@ -2,8 +2,12 @@ package com.lyeeedar.Components
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.XmlReader
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.io.Input
+import com.esotericsoftware.kryo.io.Output
 import com.exp4j.Helpers.evaluate
 import com.lyeeedar.Renderables.Renderable
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.round
@@ -12,6 +16,7 @@ import ktx.collections.set
 class RenderableComponent() : AbstractComponent()
 {
 	lateinit var renderable: Renderable
+	var overrideSprite = false
 
 	constructor(renderable: Renderable) : this()
 	{
@@ -73,6 +78,26 @@ class RenderableComponent() : AbstractComponent()
 		else
 		{
 			renderable = loadRenderable()
+		}
+	}
+
+	override fun saveData(kryo: Kryo, output: Output)
+	{
+		output.writeBoolean(overrideSprite)
+
+		if (overrideSprite)
+		{
+			kryo.writeClassAndObject(output, renderable as Sprite)
+		}
+	}
+
+	override fun loadData(kryo: Kryo, input: Input)
+	{
+		overrideSprite = input.readBoolean()
+
+		if (overrideSprite)
+		{
+			renderable = kryo.readClassAndObject(input) as Sprite
 		}
 	}
 }
