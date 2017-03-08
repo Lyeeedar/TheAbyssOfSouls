@@ -31,6 +31,6 @@
 		<Data Name="Value" meta:RefKey="String" />
 	</Definition>
 	<Definition Name="Drop" meta:RefKey="StructDef">
-		<Data Name="Item" BasePath="Items" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
+		<Data Name="Drop" Keys="AtonementSpirit,SellableItem,Equipment" meta:RefKey="Reference" />
 	</Definition>
 </Definitions>

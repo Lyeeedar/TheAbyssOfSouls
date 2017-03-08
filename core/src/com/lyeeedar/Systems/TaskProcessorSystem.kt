@@ -212,6 +212,7 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 			t.execute(e)
 
 			e.pos().turnsOnTile++
+			e.pos().moveLocked = false
 
 			e.trailing()?.updatePos(e.tile()!!)
 
@@ -226,15 +227,9 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 
 					if (pickup.item != null)
 					{
-						pickup.item!!.showEquipWindow(e)
+						pickup.item!!.steppedOn(e, ent)
 					}
 				}
-			}
-
-			if (e.stats().regeneratingHP > 0f)
-			{
-				val toregen = Math.min(0.5f, e.stats().regeneratingHP)
-				e.stats().hp += toregen
 			}
 
 			return true

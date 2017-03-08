@@ -18,11 +18,11 @@ class Interaction
 
 	val variableMap = ObjectFloatMap<String>()
 
-	fun interact(entity: Entity)
+	fun interact(activating: Entity, parent: Entity)
 	{
 		if (interactionStack.size == 0)
 		{
-			root.interact(entity, this)
+			root.interact(activating, parent, this)
 		}
 
 		while (true)
@@ -37,7 +37,7 @@ class Interaction
 
 			val action = current.node.actions[current.index]
 
-			val advance = action.interact(entity, this)
+			val advance = action.interact(activating, parent, this)
 			if (advance)
 			{
 				current.index++
@@ -63,7 +63,7 @@ class Interaction
 		interactionStack.clear()
 	}
 
-	fun getVariables(entity: Entity): ObjectFloatMap<String>
+	fun getVariables(): ObjectFloatMap<String>
 	{
 		return variableMap
 	}

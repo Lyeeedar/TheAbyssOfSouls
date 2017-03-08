@@ -1,12 +1,13 @@
 package com.lyeeedar.AI.Tasks
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.math.Interpolation
-import com.lyeeedar.Components.*
+import com.lyeeedar.Components.directionalSprite
+import com.lyeeedar.Components.pos
+import com.lyeeedar.Components.renderable
+import com.lyeeedar.Components.stats
 import com.lyeeedar.Direction
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Animation.MoveAnimation
-import com.lyeeedar.SpaceSlot
 
 class TaskMove(var direction: Direction): AbstractTask()
 {
@@ -15,6 +16,7 @@ class TaskMove(var direction: Direction): AbstractTask()
 		e.directionalSprite()?.currentAnim = "move"
 
 		val pos = e.pos() ?: return
+		if (pos.moveLocked) return
 
 		if (pos.position is Tile)
 		{
@@ -34,6 +36,6 @@ class TaskMove(var direction: Direction): AbstractTask()
 			pos.position.y += direction.y
 		}
 
-		if (e.stats() != null) e.stats().stamina += 2
+		if (e.stats() != null) e.stats().stamina += 1
 	}
 }

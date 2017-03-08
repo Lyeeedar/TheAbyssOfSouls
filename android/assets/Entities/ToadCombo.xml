@@ -68,7 +68,7 @@
 					<DestinationRenderable>
 						<Duration LockDuration="False">0.5</Duration>
 						<Renderable meta:RefKey="ParticleEffect">
-							<Name>SpecialBeam</Name>
+							<Name>TongueGrab</Name>
 						</Renderable>
 						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>

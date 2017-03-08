@@ -24,6 +24,20 @@ class StatisticsSystem : AbstractSystem(Family.one(StatisticsComponent::class.ja
 		}
 	}
 
+	override fun onTurn()
+	{
+		for (e in entities)
+		{
+			if (e.stats().regeneratingHP > 0f)
+			{
+				val toregen = Math.min(0.2f, e.stats().regeneratingHP)
+				e.stats().hp += toregen
+			}
+		}
+
+		super.onTurn()
+	}
+
 	fun processEntity(entity: Entity)
 	{
 		val stats = entity.stats()!!

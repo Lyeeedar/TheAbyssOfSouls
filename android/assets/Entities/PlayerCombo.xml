@@ -1,4 +1,15 @@
-<Combo meta:X="0" meta:Y="0" xmlns:meta="Editor">
+<Weapon meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Icon meta:RefKey="Sprite">
+		<Name>Particle/fist</Name>
+		<Colour>168,168,168,255</Colour>
+	</Icon>
+	<Name>Unarmed</Name>
+	<Description>Your weapon is your very body.</Description>
+	<ComboHint>N-N-N
+N*-S
+N*-D
+S
+D</ComboHint>
 	<NextMode>Keybinding</NextMode>
 	<Combos>
 		<Combo meta:RefKey="Wait">
@@ -6,14 +17,14 @@
 			<Animation>idle</Animation>
 		</Combo>
 		<Combo meta:RefKey="Scene">
-			<Name>SlashLeft</Name>
+			<Name>Punch</Name>
 			<Animation>attack</Animation>
 			<SceneTimeline meta:RefKey="SceneTimeline">
 				<Timeline>
 					<DestinationRenderable>
 						<Duration LockDuration="True">0.2</Duration>
 						<Renderable meta:RefKey="ParticleEffect">
-							<Name>slash</Name>
+							<Name>Punch</Name>
 						</Renderable>
 						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
@@ -22,6 +33,10 @@
 					<Damage>
 						<Time>0.1</Time>
 					</Damage>
+					<Stun>
+						<Time>0.102615744</Time>
+						<Chance>0.2</Chance>
+					</Stun>
 				</Timeline>
 			</SceneTimeline>
 			<HitPattern>
@@ -31,15 +46,14 @@
 			<StepForward>true</StepForward>
 		</Combo>
 		<Combo meta:RefKey="Scene">
-			<Name>SlashRight</Name>
+			<Name>Kick</Name>
 			<Animation>attack</Animation>
 			<SceneTimeline meta:RefKey="SceneTimeline">
 				<Timeline>
 					<DestinationRenderable>
 						<Duration LockDuration="True">0.2</Duration>
 						<Renderable meta:RefKey="ParticleEffect">
-							<Name>slash</Name>
-							<FlipX>true</FlipX>
+							<Name>Kick</Name>
 						</Renderable>
 						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
@@ -48,6 +62,44 @@
 					<Damage>
 						<Time>0.1</Time>
 					</Damage>
+					<Knockback>
+						<Time>0.10244599</Time>
+					</Knockback>
+					<Stun>
+						<Time>0.1047779</Time>
+					</Stun>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>PowerKick</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>Kick</Name>
+						</Renderable>
+						<KillOnEnd>false</KillOnEnd>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+						<Amount>2</Amount>
+					</Damage>
+					<Knockback>
+						<Time>0.10244599</Time>
+					</Knockback>
+					<Stun>
+						<Time>0.1047779</Time>
+					</Stun>
 				</Timeline>
 			</SceneTimeline>
 			<HitPattern>
@@ -64,10 +116,6 @@
 			<AnimType>Roll</AnimType>
 		</Combo>
 		<Combo meta:RefKey="Defense">
-			<Name>Block</Name>
-			<Animation>defense</Animation>
-		</Combo>
-		<Combo meta:RefKey="Defense">
 			<Name>Backstep</Name>
 			<Animation>defense</Animation>
 			<Type>Invulnerable</Type>
@@ -75,5 +123,119 @@
 			<Direction>Opposite</Direction>
 		</Combo>
 	</Combos>
-	<Keybinding />
-</Combo>
+	<Keybinding>
+		<AttackNormal meta:X="307.83590698242187" meta:Y="-11.451224327087402" meta:RefKey="ComboNode">
+			<Desc>Punch</Desc>
+			<Cost>4</Cost>
+			<Keybinding>
+				<AttackNormal meta:X="619.8359375" meta:Y="-11.451224327087402" GUID="08f7e6d6-1423-4cb7-8cc5-f9f4532184ff" meta:RefKey="ComboNode">
+					<Desc>Punch</Desc>
+					<Cost>3</Cost>
+					<Keybinding>
+						<AttackNormal meta:X="931.8359375" meta:Y="-11.451224327087402" GUID="967917a8-7781-48ef-9747-80c3355a4092" meta:RefKey="ComboNode">
+							<Desc>Punch</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackSpecial meta:X="1242.5230712890625" meta:Y="572.00225830078125" GUID="bfdf102f-219c-48e5-ab5b-e694c0fe61b6" meta:RefKey="ComboNode">
+									<Desc>Kick</Desc>
+									<Cost>3</Cost>
+								</AttackSpecial>
+								<Defense meta:X="1101.1500244140625" meta:Y="830.32952880859375" GUID="e17db68d-faa8-42b7-ba46-f86bd43e9c30" meta:RefKey="ComboNode">
+									<Desc>Backstep</Desc>
+									<Cost>1</Cost>
+									<Keybinding />
+								</Defense>
+							</Keybinding>
+						</AttackNormal>
+						<AttackSpecial meta:X="1242.5230712890625" meta:Y="572.00225830078125" GUID="bfdf102f-219c-48e5-ab5b-e694c0fe61b6" meta:RefKey="ComboNode">
+							<Desc>Kick</Desc>
+							<Cost>3</Cost>
+						</AttackSpecial>
+						<Defense meta:X="1101.1500244140625" meta:Y="830.32952880859375" GUID="e17db68d-faa8-42b7-ba46-f86bd43e9c30" meta:RefKey="ComboNode">
+							<Desc>Backstep</Desc>
+							<Cost>1</Cost>
+							<Keybinding />
+						</Defense>
+						<Direction meta:X="931.8359375" meta:Y="-11.451224327087402" GUID="967917a8-7781-48ef-9747-80c3355a4092" meta:RefKey="ComboNode">
+							<Desc>Punch</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackSpecial meta:X="1242.5230712890625" meta:Y="572.00225830078125" GUID="bfdf102f-219c-48e5-ab5b-e694c0fe61b6" meta:RefKey="ComboNode">
+									<Desc>Kick</Desc>
+									<Cost>3</Cost>
+								</AttackSpecial>
+								<Defense meta:X="1101.1500244140625" meta:Y="830.32952880859375" GUID="e17db68d-faa8-42b7-ba46-f86bd43e9c30" meta:RefKey="ComboNode">
+									<Desc>Backstep</Desc>
+									<Cost>1</Cost>
+									<Keybinding />
+								</Defense>
+							</Keybinding>
+						</Direction>
+					</Keybinding>
+				</AttackNormal>
+				<AttackSpecial meta:X="1242.5230712890625" meta:Y="572.00225830078125" GUID="bfdf102f-219c-48e5-ab5b-e694c0fe61b6" meta:RefKey="ComboNode">
+					<Desc>Kick</Desc>
+					<Cost>3</Cost>
+				</AttackSpecial>
+				<Defense meta:X="1101.1500244140625" meta:Y="830.32952880859375" GUID="e17db68d-faa8-42b7-ba46-f86bd43e9c30" meta:RefKey="ComboNode">
+					<Desc>Backstep</Desc>
+					<Cost>1</Cost>
+					<Keybinding />
+				</Defense>
+				<Direction meta:X="619.8359375" meta:Y="-11.451224327087402" GUID="08f7e6d6-1423-4cb7-8cc5-f9f4532184ff" meta:RefKey="ComboNode">
+					<Desc>Punch</Desc>
+					<Cost>3</Cost>
+					<Keybinding>
+						<AttackNormal meta:X="931.8359375" meta:Y="-11.451224327087402" GUID="967917a8-7781-48ef-9747-80c3355a4092" meta:RefKey="ComboNode">
+							<Desc>Punch</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackSpecial meta:X="1242.5230712890625" meta:Y="572.00225830078125" GUID="bfdf102f-219c-48e5-ab5b-e694c0fe61b6" meta:RefKey="ComboNode">
+									<Desc>Kick</Desc>
+									<Cost>3</Cost>
+								</AttackSpecial>
+								<Defense meta:X="1101.1500244140625" meta:Y="830.32952880859375" GUID="e17db68d-faa8-42b7-ba46-f86bd43e9c30" meta:RefKey="ComboNode">
+									<Desc>Backstep</Desc>
+									<Cost>1</Cost>
+									<Keybinding />
+								</Defense>
+							</Keybinding>
+						</AttackNormal>
+						<AttackSpecial meta:X="1242.5230712890625" meta:Y="572.00225830078125" GUID="bfdf102f-219c-48e5-ab5b-e694c0fe61b6" meta:RefKey="ComboNode">
+							<Desc>Kick</Desc>
+							<Cost>3</Cost>
+						</AttackSpecial>
+						<Defense meta:X="1101.1500244140625" meta:Y="830.32952880859375" GUID="e17db68d-faa8-42b7-ba46-f86bd43e9c30" meta:RefKey="ComboNode">
+							<Desc>Backstep</Desc>
+							<Cost>1</Cost>
+							<Keybinding />
+						</Defense>
+						<Direction meta:X="931.8359375" meta:Y="-11.451224327087402" GUID="967917a8-7781-48ef-9747-80c3355a4092" meta:RefKey="ComboNode">
+							<Desc>Punch</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackSpecial meta:X="1242.5230712890625" meta:Y="572.00225830078125" GUID="bfdf102f-219c-48e5-ab5b-e694c0fe61b6" meta:RefKey="ComboNode">
+									<Desc>Kick</Desc>
+									<Cost>3</Cost>
+								</AttackSpecial>
+								<Defense meta:X="1101.1500244140625" meta:Y="830.32952880859375" GUID="e17db68d-faa8-42b7-ba46-f86bd43e9c30" meta:RefKey="ComboNode">
+									<Desc>Backstep</Desc>
+									<Cost>1</Cost>
+									<Keybinding />
+								</Defense>
+							</Keybinding>
+						</Direction>
+					</Keybinding>
+				</Direction>
+			</Keybinding>
+		</AttackNormal>
+		<AttackSpecial meta:X="308" meta:Y="312.30612182617187" meta:RefKey="ComboNode">
+			<Desc>PowerKick</Desc>
+			<Cost>6</Cost>
+		</AttackSpecial>
+		<Defense meta:X="319.56756591796875" meta:Y="538.6661376953125" meta:RefKey="ComboNode">
+			<Desc>Roll</Desc>
+			<Cost>3</Cost>
+		</Defense>
+	</Keybinding>
+</Weapon>

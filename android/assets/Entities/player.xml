@@ -61,6 +61,7 @@
 			<HP>10</HP>
 			<Stamina>10</Stamina>
 			<Sight>12</Sight>
+			<CanRegenerate>true</CanRegenerate>
 		</Statistics>
 		<Combo>
 			<ComboTree>Entities/PlayerCombo</ComboTree>

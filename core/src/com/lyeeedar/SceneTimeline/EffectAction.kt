@@ -3,10 +3,12 @@ package com.lyeeedar.SceneTimeline
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.AI.Tasks.TaskInterrupt
 import com.lyeeedar.Components.*
 import com.lyeeedar.ElementType
 import com.lyeeedar.Global
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Util.Random
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
@@ -130,6 +132,51 @@ class SpawnAction() : AbstractTimelineAction()
 		entityXml = xml.getChildByName("Entity")
 		deleteOnExit = xml.getBoolean("DeleteOnExit", false)
 		ignoreWall = xml.getBoolean("IgnoreWall", false)
+	}
+
+}
+
+class StunAction() :  AbstractTimelineAction()
+{
+	var chance = 1f
+
+	override fun enter()
+	{
+		for (tile in parent.destinationTiles)
+		{
+			for (entity in tile.contents)
+			{
+				val task = entity.task() ?: continue
+
+				if (Random.random() <= chance)
+				{
+					task.tasks.clear()
+					task.tasks.add(TaskInterrupt())
+				}
+			}
+		}
+	}
+
+	override fun exit()
+	{
+
+	}
+
+	override fun copy(parent: SceneTimeline): AbstractTimelineAction
+	{
+		val action = StunAction()
+		action.parent = parent
+		action.startTime = startTime
+		action.duration = duration
+
+		action.chance = chance
+
+		return action
+	}
+
+	override fun parse(xml: XmlReader.Element)
+	{
+		chance = xml.getFloat("Chance", 1f)
 	}
 
 }

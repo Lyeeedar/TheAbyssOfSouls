@@ -73,7 +73,7 @@ class InteractionAction : AbstractBlockerAction()
 			return true
 		}
 
-		interaction.interact(entity)
+		interaction.interact(entity, entity)
 
 		isBlocked = true
 	}

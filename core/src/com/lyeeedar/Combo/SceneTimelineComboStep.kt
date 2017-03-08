@@ -109,7 +109,7 @@ class SceneTimelineComboStep : ComboStep()
 			{
 				val tile = prev.level.getTile(prev, x, y)
 
-				if (tile?.contents?.get(pos.slot) == entity) tile?.contents?.remove(pos.slot)
+				if (tile?.contents?.get(pos.slot) == entity) tile.contents.remove(pos.slot)
 			}
 		}
 
@@ -117,6 +117,11 @@ class SceneTimelineComboStep : ComboStep()
 		val oldfacing = pos.facing
 		pos.position = next
 		pos.facing = oldfacing
+
+		if (entity != next.level.player)
+		{
+			pos.moveLocked = true
+		}
 
 		for (x in 0..pos.size-1)
 		{
@@ -144,7 +149,7 @@ class SceneTimelineComboStep : ComboStep()
 
 	override fun activate(entity: Entity, direction: Direction, target: Point)
 	{
-		if (stepForward)
+		if (stepForward && !entity.pos().moveLocked)
 		{
 			val toMove = Array<Entity>()
 			if (canMove(entity, entity, direction, toMove))

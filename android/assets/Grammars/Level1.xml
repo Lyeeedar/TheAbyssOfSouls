@@ -801,8 +801,8 @@
 												<Interaction>StartGame</Interaction>
 											</Interaction>
 											<Speech>
-												<Time>0.104364328</Time>
 												<Duration LockDuration="False">0.145693421</Duration>
+												<Time>0.104364328</Time>
 												<Text>[GREEN]To move use wasd or the arrow keys.[]</Text>
 											</Speech>
 										</Timeline>
@@ -833,8 +833,8 @@
 									<SceneTimeline meta:RefKey="SceneTimeline">
 										<Timeline>
 											<Speech>
-												<Time>0.09964476</Time>
 												<Duration LockDuration="False">0.151119441</Duration>
+												<Time>0.09964476</Time>
 												<Text>That there looks like some sort of weapon.
 [GREEN]*Walk into objects to interact with them.*[]</Text>
 											</Speech>

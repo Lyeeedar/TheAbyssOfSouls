@@ -9,7 +9,7 @@ class InteractionActionNode : AbstractInteractionAction()
 	lateinit var key: String
 	lateinit var node: InteractionNode
 
-	override fun interact(entity: Entity, interaction: Interaction): Boolean
+	override fun interact(activating: Entity, parent: Entity, interaction: Interaction): Boolean
 	{
 		interaction.interactionStack.add(InteractionNodeData(node, 0))
 		return true

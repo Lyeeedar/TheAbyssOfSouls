@@ -1,8 +1,8 @@
 package com.lyeeedar.Util
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.NumberUtils
+import com.badlogic.gdx.utils.Pool
 
 /**
  * Created by Philip on 30-Mar-16.
@@ -237,6 +237,14 @@ class Colour()
 		return true
 	}
 
+	fun freeTS()
+	{
+		synchronized(pool)
+		{
+			pool.free(this)
+		}
+	}
+
 	companion object
 	{
 		val WHITE = Colour(Color.WHITE)
@@ -252,6 +260,21 @@ class Colour()
 		{
 			val hsl = HSLColour(Random.random(), s, l, 1.0f)
 			return hsl.toRGB()
+		}
+
+		val pool: Pool<Colour> = object : Pool<Colour>() {
+			override fun newObject(): Colour
+			{
+				return Colour()
+			}
+		}
+
+		fun obtainTS(): Colour
+		{
+			synchronized(pool)
+			{
+				return pool.obtain()
+			}
 		}
 	}
 }

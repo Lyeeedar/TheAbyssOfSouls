@@ -10,7 +10,7 @@
 		</Branch>
 	</Branch>
 	<Nodes>
-		<Node meta:X="293.789052574878" meta:Y="-15.198897286382639" GUID="ff111229-6743-464b-b74a-e68260cc4336">
+		<Node meta:X="293.7890625" meta:Y="-15.198897361755371" GUID="ff111229-6743-464b-b74a-e68260cc4336">
 			<Action meta:RefKey="Choice">
 				<Text>A dagger is thrust into the wood. Using it you may be able to cut through the bushes surrounding you.</Text>
 				<Choices>
@@ -29,7 +29,9 @@
 				<Text>You yank it out of the tree</Text>
 			</Action>
 			<Action meta:RefKey="Drop">
-				<Item>Dagger</Item>
+				<Drop meta:RefKey="Equipment">
+					<Weapon>Dagger</Weapon>
+				</Drop>
 			</Action>
 			<Action meta:RefKey="Define">
 				<Key>DaggerTaken</Key>
@@ -37,7 +39,7 @@
 			</Action>
 			<Node meta:RefKey="Node">58f86cbb-2ba6-4b4e-8c1e-7546d6fe1716</Node>
 		</Node>
-		<Node meta:X="821.231458113301" meta:Y="275.40743267235229" GUID="58f86cbb-2ba6-4b4e-8c1e-7546d6fe1716">
+		<Node meta:X="821.2314453125" meta:Y="275.40744018554687" GUID="58f86cbb-2ba6-4b4e-8c1e-7546d6fe1716">
 			<!--Combat tutorial-->
 			<Action meta:RefKey="Choice">
 				<Text>Do you want to learn about combat?</Text>
@@ -52,27 +54,22 @@
 				</Choices>
 			</Action>
 		</Node>
-		<Node meta:X="1106.3758271663187" meta:Y="274.12222235669151" GUID="9680d950-c607-4236-89e1-00ccf0688217">
+		<Node meta:X="1106.3758544921875" meta:Y="274.12222290039062" GUID="9680d950-c607-4236-89e1-00ccf0688217">
 			<Action meta:RefKey="Line">
 				<Text>Combat consists of performing 'combos'. Each weapon has its own unique set of combos.</Text>
 			</Action>
 			<Action meta:RefKey="Line">
 				<Text>Combos are constructed of 3 different move types. [YELLOW]Normal[] attacks, [YELLOW]Special[] attacks and [YELLOW]Defensive[] moves. 
-
 Each of these is assigned a key (by default [YELLOW]Normal[] attack is [GREEN]Right-Ctrl[], [YELLOW]Special[] is [GREEN]Insert[] and [YELLOW]Defense[] is [GREEN]Right-Shift[].
-
 These keys are rebindable in the options menu.</Text>
 			</Action>
 			<Action meta:RefKey="Line">
 				<Text>To start a combo hold one of the [YELLOW]Normal[], [YELLOW]Special[] or [YELLOW]Defense[] keys, then press a direction.
-
 You can then continue a combo by pressing one of those keys, or a directional one.</Text>
 			</Action>
 			<Action meta:RefKey="Line">
 				<Text>The available combos are displayed on each weapon in the form 'N-N-S'.
-
 N stands for [YELLOW]Normal[], S for [YELLOW]Special[] and D for [YELLOW]Defense[].
-
 So in that example an available combo would be [YELLOW]Normal Normal Special[].</Text>
 			</Action>
 		</Node>

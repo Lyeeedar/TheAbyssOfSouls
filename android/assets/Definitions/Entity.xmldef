@@ -25,6 +25,12 @@
 				<Data Name="ComboTree" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
 			</Data>
 			<Data Name="DirectionalSprite" Extends="DirectionalSprite" meta:RefKey="Struct" />
+			<Data Name="Drop" meta:RefKey="Collection">
+				<Data Name="Drop" meta:RefKey="Struct">
+					<Data Name="Chance" Min="0" Max="1" Default="1" meta:RefKey="Number" />
+					<Data Name="Drop" Keys="AtonementSpirit,SellableItem,Equipment" meta:RefKey="Reference" />
+				</Data>
+			</Data>
 			<Data Name="Interaction" meta:RefKey="Struct">
 				<Data Name="Interaction" BasePath="Interactions" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
 			</Data>
@@ -69,6 +75,7 @@
 				<Data Name="Stamina" Type="Int" Min="-999999" Default="10" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="Sight" Default="15" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="DisplayHP" Default="True" meta:RefKey="Boolean" />
+				<Data Name="CanRegenerate" meta:RefKey="Boolean" />
 			</Data>
 			<Data Name="Trailing" meta:RefKey="Struct">
 				<Data Name="Collapses" Default="True" meta:RefKey="Boolean" />

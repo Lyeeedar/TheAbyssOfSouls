@@ -1,29 +1,35 @@
 <Effect xmlns:meta="Editor">
 	<Emitters>
 		<Emitter>
-			<Type>Accumulated</Type>
-			<Direction>Random</Direction>
-			<ParticleSpeed>0.03,0.05</ParticleSpeed>
-			<ParticleRotation>0,360</ParticleRotation>
-			<Gravity>0.01</Gravity>
+			<Width>0</Width>
+			<Height>0</Height>
+			<Direction>Up</Direction>
+			<ParticleSpeed>0,1</ParticleSpeed>
+			<ParticleRotation>0,50</ParticleRotation>
 			<RateKeyframes>
-				<Keyframe>0|1.5</Keyframe>
+				<Keyframe>0|1</Keyframe>
 			</RateKeyframes>
+			<SingleBurst>true</SingleBurst>
 			<Particles>
 				<Particle>
-					<Lifetime>2,4</Lifetime>
+					<Lifetime>0.5,0.5</Lifetime>
 					<BlendMode>Additive</BlendMode>
-					<Brownian>10</Brownian>
 					<TextureKeyframes>
 						<Stream>
-							<Keyframe>0|Particle/glow</Keyframe>
+							<Keyframe>0|Particle/foot</Keyframe>
 						</Stream>
 					</TextureKeyframes>
 					<SizeKeyframes>
 						<Stream>
-							<Keyframe>0|0.05|0.15</Keyframe>
+							<Keyframe>0|0.4|0.4</Keyframe>
+							<Keyframe>1|0.6|0.6</Keyframe>
 						</Stream>
 					</SizeKeyframes>
+					<RotationSpeedKeyframes>
+						<Stream>
+							<Keyframe>0|-10|10</Keyframe>
+						</Stream>
+					</RotationSpeedKeyframes>
 					<ColourKeyframes>
 						<Stream>
 							<Keyframe>0|255,255,255,255</Keyframe>
@@ -32,8 +38,8 @@
 					<AlphaKeyframes>
 						<Stream>
 							<Keyframe>0|0</Keyframe>
-							<Keyframe>0.02331042|0.5</Keyframe>
-							<Keyframe>0.7024628|0.5</Keyframe>
+							<Keyframe>0.1|1</Keyframe>
+							<Keyframe>0.8|1</Keyframe>
 							<Keyframe>1|0</Keyframe>
 						</Stream>
 					</AlphaKeyframes>

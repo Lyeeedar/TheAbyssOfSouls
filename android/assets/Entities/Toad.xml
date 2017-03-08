@@ -1,11 +1,5 @@
 <Entity xmlns:meta="Editor">
 	<Components>
-		<Renderable>
-			<Renderable meta:RefKey="Sprite">
-				<Name>Oryx/uf_split/uf_heroes/toad_green</Name>
-				<DrawActualSize>true</DrawActualSize>
-			</Renderable>
-		</Renderable>
 		<Position />
 		<AI>
 			<AI>BasicMonster</AI>
@@ -19,5 +13,31 @@
 		<Combo>
 			<ComboTree>Entities/ToadCombo</ComboTree>
 		</Combo>
+		<DirectionalSprite>
+			<Animations>
+				<Animation>
+					<Name>idle</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/toad_spirit</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/toad_spirit</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+				<Animation>
+					<Name>attack</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/toad_spirit_attack</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/toad_spirit_attack</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+			</Animations>
+		</DirectionalSprite>
 	</Components>
 </Entity>

@@ -12,9 +12,9 @@ class InteractionActionBranch : AbstractInteractionAction()
 {
 	val branches = Array<BranchNode>()
 
-	override fun interact(entity: Entity, interaction: Interaction): Boolean
+	override fun interact(activating: Entity, parent: Entity, interaction: Interaction): Boolean
 	{
-		val variables = interaction.getVariables(entity)
+		val variables = interaction.getVariables()
 		for (branch in branches)
 		{
 			if (branch.condition.evaluate(variables).round() == 1)

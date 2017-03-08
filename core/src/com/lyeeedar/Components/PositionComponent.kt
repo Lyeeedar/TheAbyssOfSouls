@@ -41,6 +41,8 @@ class PositionComponent(): AbstractComponent()
 
 	var moveable = true
 
+	var moveLocked = false
+
 	var facing: Direction = Direction.SOUTH
 
 	var turnsOnTile: Int = 0

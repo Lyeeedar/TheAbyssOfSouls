@@ -20,14 +20,14 @@ class InteractionActionChoice : AbstractInteractionAction()
 	lateinit var text: String
 	val choices = Array<Choice>()
 
-	override fun interact(entity: Entity, interaction: Interaction): Boolean
+	override fun interact(activating: Entity, parent: Entity, interaction: Interaction): Boolean
 	{
-		if (!entity.hasComponent(DialogueComponent::class.java))
+		if (!parent.hasComponent(DialogueComponent::class.java))
 		{
-			entity.add(DialogueComponent())
+			parent.add(DialogueComponent())
 		}
 
-		val dialogue = entity.dialogue()
+		val dialogue = parent.dialogue()
 
 		if (dialogue.text != text)
 		{
@@ -60,7 +60,7 @@ class InteractionActionChoice : AbstractInteractionAction()
 
 						dialogue.remove = true
 
-						interaction.interact(entity)
+						interaction.interact(activating, parent)
 					}
 
 					keyboardHelper.add(this)

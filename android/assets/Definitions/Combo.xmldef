@@ -13,7 +13,7 @@
 			<Data Name="Defense" Keys="ComboNode" meta:RefKey="GraphReference" />
 		</Data>
 	</Definition>
-	<Definition Name="Item" AllowReferenceLinks="False" meta:RefKey="GraphStruct">
+	<Definition Name="Weapon" AllowReferenceLinks="False" meta:RefKey="GraphStruct">
 		<Data Name="Icon" Keys="Sprite" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
 		<Data Name="Name" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Description" SkipIfDefault="False" meta:RefKey="MultilineString" />

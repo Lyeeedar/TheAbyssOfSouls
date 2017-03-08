@@ -43,6 +43,7 @@ fun Entity.occludes() = Mappers.occludes.get(this)
 fun Entity.pickup() = Mappers.pickup.get(this)
 fun Entity.metaregion() = Mappers.metaregion.get(this)
 fun Entity.loaddata() = Mappers.loaddata.get(this)
+fun Entity.drop() = Mappers.drop.get(this)
 
 fun <T: AbstractComponent> Entity.hasComponent(c: Class<T>) = this.getComponent(c) != null
 
@@ -71,6 +72,7 @@ class Mappers
 		val pickup: ComponentMapper<PickupComponent> = ComponentMapper.getFor(PickupComponent::class.java)
 		val metaregion: ComponentMapper<MetaRegionComponent> = ComponentMapper.getFor(MetaRegionComponent::class.java)
 		val loaddata: ComponentMapper<LoadDataComponent> = ComponentMapper.getFor(LoadDataComponent::class.java)
+		val drop: ComponentMapper<DropComponent> = ComponentMapper.getFor(DropComponent::class.java)
 	}
 }
 

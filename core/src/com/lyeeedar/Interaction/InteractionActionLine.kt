@@ -14,14 +14,14 @@ class InteractionActionLine : AbstractInteractionAction()
 	lateinit var text: String
 	var italics = false
 
-	override fun interact(entity: Entity, interaction: Interaction): Boolean
+	override fun interact(activating: Entity, parent: Entity, interaction: Interaction): Boolean
 	{
-		if (!entity.hasComponent(DialogueComponent::class.java))
+		if (!parent.hasComponent(DialogueComponent::class.java))
 		{
-			entity.add(DialogueComponent())
+			parent.add(DialogueComponent())
 		}
 
-		val dialogue = entity.dialogue()
+		val dialogue = parent.dialogue()
 
 		if (dialogue.text != text)
 		{
@@ -38,7 +38,7 @@ class InteractionActionLine : AbstractInteractionAction()
 				}
 				else
 				{
-					Future.call({ interaction.interact(entity) }, 0f)
+					Future.call({ interaction.interact(activating, parent) }, 0f)
 
 					return true
 				}

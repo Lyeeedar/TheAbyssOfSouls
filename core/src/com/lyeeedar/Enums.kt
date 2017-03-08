@@ -17,6 +17,16 @@ enum class BlendMode constructor(val src: Int, val dst: Int)
 }
 
 // ----------------------------------------------------------------------
+enum class Sin
+{
+	ANGER,
+	SLOTH,
+	LUST,
+	GREED,
+	PRIDE
+}
+
+// ----------------------------------------------------------------------
 enum class Rarity
 {
 	COMMON,

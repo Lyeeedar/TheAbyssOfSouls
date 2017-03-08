@@ -3,13 +3,16 @@ package com.lyeeedar.Systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.utils.ObjectSet
-import com.lyeeedar.Components.MarkedForDeletionComponent
-import com.lyeeedar.Components.pos
-import com.lyeeedar.Components.trailing
+import com.lyeeedar.Components.*
+import com.lyeeedar.Global
 import com.lyeeedar.Level.World
+import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Random
 
 class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::class.java).get())
 {
+	val deathEffect = AssetManager.loadParticleEffect("Death")
+
 	override fun doUpdate(deltaTime: Float)
 	{
 		deletedEntities.clear()
@@ -40,6 +43,18 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 			}
 		}
 
+		val drop = entity.drop()
+		if (drop != null)
+		{
+			for (dropdata in drop.drops)
+			{
+				if (Random.random() <= dropdata.chance)
+				{
+					DropComponent.dropTo(pos.tile!!, pos.tile!!, dropdata.item)
+				}
+			}
+		}
+
 		val trail = entity.trailing()
 		if (trail != null)
 		{
@@ -47,6 +62,21 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 			{
 				processEntity(e)
 			}
+		}
+
+		if (entity.task() != null)
+		{
+			val effect = deathEffect.copy()
+			val effectEntity = Entity()
+
+			effectEntity.add(RenderableComponent(effect))
+			effectEntity.add(PositionComponent())
+			val effectPos = effectEntity.pos()!!
+
+			effectPos.position = pos.position
+			effectPos.slot = pos.slot
+
+			Global.engine.addEntity(effectEntity)
 		}
 
 		engine.removeEntity(entity)

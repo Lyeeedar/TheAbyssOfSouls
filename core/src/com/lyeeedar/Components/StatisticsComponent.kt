@@ -48,15 +48,18 @@ class StatisticsComponent: AbstractComponent()
 				}
 			}
 
-			if (v < field)
+			if (canRegenerate)
 			{
-				tookDamage = true
+				if (v < field)
+				{
+					tookDamage = true
 
-				regeneratingHP = Math.max(-diff, regeneratingHP)
-			}
-			else
-			{
-				regeneratingHP = Math.max(0f, regeneratingHP-diff)
+					regeneratingHP = Math.max(-diff, regeneratingHP)
+				}
+				else
+				{
+					regeneratingHP = Math.max(0f, regeneratingHP - diff)
+				}
 			}
 
 			field = v
@@ -64,6 +67,8 @@ class StatisticsComponent: AbstractComponent()
 		}
 
 	var regeneratingHP: Float = 0f
+
+	var canRegenerate = false
 
 	var maxHP: Float = 0f
 		get() = field
@@ -105,6 +110,7 @@ class StatisticsComponent: AbstractComponent()
 	var blockedDamage = false
 	var blockBroken = false
 	var insufficientStamina = 0f
+	var insufficientStaminaAmount = 0
 
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{
@@ -114,6 +120,7 @@ class StatisticsComponent: AbstractComponent()
 		maxStamina += xml.getInt("Stamina")
 		sight += xml.getInt("Sight")
 		showHp = xml.getBoolean("DisplayHP", true)
+		canRegenerate = xml.getBoolean("CanRegenerate", false)
 	}
 
 	fun dealDamage(amount: Int, element: ElementType, elementalConversion: Float)
@@ -155,12 +162,14 @@ class StatisticsComponent: AbstractComponent()
 	{
 		output.writeFloat(hp)
 		output.writeFloat(stamina)
+		output.writeFloat(regeneratingHP)
 	}
 
 	override fun loadData(kryo: Kryo, input: Input)
 	{
 		hp = input.readFloat()
 		stamina = input.readFloat()
+		regeneratingHP = input.readFloat()
 
 		tookDamage = false
 	}

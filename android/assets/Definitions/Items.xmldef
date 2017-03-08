@@ -1,0 +1,15 @@
+<Definitions xmlns:meta="Editor">
+	<Definition Name="AtonementSpirit" IsGlobal="True" meta:RefKey="StructDef">
+		<Data Name="Sin" EnumValues="Anger,Sloth,Lust,Greed,Pride" meta:RefKey="Enum" />
+		<Data Name="Icon" Keys="Sprite" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="SellableItem" IsGlobal="True" meta:RefKey="StructDef">
+		<Data Name="Name" meta:RefKey="String" />
+		<Data Name="Description" meta:RefKey="MultilineString" />
+		<Data Name="Icon" Keys="Sprite" meta:RefKey="Reference" />
+		<Data Name="Value" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+	</Definition>
+	<Definition Name="Equipment" IsGlobal="True" meta:RefKey="StructDef">
+		<Data Name="Weapon" BasePath="Items" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
+	</Definition>
+</Definitions>

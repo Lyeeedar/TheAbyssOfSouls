@@ -14,6 +14,6 @@ class TaskWait(): AbstractTask()
 	{
 		e.directionalSprite()?.currentAnim = "wait"
 
-		e.stats().stamina += 5
+		e.stats().stamina += 4
 	}
 }

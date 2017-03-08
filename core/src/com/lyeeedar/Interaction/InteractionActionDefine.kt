@@ -10,9 +10,9 @@ class InteractionActionDefine : AbstractInteractionAction()
 	lateinit var key: String
 	lateinit var value: String
 
-	override fun interact(entity: Entity, interaction: Interaction): Boolean
+	override fun interact(activating: Entity, parent: Entity, interaction: Interaction): Boolean
 	{
-		val outVal = value.evaluate(interaction.getVariables(entity))
+		val outVal = value.evaluate(interaction.getVariables())
 		interaction.variableMap.put(key, outVal)
 
 		return true

@@ -1,4 +1,4 @@
-<Item meta:X="0" meta:Y="0" xmlns:meta="Editor">
+<Weapon meta:X="0" meta:Y="0" xmlns:meta="Editor">
 	<Icon meta:RefKey="Sprite">
 		<Name>Oryx/uf_split/uf_items/weapon_dagger</Name>
 		<DrawActualSize>true</DrawActualSize>
@@ -89,7 +89,7 @@ D-D</ComboHint>
 					<DestinationRenderable>
 						<Duration LockDuration="False">0.167073175</Duration>
 						<Renderable meta:RefKey="ParticleEffect">
-							<Name>SpecialBeam</Name>
+							<Name>Thrust</Name>
 						</Renderable>
 						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
@@ -245,4 +245,4 @@ D-D</ComboHint>
 			</Keybinding>
 		</Defense>
 	</Keybinding>
-</Item>
+</Weapon>

@@ -204,6 +204,7 @@ class ActionProcessInput(): AbstractAction()
 					if (entity.stats().stamina < next.cost)
 					{
 						entity.stats().insufficientStamina = 0.5f
+						entity.stats().insufficientStaminaAmount = next.cost
 						return
 					}
 
@@ -268,7 +269,7 @@ class ActionProcessInput(): AbstractAction()
 						if (interaction != null)
 						{
 							Global.interaction = interaction.interaction
-							interaction.interaction.interact(entity)
+							interaction.interaction.interact(entity, e)
 
 							entity.task().tasks.add(TaskWait())
 

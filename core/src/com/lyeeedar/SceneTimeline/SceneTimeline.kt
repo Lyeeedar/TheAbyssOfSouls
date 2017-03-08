@@ -209,6 +209,7 @@ abstract class AbstractTimelineAction()
 
 				"DAMAGE" -> DamageAction()
 				"SPAWN" -> SpawnAction()
+				"STUN" -> StunAction()
 
 				"SPEECH" -> SpeechAction()
 				"INTERACTION" -> InteractionAction()

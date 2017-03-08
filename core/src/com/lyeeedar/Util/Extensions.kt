@@ -1,6 +1,8 @@
 package com.lyeeedar.Util
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.Pool
 
 /**
  * Created by Philip on 04-Jul-16.
@@ -26,4 +28,28 @@ fun Color.toHSV(out: FloatArray? = null): FloatArray
 	output[2] = value
 
 	return output
+}
+
+
+val vector2Pool = object : Pool<Vector2>() {
+	override fun newObject(): Vector2
+	{
+		return Vector2()
+	}
+}
+
+fun Vector2.freeTS()
+{
+	synchronized(vector2Pool)
+	{
+		vector2Pool.free(this)
+	}
+}
+
+fun obtainVector2TS(): Vector2
+{
+	synchronized(vector2Pool)
+	{
+		return vector2Pool.obtain()
+	}
 }

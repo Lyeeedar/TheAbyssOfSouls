@@ -14,6 +14,7 @@ import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Colour
+import com.lyeeedar.Util.floor
 import com.lyeeedar.Util.lerp
 
 class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).one(RenderableComponent::class.java).get())
@@ -306,7 +307,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				{
 					val pip: TextureRegion
 
-					if (i >= hp && i < hp+stats.regeneratingHP) pip = hp_full_red
+					if (i >= hp && i < hp+stats.regeneratingHP.floor()) pip = hp_full_red
 					else if(i < hp) pip = hp_full
 					else pip = hp_empty
 
@@ -330,7 +331,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 						if (entity.stats().insufficientStamina > 0f)
 						{
 							entity.stats().insufficientStamina -= deltaTime
-							pip = hp_full_red
+							pip = if(i < entity.stats().insufficientStaminaAmount) hp_full_red else hp_empty
 						}
 
 						renderer.queueTexture(pip, ax+i*spacePerPip, ay+0.1f, pos.slot.ordinal, 1, width = solid, height = 0.1f)
