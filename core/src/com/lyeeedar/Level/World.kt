@@ -42,7 +42,7 @@ class World
 		currentLevel = root
 	}
 
-	fun changeLevel(key: String, lastPlayer: Entity)
+	fun changeLevel(key: String, type: String, lastPlayer: Entity)
 	{
 		val level = levels[currentLevel.connections[key]]
 
@@ -55,7 +55,7 @@ class World
 		val sequence = Actions.alpha(0f) then Actions.fadeIn(1f) then lamda {
 			currentLevel = level
 
-			GameScreen.instance.loadLevel(level, lastPlayer)
+			GameScreen.instance.loadLevel(level, type, lastPlayer)
 
 		} then Actions.fadeOut(1f) then lamda { Global.pause = false } then Actions.removeActor()
 

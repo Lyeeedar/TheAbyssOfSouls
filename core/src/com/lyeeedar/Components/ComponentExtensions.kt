@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Renderable
+import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.children
 import ktx.collections.set
 
@@ -166,6 +167,27 @@ class EntityLoader()
 			}
 
 			return entity
+		}
+
+		fun getSlot(xml: XmlReader.Element): SpaceSlot
+		{
+			var slot = SpaceSlot.ENTITY
+
+			val extends = xml.get("Extends", null)
+			if (extends != null)
+			{
+				val extendsxml = XmlReader().parse(files[extends.toUpperCase()])
+				slot = getSlot(extendsxml)
+			}
+
+			val componentsEl = xml.getChildByName("Components")
+			if (componentsEl != null)
+			{
+				val positionEl = componentsEl.getChildByName("Position")
+				slot = SpaceSlot.valueOf(positionEl.get("SpaceSlot", "Entity").toUpperCase())
+			}
+
+			return slot
 		}
 	}
 }

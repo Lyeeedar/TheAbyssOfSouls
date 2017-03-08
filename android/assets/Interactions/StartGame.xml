@@ -1,7 +1,7 @@
 <Interaction meta:X="0" meta:Y="0" GUID="d976340f-a7fb-4f1c-9284-dd30017b2290" xmlns:meta="Editor">
 	<Branch meta:RefKey="Branch">
 		<Branch>
-			<Condition>1</Condition>
+			<Condition>DoneTutorial==0</Condition>
 			<Node meta:RefKey="Node">3351ceef-25da-44a9-b013-22ac7497956b</Node>
 		</Branch>
 	</Branch>
@@ -15,6 +15,11 @@
 			</Action>
 			<Action meta:RefKey="Line">
 				<Text>I think I... died?</Text>
+			</Action>
+			<Action meta:RefKey="Define">
+				<Key>DoneTutorial</Key>
+				<Value>1</Value>
+				<Global>true</Global>
 			</Action>
 		</Node>
 	</Nodes>

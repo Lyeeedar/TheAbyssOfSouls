@@ -185,7 +185,7 @@
 				</Split>
 			</Rule>
 		</Node>
-		<Node meta:X="1447.53759765625" meta:Y="736.86578369140625" GUID="2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac">
+		<Node meta:X="1535.2723572558684" meta:Y="453.01803204558195" GUID="2e9f6c80-e75e-4eb8-acd3-eb40b165c1ac">
 			<Rule meta:RefKey="Scale">
 				<Mode>Absolute</Mode>
 				<X>7+rnd(5)</X>
@@ -199,7 +199,7 @@
 				<Rule meta:RefKey="Node">d0f77ec0-f861-423b-af26-5a3fde4599b7</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1645.0821533203125" meta:Y="947.63311767578125" GUID="d0f77ec0-f861-423b-af26-5a3fde4599b7">
+		<Node meta:X="1732.8169129199309" meta:Y="663.785366029957" GUID="d0f77ec0-f861-423b-af26-5a3fde4599b7">
 			<Rule meta:RefKey="Scale">
 				<X>-2</X>
 				<Y>-2</Y>
@@ -229,31 +229,31 @@
 				</Split>
 			</Rule>
 		</Node>
-		<Node meta:X="1937.0821533203125" meta:Y="853.63311767578125" GUID="683063da-a4f5-4750-ac6f-a59e439e1e59">
+		<Node meta:X="2024.8169129199309" meta:Y="569.785366029957" GUID="683063da-a4f5-4750-ac6f-a59e439e1e59">
 			<Rule meta:RefKey="Fill">
 				<Character>.</Character>
 				<Overwrite>true</Overwrite>
 			</Rule>
 		</Node>
-		<Node meta:X="1966.0821533203125" meta:Y="1028.6331787109375" GUID="8212fa1e-d8d6-4ae2-8aaf-4ed79dc961e3">
+		<Node meta:X="2053.8169129199309" meta:Y="744.78542706511325" GUID="8212fa1e-d8d6-4ae2-8aaf-4ed79dc961e3">
 			<Rule meta:RefKey="Take">
 				<Count>50%</Count>
 				<Rule meta:RefKey="Node">3bb4af64-875f-4fac-8f78-f5d3c4984ea0</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="2224.08203125" meta:Y="1028.6331787109375" GUID="3bb4af64-875f-4fac-8f78-f5d3c4984ea0">
+		<Node meta:X="2311.8167908496184" meta:Y="744.78542706511325" GUID="3bb4af64-875f-4fac-8f78-f5d3c4984ea0">
 			<Rule meta:RefKey="Fill">
 				<Character>#</Character>
 				<Overwrite>true</Overwrite>
 			</Rule>
 		</Node>
-		<Node meta:X="877.98236083984375" meta:Y="494.84603881835937" GUID="4a830b3a-8726-4e58-b8f8-0c788dfed739">
+		<Node meta:X="742.07949793063085" meta:Y="384.74751696785779" GUID="4a830b3a-8726-4e58-b8f8-0c788dfed739">
 			<!--Fortress-->
 			<Rule meta:RefKey="DataScope">
 				<Rule meta:RefKey="Node">35a5ec42-da60-43e7-9761-2ea2c8424df2</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1189.2916259765625" meta:Y="474.86688232421875" GUID="35a5ec42-da60-43e7-9761-2ea2c8424df2">
+		<Node meta:X="1053.3887630673496" meta:Y="364.76836047371717" GUID="35a5ec42-da60-43e7-9761-2ea2c8424df2">
 			<Rule meta:RefKey="Prefab">
 				<Symbols>
 					<Symbol meta:RefKey="Symbol">
@@ -316,7 +316,7 @@
 						<BelowEntity>
 							<Components>
 								<MetaRegion>
-									<Key>playerspawn</Key>
+									<Key>spawndescend</Key>
 								</MetaRegion>
 							</Components>
 						</BelowEntity>
@@ -411,7 +411,7 @@
 				</Prefab>
 			</Rule>
 		</Node>
-		<Node meta:X="1023.03369140625" meta:Y="699.28753662109375" GUID="460153e7-99c7-4df0-b009-ac0168bfc791">
+		<Node meta:X="687.92079187424224" meta:Y="638.458202846678" GUID="460153e7-99c7-4df0-b009-ac0168bfc791">
 			<!--Islands-->
 			<Rule meta:RefKey="Repeat">
 				<Axis>Y</Axis>
@@ -419,8 +419,18 @@
 				<Size>13+rnd(7)</Size>
 				<Rule meta:RefKey="Node">f07a882b-e6ce-4da0-af74-0a20cfec37b6</Rule>
 			</Rule>
+			<!--Spawn Death-->
+			<Rule meta:RefKey="Filter">
+				<Mode>Character</Mode>
+				<Character>~</Character>
+				<Rule meta:RefKey="Node">f340eeca-190e-4eab-afdf-8fe9230f730d</Rule>
+			</Rule>
+			<!--Spawn Ascend-->
+			<Rule meta:RefKey="DataScope">
+				<Rule meta:RefKey="Node">8b1608f2-6565-4744-a559-94fc2e70b07b</Rule>
+			</Rule>
 		</Node>
-		<Node meta:X="509.74578857421875" meta:Y="484.16043090820312" GUID="1f062dab-9be9-4f64-b8ab-eccf255cbe13">
+		<Node meta:X="452.97623824505388" meta:Y="439.43290640643687" GUID="1f062dab-9be9-4f64-b8ab-eccf255cbe13">
 			<Rule Axis="Y" Parallel="True" meta:RefKey="Divide">
 				<Division>
 					<Size>20</Size>
@@ -444,14 +454,14 @@
 				<Rule meta:RefKey="Node">0acc92c2-f458-4f00-addf-6e60a173b231</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1250.8541259765625" meta:Y="1256.090576171875" GUID="5b766fef-9357-4633-abc1-ebd81b4a4401">
+		<Node meta:X="1765.2206577468744" meta:Y="1072.0196099530676" GUID="5b766fef-9357-4633-abc1-ebd81b4a4401">
 			<Rule meta:RefKey="Take">
 				<Count>3</Count>
 				<Rule meta:RefKey="Node">13ea1b2a-ab92-497a-be8d-13aac485ff13</Rule>
 				<Remainder meta:RefKey="Node">618023a9-52f9-4b38-ba1e-d5bb4c3e079e</Remainder>
 			</Rule>
 		</Node>
-		<Node meta:X="1440.5841064453125" meta:Y="1337.668701171875" GUID="13ea1b2a-ab92-497a-be8d-13aac485ff13">
+		<Node meta:X="1954.9506382156244" meta:Y="1153.5977349530676" GUID="13ea1b2a-ab92-497a-be8d-13aac485ff13">
 			<Rule meta:RefKey="Symbol">
 				<Character>L</Character>
 				<BelowEntity>
@@ -500,14 +510,14 @@
 				<Character>L</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="1410.801513671875" meta:Y="1555.2103271484375" GUID="618023a9-52f9-4b38-ba1e-d5bb4c3e079e">
+		<Node meta:X="1925.1680454421869" meta:Y="1371.1393609296301" GUID="618023a9-52f9-4b38-ba1e-d5bb4c3e079e">
 			<Rule meta:RefKey="Take">
 				<Count>1</Count>
 				<Rule meta:RefKey="Node">2d28706f-391a-4e10-8843-4ebeab026753</Rule>
 				<Remainder meta:RefKey="Node">c7d8c53d-55fd-4bd2-a058-4386048be6d2</Remainder>
 			</Rule>
 		</Node>
-		<Node meta:X="1638.5577392578125" meta:Y="1565.5694580078125" GUID="2d28706f-391a-4e10-8843-4ebeab026753">
+		<Node meta:X="2152.9242710281242" meta:Y="1381.4984917890051" GUID="2d28706f-391a-4e10-8843-4ebeab026753">
 			<Rule meta:RefKey="Symbol">
 				<Character>P</Character>
 				<Entity>
@@ -518,7 +528,7 @@
 				<Character>P</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="1249.334716796875" meta:Y="710.2412109375" GUID="f07a882b-e6ce-4da0-af74-0a20cfec37b6">
+		<Node meta:X="1041.1796989232705" meta:Y="551.97458577740406" GUID="f07a882b-e6ce-4da0-af74-0a20cfec37b6">
 			<!--Island-->
 			<Rule meta:RefKey="Divide">
 				<Division>
@@ -537,13 +547,13 @@
 				<Rule meta:RefKey="Node">5b766fef-9357-4633-abc1-ebd81b4a4401</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1655.6704001924811" meta:Y="1809.7636616979073" GUID="c7d8c53d-55fd-4bd2-a058-4386048be6d2">
+		<Node meta:X="2170.0369419265617" meta:Y="1625.6927056561926" GUID="c7d8c53d-55fd-4bd2-a058-4386048be6d2">
 			<Rule meta:RefKey="Take">
 				<Count>6</Count>
 				<Rule meta:RefKey="Node">9546b583-56b8-4c44-8b1b-7ee86275104b</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1897.6704001924811" meta:Y="1809.7636616979073" GUID="9546b583-56b8-4c44-8b1b-7ee86275104b">
+		<Node meta:X="2412.0369419265617" meta:Y="1625.6927056561926" GUID="9546b583-56b8-4c44-8b1b-7ee86275104b">
 			<Rule meta:RefKey="Symbol">
 				<Character>M</Character>
 				<AboveEntity>
@@ -566,6 +576,98 @@
 			</Rule>
 			<Rule meta:RefKey="Fill">
 				<Character>M</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="1043.7771317059467" meta:Y="871.21016078823334" GUID="f340eeca-190e-4eab-afdf-8fe9230f730d">
+			<Rule meta:RefKey="Take">
+				<Count>1</Count>
+				<Rule meta:RefKey="Node">06c278e6-a5df-449f-b040-2b286d4a5fe4</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1203.1535955671065" meta:Y="876.61020769435675" GUID="06c278e6-a5df-449f-b040-2b286d4a5fe4">
+			<Rule meta:RefKey="Symbol">
+				<Character>s</Character>
+				<FloorDetail>
+					<Components>
+						<MetaRegion>
+							<Key>spawndeath</Key>
+						</MetaRegion>
+					</Components>
+				</FloorDetail>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>s</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="1043.3274686230397" meta:Y="1094.7032513678444" GUID="8b1608f2-6565-4744-a559-94fc2e70b07b">
+			<Rule meta:RefKey="Scale">
+				<Mode>Absolute</Mode>
+				<X>7</X>
+				<Y>7</Y>
+			</Rule>
+			<Rule meta:RefKey="Translate">
+				<X>-25+rnd(50)</X>
+				<Y>-25+rnd(50)</Y>
+			</Rule>
+			<Rule meta:RefKey="Prefab">
+				<Symbols>
+					<Symbol meta:RefKey="Symbol">
+						<Character>#</Character>
+						<Wall>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>castlewall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_dungeon_14</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_dungeon_7</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_dungeon_1</Name>
+										</Overhang>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Wall>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>,</Character>
+						<Floor>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/floor_set_grey_6</Name>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Floor>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>s</Character>
+						<Extends>,</Extends>
+						<FloorDetail>
+							<Components>
+								<MetaRegion>
+									<Key>spawnascend</Key>
+								</MetaRegion>
+							</Components>
+						</FloorDetail>
+					</Symbol>
+				</Symbols>
+				<Prefab>
+					<Line>~~.....~~</Line>
+					<Line>~..#,#..~</Line>
+					<Line>..,,,,,..</Line>
+					<Line>.#,,,,,#.</Line>
+					<Line>.,,,s,,,.</Line>
+					<Line>.#,,,,,#.</Line>
+					<Line>~.,,,,,..</Line>
+					<Line>~~.#,#..~</Line>
+					<Line>~~~...~~~</Line>
+				</Prefab>
 			</Rule>
 		</Node>
 	</Rules>

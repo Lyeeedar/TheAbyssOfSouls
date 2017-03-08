@@ -63,6 +63,7 @@ class DamageAction() : AbstractTimelineAction()
 class SpawnAction() : AbstractTimelineAction()
 {
 	lateinit var entityXml: XmlReader.Element
+	lateinit var entitySlot: SpaceSlot
 	var deleteOnExit = false
 	var ignoreWall = false
 
@@ -79,10 +80,10 @@ class SpawnAction() : AbstractTimelineAction()
 
 				val job = launch(CommonPool)
 				{
-					val entity = EntityLoader.load(entityXml)
-
-					if (!tile.contents.containsKey(entity.pos().slot) && (ignoreWall || !tile.contents.containsKey(SpaceSlot.WALL)))
+					if (!tile.contents.containsKey(entitySlot) && (ignoreWall || !tile.contents.containsKey(SpaceSlot.WALL)))
 					{
+						val entity = EntityLoader.load(entityXml)
+
 						entity.pos().tile = tile
 						tile.contents[entity.pos().slot] = entity
 
@@ -93,9 +94,9 @@ class SpawnAction() : AbstractTimelineAction()
 							spawnedEntities.add(entity)
 						}
 					}
-					else
+					else if (!Global.release)
 					{
-						System.err.println("Tried to spawn entity '" + entity.name().name + "' in non-empty tile!")
+						System.err.println("Tried to spawn entity in non-empty tile at slot '$entitySlot'!")
 					}
 				}
 				jobs.add(job)
@@ -121,6 +122,7 @@ class SpawnAction() : AbstractTimelineAction()
 		val out = SpawnAction()
 		out.parent = parent
 		out.entityXml = entityXml
+		out.entitySlot = entitySlot
 		out.deleteOnExit = deleteOnExit
 		out.ignoreWall = ignoreWall
 
@@ -132,6 +134,8 @@ class SpawnAction() : AbstractTimelineAction()
 		entityXml = xml.getChildByName("Entity")
 		deleteOnExit = xml.getBoolean("DeleteOnExit", false)
 		ignoreWall = xml.getBoolean("IgnoreWall", false)
+
+		entitySlot = EntityLoader.getSlot(entityXml)
 	}
 
 }

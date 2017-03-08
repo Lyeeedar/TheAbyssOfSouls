@@ -8,7 +8,7 @@
 				<Keyframe>0|0,-0.5</Keyframe>
 			</Offset>
 			<Direction>Up</Direction>
-			<ParticleSpeed>2,2</ParticleSpeed>
+			<ParticleSpeed>4,4</ParticleSpeed>
 			<ParticleRotation>0,0</ParticleRotation>
 			<RateKeyframes>
 				<Keyframe>0|1</Keyframe>
@@ -16,7 +16,7 @@
 			<SingleBurst>true</SingleBurst>
 			<Particles>
 				<Particle>
-					<Lifetime>0.5,0.5</Lifetime>
+					<Lifetime>0.2,0.2</Lifetime>
 					<BlendMode>Additive</BlendMode>
 					<TextureKeyframes>
 						<Stream>

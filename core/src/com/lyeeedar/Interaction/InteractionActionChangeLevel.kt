@@ -13,7 +13,7 @@ class InteractionActionChangeLevel : AbstractInteractionAction()
 
 	override fun interact(activating: Entity, parent: Entity, interaction: Interaction): Boolean
 	{
-		World.world.changeLevel(level, Global.engine.level!!.player)
+		World.world.changeLevel(level, level, Global.engine.level!!.player)
 
 		return true
 	}

@@ -169,9 +169,24 @@ class TileSystem : AbstractSystem()
 		if (movedByWater.contains(entity)) return
 		movedByWater.add(entity)
 
-		fun getWater(tile: Tile): WaterComponent? = tile.contents[SpaceSlot.FLOOR]?.water() ?: tile.contents[SpaceSlot.BELOWENTITY]?.water()
+		fun getWater(tile: Tile): WaterComponent?
+		{
+			var test = tile.contents[SpaceSlot.FLOOR]
+			if (test?.water() != null && test.water().flowChance > 0)
+			{
+				return test.water()
+			}
 
-		val water =  getWater(tile) ?: return
+			test = tile.contents[SpaceSlot.BELOWENTITY]
+			if (test?.water() != null && test.water().flowChance > 0)
+			{
+				return test.water()
+			}
+
+			return null
+		}
+
+		val water = getWater(tile) ?: return
 
 		if (water.flowDir != Direction.CENTER || water.flowTowards != null)
 		{
@@ -190,6 +205,23 @@ class TileSystem : AbstractSystem()
 			{
 				val prev = (pos.position as Tile)
 				var next = prev.level.getTile(prev, direction) ?: return
+
+				if (water.flowForce == 2)
+				{
+					val next2 = prev.level.getTile(prev, direction.x * 2, direction.y * 2)
+					if (next2 != null && entity.pos().isValidTile(next, entity) && entity.pos().isValidTile(next2, entity))
+					{
+						entity.pos().doMove(next2, entity)
+
+						entity.renderable().renderable.animation = MoveAnimation.obtain().set(next2, prev, 0.15f)
+						entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.15f, 360f)
+						(entity.renderable().renderable as? Sprite)?.removeAmount = 0f
+
+						entity.task()?.tasks?.add(TaskInterrupt())
+
+						return
+					}
+				}
 
 				if (getWater(next) == null)
 				{
@@ -211,6 +243,12 @@ class TileSystem : AbstractSystem()
 					entity.pos().doMove(next, entity)
 
 					entity.renderable().renderable.animation = MoveAnimation.obtain().set(next, prev, 0.15f)
+
+					if (water.flowForce == 2)
+					{
+						entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.15f, 360f)
+						(entity.renderable().renderable as? Sprite)?.removeAmount = 0f
+					}
 
 					entity.task()?.tasks?.add(TaskInterrupt())
 				}

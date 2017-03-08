@@ -3,12 +3,13 @@ package com.lyeeedar.Components
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
+import com.esotericsoftware.kryo.Kryo
+import com.esotericsoftware.kryo.io.Input
+import com.esotericsoftware.kryo.io.Output
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Animation.MoveAnimation
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.children
-import com.lyeeedar.Util.getRotation
+import com.lyeeedar.Util.*
 
 class TrailingEntityComponent : AbstractComponent()
 {
@@ -85,5 +86,56 @@ class TrailingEntityComponent : AbstractComponent()
 		{
 			entities.forEach { it.add(MarkedForDeletionComponent()) }
 		}
+	}
+
+	override fun saveData(kryo: Kryo, output: Output)
+	{
+		output.writeInt(entities.size)
+
+		for (i in 0..entities.size-1)
+		{
+			val tile = if (tiles.size == 0) entities[0].tile()!! else if (tiles.size <= i) tiles.last() else tiles[i]
+
+			output.writeInt(tile.x)
+			output.writeInt(tile.y)
+		}
+	}
+
+	override fun loadData(kryo: Kryo, input: Input)
+	{
+		val count = input.readInt()
+		if (count != entities.size) throw Exception("Mismatched count of trail! Expected '" + entities.size + "' but got '" + count + "'!")
+
+		val points = Array<Point>(entities.size)
+
+		for (i in 0..entities.size-1)
+		{
+			val x = input.readInt()
+			val y = input.readInt()
+
+			points.add(Point(x, y))
+		}
+
+		Future.call({
+			val head = entities[0]
+			if (head.pos().position != points[0]) throw Exception("Trail head isnt in the same place as it was saved!")
+
+			for (i in 0..points.size-1)
+			{
+				val entity = entities[i]
+				val point = points[i]
+
+				val tile = head.tile()!!.level.getTile(point)!!
+
+				if (tiles.size == i) tiles.add(tile)
+				else tiles[i] = tile
+
+				entity.pos().tile = tile
+
+				tile.contents[entity.pos().slot] = entity
+
+				if (i > 0) Global.engine.addEntity(entities[i])
+			}
+		}, 0f)
 	}
 }

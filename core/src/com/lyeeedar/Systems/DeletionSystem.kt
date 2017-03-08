@@ -62,8 +62,11 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 			}
 		}
 
+		var died = false
 		if (entity.stats() != null && entity.stats().hp <= 0f && entity.stats().deathEffect != null)
 		{
+			died = true
+
 			val effect = entity.stats().deathEffect!!.copy()
 			val effectEntity = Entity()
 
@@ -81,10 +84,12 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 
 		if (entity == level!!.player)
 		{
+			val travel = if (died) "death" else "descend"
+
 			Global.pause = true
 			Future.call(
 			{
-				World.world.changeLevel("death", level!!.player)
+				World.world.changeLevel("death", travel, level!!.player)
 			}, 0.5f)
 		}
 	}

@@ -45,7 +45,7 @@ class GameScreen : AbstractScreen()
 
 	override fun create()
 	{
-		loadLevel(World.world.root, null)
+		loadLevel(World.world.root, "start", null)
 
 		font = Global.skin.getFont("default")
 		batch = SpriteBatch()
@@ -54,7 +54,7 @@ class GameScreen : AbstractScreen()
 		statsWidget.setPosition(5f, stage.height-statsWidget.height-5f)
 	}
 
-	fun loadLevel(level: LevelData, lastPlayer: Entity?)
+	fun loadLevel(level: LevelData, travelType: String, lastPlayer: Entity?)
 	{
 		Global.engine.level?.destroyingLevel = true
 
@@ -70,7 +70,7 @@ class GameScreen : AbstractScreen()
 
 		val player = EntityLoader.load("player")
 		Global.engine.addEntity(player)
-		val spawnTile = level.getClosestMetaRegion("playerspawn", Point.ZERO)!!
+		val spawnTile = level.getClosestMetaRegion("spawn" + travelType.toLowerCase(), Point.ZERO)!!
 		player.pos().position = spawnTile
 		spawnTile.contents[SpaceSlot.ENTITY] = player
 

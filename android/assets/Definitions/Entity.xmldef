@@ -91,6 +91,7 @@
 				<Data Name="FlowTowards" VisibleIf="Direction==--" meta:RefKey="String" />
 				<Data Name="FlowChance" Min="0" Max="1" SkipIfDefault="False" meta:RefKey="Number" />
 				<Data Name="Depth" Min="0" Max="1" Default="0.2" SkipIfDefault="False" meta:RefKey="Number" />
+				<Data Name="FlowForce" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
 			</Data>
 		</Data>
 	</Definition>

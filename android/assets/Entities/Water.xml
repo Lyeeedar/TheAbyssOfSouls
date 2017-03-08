@@ -58,8 +58,13 @@
 		</Renderable>
 		<Water>
 			<Direction>South</Direction>
-			<FlowChance>1</FlowChance>
+			<FlowChance>0.8</FlowChance>
 			<Depth>0.4</Depth>
+			<FlowForce>2</FlowForce>
 		</Water>
+		<Light>
+			<Colour>10,212,240,138</Colour>
+			<Distance>4</Distance>
+		</Light>
 	</Components>
 </Entity>

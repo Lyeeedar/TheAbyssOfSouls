@@ -208,7 +208,7 @@
 				</Division>
 				<Division>
 					<Size>20</Size>
-					<Rule meta:RefKey="Node">ced1df3a-7a56-4881-ad20-28c21fe579c3</Rule>
+					<Rule meta:RefKey="Node">c086f57f-a5d1-4e89-a28e-7301105b1c04</Rule>
 				</Division>
 			</Rule>
 		</Node>
@@ -258,7 +258,7 @@
 				</Division>
 			</Rule>
 		</Node>
-		<Node meta:X="-6.8252291679382324" meta:Y="1015.2891845703125" GUID="ced1df3a-7a56-4881-ad20-28c21fe579c3">
+		<Node meta:X="145.33735656738281" meta:Y="996.1090087890625" GUID="ced1df3a-7a56-4881-ad20-28c21fe579c3">
 			<!--Exit Whirlpool-->
 			<Rule meta:RefKey="Prefab">
 				<Symbols>
@@ -821,7 +821,7 @@
 									</SceneTimeline>
 								</SceneTimeline>
 								<MetaRegion>
-									<Key>playerspawns</Key>
+									<Key>spawnstart</Key>
 								</MetaRegion>
 							</Components>
 						</BelowEntity>
@@ -1041,17 +1041,6 @@
 						</Entity>
 					</Symbol>
 					<Symbol meta:RefKey="Symbol">
-						<Character>s</Character>
-						<Extends>.</Extends>
-						<BelowEntity>
-							<Components>
-								<MetaRegion>
-									<Key>playerspawn</Key>
-								</MetaRegion>
-							</Components>
-						</BelowEntity>
-					</Symbol>
-					<Symbol meta:RefKey="Symbol">
 						<Character>~</Character>
 						<Floor>
 							<Components>
@@ -1102,13 +1091,83 @@
 					<Line>~~~~~~~~~~</Line>
 					<Line>..........</Line>
 					<Line>..........</Line>
-					<Line>....s.....</Line>
 					<Line>..........</Line>
 					<Line>..........</Line>
 					<Line>..........</Line>
 					<Line>..........</Line>
 					<Line>..........</Line>
 					<Line>..........</Line>
+					<Line>..........</Line>
+				</Prefab>
+			</Rule>
+		</Node>
+		<Node meta:X="-30.61536979675293" meta:Y="990.937744140625" GUID="c086f57f-a5d1-4e89-a28e-7301105b1c04">
+			<Rule Axis="Y" meta:RefKey="Divide">
+				<Division>
+					<Size>15</Size>
+					<Rule meta:RefKey="Node">ced1df3a-7a56-4881-ad20-28c21fe579c3</Rule>
+				</Division>
+				<Division>
+					<Size>5</Size>
+					<Rule meta:RefKey="Node">e529b5ad-e11f-47d8-935c-ae65675af794</Rule>
+				</Division>
+			</Rule>
+		</Node>
+		<Node meta:X="139.40150451660156" meta:Y="1182.7392578125" GUID="e529b5ad-e11f-47d8-935c-ae65675af794">
+			<!--Ascension shrine-->
+			<Rule meta:RefKey="Prefab">
+				<Symbols>
+					<Symbol meta:RefKey="Symbol">
+						<Character>,</Character>
+						<Floor>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/floor_extra_2</Name>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Floor>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>s</Character>
+						<Extends>,</Extends>
+						<FloorDetail>
+							<Components>
+								<MetaRegion>
+									<Key>spawnascend</Key>
+								</MetaRegion>
+							</Components>
+						</FloorDetail>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>#</Character>
+						<Wall>
+							<Components>
+								<Renderable>
+									<IsShared>true</IsShared>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>wall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/light_brick_wall</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/light_brick_wall_top</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/light_brick_wall_overhang</Name>
+										</Overhang>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Wall>
+					</Symbol>
+				</Symbols>
+				<Prefab>
+					<Line>#,#</Line>
+					<Line>,s,</Line>
+					<Line>#,#</Line>
 				</Prefab>
 			</Rule>
 		</Node>

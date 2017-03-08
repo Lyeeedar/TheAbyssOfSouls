@@ -3,9 +3,9 @@
 		<Action Key="Pos" Value="move EntityPos SOUTH 1" meta:RefKey="SetValue" />
 		<Action Key="TrailLength" Value="trail length" meta:RefKey="SetValue" />
 		<Node meta:X="496.22222900390625" meta:Y="-197.66667175292969" meta:RefKey="Sequence">
-			<Action Condition="CanSpawn &gt; 4" meta:RefKey="Conditional" />
+			<Action Condition="CanSpawn &gt;2" meta:RefKey="Conditional" />
 			<Action Key="SpawnCounter" Value="SpawnCounter+1" meta:RefKey="SetValue" />
-			<Action Condition="SpawnCounter==8" meta:RefKey="Conditional" />
+			<Action Condition="SpawnCounter==4" meta:RefKey="Conditional" />
 			<Action Key="SpawnCounter" Value="0" meta:RefKey="SetValue" />
 			<Action meta:RefKey="Scene">
 				<HitPoints>
@@ -22,12 +22,12 @@
 				</SceneTimeline>
 			</Action>
 		</Node>
-		<Node meta:X="496.22222900390625" meta:Y="-12.666671752929688" meta:RefKey="Sequence">
+		<Node meta:X="495.66666666666674" meta:Y="30.333333333333314" State="Failed" meta:RefKey="Until">
 			<Action Key="Pos" meta:RefKey="MoveTo" />
 			<Action Key="DeathCounter" Value="0" meta:RefKey="SetValue" />
 			<Action Key="CanSpawn" Value="CanSpawn+1" meta:RefKey="SetValue" />
 		</Node>
-		<Node meta:X="496.22222900390625" meta:Y="112.33332824707031" meta:RefKey="Sequence">
+		<Node meta:X="496.22222900390625" meta:Y="185.33332824707031" meta:RefKey="Sequence">
 			<Action Key="DeathCounter" Value="DeathCounter+1" meta:RefKey="SetValue" />
 			<Action Condition="DeathCounter&gt;=trailLength" meta:RefKey="Conditional" />
 			<Action meta:RefKey="Kill" />

@@ -106,7 +106,7 @@ class SaveGame
 						{
 							val compName = input.readString()
 							if (compName != component.javaClass.simpleName)
-								throw Exception("Component load mismatch!")
+								throw Exception("Component load mismatch! Tried to load '" + component.javaClass.simpleName + "' but got '$compName'!")
 
 							component.loadData(kryo, input)
 

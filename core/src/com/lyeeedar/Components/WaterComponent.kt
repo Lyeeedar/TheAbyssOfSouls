@@ -10,9 +10,11 @@ class WaterComponent : AbstractComponent()
 	var flowDir = Direction.CENTER
 	var flowChance = 0.3f
 	var depth: Float = 0.3f
+	var flowForce: Int = 1
 
 	override fun parse(xml: XmlReader.Element, entity: Entity)
 	{
+		flowForce = xml.getInt("FlowForce", 1)
 		flowTowards = xml.get("FlowTowards", null)
 		depth = xml.getFloat("Depth", 0.3f)
 		flowChance = xml.getFloat("FlowChance", 0f)

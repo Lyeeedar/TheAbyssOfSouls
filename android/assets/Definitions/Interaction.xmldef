@@ -29,6 +29,7 @@
 	<Definition Name="Define" meta:RefKey="StructDef">
 		<Data Name="Key" meta:RefKey="String" />
 		<Data Name="Value" meta:RefKey="String" />
+		<Data Name="Global" meta:RefKey="Boolean" />
 	</Definition>
 	<Definition Name="Drop" meta:RefKey="StructDef">
 		<Data Name="Drop" Keys="AtonementSpirit,SellableItem,Equipment" meta:RefKey="Reference" />
