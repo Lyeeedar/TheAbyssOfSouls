@@ -1,10 +1,6 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
-import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.SpaceSlot
 
@@ -22,7 +18,7 @@ class GrammarRuleFilter : AbstractGrammarRule()
 	lateinit var remainder: String
 	var char: Char = ' '
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
 		val condition: (symbol: GrammarSymbol) -> Boolean = when (mode)
 		{
@@ -32,7 +28,7 @@ class GrammarRuleFilter : AbstractGrammarRule()
 			else -> throw UnsupportedOperationException("Unknown mode '$mode'!")
 		}
 
-		val newArea = area.copy()
+		val newArea = args.area.copy()
 
 		if (!newArea.isPoints) newArea.convertToPoints()
 
@@ -52,13 +48,19 @@ class GrammarRuleFilter : AbstractGrammarRule()
 
 		if (rule.isNotBlank() && newArea.points.size > 0)
 		{
-			val rule = ruleTable[rule]
-			rule.execute(newArea, ruleTable, defines, variables, symbolTable, seed, deferredRules)
+			val newArgs = args.copy(false, false, false, false)
+			newArgs.area = newArea
+
+			val rule = args.ruleTable[rule]
+			rule.execute(newArgs)
 		}
 		if (remainderArea != null && remainderArea.points.size > 0)
 		{
-			val rule = ruleTable[remainder]
-			rule.execute(remainderArea, ruleTable, defines, variables, symbolTable, seed, deferredRules)
+			val newArgs = args.copy(false, false, false, false)
+			newArgs.area = remainderArea
+
+			val rule = args.ruleTable[remainder]
+			rule.execute(newArgs)
 		}
 	}
 

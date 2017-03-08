@@ -4,7 +4,7 @@
 		<DrawActualSize>true</DrawActualSize>
 	</Icon>
 	<Name>Dagger</Name>
-	<Description>A small dagger, quick but weak</Description>
+	<Description>A small dagger, quick but weak. It's lightness makes you highly mobile.</Description>
 	<ComboHint>N-N-N
 N-D-N
 N-S

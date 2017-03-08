@@ -1,11 +1,7 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.GenerationGrammar.Area
-import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.freeTS
@@ -14,13 +10,16 @@ class GrammarRuleNode : AbstractGrammarRule()
 {
 	val rules = Array<AbstractGrammarRule>()
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		val rng = Random.obtainTS(seed)
+		val rng = Random.obtainTS(args.seed)
 
 		for (i in 0..rules.size-1)
 		{
-			rules[i].execute(area, ruleTable, defines, variables, symbolTable, rng.nextLong(), deferredRules)
+			val newArgs = args.copy(false, false, false, false)
+			newArgs.seed = rng.nextLong()
+
+			rules[i].execute(newArgs)
 		}
 
 		rng.freeTS()

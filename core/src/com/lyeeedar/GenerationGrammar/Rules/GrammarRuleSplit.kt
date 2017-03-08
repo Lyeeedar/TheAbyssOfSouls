@@ -1,12 +1,8 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
-import com.lyeeedar.GenerationGrammar.Area
-import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.freeTS
@@ -27,13 +23,13 @@ class GrammarRuleSplit : AbstractGrammarRule()
 	val splits = Array<Split>()
 	var parallel = false
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		val rng = Random.obtainTS(seed)
+		val rng = Random.obtainTS(args.seed)
 
 		val jobs = Array<Job>(splits.size)
 
-		var currentArea = area.copy()
+		var currentArea = args.area.copy()
 		for (i in 0..splits.size-1)
 		{
 			val newSeed = rng.nextLong()
@@ -46,8 +42,8 @@ class GrammarRuleSplit : AbstractGrammarRule()
 			if (split.side == SplitSide.NORTH)
 			{
 				currentArea.xMode = false
-				currentArea.writeVariables(variables)
-				val size = split.size.evaluate(variables, rng.nextLong()).round()
+				currentArea.writeVariables(args.variables)
+				val size = split.size.evaluate(args.variables, rng.nextLong()).round()
 
 				newArea.x = currentArea.x
 				newArea.y = currentArea.y + currentArea.height - size
@@ -66,8 +62,8 @@ class GrammarRuleSplit : AbstractGrammarRule()
 			else if (split.side == SplitSide.SOUTH)
 			{
 				currentArea.xMode = false
-				currentArea.writeVariables(variables)
-				val size = split.size.evaluate(variables, rng.nextLong()).round()
+				currentArea.writeVariables(args.variables)
+				val size = split.size.evaluate(args.variables, rng.nextLong()).round()
 
 				newArea.x = currentArea.x
 				newArea.y = currentArea.y
@@ -86,8 +82,8 @@ class GrammarRuleSplit : AbstractGrammarRule()
 			else if (split.side == SplitSide.WEST)
 			{
 				currentArea.xMode = true
-				currentArea.writeVariables(variables)
-				val size = split.size.evaluate(variables, rng.nextLong()).round()
+				currentArea.writeVariables(args.variables)
+				val size = split.size.evaluate(args.variables, rng.nextLong()).round()
 
 				newArea.x = currentArea.x
 				newArea.y = currentArea.y
@@ -106,8 +102,8 @@ class GrammarRuleSplit : AbstractGrammarRule()
 			else if (split.side == SplitSide.EAST)
 			{
 				currentArea.xMode = true
-				currentArea.writeVariables(variables)
-				val size = split.size.evaluate(variables, rng.nextLong()).round()
+				currentArea.writeVariables(args.variables)
+				val size = split.size.evaluate(args.variables, rng.nextLong()).round()
 
 				newArea.x = currentArea.x + currentArea.width - size
 				newArea.y = currentArea.y
@@ -127,15 +123,19 @@ class GrammarRuleSplit : AbstractGrammarRule()
 			{
 				if (!split.rule.isNullOrBlank())
 				{
-					val rule = ruleTable[split.rule]
+					val newArgs = args.copy(false, false, false, false)
+					newArgs.area = currentArea
+					newArgs.seed = newSeed
+
+					val rule = args.ruleTable[split.rule]
 
 					if (parallel)
 					{
-						jobs.add(rule.executeAsync(currentArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules))
+						jobs.add(rule.executeAsync(newArgs))
 					}
 					else
 					{
-						rule.execute(currentArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules)
+						rule.execute(newArgs)
 					}
 				}
 
@@ -147,22 +147,26 @@ class GrammarRuleSplit : AbstractGrammarRule()
 
 			if (!split.rule.isNullOrBlank())
 			{
-				val rule = ruleTable[split.rule]
+				val newArgs = args.copy(false, false, false, false)
+				newArgs.area = newArea
+				newArgs.seed = newSeed
+
+				val rule = args.ruleTable[split.rule]
 
 				if (parallel)
 				{
-					jobs.add(rule.executeAsync(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules))
+					jobs.add(rule.executeAsync(newArgs))
 				}
 				else
 				{
-					rule.execute(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules)
+					rule.execute(newArgs)
 				}
 			}
 		}
 
-		for (job in jobs) job.join()
-
 		rng.freeTS()
+
+		for (job in jobs) job.join()
 	}
 
 	override fun parse(xml: XmlReader.Element)

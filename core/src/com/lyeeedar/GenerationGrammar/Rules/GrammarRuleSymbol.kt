@@ -1,10 +1,6 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
-import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.FastEnumMap
@@ -17,20 +13,20 @@ class GrammarRuleSymbol : AbstractGrammarRule()
 	var extends: Char? = null
 	val contents = FastEnumMap<SpaceSlot, XmlReader.Element>(SpaceSlot::class.java)
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
 		val symbol = GrammarSymbol(char)
 
 		if (extends != null)
 		{
-			val existing = symbolTable[extends]
+			val existing = args.symbolTable[extends]
 
 			symbol.write(existing)
 		}
 
 		symbol.write(contents)
 
-		symbolTable[char] = symbol
+		args.symbolTable[char] = symbol
 	}
 
 	override fun parse(xml: XmlReader.Element)

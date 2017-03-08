@@ -10,7 +10,7 @@
 		</Branch>
 	</Branch>
 	<Nodes>
-		<Node meta:X="359" meta:Y="175" GUID="91a6c4a7-3e90-4469-88a7-7c9eb177e275">
+		<Node meta:X="336" meta:Y="158" GUID="91a6c4a7-3e90-4469-88a7-7c9eb177e275">
 			<Action meta:RefKey="Line">
 				<Text>Greetings [IMPORTANT]corrupt soul[], you have arrived at a most opportune time.</Text>
 			</Action>
@@ -20,10 +20,30 @@
 			<Action meta:RefKey="Line">
 				<Text>Defeat them and you may be able to lift the sins of [ANGER]anger[] from your soul.</Text>
 			</Action>
+			<Action meta:RefKey="Branch">
+				<Branch>
+					<Condition>dropped==0</Condition>
+					<Node meta:RefKey="Node">aef7e7bc-07c5-49b8-be21-8255a206f4f1</Node>
+				</Branch>
+			</Action>
 		</Node>
 		<Node meta:X="341" meta:Y="-1" GUID="e1e1dc9f-c6fe-4019-aa6e-5eaee063f5b7">
 			<Action meta:RefKey="Line">
 				<Text>Greetings [IMPORTANT]calmed soul[]. You may use the altar behind me to ascend.</Text>
+			</Action>
+		</Node>
+		<Node meta:X="613" meta:Y="158" GUID="aef7e7bc-07c5-49b8-be21-8255a206f4f1">
+			<Action meta:RefKey="Line">
+				<Text>To help you on this endeavour feel free to use these weapons.</Text>
+			</Action>
+			<Action meta:RefKey="Drop">
+				<Drop meta:RefKey="Equipment">
+					<Weapon>Sword</Weapon>
+				</Drop>
+			</Action>
+			<Action meta:RefKey="Define">
+				<Key>dropped</Key>
+				<Value>1</Value>
 			</Action>
 		</Node>
 	</Nodes>

@@ -1104,6 +1104,9 @@
 		<Node meta:X="-30.61536979675293" meta:Y="990.937744140625" GUID="c086f57f-a5d1-4e89-a28e-7301105b1c04">
 			<Rule Axis="Y" meta:RefKey="Divide">
 				<Division>
+					<Size>50%-7</Size>
+				</Division>
+				<Division>
 					<Size>15</Size>
 					<Rule meta:RefKey="Node">ced1df3a-7a56-4881-ad20-28c21fe579c3</Rule>
 				</Division>

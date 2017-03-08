@@ -89,7 +89,7 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 			Global.pause = true
 			Future.call(
 			{
-				World.world.changeLevel("death", travel, level!!.player)
+				World.world.changeLevel(travel, travel, level!!.player)
 			}, 0.5f)
 		}
 	}

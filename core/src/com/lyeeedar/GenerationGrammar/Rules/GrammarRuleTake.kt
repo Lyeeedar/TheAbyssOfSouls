@@ -1,18 +1,17 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
-import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectSet
+import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
 import com.exp4j.Helpers.unescapeCharacters
 import com.lyeeedar.Direction
 import com.lyeeedar.GenerationGrammar.Area
-import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.GenerationGrammar.Pos
 import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.freeTS
 import com.lyeeedar.Util.removeRandom
 import com.lyeeedar.Util.round
-import java.util.*
 
 class GrammarRuleTake : AbstractGrammarRule()
 {
@@ -30,10 +29,10 @@ class GrammarRuleTake : AbstractGrammarRule()
 	lateinit var rule: String
 	lateinit var remainder: String
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		val valid = Array<Pos>(false, if (area.isPoints) area.points.size else area.width * area.height)
-		valid.addAll(area.getAllPoints())
+		val valid = Array<Pos>(false, if (args.area.isPoints) args.area.points.size else args.area.width * args.area.height)
+		valid.addAll(args.area.getAllPoints())
 
 		if (mode == Mode.EDGE)
 		{
@@ -110,12 +109,12 @@ class GrammarRuleTake : AbstractGrammarRule()
 
 		if (valid.size == 0) return
 
-		area.writeVariables(variables)
-		variables.put("count", valid.size.toFloat())
+		args.area.writeVariables(args.variables)
+		args.variables.put("count", valid.size.toFloat())
 
-		val rng = Random.obtainTS(seed)
+		val rng = Random.obtainTS(args.seed)
 
-		val count = count.evaluate(variables, rng.nextLong()).round()
+		val count = count.evaluate(args.variables, rng.nextLong()).round()
 
 		var newArea: Area? = null
 		if (count > 0)
@@ -127,24 +126,32 @@ class GrammarRuleTake : AbstractGrammarRule()
 				finalPoints.add(valid.removeRandom(rng))
 			}
 
-			newArea = area.copy()
+			newArea = args.area.copy()
 			if (!newArea.isPoints) newArea.convertToPoints()
 			newArea.points.clear()
 			newArea.points.addAll(finalPoints)
 
-			val rule = ruleTable[rule]
-			rule.execute(newArea, ruleTable, defines, variables, symbolTable, rng.nextLong(), deferredRules)
+			val newArgs = args.copy(false, false, false, false)
+			newArgs.area = newArea
+			newArgs.seed = rng.nextLong()
+
+			val rule = args.ruleTable[rule]
+			rule.execute(newArgs)
 		}
 
 		if (!remainder.isNullOrBlank() && valid.size > 0)
 		{
-			val remainderArea = newArea?.copy() ?: area.copy()
+			val remainderArea = newArea?.copy() ?: args.area.copy()
 			if (!remainderArea.isPoints) remainderArea.convertToPoints()
 			remainderArea.points.clear()
 			remainderArea.points.addAll(valid)
 
-			val remainder = ruleTable[remainder]
-			remainder.execute(remainderArea, ruleTable, defines, variables, symbolTable, rng.nextLong(), deferredRules)
+			val newArgs = args.copy(false, false, false, false)
+			newArgs.area = remainderArea
+			newArgs.seed = rng.nextLong()
+
+			val remainder = args.ruleTable[remainder]
+			remainder.execute(newArgs)
 		}
 
 		rng.freeTS()

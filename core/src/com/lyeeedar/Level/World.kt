@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Global
 import com.lyeeedar.Screens.GameScreen
 import com.lyeeedar.UI.lamda
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.getXml
 import ktx.actors.alpha
@@ -24,6 +26,8 @@ class World
 
 	lateinit var root: LevelData
 	lateinit var currentLevel: LevelData
+
+	val globalVariables = ObjectFloatMap<String>()
 
 	init
 	{
@@ -76,6 +80,7 @@ class LevelData
 	// insert kryo save here
 
 	lateinit var grammar: String
+	var seed: Long = 0
 	val connections = ObjectMap<String, String>()
 
 	companion object
@@ -84,6 +89,7 @@ class LevelData
 		{
 			val level = LevelData()
 			level.grammar = xml.get("Grammar")
+			level.seed = Random.random.nextLong()
 
 			val connectionsEl = xml.getChildByName("Connected")
 			if (connectionsEl != null)

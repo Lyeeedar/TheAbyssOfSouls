@@ -16,38 +16,12 @@ class GrammarRuleDataScope : AbstractGrammarRule()
 
 	lateinit var child: String
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		var newDefines = defines
-		var newVariables = variables
-		var newSymbols = symbolTable
-		var newArea = area
+		val cpy = args.copy(scopeArea, scopeDefines, scopeVariables, scopeSymbols)
 
-		if (scopeDefines)
-		{
-			newDefines = ObjectMap<String, String>()
-			newDefines.putAll(defines)
-		}
-
-		if (scopeVariables)
-		{
-			newVariables = ObjectFloatMap()
-			newVariables.putAll(variables)
-		}
-
-		if (scopeSymbols)
-		{
-			newSymbols = ObjectMap()
-			symbolTable.forEach { newSymbols.put(it.key, it.value.copy()) }
-		}
-
-		if (scopeArea)
-		{
-			newArea = area.copy()
-		}
-
-		val rule = ruleTable[child]
-		rule.execute(newArea, ruleTable, newDefines, newVariables, newSymbols, seed, deferredRules)
+		val rule = cpy.ruleTable[child]
+		rule.execute(cpy)
 	}
 
 	override fun parse(xml: XmlReader.Element)

@@ -1,11 +1,9 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
-import com.lyeeedar.GenerationGrammar.Area
 import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.GenerationGrammar.Pos
 import com.lyeeedar.Util.Array2D
@@ -19,17 +17,20 @@ class GrammarRulePrefab : AbstractGrammarRule()
 
 	lateinit var snap: Direction
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
 		val newSymbols = ObjectMap<Char, GrammarSymbol>()
-		symbolTable.forEach { newSymbols.put(it.key, it.value.copy()) }
+		args.symbolTable.forEach { newSymbols.put(it.key, it.value.copy()) }
+
+		val newArgs = args.copy(false, false, false, false)
+		newArgs.symbolTable = newSymbols
 
 		for (symbol in symbols)
 		{
-			symbol.execute(area, ruleTable, defines, variables, newSymbols, seed, deferredRules)
+			symbol.execute(newArgs)
 		}
 
-		val newArea = area.copy()
+		val newArea = args.area.copy()
 
 		val oldWidth = newArea.width
 		val oldHeight = newArea.height
@@ -69,7 +70,7 @@ class GrammarRulePrefab : AbstractGrammarRule()
 		if (newArea.isPoints)
 		{
 			newArea.points.clear()
-			newArea.addPointsWithin(area)
+			newArea.addPointsWithin(args.area)
 
 			for (x in 0..prefab.width-1)
 			{

@@ -12,13 +12,13 @@ class GrammarRuleDefer : AbstractGrammarRule()
 {
 	lateinit var rule: String
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		val rule = ruleTable[rule]
+		val rule = args.ruleTable[rule]
 
-		synchronized(deferredRules)
+		synchronized(args.deferredRules)
 		{
-			deferredRules.add(DeferredRule(rule, area, defines, variables, symbolTable, seed))
+			args.deferredRules.add(DeferredRule(rule, args))
 		}
 	}
 
@@ -28,40 +28,50 @@ class GrammarRuleDefer : AbstractGrammarRule()
 	}
 }
 
-data class DeferredRule(val rule: AbstractGrammarRule, val area: Area, val defines: ObjectMap<String, String>, val variables: ObjectFloatMap<String>, val symbolTable: ObjectMap<Char, GrammarSymbol>, val seed: Long)
+data class DeferredRule(val rule: AbstractGrammarRule, val args: RuleArguments)
 {
 	init
 	{
-		if (!areaMap.containsKey(area))
+		if (!areaMap.containsKey(args.area))
 		{
-			areaMap[area] = area.copy()
+			areaMap[args.area] = args.area.copy()
 		}
-		if (!defineMap.containsKey(defines))
+		if (!defineMap.containsKey(args.defines))
 		{
 			val newDefines = ObjectMap<String, String>()
-			newDefines.putAll(defines)
+			newDefines.putAll(args.defines)
 
-			defineMap[defines] = newDefines
+			defineMap[args.defines] = newDefines
 		}
-		if (!variableMap.containsKey(variables))
+		if (!variableMap.containsKey(args.variables))
 		{
 			val newVariables = ObjectFloatMap<String>()
-			newVariables.putAll(variables)
+			newVariables.putAll(args.variables)
 
-			variableMap[variables] = newVariables
+			variableMap[args.variables] = newVariables
 		}
-		if (!symbolMap.containsKey(symbolTable))
+		if (!symbolMap.containsKey(args.symbolTable))
 		{
 			val newSymbols = ObjectMap<Char, GrammarSymbol>()
-			symbolTable.forEach { newSymbols.put(it.key, it.value.copy()) }
+			args.symbolTable.forEach { newSymbols.put(it.key, it.value.copy()) }
 
-			symbolMap[symbolTable] = newSymbols
+			symbolMap[args.symbolTable] = newSymbols
 		}
 	}
 
-	suspend fun execute(ruleTable: ObjectMap<String, AbstractGrammarRule>, deferredRules: Array<DeferredRule>)
+	suspend fun execute(ruleTable: ObjectMap<String, AbstractGrammarRule>, deferredRules: Array<DeferredRule>, namedAreas: ObjectMap<String, Array<Area>>)
 	{
-		rule.execute(areaMap[area], ruleTable, defineMap[defines], variableMap[variables], symbolMap[symbolTable], seed, deferredRules)
+		val newArgs = RuleArguments()
+		newArgs.ruleTable = ruleTable
+		newArgs.deferredRules = deferredRules
+		newArgs.area = areaMap[args.area]
+		newArgs.defines = defineMap[args.defines]
+		newArgs.variables = variableMap[args.variables]
+		newArgs.symbolTable = symbolMap[args.symbolTable]
+		newArgs.seed = args.seed
+		newArgs.namedAreas = namedAreas
+
+		rule.execute(newArgs)
 	}
 
 	companion object

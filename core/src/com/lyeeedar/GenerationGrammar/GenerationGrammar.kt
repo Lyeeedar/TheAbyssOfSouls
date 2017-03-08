@@ -13,6 +13,7 @@ import com.lyeeedar.Components.SceneTimelineComponent
 import com.lyeeedar.Components.pos
 import com.lyeeedar.GenerationGrammar.Rules.AbstractGrammarRule
 import com.lyeeedar.GenerationGrammar.Rules.DeferredRule
+import com.lyeeedar.GenerationGrammar.Rules.RuleArguments
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
@@ -55,8 +56,20 @@ class GenerationGrammar
 		var deferred = Array<DeferredRule>()
 		DeferredRule.reset()
 
+		var namedAreas = ObjectMap<String, Array<Area>>()
+
+		val args = RuleArguments()
+		args.area = area
+		args.ruleTable = ruleTable
+		args.defines = ObjectMap()
+		args.variables = ObjectFloatMap()
+		args.symbolTable = ObjectMap()
+		args.seed = rng.nextLong()
+		args.deferredRules = deferred
+		args.namedAreas = namedAreas
+
 		runBlocking {
-			rule.execute(area, ruleTable, ObjectMap(), ObjectFloatMap(), ObjectMap(), rng.nextLong(), deferred)
+			rule.execute(args)
 		}
 
 		rng.freeTS()
@@ -67,7 +80,7 @@ class GenerationGrammar
 			for (deferredRule in deferred)
 			{
 				runBlocking {
-					deferredRule.execute(ruleTable, newDeferred)
+					deferredRule.execute(ruleTable, newDeferred, namedAreas)
 				}
 			}
 

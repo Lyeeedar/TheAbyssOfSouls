@@ -1,13 +1,9 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
 import com.exp4j.Helpers.unescapeCharacters
-import com.lyeeedar.GenerationGrammar.Area
-import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.freeTS
@@ -16,9 +12,9 @@ class GrammarRuleCondition : AbstractGrammarRule()
 {
 	val conditions = Array<Condition>()
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		val rng = Random.obtainTS(seed)
+		val rng = Random.obtainTS(args.seed)
 
 		for (i in 0..conditions.size-1)
 		{
@@ -26,13 +22,13 @@ class GrammarRuleCondition : AbstractGrammarRule()
 
 			val condition = conditions[i]
 
-			area.writeVariables(variables)
-			if (condition.condition == "else" || condition.condition.evaluate(variables, rng.nextLong()) > 0)
+			args.area.writeVariables(args.variables)
+			if (condition.condition == "else" || condition.condition.evaluate(args.variables, rng.nextLong()) > 0)
 			{
 				if (!condition.rule.isNullOrBlank())
 				{
-					val rule = ruleTable[condition.rule]
-					rule.execute(area, ruleTable, defines, variables, symbolTable, newSeed, deferredRules)
+					val rule = args.ruleTable[condition.rule]
+					rule.execute(args)
 				}
 
 				break

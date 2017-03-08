@@ -9,7 +9,7 @@
 		<Data Name="Rule" DefKey="Rules" meta:RefKey="Reference" />
 	</Definition>
 	<!--Rule Types-->
-	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Defer,Divide,Filter,Repeat,Rule,Split,Take),Symbol(Fill,Prefab,Symbol)" meta:RefKey="ReferenceDef" />
+	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Defer,Divide,Filter,NamedArea,Repeat,Rule,Split,Take),Symbol(Fill,Prefab,Symbol)" meta:RefKey="ReferenceDef" />
 	<!--Data Rules-->
 	<Definition Name="DataScope" meta:RefKey="StructDef">
 		<Data Name="Defines" Default="True" meta:RefKey="Boolean" />
@@ -65,6 +65,13 @@
 		<Data Name="Character" MaxLength="1" VisibleIf="Mode==Character" meta:RefKey="String" />
 		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 		<Data Name="Remainder" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
+	</Definition>
+	<Definition Name="NamedArea" meta:RefKey="StructDef">
+		<Data Name="Key" meta:RefKey="String" />
+		<Data Name="Mode" EnumValues="Random,Largest,Smallest" meta:RefKey="Enum" />
+		<Data Name="Count" Default="1" meta:RefKey="String" />
+		<Data Name="Parallel" meta:RefKey="Boolean" />
+		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 	</Definition>
 	<Definition Name="Repeat" Description="{Size}" meta:RefKey="StructDef">
 		<Data Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />

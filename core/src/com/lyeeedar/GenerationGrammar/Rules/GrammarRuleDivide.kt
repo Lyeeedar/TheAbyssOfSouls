@@ -1,13 +1,9 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
 import com.exp4j.Helpers.unescapeCharacters
-import com.lyeeedar.GenerationGrammar.Area
-import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.children
 import com.lyeeedar.Util.freeTS
@@ -20,11 +16,11 @@ class GrammarRuleDivide : AbstractGrammarRule()
 	var onX = true
 	var parallel = false
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		area.xMode = onX
+		args.area.xMode = onX
 
-		val rng = Random.obtainTS(seed)
+		val rng = Random.obtainTS(args.seed)
 
 		val jobs = Array<Job>(divisions.size)
 
@@ -37,64 +33,72 @@ class GrammarRuleDivide : AbstractGrammarRule()
 
 				val division = divisions[i]
 
-				area.writeVariables(variables)
-				val size = if (division.size == "remainder") area.size - current else Math.min(area.size - current, division.size.evaluate(variables, rng.nextLong()).round())
-				val newArea = area.copy()
-				newArea.pos = area.pos + current
+				args.area.writeVariables(args.variables)
+				val size = if (division.size == "remainder") args.area.size - current else Math.min(args.area.size - current, division.size.evaluate(args.variables, rng.nextLong()).round())
+				val newArea = args.area.copy()
+				newArea.pos = args.area.pos + current
 				newArea.size = size
 
 				if (!division.rule.isNullOrBlank() && newArea.hasContents)
 				{
 					newArea.points.clear()
-					newArea.addPointsWithin(area)
+					newArea.addPointsWithin(args.area)
 
-					val rule = ruleTable[division.rule]
+					val newArgs = args.copy(false, false, false, false)
+					newArgs.area = newArea
+					newArgs.seed = newSeed
+
+					val rule = args.ruleTable[division.rule]
 
 					if (parallel)
 					{
-						jobs.add(rule.executeAsync(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules))
+						jobs.add(rule.executeAsync(newArgs))
 					}
 					else
 					{
-						rule.execute(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules)
+						rule.execute(newArgs)
 					}
 				}
 
 				current += size
-				if (current == area.size) break
+				if (current == args.area.size) break
 			}
 		}
 		else
 		{
-			var current = area.size
+			var current = args.area.size
 			for (i in 0..divisions.size - 1)
 			{
 				val newSeed = rng.nextLong()
 
 				val division = divisions[i]
 
-				area.writeVariables(variables)
-				val size = if (division.size == "remainder") current else Math.min(current, division.size.evaluate(variables, rng.nextLong()).round())
+				args.area.writeVariables(args.variables)
+				val size = if (division.size == "remainder") current else Math.min(current, division.size.evaluate(args.variables, rng.nextLong()).round())
 				current -= size
 
-				val newArea = area.copy()
-				newArea.pos = area.pos + current
+				val newArea = args.area.copy()
+				newArea.pos = args.area.pos + current
 				newArea.size = size
 
 				if (!division.rule.isNullOrBlank() && newArea.hasContents)
 				{
 					newArea.points.clear()
-					newArea.addPointsWithin(area)
+					newArea.addPointsWithin(args.area)
 
-					val rule = ruleTable[division.rule]
+					val newArgs = args.copy(false, false, false, false)
+					newArgs.area = newArea
+					newArgs.seed = newSeed
+
+					val rule = args.ruleTable[division.rule]
 
 					if (parallel)
 					{
-						jobs.add(rule.executeAsync(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules))
+						jobs.add(rule.executeAsync(newArgs))
 					}
 					else
 					{
-						rule.execute(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules)
+						rule.execute(newArgs)
 					}
 				}
 
@@ -102,9 +106,9 @@ class GrammarRuleDivide : AbstractGrammarRule()
 			}
 		}
 
-		for (job in jobs) job.join()
-
 		rng.freeTS()
+
+		for (job in jobs) job.join()
 	}
 
 	override fun parse(xml: XmlReader.Element)

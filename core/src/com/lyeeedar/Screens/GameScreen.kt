@@ -63,7 +63,7 @@ class GameScreen : AbstractScreen()
 		val grammar = GenerationGrammar.load(level.grammar)
 
 		val start = System.nanoTime()
-		val level = grammar.generate(10, Global.engine, true)
+		val level = grammar.generate(level.seed, Global.engine, true)
 		val end = System.nanoTime()
 
 		level.updateMetaRegions()
@@ -207,6 +207,12 @@ class GameScreen : AbstractScreen()
 
 		DebugConsole.register("Suicide", "", fun (args, console): Boolean {
 			Global.engine.level!!.player.stats().hp = 0f
+
+			return true
+		})
+
+		DebugConsole.register("ChangeLevel", "", fun (args, console): Boolean {
+			World.world.changeLevel(args[0], args[0], Global.engine.level!!.player)
 
 			return true
 		})

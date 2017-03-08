@@ -12,38 +12,21 @@ import kotlinx.coroutines.experimental.launch
 
 abstract class AbstractGrammarRule
 {
-	suspend abstract fun execute(area: Area,
-								 ruleTable: ObjectMap<String, AbstractGrammarRule>,
-								 defines: ObjectMap<String, String>,
-								 variables: ObjectFloatMap<String>,
-								 symbolTable: ObjectMap<Char, GrammarSymbol>,
-								 seed: Long, deferredRules: Array<DeferredRule>)
+	suspend abstract fun execute(args: RuleArguments)
 
 	abstract fun parse(xml: XmlReader.Element)
 
-	fun executeAsync(area: Area,
-				ruleTable: ObjectMap<String, AbstractGrammarRule>,
-				defines: ObjectMap<String, String>,
-				variables: ObjectFloatMap<String>,
-				symbolTable: ObjectMap<Char, GrammarSymbol>,
-				seed: Long, deferredRules: Array<DeferredRule>): Job
+	fun executeAsync(args: RuleArguments): Job
 	{
-		area.allowedBoundsX = area.x
-		area.allowedBoundsY = area.y
-		area.allowedBoundsWidth = area.width
-		area.allowedBoundsHeight = area.height
+		val cpy = args.copy(false, true, true, true)
 
-		val newDefines = ObjectMap<String, String>(defines.size)
-		newDefines.putAll(defines)
-
-		val newVariables = ObjectFloatMap<String>(variables.size)
-		newVariables.putAll(variables)
-
-		val newSymbols = ObjectMap<Char, GrammarSymbol>(symbolTable.size)
-		symbolTable.forEach { newSymbols.put(it.key, it.value.copy()) }
+		cpy.area.allowedBoundsX = cpy.area.x
+		cpy.area.allowedBoundsY = cpy.area.y
+		cpy.area.allowedBoundsWidth = cpy.area.width
+		cpy.area.allowedBoundsHeight = cpy.area.height
 
 		return launch(CommonPool) {
-			execute(area, ruleTable, newDefines, newVariables, newSymbols, seed, deferredRules)
+			execute(cpy)
 		}
 	}
 
@@ -63,6 +46,7 @@ abstract class AbstractGrammarRule
 				"FLIP" -> GrammarRuleFlip()
 				"REPEAT" -> GrammarRuleRepeat()
 				"PREFAB" -> GrammarRulePrefab()
+				"NAMEDAREA" -> GrammarRuleNamedArea()
 				"ROTATE" -> GrammarRuleRotate()
 				"RULE" -> GrammarRuleRule()
 				"SCALE" -> GrammarRuleScale()
@@ -78,5 +62,68 @@ abstract class AbstractGrammarRule
 
 			return rule
 		}
+	}
+}
+
+class RuleArguments
+{
+	lateinit var area: Area
+	lateinit var ruleTable: ObjectMap<String, AbstractGrammarRule>
+	lateinit var defines: ObjectMap<String, String>
+	lateinit var variables: ObjectFloatMap<String>
+	lateinit var symbolTable: ObjectMap<Char, GrammarSymbol>
+	var seed: Long = 0
+	lateinit var deferredRules: Array<DeferredRule>
+	lateinit var namedAreas: ObjectMap<String, Array<Area>>
+
+	fun copy(scopeArea: Boolean = false, scopeDefines: Boolean = false, scopeVariables: Boolean = false, scopeSymbols: Boolean = false): RuleArguments
+	{
+		val args = RuleArguments()
+
+		args.ruleTable = ruleTable
+		args.seed = seed
+		args.deferredRules = deferredRules
+		args.namedAreas = namedAreas
+
+		if (scopeArea)
+		{
+			args.area = area.copy()
+		}
+		else
+		{
+			args.area = area
+		}
+
+		if (scopeDefines)
+		{
+			args.defines = ObjectMap<String, String>()
+			args.defines.putAll(defines)
+		}
+		else
+		{
+			args.defines = defines
+		}
+
+		if (scopeVariables)
+		{
+			args.variables = ObjectFloatMap()
+			args.variables.putAll(variables)
+		}
+		else
+		{
+			args.variables = variables
+		}
+
+		if (scopeSymbols)
+		{
+			args.symbolTable = ObjectMap()
+			symbolTable.forEach { args.symbolTable.put(it.key, it.value.copy()) }
+		}
+		else
+		{
+			args.symbolTable = symbolTable
+		}
+
+		return args
 	}
 }

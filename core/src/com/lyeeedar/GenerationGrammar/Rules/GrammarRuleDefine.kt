@@ -1,13 +1,9 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
 import com.exp4j.Helpers.unescapeCharacters
-import com.lyeeedar.GenerationGrammar.Area
-import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import ktx.collections.set
 
 class GrammarRuleDefine : AbstractGrammarRule()
@@ -15,26 +11,38 @@ class GrammarRuleDefine : AbstractGrammarRule()
 	lateinit var key: String
 	lateinit var value: String
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		var expanded = value
-		for (def in defines)
+		if (value == "area")
 		{
-			expanded = expanded.replace(def.key, def.value)
+			if (!args.namedAreas.containsKey(key))
+			{
+				args.namedAreas[key] = Array()
+			}
+
+			args.namedAreas[key].add(args.area.copy())
 		}
-
-		defines[key] = value
-
-		try
+		else
 		{
-			area.writeVariables(variables)
+			var expanded = value
+			for (def in args.defines)
+			{
+				expanded = expanded.replace(def.key, def.value)
+			}
 
-			val value = expanded.toLowerCase().evaluate(variables, seed)
-			variables.put(key.toLowerCase(), value)
-		}
-		catch (ex: Exception)
-		{
+			args.defines[key] = value
 
+			try
+			{
+				args.area.writeVariables(args.variables)
+
+				val value = expanded.toLowerCase().evaluate(args.variables, args.seed)
+				args.variables.put(key.toLowerCase(), value)
+			}
+			catch (ex: Exception)
+			{
+
+			}
 		}
 	}
 

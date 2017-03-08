@@ -183,7 +183,7 @@ class TileSystem : AbstractSystem()
 				return test.water()
 			}
 
-			return null
+			return tile.contents[SpaceSlot.FLOOR]?.water() ?: tile.contents[SpaceSlot.BELOWENTITY]?.water()
 		}
 
 		val water = getWater(tile) ?: return

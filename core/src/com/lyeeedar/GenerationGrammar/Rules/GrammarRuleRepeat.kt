@@ -1,13 +1,9 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
 import com.exp4j.Helpers.unescapeCharacters
-import com.lyeeedar.GenerationGrammar.Area
-import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.freeTS
 import com.lyeeedar.Util.round
@@ -21,14 +17,14 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 	lateinit var remainder: String
 	var parallel = false
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		val rng = Random.obtainTS(seed)
+		val rng = Random.obtainTS(args.seed)
 
-		area.xMode = onX
+		args.area.xMode = onX
 
 		var current = 0
-		val totalSize = area.size
+		val totalSize = args.area.size
 
 		val jobs = Array<Job>(8)
 
@@ -36,29 +32,33 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 		{
 			val newSeed = rng.nextLong()
 
-			area.writeVariables(variables)
-			val size = size.evaluate(variables, rng.nextLong()).round()
+			args.area.writeVariables(args.variables)
+			val size = size.evaluate(args.variables, rng.nextLong()).round()
 
-			val newArea = area.copy()
-			newArea.pos = area.pos + current
+			val newArea = args.area.copy()
+			newArea.pos = args.area.pos + current
 			newArea.size = Math.min(size, totalSize-current)
 
 			if (current + size <= totalSize)
 			{
 				newArea.points.clear()
-				newArea.addPointsWithin(area)
+				newArea.addPointsWithin(args.area)
 
 				if (newArea.hasContents)
 				{
-					val rule = ruleTable[rule]
+					val newArgs = args.copy(false, false, false, false)
+					newArgs.area = newArea
+					newArgs.seed = newSeed
+
+					val rule = args.ruleTable[rule]
 
 					if (parallel)
 					{
-						jobs.add(rule.executeAsync(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules))
+						jobs.add(rule.executeAsync(newArgs))
 					}
 					else
 					{
-						rule.execute(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules)
+						rule.execute(newArgs)
 					}
 				}
 			}
@@ -67,19 +67,23 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 				if (!remainder.isNullOrBlank())
 				{
 					newArea.points.clear()
-					newArea.addPointsWithin(area)
+					newArea.addPointsWithin(args.area)
 
 					if (newArea.hasContents)
 					{
-						val rule = ruleTable[remainder]
+						val newArgs = args.copy(false, false, false, false)
+						newArgs.area = newArea
+						newArgs.seed = newSeed
+
+						val rule = args.ruleTable[remainder]
 
 						if (parallel)
 						{
-							jobs.add(rule.executeAsync(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules))
+							jobs.add(rule.executeAsync(newArgs))
 						}
 						else
 						{
-							rule.execute(newArea, ruleTable, defines, variables, symbolTable, newSeed, deferredRules)
+							rule.execute(newArgs)
 						}
 					}
 				}
@@ -90,9 +94,9 @@ class GrammarRuleRepeat : AbstractGrammarRule()
 			current += size
 		}
 
-		for (job in jobs) job.join()
-
 		rng.freeTS()
+
+		for (job in jobs) job.join()
 	}
 
 	override fun parse(xml: XmlReader.Element)

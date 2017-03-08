@@ -1,25 +1,20 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
-import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.GenerationGrammar.Area
-import com.lyeeedar.GenerationGrammar.GrammarSymbol
 
 class GrammarRuleFlip : AbstractGrammarRule()
 {
 	var onX = true
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
 		if (onX)
 		{
-			area.flipX = !area.flipX
+			args.area.flipX = !args.area.flipX
 		}
 		else
 		{
-			area.flipY = !area.flipY
+			args.area.flipY = !args.area.flipY
 		}
 	}
 

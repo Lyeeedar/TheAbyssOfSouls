@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.sin
 import com.lyeeedar.Global
+import com.lyeeedar.Level.World
 import com.lyeeedar.Sin
 import com.lyeeedar.Systems.level
 import com.lyeeedar.Util.children
@@ -81,6 +82,11 @@ class Interaction
 			{
 				variableMap.put("sinful", 1f)
 			}
+		}
+
+		for (entry in World.world.globalVariables)
+		{
+			variableMap.put(entry.key, entry.value)
 		}
 
 		return variableMap

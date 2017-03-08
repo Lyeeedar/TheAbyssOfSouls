@@ -1,13 +1,8 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
-import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
 import com.lyeeedar.Direction
-import com.lyeeedar.GenerationGrammar.Area
-import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.freeTS
 
@@ -26,42 +21,42 @@ class GrammarRuleScale : AbstractGrammarRule()
 
 	lateinit var snap: Direction
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		val oldWidth = area.width
-		val oldHeight = area.height
+		val oldWidth = args.area.width
+		val oldHeight = args.area.height
 
-		val rng = Random.obtainTS(seed)
+		val rng = Random.obtainTS(args.seed)
 
-		area.writeVariables(variables)
-		val x = xEqn.evaluate(variables, rng.nextLong())
-		val y = yEqn.evaluate(variables, rng.nextLong())
+		args.area.writeVariables(args.variables)
+		val x = xEqn.evaluate(args.variables, rng.nextLong())
+		val y = yEqn.evaluate(args.variables, rng.nextLong())
 
 		rng.freeTS()
 
 		if (mode == Mode.ADDITIVE)
 		{
-			area.width += x.toInt()
-			area.height += y.toInt()
+			args.area.width += x.toInt()
+			args.area.height += y.toInt()
 		}
 		else if (mode == Mode.MULTIPLICATIVE)
 		{
-			area.width = (area.width * x).toInt()
-			area.height = (area.height * y).toInt()
+			args.area.width = (args.area.width * x).toInt()
+			args.area.height = (args.area.height * y).toInt()
 		}
 		else if (mode == Mode.ABSOLUTE)
 		{
-			area.width = x.toInt()
-			area.height = y.toInt()
+			args.area.width = x.toInt()
+			args.area.height = y.toInt()
 		}
 		else throw Exception("Unhandled scale mode '$mode'!")
 
-		val diffX = area.width - oldWidth
-		val diffY = area.height - oldHeight
+		val diffX = args.area.width - oldWidth
+		val diffY = args.area.height - oldHeight
 
 		if (snap.x == 0)
 		{
-			area.x -= diffX / 2
+			args.area.x -= diffX / 2
 		}
 		else if (snap.x < 0)
 		{
@@ -69,12 +64,12 @@ class GrammarRuleScale : AbstractGrammarRule()
 		}
 		else if (snap.x > 0)
 		{
-			area.x = (area.x + oldWidth) - area.width
+			args.area.x = (args.area.x + oldWidth) - args.area.width
 		}
 
 		if (snap.y == 0)
 		{
-			area.y -= diffY / 2
+			args.area.y -= diffY / 2
 		}
 		else if (snap.y < 0)
 		{
@@ -82,16 +77,16 @@ class GrammarRuleScale : AbstractGrammarRule()
 		}
 		else if (snap.y > 0)
 		{
-			area.y = (area.y + oldHeight) - area.height
+			args.area.y = (args.area.y + oldHeight) - args.area.height
 		}
 
-		if (area.isPoints)
+		if (args.area.isPoints)
 		{
-			for (point in area.points.toList())
+			for (point in args.area.points.toList())
 			{
-				if (point.x < area.x || point.y < area.y || point.x >= area.x+area.width || point.y >= area.y+area.height)
+				if (point.x < args.area.x || point.y < args.area.y || point.x >= args.area.x+args.area.width || point.y >= args.area.y+args.area.height)
 				{
-					area.points.removeValue(point, true)
+					args.area.points.removeValue(point, true)
 				}
 			}
 		}

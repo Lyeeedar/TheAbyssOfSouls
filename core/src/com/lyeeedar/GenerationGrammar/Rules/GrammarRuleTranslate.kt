@@ -1,12 +1,7 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
-import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectFloatMap
-import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
-import com.lyeeedar.GenerationGrammar.Area
-import com.lyeeedar.GenerationGrammar.GrammarSymbol
 import com.lyeeedar.GenerationGrammar.Pos
 import com.lyeeedar.Util.Random
 import com.lyeeedar.Util.freeTS
@@ -23,37 +18,37 @@ class GrammarRuleTranslate : AbstractGrammarRule()
 	lateinit var yEqn: String
 	lateinit var mode: Mode
 
-	suspend override fun execute(area: Area, ruleTable: ObjectMap<String, AbstractGrammarRule>, defines: ObjectMap<String, String>, variables: ObjectFloatMap<String>, symbolTable: ObjectMap<Char, GrammarSymbol>, seed: Long, deferredRules: Array<DeferredRule>)
+	suspend override fun execute(args: RuleArguments)
 	{
-		val rng = Random.obtainTS(seed)
+		val rng = Random.obtainTS(args.seed)
 
-		area.writeVariables(variables)
-		val x = xEqn.evaluate(variables, rng.nextLong()).toInt()
-		val y = yEqn.evaluate(variables, rng.nextLong()).toInt()
+		args.area.writeVariables(args.variables)
+		val x = xEqn.evaluate(args.variables, rng.nextLong()).toInt()
+		val y = yEqn.evaluate(args.variables, rng.nextLong()).toInt()
 
 		rng.freeTS()
 
 		if (mode == Mode.RELATIVE)
 		{
-			area.x += x
-			area.y += y
+			args.area.x += x
+			args.area.y += y
 
-			if (area.isPoints)
+			if (args.area.isPoints)
 			{
-				area.points.forEachIndexed { i, pos -> area.points[i] = Pos(pos.x + x, pos.y + y) }
+				args.area.points.forEachIndexed { i, pos -> args.area.points[i] = Pos(pos.x + x, pos.y + y) }
 			}
 		}
 		else if (mode == Mode.ABSOLUTE)
 		{
-			val dx = x - area.x
-			val dy = y - area.y
+			val dx = x - args.area.x
+			val dy = y - args.area.y
 
-			area.x += dx
-			area.y += dy
+			args.area.x += dx
+			args.area.y += dy
 
-			if (area.isPoints)
+			if (args.area.isPoints)
 			{
-				area.points.forEachIndexed { i, pos -> area.points[i] = Pos(pos.x + dx, pos.y + dy) }
+				args.area.points.forEachIndexed { i, pos -> args.area.points[i] = Pos(pos.x + dx, pos.y + dy) }
 			}
 		}
 	}
