@@ -9,7 +9,7 @@
 		<Data Name="Rule" DefKey="Rules" meta:RefKey="Reference" />
 	</Definition>
 	<!--Rule Types-->
-	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Defer,Divide,Filter,NamedArea,Repeat,Rule,Split,Take),Symbol(Fill,Prefab,Symbol)" meta:RefKey="ReferenceDef" />
+	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Defer,Divide,Filter,NamedArea,Repeat,Rule,Split,Take),Symbol(Fill,Prefab,Symbol),Debug(Breakpoint)" meta:RefKey="ReferenceDef" />
 	<!--Data Rules-->
 	<Definition Name="DataScope" meta:RefKey="StructDef">
 		<Data Name="Defines" Default="True" meta:RefKey="Boolean" />
@@ -20,7 +20,8 @@
 	</Definition>
 	<Definition Name="Define" meta:RefKey="StructDef">
 		<Data Name="Key" meta:RefKey="String" />
-		<Data Name="Value" meta:RefKey="String" />
+		<Data Name="Value" VisibleIf="NamedRegion==false" meta:RefKey="String" />
+		<Data Name="NamedRegion" VisibleIf="Value==null" meta:RefKey="Boolean" />
 	</Definition>
 	<!--Area Rules-->
 	<Definition Name="Flip" meta:RefKey="StructDef">
@@ -72,6 +73,7 @@
 		<Data Name="Count" Default="1" meta:RefKey="String" />
 		<Data Name="Parallel" meta:RefKey="Boolean" />
 		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
+		<Data Name="Remainder" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 	</Definition>
 	<Definition Name="Repeat" Description="{Size}" meta:RefKey="StructDef">
 		<Data Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
@@ -88,7 +90,7 @@
 			<Attribute Name="Parallel" meta:RefKey="Boolean" />
 		</Attributes>
 		<Data Name="Split" Description="{Side} : {Size}" meta:RefKey="Struct">
-			<Data Name="Side" EnumValues="North,South,East,West,Remainder" meta:RefKey="Enum" />
+			<Data Name="Side" EnumValues="North,South,East,West,Edge,Remainder" meta:RefKey="Enum" />
 			<Data Name="Size" Default="1" VisibleIf="Side != Remainder" meta:RefKey="String" />
 			<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 		</Data>
@@ -122,5 +124,9 @@
 		<Data Name="BelowEntity" Extends="Entity" meta:RefKey="Struct" />
 		<Data Name="Entity" Extends="Entity" meta:RefKey="Struct" />
 		<Data Name="AboveEntity" Extends="Entity" meta:RefKey="Struct" />
+	</Definition>
+	<!--Debug Rules-->
+	<Definition Name="Breakpoint" SkipIfDefault="False" meta:RefKey="StructDef">
+		<Data Name="Name" meta:RefKey="String" />
 	</Definition>
 </Definitions>

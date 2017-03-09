@@ -1,10 +1,25 @@
 <AI meta:X="0" meta:Y="0" xmlns:meta="Editor">
-	<Root meta:X="210" meta:Y="-13" meta:RefKey="Random">
-		<Node meta:X="411" meta:Y="-19.666666666666686" meta:RefKey="Sequence">
-			<Action Key="pos" Value="move entityPos random 1" meta:RefKey="SetValue" />
-			<Action Key="pos" meta:RefKey="MoveTo" />
+	<Root meta:X="132.07903970331552" meta:Y="-6.0401614258781677" meta:RefKey="Any">
+		<Node meta:X="414.10091787985596" meta:Y="-182.06723975083293" meta:RefKey="Sequence">
+			<Action Condition="StartTile==0" meta:RefKey="Conditional" />
+			<Action Key="StartTile" Value="entityPos" meta:RefKey="SetValue" />
 		</Node>
-		<Action meta:RefKey="Wait" />
-		<Action meta:RefKey="Wait" />
+		<Node meta:X="324.19461443431453" meta:Y="90.49081701038736" meta:RefKey="Priority">
+			<Node meta:X="580.66417478949052" meta:Y="-4.147397142814139" meta:RefKey="Sequence">
+				<!--Stay close to spawn-->
+				<Action Condition="dist entityPos startTile &gt;6" meta:RefKey="Conditional" />
+				<Action Key="startTile" Distance="4" meta:RefKey="MoveTo" />
+			</Node>
+			<Node meta:X="531.76992812088508" meta:Y="171.54451759874291" meta:RefKey="Random">
+				<Node meta:X="710.05675672411667" meta:Y="202.73313722913971" meta:RefKey="Sequence">
+					<Action Key="pos" Value="move entityPos random 1" meta:RefKey="SetValue" />
+					<Action Key="pos" meta:RefKey="MoveTo" />
+				</Node>
+				<Action meta:RefKey="Wait" />
+				<Action meta:RefKey="Wait" />
+				<Action meta:RefKey="Wait" />
+				<Action meta:RefKey="Wait" />
+			</Node>
+		</Node>
 	</Root>
 </AI>

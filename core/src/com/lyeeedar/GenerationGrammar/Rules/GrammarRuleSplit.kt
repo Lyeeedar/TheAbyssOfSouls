@@ -17,6 +17,7 @@ class GrammarRuleSplit : AbstractGrammarRule()
 		SOUTH,
 		EAST,
 		WEST,
+		EDGE,
 		REMAINDER
 	}
 
@@ -118,6 +119,27 @@ class GrammarRuleSplit : AbstractGrammarRule()
 				nextArea.height = currentArea.height
 				nextArea.points.clear()
 				nextArea.addPointsWithin(currentArea)
+			}
+			else if (split.side == SplitSide.EDGE)
+			{
+				currentArea.xMode = true
+				currentArea.writeVariables(args.variables)
+				val size = split.size.evaluate(args.variables, rng.nextLong()).round()
+
+				if (!newArea.isPoints)
+				{
+					newArea.points.clear()
+					newArea.convertToPoints()
+				}
+
+				nextArea.x = currentArea.x + size
+				nextArea.y = currentArea.y + size
+				nextArea.width = currentArea.width - size * 2
+				nextArea.height = currentArea.height - size * 2
+				nextArea.points.clear()
+				nextArea.addPointsWithin(newArea)
+
+				for (point in nextArea.points) newArea.points.removeValue(point, true)
 			}
 			else if (split.side == SplitSide.REMAINDER)
 			{

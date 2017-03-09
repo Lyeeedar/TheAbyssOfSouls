@@ -1,7 +1,7 @@
 <GenerationGrammar meta:X="-179" meta:Y="-39" GUID="de4174d2-5f44-4910-8975-295b7e3d1429" xmlns:meta="Editor">
 	<Width>150</Width>
 	<Height>75</Height>
-	<Ambient>89,89,89,255</Ambient>
+	<Ambient>56,56,56,255</Ambient>
 	<Root meta:RefKey="Node">7c5b7af5-a80c-4976-95ae-bf38812d3b13</Root>
 	<Rules>
 		<Node meta:X="24.670927047729492" meta:Y="-36.447784423828125" GUID="7c5b7af5-a80c-4976-95ae-bf38812d3b13">
@@ -186,8 +186,8 @@
 										<Count>75+rnd(50)</Count>
 									</Blocker>
 									<Screenshake>
-										<Time>0.00537332054</Time>
 										<Duration LockDuration="False">0.490959018</Duration>
+										<Time>0.00537332054</Time>
 										<Strength>3</Strength>
 										<Speed>15</Speed>
 									</Screenshake>
@@ -490,14 +490,14 @@
 				</Division>
 			</Rule>
 		</Node>
-		<Node meta:X="1421.0463003430802" meta:Y="1087.1777796336607" GUID="3b90d7a6-4eb5-4837-ac07-fcf75cb60a2f">
-			<!--Spawn death-->
+		<Node meta:X="1421.0462646484375" meta:Y="1087.177734375" GUID="3b90d7a6-4eb5-4837-ac07-fcf75cb60a2f">
 			<Rule meta:RefKey="NamedArea">
 				<Key>building</Key>
 				<Rule meta:RefKey="Node">6b76c8ef-762a-42cb-83d8-f5e69f0cd892</Rule>
+				<Remainder meta:RefKey="Node">c6d131d4-6ad8-4dce-8a02-2be2f2a99f34</Remainder>
 			</Rule>
 		</Node>
-		<Node meta:X="2024.4771424295327" meta:Y="1094.7168297835826" GUID="dad23297-abea-41ae-9f72-de63ff115bab">
+		<Node meta:X="2024.4771728515625" meta:Y="1094.716796875" GUID="dad23297-abea-41ae-9f72-de63ff115bab">
 			<Rule meta:RefKey="Symbol">
 				<Character>s</Character>
 				<FloorDetail>
@@ -581,10 +581,14 @@
 				<Character>s</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="1810.7806396484375" meta:Y="931.8419189453125" GUID="9836b7d1-5d7f-43a7-9395-190dad2691cd">
+		<Node meta:X="1807.3105717961535" meta:Y="924.90178324074441" GUID="9836b7d1-5d7f-43a7-9395-190dad2691cd">
 			<Rule meta:RefKey="Define">
 				<Key>building</Key>
 				<Value>area</Value>
+			</Rule>
+			<Rule meta:RefKey="Take">
+				<Count>2</Count>
+				<Rule meta:RefKey="Node">0df2d5ed-065f-4708-aafc-39bf787614af</Rule>
 			</Rule>
 		</Node>
 		<Node meta:X="785.700927734375" meta:Y="1240.30859375" GUID="5da9611b-8029-48e4-8fb0-1fb525b7c9a7">
@@ -657,17 +661,62 @@
 				<Snap>South</Snap>
 			</Rule>
 		</Node>
-		<Node meta:X="1838.3093737811889" meta:Y="1091.119770554531" GUID="374c70ff-974d-43a1-876e-cfa794292b22">
+		<Node meta:X="1838.309326171875" meta:Y="1091.1197509765625" GUID="374c70ff-974d-43a1-876e-cfa794292b22">
 			<Rule meta:RefKey="Take">
 				<Count>1</Count>
 				<Rule meta:RefKey="Node">dad23297-abea-41ae-9f72-de63ff115bab</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1674.6042848114562" meta:Y="1085.7347347331586" GUID="6b76c8ef-762a-42cb-83d8-f5e69f0cd892">
+		<Node meta:X="1674.604248046875" meta:Y="1085.7347412109375" GUID="6b76c8ef-762a-42cb-83d8-f5e69f0cd892">
+			<!--Spawn death-->
 			<Rule meta:RefKey="Filter">
 				<Mode>Character</Mode>
 				<Character>.</Character>
 				<Rule meta:RefKey="Node">374c70ff-974d-43a1-876e-cfa794292b22</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1669.4283540232298" meta:Y="1272.2480198301496" GUID="c6d131d4-6ad8-4dce-8a02-2be2f2a99f34">
+			<!--Sloth monster-->
+			<Rule meta:RefKey="Take">
+				<Mode>Corner</Mode>
+				<Count>1</Count>
+				<Rule meta:RefKey="Node">bb0989a2-91f8-44f8-a953-09367529f142</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1917.4283540232298" meta:Y="1272.2480198301496" GUID="bb0989a2-91f8-44f8-a953-09367529f142">
+			<Rule meta:RefKey="Symbol">
+				<Character>M</Character>
+				<Entity>
+					<Extends>Sloth</Extends>
+				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>M</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="2072.7806396484375" meta:Y="931.8419189453125" GUID="0df2d5ed-065f-4708-aafc-39bf787614af">
+			<Rule meta:RefKey="Symbol">
+				<Character>m</Character>
+				<AboveEntity>
+					<Components>
+						<Renderable>
+							<Renderable meta:RefKey="ParticleEffect">
+								<Name>Motes</Name>
+								<Colour>137,225,242,255</Colour>
+							</Renderable>
+						</Renderable>
+						<Light>
+							<Colour>162,248,255,137</Colour>
+							<Distance>3</Distance>
+						</Light>
+						<AI>
+							<AI>RandomWander</AI>
+						</AI>
+					</Components>
+				</AboveEntity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>m</Character>
 			</Rule>
 		</Node>
 	</Rules>

@@ -1,0 +1,59 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<DirectionalSprite>
+			<Animations>
+				<Animation>
+					<Name>idle</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/sloth_demon_idle</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/sloth_demon_idle</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+				<Animation>
+					<Name>attack</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/sloth_demon_attack</Name>
+						<DrawActualSize>true</DrawActualSize>
+						<UpdateRate>0.2</UpdateRate>
+						<Blend>true</Blend>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/sloth_demon_attack</Name>
+						<DrawActualSize>true</DrawActualSize>
+						<UpdateRate>0.2</UpdateRate>
+						<Blend>true</Blend>
+					</Down>
+				</Animation>
+			</Animations>
+		</DirectionalSprite>
+		<Statistics>
+			<Faction>sloth</Faction>
+			<HP>10</HP>
+			<Stamina>10</Stamina>
+			<Sight>7</Sight>
+			<Death meta:RefKey="ParticleEffect">
+				<Name>Death</Name>
+			</Death>
+		</Statistics>
+		<Drop>
+			<Drop>
+				<Drop meta:RefKey="AtonementSpirit">
+					<Sin>Sloth</Sin>
+				</Drop>
+			</Drop>
+		</Drop>
+		<Position>
+			<Moveable>false</Moveable>
+		</Position>
+		<AI>
+			<AI>StationaryMonster</AI>
+		</AI>
+		<Combo>
+			<ComboTree>Entities/SlothCombo</ComboTree>
+		</Combo>
+	</Components>
+</Entity>

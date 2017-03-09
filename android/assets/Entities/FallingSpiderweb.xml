@@ -1,0 +1,121 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<Renderable>
+			<Renderable meta:RefKey="TilingSprite">
+				<Name>web</Name>
+				<Mode>Masked</Mode>
+				<Mask>Masks/web</Mask>
+				<Sprite meta:RefKey="Sprite">
+					<Name>white</Name>
+				</Sprite>
+			</Renderable>
+		</Renderable>
+		<SceneTimeline>
+			<Loop>true</Loop>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<Blocker>
+						<Time>0.0406586044</Time>
+						<Count>50+rnd(25)</Count>
+					</Blocker>
+					<Blocker>
+						<Time>0.144153237</Time>
+						<Count>25+rnd(13)</Count>
+					</Blocker>
+					<Blocker>
+						<Time>0.235819876</Time>
+						<Count>15+rnd(10)</Count>
+					</Blocker>
+					<Proximity>
+						<Time>0.4859067</Time>
+						<Range>2</Range>
+						<Type>Named</Type>
+						<Name>Spider</Name>
+					</Proximity>
+				</Timeline>
+				<Timeline>
+					<SourceRenderable>
+						<Duration LockDuration="False">0.107190862</Duration>
+						<Renderable meta:RefKey="TilingSprite">
+							<Name>web</Name>
+							<Mode>Masked</Mode>
+							<Mask>Masks/web</Mask>
+							<Sprite meta:RefKey="Sprite">
+								<Name>white</Name>
+								<Colour>255,255,255,172</Colour>
+							</Sprite>
+						</Renderable>
+					</SourceRenderable>
+					<SourceRenderable>
+						<Time>0.107190862</Time>
+						<Duration LockDuration="False">0.08575268</Duration>
+						<Renderable meta:RefKey="TilingSprite">
+							<Name>web</Name>
+							<Mode>Masked</Mode>
+							<Mask>Masks/web</Mask>
+							<Sprite meta:RefKey="Sprite">
+								<Name>white</Name>
+								<Colour>161,221,255,201</Colour>
+							</Sprite>
+						</Renderable>
+					</SourceRenderable>
+					<SourceRenderable>
+						<Time>0.192943543</Time>
+						<Duration LockDuration="False">0.156103373</Duration>
+						<Renderable meta:RefKey="TilingSprite">
+							<Name>web</Name>
+							<Mode>Masked</Mode>
+							<Mask>Masks/web</Mask>
+							<Sprite meta:RefKey="Sprite">
+								<Name>white</Name>
+								<Colour>42,168,255,255</Colour>
+							</Sprite>
+						</Renderable>
+					</SourceRenderable>
+					<SourceRenderable>
+						<Time>0.349046916</Time>
+						<Duration LockDuration="False">0.138321221</Duration>
+						<Renderable meta:RefKey="Sprite">
+							<Name>blank</Name>
+						</Renderable>
+					</SourceRenderable>
+					<SourceRenderable>
+						<Time>0.487368137</Time>
+						<Duration LockDuration="False">0.08986047</Duration>
+						<Renderable meta:RefKey="TilingSprite">
+							<Name>web</Name>
+							<Mode>Masked</Mode>
+							<Mask>Masks/web</Mask>
+							<Sprite meta:RefKey="Sprite">
+								<Name>white</Name>
+								<Colour>255,255,255,172</Colour>
+							</Sprite>
+						</Renderable>
+					</SourceRenderable>
+				</Timeline>
+				<Timeline>
+					<SourceAnimation>
+						<Time>0.280343771</Time>
+						<Duration LockDuration="False">0.0687031448</Duration>
+						<SizeEnd>0</SizeEnd>
+						<OneWay>true</OneWay>
+					</SourceAnimation>
+					<SourceAnimation>
+						<Time>0.487368137</Time>
+						<Duration LockDuration="False">0.06864342</Duration>
+						<SizeStart>0</SizeStart>
+						<OneWay>true</OneWay>
+					</SourceAnimation>
+				</Timeline>
+				<Timeline>
+					<AddComponent>
+						<Time>0.3126395</Time>
+					</AddComponent>
+					<RemoveComponent>
+						<Time>0.487368137</Time>
+					</RemoveComponent>
+				</Timeline>
+			</SceneTimeline>
+		</SceneTimeline>
+	</Components>
+</Entity>

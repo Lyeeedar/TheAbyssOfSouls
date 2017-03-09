@@ -38,6 +38,23 @@
 					<Key>ascend</Key>
 					<Next meta:RefKey="Level">8b251f47-2663-47c9-81a0-00cdd7898197</Next>
 				</Level>
+				<Level>
+					<Key>death</Key>
+					<Next meta:RefKey="Level">704c527e-4756-4438-992e-2b95d5d676d3</Next>
+				</Level>
+				<Level>
+					<Key>descend</Key>
+					<Next meta:RefKey="Level">704c527e-4756-4438-992e-2b95d5d676d3</Next>
+				</Level>
+			</Connected>
+		</Level>
+		<Level meta:X="1072.6666666666667" meta:Y="-11.666666666666686" GUID="704c527e-4756-4438-992e-2b95d5d676d3">
+			<Grammar>Level4</Grammar>
+			<Connected>
+				<Level>
+					<Key>ascend</Key>
+					<Next meta:RefKey="Level">34187d6f-022e-434d-b8d1-5d18794e7506</Next>
+				</Level>
 			</Connected>
 		</Level>
 	</Levels>

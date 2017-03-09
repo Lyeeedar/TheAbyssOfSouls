@@ -105,11 +105,13 @@ class TileSystem : AbstractSystem()
 
 	fun processPit(tile: Tile)
 	{
-		val pit = tile.contents[SpaceSlot.FLOOR]?.pit() ?: return
+		val pit = tile.contents[SpaceSlot.FLOOR]?.pit() ?: tile.contents[SpaceSlot.FLOORDETAIL]?.pit() ?: return
 
 		for (slot in SpaceSlot.EntityValues)
 		{
 			val entity = tile.contents[slot] ?: continue
+
+			if (!entity.pos().canFall) continue
 
 			val trailing = entity.trailing()
 			if (trailing != null)

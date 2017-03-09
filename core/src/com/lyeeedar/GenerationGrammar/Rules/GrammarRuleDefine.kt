@@ -49,7 +49,8 @@ class GrammarRuleDefine : AbstractGrammarRule()
 	override fun parse(xml: XmlReader.Element)
 	{
 		key = xml.get("Key")
-		value = xml.get("Value").unescapeCharacters()
+		if (xml.getBoolean("NamedRegion", false)) value = "area"
+		else value = xml.get("Value").unescapeCharacters()
 
 		when (key)
 		{

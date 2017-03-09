@@ -4,15 +4,13 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Components.PositionComponent
-import com.lyeeedar.Components.RenderableComponent
-import com.lyeeedar.Components.pos
-import com.lyeeedar.Components.renderable
+import com.lyeeedar.Components.*
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Animation.ExpandAnimation
 import com.lyeeedar.Renderables.Animation.LeapAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.Animation.SpinAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.SpaceSlot
@@ -20,6 +18,135 @@ import com.lyeeedar.Systems.render
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.UnsmoothedPath
 import com.lyeeedar.Util.getRotation
+
+class SourceRenderableAction() : AbstractTimelineAction()
+{
+	lateinit var renderable: Renderable
+
+	var restoreOriginal = true
+	var originalRenderable: Renderable? = null
+
+	override fun enter()
+	{
+		val source = parent.parentEntity ?: parent.sourceTile!!.contents.firstOrNull{ it.sceneTimeline()?.sceneTimeline == parent } ?: return
+
+		if (source.renderable() == null)
+		{
+			source.add(RenderableComponent())
+		}
+		else
+		{
+			originalRenderable = source.renderable().renderable
+		}
+
+		source.renderable().renderable = renderable.copy()
+	}
+
+	override fun exit()
+	{
+		val source = parent.parentEntity ?: parent.sourceTile!!.contents.firstOrNull{ it.sceneTimeline()?.sceneTimeline == parent } ?: return
+
+		if (originalRenderable != null)
+		{
+			source.renderable().renderable = originalRenderable!!
+		}
+		else
+		{
+			source.remove(RenderableComponent::class.java)
+		}
+
+		originalRenderable = null
+	}
+
+	override fun copy(parent: SceneTimeline): AbstractTimelineAction
+	{
+		val action = SourceRenderableAction()
+		action.parent = parent
+
+		action.startTime = startTime
+		action.duration = duration
+
+		action.renderable = renderable
+		action.restoreOriginal = restoreOriginal
+
+		return action
+	}
+
+	override fun parse(xml: XmlReader.Element)
+	{
+		renderable = AssetManager.loadRenderable(xml.getChildByName("Renderable"))
+		restoreOriginal = xml.getBoolean("RestoreOriginal", true)
+	}
+}
+
+class SourceAnimationAction() : AbstractTimelineAction()
+{
+	enum class Animation
+	{
+		EXPAND,
+		SPIN
+	}
+
+	lateinit var anim: Animation
+
+	var startSize = 1f
+	var endSize = 1f
+	var oneWay = true
+
+	var spinAngle = 0f
+
+	override fun enter()
+	{
+		val source = parent.parentEntity ?: parent.sourceTile!!.contents.firstOrNull{ it.sceneTimeline()?.sceneTimeline == parent } ?: return
+		val sourceRenderable = source.renderable()?.renderable ?: return
+
+		if (anim == Animation.EXPAND)
+		{
+			sourceRenderable.animation = ExpandAnimation.obtain().set(duration, startSize, endSize, oneWay)
+		}
+		else if (anim == Animation.SPIN)
+		{
+			sourceRenderable.animation = SpinAnimation.obtain().set(duration, spinAngle)
+		}
+		else
+		{
+			throw Exception("Unhandled animation type '$anim'!")
+		}
+	}
+
+	override fun exit()
+	{
+
+	}
+
+	override fun copy(parent: SceneTimeline): AbstractTimelineAction
+	{
+		val action = SourceAnimationAction()
+		action.parent = parent
+
+		action.startTime = startTime
+		action.duration = duration
+
+		action.anim = anim
+		action.startSize = startSize
+		action.endSize = endSize
+		action.oneWay = oneWay
+		action.spinAngle = spinAngle
+
+		return action
+	}
+
+	override fun parse(xml: XmlReader.Element)
+	{
+		anim = Animation.valueOf(xml.get("Animation", "Expand").toUpperCase())
+		startSize = xml.getFloat("SizeStart", 1f)
+		endSize = xml.getFloat("SizeEnd", 1f)
+		oneWay = xml.getBoolean("OneWay", false)
+		spinAngle = xml.getFloat("Angle", 0f)
+	}
+
+}
+
 
 class DestinationRenderableAction() : AbstractTimelineAction()
 {

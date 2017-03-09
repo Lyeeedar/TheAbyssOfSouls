@@ -1,0 +1,44 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<DirectionalSprite>
+			<Animations>
+				<Animation>
+					<Name>idle</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/icespider</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/icespider</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+			</Animations>
+		</DirectionalSprite>
+		<Statistics>
+			<Faction>spider</Faction>
+			<HP>10</HP>
+			<Stamina>10</Stamina>
+			<Sight>4</Sight>
+			<Death meta:RefKey="ParticleEffect">
+				<Name>Death</Name>
+			</Death>
+		</Statistics>
+		<Name>
+			<Name>Spider</Name>
+		</Name>
+		<Position>
+			<CanFall>false</CanFall>
+		</Position>
+		<AI>
+			<AI>BasicMonsterRandomWalk</AI>
+		</AI>
+		<Combo>
+			<ComboTree>Entities/SpiderCombo</ComboTree>
+		</Combo>
+		<Light>
+			<Colour>121,233,255,77</Colour>
+			<Distance>3</Distance>
+		</Light>
+	</Components>
+</Entity>

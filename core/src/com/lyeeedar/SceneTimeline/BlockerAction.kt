@@ -2,6 +2,7 @@ package com.lyeeedar.SceneTimeline
 
 import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.evaluate
+import com.lyeeedar.Components.name
 import com.lyeeedar.Components.task
 import com.lyeeedar.Global
 import com.lyeeedar.Pathfinding.ShadowCastCache
@@ -67,11 +68,12 @@ class ProximityAction() : AbstractBlockerAction()
 	enum class Type
 	{
 		ALL,
-		PLAYERONLY
+		NAMED
 	}
 
 	lateinit var type: Type
 	var range: Int = 1
+	lateinit var name: String
 
 	var shadowCast: ShadowCastCache? = null
 
@@ -90,12 +92,12 @@ class ProximityAction() : AbstractBlockerAction()
 
 			val visible = shadowCast!!.getShadowCast(parent.sourceTile!!.level.grid, parent.sourceTile!!.x, parent.sourceTile!!.y, range, parent.parentEntity)
 
-			if (type == Type.PLAYERONLY)
+			if (type == Type.NAMED)
 			{
 				for (pos in visible)
 				{
 					val tile = parent.sourceTile!!.level.getTile(pos) ?: continue
-					if (tile.contents[SpaceSlot.ENTITY] == tile.level.player)
+					if (tile.contents[SpaceSlot.ENTITY]?.name()?.name == name)
 					{
 						isExited = true
 						exit()
@@ -134,6 +136,7 @@ class ProximityAction() : AbstractBlockerAction()
 
 		action.type = type
 		action.range = range
+		action.name = name
 
 		return action
 	}
@@ -142,6 +145,7 @@ class ProximityAction() : AbstractBlockerAction()
 	{
 		range = xml.getInt("Range", 1)
 		type = Type.valueOf(xml.get("Type", "All").toUpperCase())
+		name = xml.get("Name", "")
 	}
 }
 

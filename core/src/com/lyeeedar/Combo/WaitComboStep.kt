@@ -2,15 +2,12 @@ package com.lyeeedar.Combo
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.PositionComponent
 import com.lyeeedar.Components.RenderableComponent
 import com.lyeeedar.Components.pos
-import com.lyeeedar.Components.tile
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
-import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Point
@@ -19,7 +16,7 @@ class WaitComboStep: ComboStep()
 {
 	var particle: ParticleEffect? = null
 
-	override fun activate(entity: Entity, direction: Direction, target: Point)
+	override fun activate(entity: Entity, direction: Direction, target: Point, tree: ComboTree)
 	{
 		if (particle != null)
 		{

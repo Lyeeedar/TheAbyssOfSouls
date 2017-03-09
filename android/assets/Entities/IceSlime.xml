@@ -1,0 +1,35 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<Renderable>
+			<Renderable meta:RefKey="Sprite">
+				<Name>Oryx/Custom/heroes/slime_1</Name>
+				<DrawActualSize>true</DrawActualSize>
+				<Colour>200,251,255,255</Colour>
+			</Renderable>
+		</Renderable>
+		<Statistics>
+			<Faction>spider</Faction>
+			<HP>10</HP>
+			<Stamina>10</Stamina>
+			<Sight>15</Sight>
+		</Statistics>
+		<AI>
+			<AI>StationaryMonster</AI>
+		</AI>
+		<Drop>
+			<Drop>
+				<Drop meta:RefKey="AtonementSpirit">
+					<Sin>Anger</Sin>
+				</Drop>
+			</Drop>
+		</Drop>
+		<Position />
+		<Light>
+			<Colour>130,240,255,163</Colour>
+			<Distance>4</Distance>
+		</Light>
+		<Combo>
+			<ComboTree>Entities/IceSlimeCombo</ComboTree>
+		</Combo>
+	</Components>
+</Entity>

@@ -6,6 +6,7 @@ import com.exp4j.Helpers.evaluate
 import com.exp4j.Helpers.unescapeCharacters
 import com.lyeeedar.Util.*
 import kotlinx.coroutines.experimental.Job
+import ktx.collections.toGdxArray
 
 class GrammarRuleNamedArea : AbstractGrammarRule()
 {
@@ -22,6 +23,7 @@ class GrammarRuleNamedArea : AbstractGrammarRule()
 	var parallel = false
 
 	lateinit var rule: String
+	lateinit var remainder: String
 
 	suspend override fun execute(args: RuleArguments)
 	{
@@ -51,8 +53,7 @@ class GrammarRuleNamedArea : AbstractGrammarRule()
 			val area = when (mode)
 			{
 				Mode.RANDOM -> rooms.removeRandom(rng)
-				Mode.LARGEST -> rooms[i]
-				Mode.SMALLEST -> rooms[i]
+				Mode.LARGEST, Mode.SMALLEST -> rooms[i]
 				else -> throw Exception("Unhandled named area mode '$mode'!")
 			}
 
@@ -72,6 +73,34 @@ class GrammarRuleNamedArea : AbstractGrammarRule()
 			}
 		}
 
+		if (!remainder.isNullOrBlank())
+		{
+			val remaining = when (mode)
+			{
+				Mode.RANDOM -> rooms
+				Mode.LARGEST, Mode.SMALLEST -> rooms.toList().slice(count..rooms.size-1).toGdxArray()
+				else -> throw Exception("Unhandled named area mode '$mode'!")
+			}
+
+			for (room in remaining)
+			{
+				val newArgs = args.copy()
+				newArgs.area = room.copy()
+				newArgs.seed = rng.nextLong()
+
+				val rule = args.ruleTable[remainder]
+
+				if (parallel)
+				{
+					jobs.add(rule.executeAsync(newArgs))
+				}
+				else
+				{
+					rule.execute(newArgs)
+				}
+			}
+		}
+
 		rng.freeTS()
 
 		for (job in jobs) job.join()
@@ -84,5 +113,6 @@ class GrammarRuleNamedArea : AbstractGrammarRule()
 		mode = Mode.valueOf(xml.get("Mode", "RANDOM").toUpperCase())
 		count = xml.get("Count", "1").toLowerCase().replace("%", "#count").unescapeCharacters()
 		rule = xml.get("Rule")
+		remainder = xml.get("Remainder", "")
 	}
 }

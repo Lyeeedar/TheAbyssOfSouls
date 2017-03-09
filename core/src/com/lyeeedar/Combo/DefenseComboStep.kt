@@ -38,7 +38,7 @@ class DefenseComboStep : ComboStep()
 	lateinit var moveType: MoveType
 	lateinit var moveDirection: MoveDirection
 
-	override fun activate(entity: Entity, direction: Direction, target: Point)
+	override fun activate(entity: Entity, direction: Direction, target: Point, tree: ComboTree)
 	{
 		val origDirection = direction
 

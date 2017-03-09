@@ -18,7 +18,7 @@ abstract class ComboStep
 	var anim: String = "attack"
 	var canTurn: Boolean = false
 
-	abstract fun activate(entity: Entity, direction: Direction, target: Point)
+	abstract fun activate(entity: Entity, direction: Direction, target: Point, tree: ComboTree)
 	abstract fun getAllValid(entity: Entity, direction: Direction): Array<Point>
 	abstract fun isValid(entity: Entity, direction: Direction, target: Point, tree: ComboTree): Boolean
 	abstract fun parse(xml: XmlReader.Element)
@@ -60,8 +60,15 @@ class ComboTree
 	lateinit var comboStep: ComboStep
 	val random = Array<ComboTree>()
 	var cost = 0
+	var cooldown = 0
 	var weight = 1
+	var attackPower = 100
 	val keybinding = FastEnumMap<ComboKey, ComboTree>(ComboKey::class.java)
+
+	val chooseChance: Int
+		get() = if (cooldownTimer > 0) 0 else weight
+
+	var cooldownTimer = 0
 
 	companion object
 	{
@@ -74,6 +81,7 @@ class ComboTree
 		fun load(xml: XmlReader.Element): ComboTree
 		{
 			val isKeyBinding = xml.get("NextMode", "Random").toUpperCase() == "KEYBINDING"
+			val attackPower = xml.getInt("AttackPower", 100)
 
 			val combosEl = xml.getChildByName("Combos")
 			val descMap = ObjectMap<String, ComboStep>()
@@ -98,6 +106,8 @@ class ComboTree
 
 				current.cost = el.getInt("Cost", 0)
 				current.weight = el.getInt("Weight", 1)
+				current.cooldown = el.getInt("Cooldown", 0)
+				current.attackPower = attackPower
 
 				if (isKeyBinding)
 				{

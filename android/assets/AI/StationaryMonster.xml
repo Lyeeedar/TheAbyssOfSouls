@@ -1,0 +1,8 @@
+<AI meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Root meta:X="204" meta:Y="0" meta:RefKey="Sequence">
+		<Action Key="Enemies" Type="Enemies" meta:RefKey="GetAllVisible" />
+		<Action Input="Enemies" Output="Enemy" meta:RefKey="Pick" />
+		<Action Input="Enemy" Output="Pos" meta:RefKey="ConvertTo" />
+		<Action Key="Pos" meta:RefKey="Combo" />
+	</Root>
+</AI>

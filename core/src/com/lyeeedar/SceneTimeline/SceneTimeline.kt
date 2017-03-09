@@ -198,6 +198,8 @@ abstract class AbstractTimelineAction()
 				"PROXIMITY" -> ProximityAction()
 				"SIGNAL" -> SignalAction()
 
+				"SOURCERENDERABLE" -> SourceRenderableAction()
+				"SOURCEANIMATION" -> SourceAnimationAction()
 				"DESTINATIONRENDERABLE" -> DestinationRenderableAction()
 				"MOVEMENTRENDERABLE" -> MovementRenderableAction()
 				"SCREENSHAKE" -> ScreenShakeAction()
@@ -212,6 +214,9 @@ abstract class AbstractTimelineAction()
 
 				"SPEECH" -> SpeechAction()
 				"INTERACTION" -> InteractionAction()
+
+				"ADDCOMPONENT" -> AddComponentAction()
+				"REMOVECOMPONENT" -> RemoveComponentAction()
 
 				// ARGH everything broke
 				else -> throw RuntimeException("Invalid scene timeline action type: $name")

@@ -15,6 +15,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Pathfinding.ShadowCastCache
 import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.SceneTimeline.DamageAction
 import com.lyeeedar.SceneTimeline.SceneTimeline
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Point
@@ -40,7 +41,7 @@ class SceneTimelineComboStep : ComboStep()
 	lateinit var sceneTimeline: SceneTimeline
 	var stepForward = false
 
-	val shadowCast = ShadowCastCache(SpaceSlot.ENTITY, FOV.RIPPLE_LOOSE)
+	val shadowCast = ShadowCastCache(SpaceSlot.ENTITY, FOV.RIPPLE_TIGHT)
 
 	fun canMove(rootEntity: Entity, entity: Entity, direction: Direction, toMove: Array<Entity>? = null): Boolean
 	{
@@ -147,7 +148,7 @@ class SceneTimelineComboStep : ComboStep()
 		anim.startDelay = 0.03f * Math.abs(diff)
 	}
 
-	override fun activate(entity: Entity, direction: Direction, target: Point)
+	override fun activate(entity: Entity, direction: Direction, target: Point, tree: ComboTree)
 	{
 		if (stepForward && !entity.pos().moveLocked)
 		{
@@ -180,6 +181,17 @@ class SceneTimelineComboStep : ComboStep()
 		for (tile in hitTiles)
 		{
 			tile.timelines.add(timeline)
+		}
+
+		for (t in timeline.timelines)
+		{
+			for (a in t.actions)
+			{
+				if (a is DamageAction)
+				{
+					a.attackPower = tree.attackPower
+				}
+			}
 		}
 
 		val timelineEntity = Entity()

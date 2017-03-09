@@ -2,7 +2,7 @@
 	<Components>
 		<Position />
 		<AI>
-			<AI>BasicMonster</AI>
+			<AI>BasicMonsterSentry</AI>
 		</AI>
 		<Statistics>
 			<Faction>toad</Faction>

@@ -19,7 +19,6 @@
 						<Renderable meta:RefKey="ParticleEffect">
 							<Name>slash</Name>
 						</Renderable>
-						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
 				</Timeline>
 				<Timeline>
@@ -45,7 +44,6 @@
 							<Name>slash</Name>
 							<FlipX>true</FlipX>
 						</Renderable>
-						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
 				</Timeline>
 				<Timeline>
@@ -70,7 +68,6 @@
 						<Renderable meta:RefKey="ParticleEffect">
 							<Name>TongueGrab</Name>
 						</Renderable>
-						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
 				</Timeline>
 				<Timeline>
@@ -96,6 +93,7 @@
 	<Random>
 		<Node meta:X="301" meta:Y="0" meta:RefKey="ComboNode">
 			<Desc>Wait</Desc>
+			<Cooldown>6</Cooldown>
 			<Random>
 				<Node meta:X="532" meta:Y="-1.5241578817367554" meta:RefKey="ComboNode">
 					<Desc>Grab</Desc>

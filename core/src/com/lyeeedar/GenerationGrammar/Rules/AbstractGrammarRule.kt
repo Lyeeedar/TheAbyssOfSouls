@@ -36,6 +36,7 @@ abstract class AbstractGrammarRule
 		{
 			val rule: AbstractGrammarRule = if (xml.name == "Node") GrammarRuleNode() else when (xml.getAttribute("meta:RefKey").toUpperCase())
 			{
+				"BREAKPOINT" -> GrammarRuleBreakpoint()
 				"CONDITION" -> GrammarRuleCondition()
 				"DATASCOPE" -> GrammarRuleDataScope()
 				"DEFINE" -> GrammarRuleDefine()

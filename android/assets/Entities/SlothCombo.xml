@@ -1,0 +1,358 @@
+<Combo meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Combos>
+		<Combo meta:RefKey="Wait">
+			<Name>Wait</Name>
+			<Animation>attack</Animation>
+		</Combo>
+		<Combo meta:RefKey="Wait">
+			<Name>WaitCharge1</Name>
+			<Animation>attack</Animation>
+			<Particle>
+				<Name>Charge</Name>
+				<Colour>255,255,255,59</Colour>
+			</Particle>
+		</Combo>
+		<Combo meta:RefKey="Wait">
+			<Name>WaitCharge2</Name>
+			<Animation>attack</Animation>
+			<Particle>
+				<Name>Charge</Name>
+			</Particle>
+		</Combo>
+		<Combo meta:RefKey="Wait">
+			<Name>WaitIdle</Name>
+			<Animation>idle</Animation>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SpinSlash</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.4513889</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>SpinSlash</Name>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.2013889</Time>
+						<Amount>2</Amount>
+					</Damage>
+					<Knockback>
+						<Time>0.268055528</Time>
+						<MoveType>Leap</MoveType>
+					</Knockback>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line>#@#</Line>
+				<Line>###</Line>
+			</HitPattern>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Strike</Name>
+			<Animation>attack</Animation>
+			<CanTurn>true</CanTurn>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.211111128</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>Thrust</Name>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.126388893</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Aoe1</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.386882126</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>GroundEruption</Name>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Screenshake>
+						<Duration LockDuration="False">0.110836506</Duration>
+						<Time>0.004182504</Time>
+						<Strength>3</Strength>
+					</Screenshake>
+					<Damage>
+						<Time>0.227946758</Time>
+					</Damage>
+					<Knockback>
+						<Time>0.290684432</Time>
+					</Knockback>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line>#@#</Line>
+				<Line>###</Line>
+			</HitPattern>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Aoe2</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.386882126</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>GroundEruption</Name>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Screenshake>
+						<Duration LockDuration="False">0.110836506</Duration>
+						<Time>0.004182504</Time>
+						<Strength>3</Strength>
+					</Screenshake>
+					<Damage>
+						<Time>0.227946758</Time>
+					</Damage>
+					<Knockback>
+						<Time>0.290684432</Time>
+					</Knockback>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#####</Line>
+				<Line>#...#</Line>
+				<Line>#.@.#</Line>
+				<Line>#...#</Line>
+				<Line>#####</Line>
+			</HitPattern>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Aoe3</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.386882126</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>GroundEruption</Name>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Screenshake>
+						<Duration LockDuration="False">0.110836506</Duration>
+						<Time>0.004182504</Time>
+						<Strength>3</Strength>
+					</Screenshake>
+					<Damage>
+						<Time>0.227946758</Time>
+					</Damage>
+					<Knockback>
+						<Time>0.290684432</Time>
+					</Knockback>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#######</Line>
+				<Line>#.....#</Line>
+				<Line>#.....#</Line>
+				<Line>#..@..#</Line>
+				<Line>#.....#</Line>
+				<Line>#.....#</Line>
+				<Line>#######</Line>
+			</HitPattern>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Aoe4</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.386882126</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>GroundEruption</Name>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Screenshake>
+						<Duration LockDuration="False">0.110836506</Duration>
+						<Time>0.004182504</Time>
+						<Strength>3</Strength>
+					</Screenshake>
+					<Damage>
+						<Time>0.227946758</Time>
+					</Damage>
+					<Knockback>
+						<Time>0.290684432</Time>
+					</Knockback>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#########</Line>
+				<Line>#.......#</Line>
+				<Line>#.......#</Line>
+				<Line>#.......#</Line>
+				<Line>#...@...#</Line>
+				<Line>#.......#</Line>
+				<Line>#.......#</Line>
+				<Line>#.......#</Line>
+				<Line>#########</Line>
+			</HitPattern>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Aoe5</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.386882126</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>GroundEruption</Name>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Screenshake>
+						<Duration LockDuration="False">0.110836506</Duration>
+						<Time>0.004182504</Time>
+						<Strength>3</Strength>
+					</Screenshake>
+					<Damage>
+						<Time>0.227946758</Time>
+					</Damage>
+					<Knockback>
+						<Time>0.290684432</Time>
+					</Knockback>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###########</Line>
+				<Line>#.........#</Line>
+				<Line>#.........#</Line>
+				<Line>#.........#</Line>
+				<Line>#.........#</Line>
+				<Line>#....@....#</Line>
+				<Line>#.........#</Line>
+				<Line>#.........#</Line>
+				<Line>#.........#</Line>
+				<Line>#.........#</Line>
+				<Line>###########</Line>
+			</HitPattern>
+		</Combo>
+	</Combos>
+	<Random>
+		<Node meta:X="297" meta:Y="-64" meta:RefKey="ComboNode">
+			<Desc>Wait</Desc>
+			<Weight>7</Weight>
+			<Random>
+				<Node meta:X="528" meta:Y="-64" meta:RefKey="ComboNode">
+					<Desc>Strike</Desc>
+					<Random>
+						<Node meta:X="759" meta:Y="-64" meta:RefKey="ComboNode">
+							<Desc>Strike</Desc>
+							<Random>
+								<Node meta:X="990" meta:Y="-64" meta:RefKey="ComboNode">
+									<Desc>Strike</Desc>
+									<Random>
+										<Node meta:X="1858.1802978515625" meta:Y="150.16458129882812" GUID="7ce9a671-4ea8-44d3-aa64-646145f1bd53" meta:RefKey="ComboNode">
+											<Desc>WaitIdle</Desc>
+											<Random>
+												<Node meta:X="2089.180419921875" meta:Y="150.16458129882812" meta:RefKey="ComboNode">
+													<Desc>WaitIdle</Desc>
+												</Node>
+											</Random>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+						<Node meta:X="752.84771728515625" meta:Y="129.41563415527344" meta:RefKey="ComboNode">
+							<Desc>Wait</Desc>
+							<Random>
+								<Node meta:X="983.84771728515625" meta:Y="129.41563415527344" meta:RefKey="ComboNode">
+									<Desc>SpinSlash</Desc>
+									<Random>
+										<Node meta:X="1858.1802978515625" meta:Y="150.16458129882812" GUID="7ce9a671-4ea8-44d3-aa64-646145f1bd53" meta:RefKey="ComboNode">
+											<Desc>WaitIdle</Desc>
+											<Random>
+												<Node meta:X="2089.180419921875" meta:Y="150.16458129882812" meta:RefKey="ComboNode">
+													<Desc>WaitIdle</Desc>
+												</Node>
+											</Random>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+		<Node meta:X="287.76956176757812" meta:Y="414.26611328125" meta:RefKey="ComboNode">
+			<Desc>WaitCharge1</Desc>
+			<Cooldown>15</Cooldown>
+			<Random>
+				<Node meta:X="507.96295166015625" meta:Y="417.00961303710938" meta:RefKey="ComboNode">
+					<Desc>WaitCharge2</Desc>
+					<Random>
+						<Node meta:X="728.1563720703125" meta:Y="412.89437866210937" meta:RefKey="ComboNode">
+							<Desc>Aoe1</Desc>
+							<Random>
+								<Node meta:X="959.1563720703125" meta:Y="412.89437866210937" meta:RefKey="ComboNode">
+									<Desc>Aoe2</Desc>
+									<Random>
+										<Node meta:X="1190.1563720703125" meta:Y="412.89437866210937" meta:RefKey="ComboNode">
+											<Desc>Aoe3</Desc>
+											<Random>
+												<Node meta:X="1387.9552001953125" meta:Y="413.48614501953125" meta:RefKey="ComboNode">
+													<Desc>Aoe4</Desc>
+													<Random>
+														<Node meta:X="1618.9552001953125" meta:Y="413.48614501953125" meta:RefKey="ComboNode">
+															<Desc>Aoe5</Desc>
+															<Random>
+																<Node meta:X="1858.1802978515625" meta:Y="150.16458129882812" GUID="7ce9a671-4ea8-44d3-aa64-646145f1bd53" meta:RefKey="ComboNode">
+																	<Desc>WaitIdle</Desc>
+																	<Random>
+																		<Node meta:X="2089.180419921875" meta:Y="150.16458129882812" meta:RefKey="ComboNode">
+																			<Desc>WaitIdle</Desc>
+																		</Node>
+																	</Random>
+																</Node>
+															</Random>
+														</Node>
+													</Random>
+												</Node>
+											</Random>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+	</Random>
+</Combo>

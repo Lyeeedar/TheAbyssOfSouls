@@ -72,7 +72,7 @@ class ActionCombo : AbstractAction()
 				}
 			}
 
-			combo.currentCombo = combo.currentCombo!!.random.asSequence().weightedRandom(fun (c) = c.weight)
+			combo.currentCombo = combo.currentCombo!!.random.asSequence().weightedRandom(fun (c) = c.chooseChance)
 
 			state = if (combo.currentCombo != null) ExecutionState.RUNNING else ExecutionState.COMPLETED
 		}
@@ -82,7 +82,7 @@ class ActionCombo : AbstractAction()
 			val validCombos = Array<Pair>()
 			for (c in combo.combos.random)
 			{
-				if (c.comboStep.isValid(entity, pos.facing, target, c))
+				if (c.cooldownTimer == 0 && c.comboStep.isValid(entity, pos.facing, target, c))
 				{
 					validCombos.add(Pair(c, pos.facing))
 				}
@@ -95,7 +95,7 @@ class ActionCombo : AbstractAction()
 					for (dir in Direction.CardinalValues)
 					{
 						if (dir == pos.facing) continue // we already checked these
-						if (c.comboStep.isValid(entity, dir, target, c))
+						if (c.cooldownTimer == 0 && c.comboStep.isValid(entity, dir, target, c))
 						{
 							validCombos.add(Pair(c, dir))
 							if (dir.cardinalClockwise == pos.facing || dir.cardinalAnticlockwise == pos.facing) validCombos.add(Pair(c, dir))
@@ -106,7 +106,7 @@ class ActionCombo : AbstractAction()
 
 			if (validCombos.size > 0)
 			{
-				val chosen = validCombos.asSequence().weightedRandom(fun (c) = c.combo.weight)
+				val chosen = validCombos.asSequence().weightedRandom(fun (c) = c.combo.chooseChance)
 
 				if (chosen != null)
 				{
@@ -117,7 +117,7 @@ class ActionCombo : AbstractAction()
 					val task = entity.task()
 					task.tasks.add(nextTask)
 
-					combo.currentCombo = combo.currentCombo!!.random.asSequence().weightedRandom(fun(c) = c.weight)
+					combo.currentCombo = combo.currentCombo!!.random.asSequence().weightedRandom(fun(c) = c.chooseChance)
 
 					state = ExecutionState.RUNNING
 				}

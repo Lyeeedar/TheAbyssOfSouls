@@ -26,7 +26,7 @@ class ChargeComboStep : ComboStep()
 	var damage: Int = 0
 	var knockbackDist: Int = 1
 
-	override fun activate(entity: Entity, direction: Direction, target: Point)
+	override fun activate(entity: Entity, direction: Direction, target: Point, tree: ComboTree)
 	{
 		val pos = entity.pos()!!
 		val start = pos.tile!!
@@ -114,7 +114,7 @@ class ChargeComboStep : ComboStep()
 
 						if (damage > 0)
 						{
-							e.stats().dealDamage(damage, ElementType.NONE, 0f)
+							e.stats().dealDamage((damage * tree.attackPower) / 100f, ElementType.NONE, 0f)
 
 							val sprite = entity.renderable()?.renderable as? Sprite ?: continue
 							sprite.colourAnimation = BlinkAnimation.obtain().set(Colour(1f, 0.5f, 0.5f, 1f), sprite.colour, 0.15f, true)

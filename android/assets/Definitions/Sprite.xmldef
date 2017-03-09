@@ -10,6 +10,7 @@
 		<Data Name="Name" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Mode" EnumValues="Premade,PremadeDirectional,Masked" SkipIfDefault="False" meta:RefKey="Enum" />
 		<Data Name="Mask" BasePath="Sprites" StripExtension="True" AllowedFileTypes="png" VisibleIf="Mode == Masked" meta:RefKey="File" />
+		<Data Name="Sprite" Keys="Sprite" VisibleIf="Mode == Masked" meta:RefKey="Reference" />
 		<Data Name="Front" Keys="Sprite" VisibleIf="Mode == Premade" meta:RefKey="Reference" />
 		<Data Name="Top" Keys="Sprite" VisibleIf="Mode == Premade" meta:RefKey="Reference" />
 		<Data Name="Overhang" Keys="Sprite" VisibleIf="Mode == Premade" meta:RefKey="Reference" />

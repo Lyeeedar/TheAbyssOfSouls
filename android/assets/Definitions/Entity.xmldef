@@ -53,6 +53,7 @@
 				<Data Name="SpaceSlot" EnumValues="Entity,BelowEntity,AboveEntity" meta:RefKey="Enum" />
 				<Data Name="Size" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
 				<Data Name="Moveable" Default="True" meta:RefKey="Boolean" />
+				<Data Name="CanFall" Default="True" meta:RefKey="Boolean" />
 			</Data>
 			<Data Name="Renderable" meta:RefKey="Struct">
 				<Data Name="IsShared" meta:RefKey="Boolean" />

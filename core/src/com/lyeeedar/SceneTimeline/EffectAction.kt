@@ -20,6 +20,8 @@ class DamageAction() : AbstractTimelineAction()
 	lateinit var element: ElementType
 	var elementalConversion: Float = 0.0f
 
+	var attackPower = 100
+
 	override fun enter()
 	{
 		for (tile in parent.destinationTiles)
@@ -27,7 +29,7 @@ class DamageAction() : AbstractTimelineAction()
 			for (entity in tile.contents)
 			{
 				val stats = entity.stats() ?: continue
-				stats.dealDamage(amount, element, elementalConversion)
+				stats.dealDamage((amount * attackPower) / 100.0f, element, elementalConversion)
 			}
 		}
 	}
@@ -48,6 +50,7 @@ class DamageAction() : AbstractTimelineAction()
 		action.amount = amount
 		action.element = element
 		action.elementalConversion = elementalConversion
+		action.attackPower = attackPower
 
 		return action
 	}

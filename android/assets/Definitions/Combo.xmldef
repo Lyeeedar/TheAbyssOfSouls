@@ -1,6 +1,7 @@
 <Definitions xmlns:meta="Editor">
 	<Definition Name="Combo" AllowReferenceLinks="False" meta:RefKey="GraphStruct">
 		<Data Name="NextMode" EnumValues="Random,Keybinding" meta:RefKey="Enum" />
+		<Data Name="AttackPower" Type="Int" Min="100" Default="100" meta:RefKey="Number" />
 		<Data Name="Combos" meta:RefKey="Collection">
 			<Data Name="Combo" Keys="Wait,Scene,Charge,Defense" meta:RefKey="Reference" />
 		</Data>
@@ -18,6 +19,7 @@
 		<Data Name="Name" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Description" SkipIfDefault="False" meta:RefKey="MultilineString" />
 		<Data Name="ComboHint" SkipIfDefault="False" meta:RefKey="MultilineString" />
+		<Data Name="AttackPower" Type="Int" Min="100" Default="100" meta:RefKey="Number" />
 		<Data Name="NextMode" EnumValues="Random,Keybinding" meta:RefKey="Enum" />
 		<Data Name="Combos" meta:RefKey="Collection">
 			<Data Name="Combo" Keys="Wait,Scene,Charge,Defense" meta:RefKey="Reference" />
@@ -34,6 +36,7 @@
 	<Definition Name="ComboNode" Description="{Desc}" TextColour="44,209,47" meta:RefKey="GraphStructDef">
 		<Data Name="Desc" TextColour="209,179,44" meta:RefKey="String" />
 		<Data Name="Cost" Type="Int" Min="0" VisibleIf="Root.NextMode==Keybinding" meta:RefKey="Number" />
+		<Data Name="Cooldown" Type="Int" Min="0" VisibleIf="Root.NextMode==Random" meta:RefKey="Number" />
 		<Data Name="Weight" Min="0" Max="999999" Default="1" VisibleIf="Root.NextMode==Random" meta:RefKey="Number" />
 		<Data Name="Random" VisibleIf="Root.NextMode==Random" meta:RefKey="Collection">
 			<Data Name="Node" Keys="ComboNode" meta:RefKey="GraphReference" />

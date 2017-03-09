@@ -130,7 +130,7 @@ class StatisticsComponent: AbstractComponent()
 		if (deathEl != null) deathEffect = AssetManager.loadParticleEffect(deathEl)
 	}
 
-	fun dealDamage(amount: Int, element: ElementType, elementalConversion: Float)
+	fun dealDamage(amount: Float, element: ElementType, elementalConversion: Float)
 	{
 		var elementalDam = (amount * elementalConversion).ciel()
 		val baseDam = amount - elementalDam

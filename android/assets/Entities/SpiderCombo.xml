@@ -1,0 +1,83 @@
+<Combo meta:X="-1.3888888888888888" meta:Y="-1.3888888888888888" xmlns:meta="Editor">
+	<Combos>
+		<Combo meta:RefKey="Wait">
+			<Name>Wait</Name>
+			<Animation>idle</Animation>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashLeft</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line>.@.</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashRight</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+							<FlipX>true</FlipX>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line>.@.</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+	</Combos>
+	<Random>
+		<Node meta:X="296.42752075195312" meta:Y="176.80232238769531" meta:RefKey="ComboNode">
+			<Desc>SlashLeft</Desc>
+			<Weight>4</Weight>
+			<Random>
+				<Node meta:X="528.95166015625" meta:Y="176.80232238769531" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<Random>
+						<Node meta:X="746.66180419921875" meta:Y="179.85063171386719" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<Random>
+								<Node meta:X="977.66180419921875" meta:Y="179.85063171386719" meta:RefKey="ComboNode">
+									<Desc>Wait</Desc>
+									<Random>
+										<Node meta:X="1208.6617431640625" meta:Y="179.85063171386719" meta:RefKey="ComboNode">
+											<Desc>Wait</Desc>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+	</Random>
+</Combo>
