@@ -1,0 +1,59 @@
+<Interaction meta:X="0" meta:Y="0" GUID="eedffab6-9b1c-48bf-a5fe-0ed0bd20d68e" xmlns:meta="Editor">
+	<Branch meta:RefKey="Branch">
+		<Branch>
+			<Condition>1</Condition>
+			<Node meta:RefKey="Node">20f60dce-9fe2-49e7-a7e1-b68c019ea278</Node>
+		</Branch>
+	</Branch>
+	<Nodes>
+		<Node meta:X="288" meta:Y="-20" GUID="20f60dce-9fe2-49e7-a7e1-b68c019ea278">
+			<Action meta:RefKey="Line">
+				<Text>A spear is mounted against the wall.</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>A label beneath it reads 'Only 7 coins for this magnificent weapon'.</Text>
+			</Action>
+			<Action meta:RefKey="Branch">
+				<Branch>
+					<Condition>money&gt;=7</Condition>
+					<Node meta:RefKey="Node">1ed76e1a-e2fb-4b34-b24d-9cdd04637e29</Node>
+				</Branch>
+				<Branch>
+					<Condition>money&lt;7</Condition>
+					<Node meta:RefKey="Node">a86971f8-dda9-431a-b505-21a69264d8ff</Node>
+				</Branch>
+			</Action>
+		</Node>
+		<Node meta:X="564" meta:Y="-20" GUID="1ed76e1a-e2fb-4b34-b24d-9cdd04637e29">
+			<Action meta:RefKey="Choice">
+				<Text>What would you like to do?</Text>
+				<Choices>
+					<Choice>
+						<Text>Buy it</Text>
+						<Node meta:RefKey="Node">a22d7e96-2a2e-43f5-a3c2-9ff00c0ab299</Node>
+					</Choice>
+					<Choice>
+						<Text>Leave</Text>
+					</Choice>
+				</Choices>
+			</Action>
+		</Node>
+		<Node meta:X="527" meta:Y="238" GUID="a86971f8-dda9-431a-b505-21a69264d8ff">
+			<Action meta:RefKey="Line">
+				<Text>You do not have enough money for this</Text>
+			</Action>
+		</Node>
+		<Node meta:X="853" meta:Y="-20" GUID="a22d7e96-2a2e-43f5-a3c2-9ff00c0ab299">
+			<Action meta:RefKey="Drop">
+				<Drop meta:RefKey="Equipment">
+					<Weapon>Spear</Weapon>
+				</Drop>
+			</Action>
+			<Action meta:RefKey="RemoveItem">
+				<Name>Money</Name>
+				<Count>7</Count>
+			</Action>
+			<Action meta:RefKey="Kill" />
+		</Node>
+	</Nodes>
+</Interaction>

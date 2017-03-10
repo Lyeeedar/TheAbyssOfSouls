@@ -1,6 +1,6 @@
 <GenerationGrammar meta:X="-179" meta:Y="-39" GUID="de4174d2-5f44-4910-8975-295b7e3d1429" xmlns:meta="Editor">
-	<Width>150</Width>
-	<Height>75</Height>
+	<Width>100</Width>
+	<Height>85</Height>
 	<Ambient>56,56,56,255</Ambient>
 	<Root meta:RefKey="Node">7c5b7af5-a80c-4976-95ae-bf38812d3b13</Root>
 	<Rules>
@@ -254,7 +254,14 @@
 					<Rule meta:RefKey="Node">161ecd32-558e-4282-942b-8288ef808aa3</Rule>
 				</Division>
 				<Division>
-					<Size>100%-45</Size>
+					<Size>100%-48</Size>
+				</Division>
+				<Division>
+					<Size>1</Size>
+					<Rule meta:RefKey="Node">a444e13d-d3b5-4501-a7c2-be11649f71d3</Rule>
+				</Division>
+				<Division>
+					<Size>2</Size>
 				</Division>
 				<Division>
 					<Size>20</Size>
@@ -269,7 +276,7 @@
 		<Node meta:X="1208.748291015625" meta:Y="736.6519775390625" GUID="c026faf5-4176-41ff-b23e-5679a3de0941">
 			<!--Buildings-->
 			<Rule meta:RefKey="Repeat">
-				<Size>20 + rnd(10)</Size>
+				<Size>15 + rnd(5)</Size>
 				<Rule meta:RefKey="Node">e1632935-4f09-4aa3-a869-965d8b02b985</Rule>
 			</Rule>
 			<Rule meta:RefKey="Rule">
@@ -321,7 +328,7 @@
 				<Rule meta:RefKey="Node">e16de267-f04e-43b7-8bbd-461614218a0f</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1157.1995849609375" meta:Y="458.78811645507812" GUID="161ecd32-558e-4282-942b-8288ef808aa3">
+		<Node meta:X="906.29424784213154" meta:Y="393.26506663424345" GUID="161ecd32-558e-4282-942b-8288ef808aa3">
 			<!--Shrine-->
 			<Rule meta:RefKey="Prefab">
 				<Symbols>
@@ -461,7 +468,7 @@
 				<Rule meta:RefKey="Node">bb8a0f99-9474-4a7d-b9f0-2e830eddda28</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="841.8145751953125" meta:Y="109.0316162109375" GUID="a444e13d-d3b5-4501-a7c2-be11649f71d3">
+		<Node meta:X="1565.7643695572176" meta:Y="393.49753982334175" GUID="a444e13d-d3b5-4501-a7c2-be11649f71d3">
 			<Rule meta:RefKey="Fill">
 				<Character>~</Character>
 			</Rule>
@@ -479,10 +486,6 @@
 				</Division>
 				<Division>
 					<Size>3</Size>
-				</Division>
-				<Division>
-					<Size>1</Size>
-					<Rule meta:RefKey="Node">a444e13d-d3b5-4501-a7c2-be11649f71d3</Rule>
 				</Division>
 				<Division>
 					<Size>100%-8</Size>
@@ -528,7 +531,7 @@
 				<Character>s</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="1087.388671875" meta:Y="52.268867492675781" GUID="6087c56d-cf80-4457-a8e1-f9dea4fba464">
+		<Node meta:X="1811.3384662369051" meta:Y="336.73479110508003" GUID="6087c56d-cf80-4457-a8e1-f9dea4fba464">
 			<Rule meta:RefKey="Symbol">
 				<Character>s</Character>
 				<Extends>~</Extends>
@@ -575,14 +578,14 @@
 				<Character>s</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="1107.0604248046875" meta:Y="228.45918273925781" GUID="524545b4-e684-48b9-bf2e-ea865fce17bf">
+		<Node meta:X="1831.0102191665926" meta:Y="512.925106351662" GUID="524545b4-e684-48b9-bf2e-ea865fce17bf">
 			<!--Spawn descend-->
 			<Rule meta:RefKey="Take">
 				<Count>1</Count>
 				<Rule meta:RefKey="Node">9f6fbbe9-4d1a-4ccb-9794-8603f2b0d951</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1289.50927734375" meta:Y="251.12214660644531" GUID="9f6fbbe9-4d1a-4ccb-9794-8603f2b0d951">
+		<Node meta:X="2013.4590717056551" meta:Y="535.58807021884945" GUID="9f6fbbe9-4d1a-4ccb-9794-8603f2b0d951">
 			<Rule meta:RefKey="Symbol">
 				<Character>s</Character>
 				<FloorDetail>

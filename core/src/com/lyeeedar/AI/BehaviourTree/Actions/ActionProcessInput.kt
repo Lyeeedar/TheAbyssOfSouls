@@ -2,7 +2,10 @@ package com.lyeeedar.AI.BehaviourTree.Actions
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.AI.BehaviourTree.ExecutionState
 import com.lyeeedar.AI.Tasks.TaskCombo
@@ -12,7 +15,11 @@ import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Screens.AbstractScreen
+import com.lyeeedar.UI.ButtonKeyboardHelper
+import com.lyeeedar.UI.addClickListener
 import com.lyeeedar.Util.*
+import ktx.scene2d.table
+import ktx.scene2d.textButton
 
 
 /**
@@ -23,7 +30,7 @@ class ActionProcessInput(): AbstractAction()
 {
 	override fun evaluate(entity: Entity): ExecutionState
 	{
-		if ((Global.game.screen as AbstractScreen).debugConsole.isVisible) return ExecutionState.FAILED
+		if (!Global.release &&(Global.game.screen as AbstractScreen).debugConsole.isVisible) return ExecutionState.FAILED
 
 		val tile = entity.tile() ?: return ExecutionState.FAILED
 
@@ -88,6 +95,46 @@ class ActionProcessInput(): AbstractAction()
 					targetPos = Point.obtain().set(tile.x, tile.y + 1)
 				}
 			}
+		}
+		else if (Controls.Keys.INFO.consumePress())
+		{
+			Global.pause = true
+
+			val keyboardHelper = ButtonKeyboardHelper()
+
+			val background = Table()
+
+			val table = table {
+				defaults().pad(20f).center()
+
+				this.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24))
+
+				add(entity.combo()!!.comboSource!!.weaponTable()).grow()
+				row()
+
+				textButton("Okay", "default", Global.skin) {
+					addClickListener {
+
+						(Global.game.screen as AbstractScreen).keyboardHelper = null
+						background.remove()
+
+						Global.pause = false
+					}
+
+					keyboardHelper.add(this, 0, 0)
+				}
+			}
+
+			background.add(table).grow().pad(75f)
+
+			background.setFillParent(true)
+			Global.stage.addActor(background)
+
+			(Global.game.screen as AbstractScreen).keyboardHelper = keyboardHelper
+
+			Global.pause = true
+
+			return ExecutionState.FAILED
 		}
 		else
 		{

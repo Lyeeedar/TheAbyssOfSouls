@@ -1,6 +1,6 @@
 <GenerationGrammar meta:X="0" meta:Y="0" GUID="9b02a736-9a0a-47b1-81c3-4aedfc1ba94c" xmlns:meta="Editor">
-	<Width>100</Width>
-	<Height>100</Height>
+	<Width>50</Width>
+	<Height>50</Height>
 	<Ambient>20,20,20,255</Ambient>
 	<Root meta:RefKey="Node">ac6cd840-a704-440d-9ab4-cd2d2dc59bec</Root>
 	<Rules>
@@ -300,6 +300,9 @@
 								<Name>Death</Name>
 								<Colour>153,233,255,255</Colour>
 							</Death>
+							<Resistances>
+								<Corrosion>1E+08</Corrosion>
+							</Resistances>
 						</Statistics>
 						<Drop>
 							<Drop>

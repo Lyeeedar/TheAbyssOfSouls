@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.lyeeedar.Combo.AtonementSpirit
+import com.lyeeedar.Combo.Weapon
 import com.lyeeedar.Components.*
 import com.lyeeedar.GenerationGrammar.GenerationGrammar
 import com.lyeeedar.Global
@@ -20,6 +21,7 @@ import com.lyeeedar.UI.IDebugCommandProvider
 import com.lyeeedar.UI.StatsWidget
 import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.getXml
 
 class GameScreen : AbstractScreen()
 {
@@ -80,21 +82,15 @@ class GameScreen : AbstractScreen()
 		{
 			if (lastPlayer.stats().hp <= 0f)
 			{
-				// only copy sins, inventory
-				player.add(lastPlayer.sin())
-				player.add(lastPlayer.combo())
-				player.add(lastPlayer.inventory())
-
 				player.stats().hp = player.stats().maxHP / 2
 				player.stats().regeneratingHP = 0f
 			}
-			else
-			{
-				// copy sins, combos, inventory
-				player.add(lastPlayer.sin())
-				player.add(lastPlayer.combo())
-				player.add(lastPlayer.inventory())
-			}
+
+			player.add(lastPlayer.sin())
+			player.add(lastPlayer.combo())
+			player.add(lastPlayer.inventory())
+
+			player.combo()!!.currentCombo = null
 		}
 
 		level.player = player
@@ -199,12 +195,25 @@ class GameScreen : AbstractScreen()
 		})
 
 		DebugConsole.register("Drop", "", fun (args, console): Boolean {
-			val sin = Sin.valueOf(args[0].toUpperCase())
 
-			val item = AtonementSpirit(sin)
+			try
+			{
+				val sin = Sin.valueOf(args[0].toUpperCase())
 
-			val tile = Global.engine.level!!.player.tile()!!
-			DropComponent.dropTo(tile, tile, item)
+				val item = AtonementSpirit(sin)
+
+				val tile = Global.engine.level!!.player.tile()!!
+				DropComponent.dropTo(tile, tile, item)
+			}
+			catch (ex: Exception)
+			{
+				val weaponxml = getXml("Items/" + args[0])
+				val item = Weapon()
+				item.parse(weaponxml)
+
+				val tile = Global.engine.level!!.player.tile()!!
+				DropComponent.dropTo(tile, tile, item)
+			}
 
 			return true
 		})
@@ -343,7 +352,7 @@ class GameScreen : AbstractScreen()
 	{
 		updateMousePos(screenX, screenY)
 
-		if (debugConsole.isVisible)
+		if (!Global.release && debugConsole.isVisible)
 		{
 			val tile = Global.engine.level!!.getTile(mousex, mousey)
 			if (tile != null)

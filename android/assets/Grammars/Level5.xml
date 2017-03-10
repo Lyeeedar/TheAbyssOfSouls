@@ -877,6 +877,9 @@
 										<DrawActualSize>true</DrawActualSize>
 									</Renderable>
 								</Renderable>
+								<Interaction>
+									<Interaction>BuyDagger</Interaction>
+								</Interaction>
 							</Components>
 						</Entity>
 					</Symbol>
@@ -890,6 +893,9 @@
 										<DrawActualSize>true</DrawActualSize>
 									</Renderable>
 								</Renderable>
+								<Interaction>
+									<Interaction>BuySword</Interaction>
+								</Interaction>
 							</Components>
 						</Entity>
 					</Symbol>
@@ -903,6 +909,9 @@
 										<DrawActualSize>true</DrawActualSize>
 									</Renderable>
 								</Renderable>
+								<Interaction>
+									<Interaction>BuySpear</Interaction>
+								</Interaction>
 							</Components>
 						</Entity>
 					</Symbol>
@@ -925,10 +934,13 @@
 							<Components>
 								<Renderable>
 									<Renderable meta:RefKey="Sprite">
-										<Name>Oryx/uf_split/uf_items/weapon_greataxe</Name>
+										<Name>Oryx/uf_split/uf_items/weapon_lance</Name>
 										<DrawActualSize>true</DrawActualSize>
 									</Renderable>
 								</Renderable>
+								<Interaction>
+									<Interaction>BuyGreatsword</Interaction>
+								</Interaction>
 							</Components>
 						</Entity>
 					</Symbol>

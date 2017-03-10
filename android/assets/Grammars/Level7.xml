@@ -39,7 +39,7 @@
 							<IsShared>true</IsShared>
 							<Renderable meta:RefKey="Sprite">
 								<Name>Oryx/uf_split/uf_terrain/floor_crusted_grey_1</Name>
-								<Colour>20,20,20,255</Colour>
+								<Colour>38,38,38,255</Colour>
 							</Renderable>
 						</Renderable>
 					</Components>

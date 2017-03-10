@@ -1,26 +1,18 @@
 package com.lyeeedar.UI
 
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.InputListener
+import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
-import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Global
 import com.lyeeedar.Util.AssetManager
-import com.sun.org.apache.xpath.internal.operations.Bool
-import ktx.actors.onKey
+import ktx.actors.setKeyboardFocus
 import ktx.collections.set
 import ktx.collections.toGdxArray
-import com.badlogic.gdx.Input.Keys.SHIFT_RIGHT
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.Input.Keys.SHIFT_LEFT
-import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener
-import com.badlogic.gdx.scenes.scene2d.InputListener
-import com.badlogic.gdx.scenes.scene2d.ui.*
-import com.lyeeedar.Util.Future
-import ktx.actors.setKeyboardFocus
 
 
 class DebugConsole() : Table()
@@ -223,6 +215,8 @@ class DebugConsole() : Table()
 
 		fun register(name: String, help: String, callback: (args: kotlin.Array<String>, console: DebugConsole) -> Boolean)
 		{
+			if (Global.release) return
+
 			val lname = name.toLowerCase()
 			if (commands.containsKey(lname)) throw Exception("Console command already registered with name '$name'!")
 
@@ -231,6 +225,8 @@ class DebugConsole() : Table()
 
 		fun unregister(name: String)
 		{
+			if (Global.release) return
+
 			val lname = name.toLowerCase()
 			if (!commands.containsKey(lname)) throw Exception("No console command registered with name '$name'!")
 

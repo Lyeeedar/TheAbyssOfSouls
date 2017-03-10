@@ -176,6 +176,36 @@ class Weapon : Item()
 	lateinit var combosHint: String
 	lateinit var combos: ComboTree
 
+	fun weaponTable(): Table
+	{
+		return table {
+			table {
+				cell ->
+				cell.growX()
+
+				val icon = SpriteWidget(icon, 32f, 32f, false)
+				add(icon).left().padRight(10f)
+
+				label(this@Weapon.name, "title", Global.skin)
+			}
+			row()
+
+			label(description, "default", Global.skin) {
+				cell ->
+				cell.growX().center()
+				setWrap(true)
+				setAlignment(Align.center)
+			}
+			row()
+
+			label(combosHint, "default", Global.skin) {
+				cell ->
+				cell.growX().center()
+				setAlignment(Align.center)
+			}
+		}
+	}
+
 	override fun steppedOn(entity: Entity, floorEntity: Entity)
 	{
 		val keyboardHelper = ButtonKeyboardHelper()
@@ -187,27 +217,7 @@ class Weapon : Item()
 
 			this.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24))
 
-			table {
-				cell -> cell.growX()
-
-				val icon = SpriteWidget(icon, 32f, 32f, false)
-				add(icon).left().padRight(10f)
-
-				label(this@Weapon.name, "title", Global.skin)
-			}
-			row()
-
-			label(description, "default", Global.skin) {
-				cell -> cell.growX().center()
-				setWrap(true)
-				setAlignment(Align.center)
-			}
-			row()
-
-			label(combosHint, "default", Global.skin) {
-				cell -> cell.growX().center()
-				setAlignment(Align.center)
-			}
+			add(weaponTable()).grow()
 			row()
 
 			table {

@@ -24,6 +24,8 @@ class Controls
 		DEFENSE,
 		ATTACKNORMAL,
 		ATTACKSPECIAL,
+		MENU,
+		INFO
 	}
 
 	private val keyMap = FastEnumMap<Keys, ObjectSet<KeyMapping>>(Keys::class.java)
@@ -71,6 +73,8 @@ class Controls
 		addKeyMapping(Keys.DEFENSE, KeySource.CONTROLLERBUTTON, Xbox360Controller.BUTTON_B)
 		addKeyMapping(Keys.ATTACKNORMAL, KeySource.CONTROLLERBUTTON, Xbox360Controller.BUTTON_X)
 		addKeyMapping(Keys.ATTACKSPECIAL, KeySource.CONTROLLERBUTTON, Xbox360Controller.BUTTON_Y)
+		addKeyMapping(Keys.MENU, KeySource.CONTROLLERBUTTON, Xbox360Controller.BUTTON_START)
+		addKeyMapping(Keys.INFO, KeySource.CONTROLLERBUTTON, Xbox360Controller.BUTTON_BACK)
 	}
 
 	fun defaultArrow()
@@ -85,6 +89,8 @@ class Controls
 		addKeyMapping(Keys.DEFENSE, KeySource.KEYBOARD, Input.Keys.SHIFT_RIGHT)
 		addKeyMapping(Keys.ATTACKNORMAL, KeySource.KEYBOARD, Input.Keys.CONTROL_RIGHT)
 		addKeyMapping(Keys.ATTACKSPECIAL, KeySource.KEYBOARD, Input.Keys.NUMPAD_0)
+		addKeyMapping(Keys.MENU, KeySource.KEYBOARD, Input.Keys.ESCAPE)
+		addKeyMapping(Keys.INFO, KeySource.KEYBOARD, Input.Keys.SLASH)
 	}
 
 	fun defaultWASD()
@@ -99,6 +105,8 @@ class Controls
 		addKeyMapping(Keys.DEFENSE, KeySource.KEYBOARD, Input.Keys.SHIFT_LEFT)
 		addKeyMapping(Keys.ATTACKNORMAL, KeySource.KEYBOARD, Input.Keys.Q)
 		addKeyMapping(Keys.ATTACKSPECIAL, KeySource.KEYBOARD, Input.Keys.E)
+		addKeyMapping(Keys.MENU, KeySource.KEYBOARD, Input.Keys.ESCAPE)
+		addKeyMapping(Keys.INFO, KeySource.KEYBOARD, Input.Keys.SLASH)
 	}
 
 	fun defaultNumPad()
@@ -113,6 +121,8 @@ class Controls
 		addKeyMapping(Keys.DEFENSE, KeySource.KEYBOARD, Input.Keys.NUMPAD_0)
 		addKeyMapping(Keys.ATTACKNORMAL, KeySource.KEYBOARD, Input.Keys.NUMPAD_7)
 		addKeyMapping(Keys.ATTACKSPECIAL, KeySource.KEYBOARD, Input.Keys.NUMPAD_9)
+		addKeyMapping(Keys.MENU, KeySource.KEYBOARD, Input.Keys.ESCAPE)
+		addKeyMapping(Keys.INFO, KeySource.KEYBOARD, Input.Keys.SLASH)
 	}
 
 	fun setKeyMap(key: Keys, source: KeySource, keycode: Int)

@@ -146,7 +146,7 @@ abstract class AbstractScreen() : Screen, InputProcessor, ControllerListener
     // ----------------------------------------------------------------------
     override fun keyDown( keycode: Int ): Boolean
 	{
-		if (keycode == Input.Keys.GRAVE)
+		if (keycode == Input.Keys.GRAVE && !Global.release)
 		{
 			debugConsole.isVisible = !debugConsole.isVisible
 			debugConsole.text.setKeyboardFocus(true)
@@ -205,14 +205,17 @@ abstract class AbstractScreen() : Screen, InputProcessor, ControllerListener
         mainTable.setFillParent(true)
         stage.addActor(mainTable)
 
-		val debugConsoleTable = Table()
-		debugConsoleTable.setFillParent(true)
-		stage.addActor(debugConsoleTable)
+		if (!Global.release)
+		{
+			val debugConsoleTable = Table()
+			debugConsoleTable.setFillParent(true)
+			stage.addActor(debugConsoleTable)
 
-		debugConsole = DebugConsole()
-		debugConsoleTable.add(debugConsole).width(300f).expand().left().top().pad(5f)
+			debugConsole = DebugConsole()
+			debugConsoleTable.add(debugConsole).width(300f).expand().left().top().pad(5f)
 
-		debugConsole.isVisible = false
+			debugConsole.isVisible = false
+		}
 
         inputMultiplexer = InputMultiplexer()
 

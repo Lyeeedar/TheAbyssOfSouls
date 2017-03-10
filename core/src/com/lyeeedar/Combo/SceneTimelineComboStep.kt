@@ -6,10 +6,7 @@ import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Components.SceneTimelineComponent
-import com.lyeeedar.Components.pos
-import com.lyeeedar.Components.renderable
-import com.lyeeedar.Components.tile
+import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
@@ -18,6 +15,7 @@ import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.SceneTimeline.DamageAction
 import com.lyeeedar.SceneTimeline.SceneTimeline
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Systems.level
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.abs
 import com.lyeeedar.Util.random
@@ -49,6 +47,11 @@ class SceneTimelineComboStep : ComboStep()
 		val parentPos = rootEntity.pos() ?: return true
 
 		val pos = entity.pos() ?: return true
+
+		if (entity == Global.engine.level!!.player && rootEntity != entity && entity.combo()!!.currentCombo != null)
+		{
+			return false
+		}
 
 		for (x in 0..pos.size-1)
 		{
