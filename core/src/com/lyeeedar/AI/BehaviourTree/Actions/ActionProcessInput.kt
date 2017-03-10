@@ -91,10 +91,10 @@ class ActionProcessInput(): AbstractAction()
 		}
 		else
 		{
-			val up = Controls.Keys.UP.isDown()
-			val down = Controls.Keys.DOWN.isDown()
-			val left = Controls.Keys.LEFT.isDown()
-			val right = Controls.Keys.RIGHT.isDown()
+			val up = Controls.Keys.UP.isDownAndNotConsumed()
+			val down = Controls.Keys.DOWN.isDownAndNotConsumed()
+			val left = Controls.Keys.LEFT.isDownAndNotConsumed()
+			val right = Controls.Keys.RIGHT.isDownAndNotConsumed()
 			val space = Controls.Keys.WAIT.consumePress()
 
 			var x = 0
@@ -201,10 +201,10 @@ class ActionProcessInput(): AbstractAction()
 				fun tryDoAttack(key: ComboTree.ComboKey)
 				{
 					val next = first.keybinding[key]
-					if (entity.stats().stamina < next.cost)
+					if (entity.stats().stamina < next.staminaCost)
 					{
 						entity.stats().insufficientStamina = 0.5f
-						entity.stats().insufficientStaminaAmount = next.cost
+						entity.stats().insufficientStaminaAmount = next.staminaCost
 						return
 					}
 

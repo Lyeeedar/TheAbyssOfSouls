@@ -1,7 +1,7 @@
 <Interaction meta:X="0" meta:Y="0" GUID="b20fd540-57e2-46c1-abf8-4bda5b8bfbe4" xmlns:meta="Editor">
 	<Branch meta:RefKey="Branch">
 		<Branch>
-			<Condition>soulkey==0</Condition>
+			<Condition>1</Condition>
 			<Node meta:RefKey="Node">fd7f4e2d-2652-4765-8c4c-acb65ae3c6da</Node>
 		</Branch>
 	</Branch>

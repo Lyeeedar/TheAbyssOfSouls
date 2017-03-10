@@ -85,6 +85,9 @@
 				<Data Name="DisplayHP" Default="True" meta:RefKey="Boolean" />
 				<Data Name="CanRegenerate" meta:RefKey="Boolean" />
 				<Data Name="Death" Keys="ParticleEffect" meta:RefKey="Reference" />
+				<Data Name="Resistances" ChildrenAreUnique="True" meta:RefKey="Collection">
+					<Data Name="Corrosion" Min="0" meta:RefKey="Number" />
+				</Data>
 			</Data>
 			<Data Name="Trailing" meta:RefKey="Struct">
 				<Data Name="Collapses" Default="True" meta:RefKey="Boolean" />

@@ -19,5 +19,8 @@
 		<Position>
 			<SpaceSlot>BelowEntity</SpaceSlot>
 		</Position>
+		<Name>
+			<Name>Pickup</Name>
+		</Name>
 	</Components>
 </Entity>

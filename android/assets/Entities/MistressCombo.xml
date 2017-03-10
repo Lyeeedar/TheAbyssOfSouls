@@ -1,4 +1,4 @@
-<Combo meta:X="0" meta:Y="0" xmlns:meta="Editor">
+<Combo meta:X="-1" meta:Y="1" xmlns:meta="Editor">
 	<Combos>
 		<Combo meta:RefKey="Scene">
 			<Name>Thrust</Name>
@@ -18,14 +18,252 @@
 			</SceneTimeline>
 			<HitPattern>
 				<Line>#</Line>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Wait">
+			<Name>Wait</Name>
+			<Animation>attack</Animation>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>DelayedBomb</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.1</Duration>
+						<Renderable meta:RefKey="Sprite">
+							<Name>Oryx/uf_split/uf_items/heart_empty</Name>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+						<KillOnEnd>true</KillOnEnd>
+					</DestinationRenderable>
+					<DestinationRenderable>
+						<Time>0.1</Time>
+						<Duration LockDuration="False">0.1</Duration>
+						<Renderable meta:RefKey="Sprite">
+							<Name>Oryx/uf_split/uf_items/heart_red_half</Name>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+						<KillOnEnd>true</KillOnEnd>
+					</DestinationRenderable>
+					<DestinationRenderable>
+						<Time>0.2</Time>
+						<Duration LockDuration="False">0.100000009</Duration>
+						<Renderable meta:RefKey="Sprite">
+							<Name>Oryx/uf_split/uf_items/heart_red_full</Name>
+							<DrawActualSize>true</DrawActualSize>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+						<KillOnEnd>true</KillOnEnd>
+					</DestinationRenderable>
+					<Spawn>
+						<Duration LockDuration="False">0.5</Duration>
+						<Time>0.3</Time>
+						<DeleteOnExit>true</DeleteOnExit>
+						<Entity>
+							<Components>
+								<SceneTimeline>
+									<HitPoints>
+										<Line>###</Line>
+										<Line>###</Line>
+										<Line>###</Line>
+									</HitPoints>
+									<SceneTimeline meta:RefKey="SceneTimeline">
+										<Timeline>
+											<DestinationRenderable>
+												<Duration LockDuration="False">0.5</Duration>
+												<Renderable meta:RefKey="ParticleEffect">
+													<Name>SpecialExplosion</Name>
+													<Colour>253,0,255,255</Colour>
+												</Renderable>
+											</DestinationRenderable>
+										</Timeline>
+										<Timeline>
+											<Damage>
+												<Time>0.307788461</Time>
+												<Amount>4</Amount>
+											</Damage>
+										</Timeline>
+									</SceneTimeline>
+								</SceneTimeline>
+								<Position>
+									<SpaceSlot>AboveEntity</SpaceSlot>
+								</Position>
+							</Components>
+						</Entity>
+					</Spawn>
+				</Timeline>
+				<Timeline>
+					<Blocker>
+						<Time>0.0460893847</Time>
+					</Blocker>
+					<Blocker>
+						<Time>0.144413412</Time>
+					</Blocker>
+					<Blocker>
+						<Time>0.242737412</Time>
+					</Blocker>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#####</Line>
+				<Line>.###.</Line>
+				<Line>..#..</Line>
+				<Line>..@..</Line>
+			</HitPattern>
+			<HitType>Random</HitType>
+			<Count>2</Count>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>ClawLeft</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.3</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>Claws</Name>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.207456142</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line> @ </Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>ClawRight</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.3</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>Claws</Name>
+							<FlipX>true</FlipX>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.207456142</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line> @ </Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Grab</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.5</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>TongueGrab</Name>
+							<Colour>255,13,234,255</Colour>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.232785091</Time>
+					</Damage>
+					<Pull>
+						<Time>0.25</Time>
+						<MoveType>Leap</MoveType>
+					</Pull>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
+				<Line>#</Line>
 				<Line>@</Line>
 			</HitPattern>
 		</Combo>
 	</Combos>
 	<Random>
-		<Node meta:X="256" meta:Y="0" meta:RefKey="ComboNode">
-			<Desc>Thrust</Desc>
-			<Cooldown>2</Cooldown>
+		<Node meta:X="434" meta:Y="-17" meta:RefKey="ComboNode">
+			<Desc>ClawLeft</Desc>
+			<Weight>5</Weight>
+			<Random>
+				<Node meta:X="665" meta:Y="-17" meta:RefKey="ComboNode">
+					<Desc>ClawRight</Desc>
+					<Random>
+						<Node meta:X="900" meta:Y="-17" meta:RefKey="ComboNode">
+							<Desc>Thrust</Desc>
+							<Random>
+								<Node meta:X="1131" meta:Y="-17" meta:RefKey="ComboNode">
+									<Desc>Thrust</Desc>
+									<Random>
+										<Node meta:X="1483.7548685291154" meta:Y="119.27617202345979" GUID="c46e2a23-ed43-4207-b003-6f449e18813b" meta:RefKey="ComboNode">
+											<Desc>Wait</Desc>
+											<Random>
+												<Node meta:X="1714.7548685291154" meta:Y="119.27617202345979" meta:RefKey="ComboNode">
+													<Desc>Wait</Desc>
+												</Node>
+											</Random>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+		<Node meta:X="446.13045316075619" meta:Y="213.80627341233404" meta:RefKey="ComboNode">
+			<Desc>Wait</Desc>
+			<Cooldown>10</Cooldown>
+			<Random>
+				<Node meta:X="677.13045316075613" meta:Y="213.80627341233404" meta:RefKey="ComboNode">
+					<Desc>Grab</Desc>
+					<Random>
+						<Node meta:X="908.13045316075613" meta:Y="213.80627341233404" meta:RefKey="ComboNode">
+							<Desc>ClawLeft</Desc>
+							<Random>
+								<Node meta:X="1139.1304531607561" meta:Y="213.80627341233404" meta:RefKey="ComboNode">
+									<Desc>ClawRight</Desc>
+									<Random>
+										<Node meta:X="1483.7548685291154" meta:Y="119.27617202345979" GUID="c46e2a23-ed43-4207-b003-6f449e18813b" meta:RefKey="ComboNode">
+											<Desc>Wait</Desc>
+											<Random>
+												<Node meta:X="1714.7548685291154" meta:Y="119.27617202345979" meta:RefKey="ComboNode">
+													<Desc>Wait</Desc>
+												</Node>
+											</Random>
+										</Node>
+									</Random>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+		<Node meta:X="445.47323482608033" meta:Y="484.61250437283667" meta:RefKey="ComboNode">
+			<Desc>DelayedBomb</Desc>
+			<Cooldown>15</Cooldown>
 		</Node>
 	</Random>
 </Combo>

@@ -8,12 +8,12 @@ import com.lyeeedar.Components.stats
  * Created by Philip on 22-Mar-16.
  */
 
-class TaskWait(): AbstractTask()
+class TaskWait(val regenerateStamina: Boolean = true): AbstractTask()
 {
 	override fun execute(e: Entity)
 	{
 		e.directionalSprite()?.currentAnim = "wait"
 
-		if (e.stats() != null) e.stats().stamina += 4
+		if (e.stats() != null && regenerateStamina) e.stats().stamina += 4
 	}
 }

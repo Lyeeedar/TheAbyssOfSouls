@@ -326,7 +326,7 @@ class ButtonKeyboardHelper
 	}
 
 	// ----------------------------------------------------------------------
-	fun keyDown(keycode: Int): Boolean
+	fun keyDown(key: Controls.Keys): Boolean
 	{
 		if (grid.size == 0)
 		{
@@ -339,18 +339,18 @@ class ButtonKeyboardHelper
 			{
 				val slider = active as Slider?
 
-				if (Global.controls.isKey(Controls.Keys.CANCEL, keycode) || Global.controls.isKey(Controls.Keys.ACCEPT, keycode))
+				if (key == Controls.Keys.CANCEL || key == Controls.Keys.ACCEPT)
 				{
 					val `val` = slider!!.value
 					touchUp(slider)
 					slider.value = `val`
 					active = null
 				}
-				else if (Global.controls.isKey(Controls.Keys.LEFT, keycode))
+				else if (key == Controls.Keys.LEFT)
 				{
 					slider!!.value = slider.value - slider.stepSize
 				}
-				else if (Global.controls.isKey(Controls.Keys.RIGHT, keycode))
+				else if (key == Controls.Keys.RIGHT)
 				{
 					slider!!.value = slider.value + slider.stepSize
 				}
@@ -359,12 +359,12 @@ class ButtonKeyboardHelper
 			{
 				val selectBox = active as SelectBox<*>?
 
-				if (Global.controls.isKey(Controls.Keys.CANCEL, keycode) || Global.controls.isKey(Controls.Keys.ACCEPT, keycode))
+				if (key == Controls.Keys.CANCEL || key == Controls.Keys.ACCEPT)
 				{
 					selectBox!!.hideList()
 					active = null
 				}
-				else if (Global.controls.isKey(Controls.Keys.UP, keycode))
+				else if (key == Controls.Keys.UP)
 				{
 					var newIndex = selectBox!!.selectedIndex - 1
 					if (newIndex < 0)
@@ -375,7 +375,7 @@ class ButtonKeyboardHelper
 					selectBox.hideList()
 					selectBox.showList()
 				}
-				else if (Global.controls.isKey(Controls.Keys.DOWN, keycode))
+				else if (key == Controls.Keys.DOWN)
 				{
 					var newIndex = selectBox!!.selectedIndex + 1
 					if (newIndex >= selectBox.items.size)
@@ -390,14 +390,14 @@ class ButtonKeyboardHelper
 		}
 		else
 		{
-			if (Global.controls.isKey(Controls.Keys.CANCEL, keycode))
+			if (key == Controls.Keys.CANCEL)
 			{
 				if (cancel != null)
 				{
 					pressButton(cancel!!)
 				}
 			}
-			else if (Global.controls.isKey(Controls.Keys.ACCEPT, keycode))
+			else if (key == Controls.Keys.ACCEPT)
 			{
 				val actor = current
 				if (actor is Button)
@@ -420,7 +420,7 @@ class ButtonKeyboardHelper
 					selectBox!!.showList()
 				}
 			}
-			else if (Global.controls.isKey(Controls.Keys.LEFT, keycode))
+			else if (key == Controls.Keys.LEFT)
 			{
 				// check if move within cell
 				if (currentz > 0)
@@ -438,7 +438,7 @@ class ButtonKeyboardHelper
 					}
 				}
 			}
-			else if (Global.controls.isKey(Controls.Keys.RIGHT, keycode))
+			else if (key == Controls.Keys.RIGHT)
 			{
 				// check if move within cell
 				val cell = getColumn(currentx).getCell(currenty)
@@ -457,11 +457,11 @@ class ButtonKeyboardHelper
 					}
 				}
 			}
-			else if (Global.controls.isKey(Controls.Keys.UP, keycode))
+			else if (key == Controls.Keys.UP)
 			{
 				trySetCurrent(currentx, currenty - 1, currentz)
 			}
-			else if (Global.controls.isKey(Controls.Keys.DOWN, keycode))
+			else if (key == Controls.Keys.DOWN)
 			{
 				trySetCurrent(currentx, currenty + 1, currentz)
 			}

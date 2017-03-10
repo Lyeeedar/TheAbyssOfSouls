@@ -1,23 +1,32 @@
 package com.lyeeedar.Screens
 
 import com.badlogic.gdx.*
+import com.badlogic.gdx.controllers.Controller
+import com.badlogic.gdx.controllers.ControllerListener
+import com.badlogic.gdx.controllers.Controllers
+import com.badlogic.gdx.controllers.PovDirection
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.ArrayMap
 import com.badlogic.gdx.utils.Scaling
 import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.lyeeedar.Global
 import com.lyeeedar.UI.ButtonKeyboardHelper
 import com.lyeeedar.UI.DebugConsole
+import com.lyeeedar.Util.ControllerWrapper
 import com.lyeeedar.Util.Future
+import com.lyeeedar.Util.KeyMapping
+import com.lyeeedar.Util.KeySource
 import ktx.actors.setKeyboardFocus
 
 /**
  * Created by Philip on 20-Mar-16.
  */
 
-abstract class AbstractScreen() : Screen, InputProcessor
+abstract class AbstractScreen() : Screen, InputProcessor, ControllerListener
 {
     //############################################################################
     //region Abstract Methods
@@ -61,6 +70,11 @@ abstract class AbstractScreen() : Screen, InputProcessor
         stage.act()
 		Future.update(delta)
 
+		for (controller in connectedControllers)
+		{
+			controller.value.update()
+		}
+
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
@@ -97,8 +111,36 @@ abstract class AbstractScreen() : Screen, InputProcessor
     // ----------------------------------------------------------------------
     override fun dispose() {}
 
-    //enregion
-    //############################################################################
+    //endregion
+	//############################################################################
+	//region ControllerListener
+
+	override fun connected (controller: Controller)
+	{
+		connectedControllers.put(controller, ControllerWrapper(controller))
+	}
+
+	override fun disconnected(controller: Controller)
+	{
+		connectedControllers.removeKey(controller)
+	}
+
+	override fun buttonDown(controller: Controller, buttonCode: Int): Boolean = false
+
+	override fun buttonUp(controller: Controller, buttonCode: Int): Boolean = false
+
+	override fun axisMoved(controller: Controller, axisCode: Int, value: Float): Boolean = false
+
+	override fun povMoved(controller: Controller, povCode: Int, value: PovDirection): Boolean = false
+
+	override fun xSliderMoved(controller: Controller, sliderCode: Int, value: Boolean): Boolean = false
+
+	override fun ySliderMoved(controller: Controller, sliderCode: Int, value: Boolean): Boolean = false
+
+	override fun accelerometerMoved(controller: Controller, accelerometerCode: Int, value: Vector3): Boolean = false
+
+	//endregion
+	//############################################################################
     //region InputProcessor
 
     // ----------------------------------------------------------------------
@@ -113,12 +155,13 @@ abstract class AbstractScreen() : Screen, InputProcessor
 		}
 		else
 		{
-			Global.controls.keyPressed(keycode)
+			Global.controls.keyPressed(KeySource.KEYBOARD, keycode)
 		}
 
-		Global.controls.onInput(keycode)
+		Global.controls.onInput(KeyMapping(KeySource.KEYBOARD, keycode))
 
-		keyboardHelper?.keyDown(keycode)
+		val key = Global.controls.getKey(KeySource.KEYBOARD, keycode)
+		if (key != null) keyboardHelper?.keyDown(key)
 
 		return false
 	}
@@ -126,7 +169,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
     // ----------------------------------------------------------------------
     override fun keyUp( keycode: Int ): Boolean
 	{
-		Global.controls.keyReleased(keycode)
+		Global.controls.keyReleased(KeySource.KEYBOARD, keycode)
 
 		return false
 	}
@@ -179,6 +222,32 @@ abstract class AbstractScreen() : Screen, InputProcessor
         inputMultiplexer.addProcessor(inputProcessorTwo)
         inputMultiplexer.addProcessor(inputProcessorOne)
 
+		for (controller in Controllers.getControllers())
+		{
+			connectedControllers.put(controller, ControllerWrapper(controller))
+		}
+
+		Controllers.addListener(this)
+
+		ControllerWrapper.pressedEvent += fun (source: KeySource, code: Int): Boolean
+		{
+			Global.controls.keyPressed(source, code)
+
+			Global.controls.onInput(KeyMapping(source, code))
+
+			val key = Global.controls.getKey(source, code)
+			if (key != null) keyboardHelper?.keyDown(key)
+
+			return false
+		}
+
+		ControllerWrapper.releasedEvent += fun (source: KeySource, code: Int): Boolean
+		{
+			Global.controls.keyReleased(source, code)
+
+			return false
+		}
+
         create()
     }
 
@@ -210,6 +279,8 @@ abstract class AbstractScreen() : Screen, InputProcessor
     //endregion
     //############################################################################
     //region Data
+
+	val connectedControllers = ArrayMap<Controller, ControllerWrapper>()
 
     var created: Boolean = false
 

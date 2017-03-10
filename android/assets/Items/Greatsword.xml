@@ -1,0 +1,1486 @@
+<Weapon meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Icon meta:RefKey="Sprite">
+		<Name>Oryx/uf_split/uf_items/weapon_lance</Name>
+		<DrawActualSize>true</DrawActualSize>
+	</Icon>
+	<Name>Greatsword</Name>
+	<Description>A giant blade, cumbersome but extremely powerful. Attacking will stun your target, but leave you open to a counter from others.</Description>
+	<ComboHint>N-N-N
+N*-D
+D-D
+S-S-S-S-S
+S-S-S-S-D
+S-D</ComboHint>
+	<AttackPower>200</AttackPower>
+	<NextMode>Keybinding</NextMode>
+	<Combos>
+		<Combo meta:RefKey="Wait">
+			<Name>Wait</Name>
+			<Animation>attack</Animation>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashLeft</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line> @ </Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>SlashRight</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="True">0.2</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>slash</Name>
+							<FlipX>true</FlipX>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.1</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line> @ </Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Defense">
+			<Name>Backstep</Name>
+			<Animation>defense</Animation>
+			<Move>1</Move>
+			<Direction>Opposite</Direction>
+			<AnimType>Roll</AnimType>
+		</Combo>
+		<Combo meta:RefKey="Defense">
+			<Name>Roll</Name>
+			<Animation>defense</Animation>
+			<Move>1</Move>
+			<AnimType>Roll</AnimType>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Spin</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.4</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>SpinSlash</Name>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<SourceAnimation>
+						<Duration LockDuration="False">0.4</Duration>
+						<Animation>Spin</Animation>
+						<Angle>360</Angle>
+					</SourceAnimation>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.294298261</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line>#@#</Line>
+				<Line>###</Line>
+			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Wave</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.4</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>SwordWave</Name>
+						</Renderable>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.281432748</Time>
+					</Damage>
+					<Knockback>
+						<Time>0.326462</Time>
+					</Knockback>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>###</Line>
+				<Line>###</Line>
+				<Line>###</Line>
+				<Line>###</Line>
+				<Line>###</Line>
+				<Line>###</Line>
+				<Line>###</Line>
+				<Line> @ </Line>
+			</HitPattern>
+		</Combo>
+	</Combos>
+	<Keybinding>
+		<AttackNormal meta:X="391.029052734375" meta:Y="-165.7344970703125" meta:RefKey="ComboNode">
+			<Desc>SlashLeft</Desc>
+			<TurnCost>2</TurnCost>
+			<Keybinding>
+				<AttackNormal meta:X="704.51036713071232" meta:Y="-167.21581146664985" GUID="761bb4fa-dc5e-4f4e-acb3-df0cd4f38e5f" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<TurnCost>2</TurnCost>
+					<Keybinding>
+						<AttackNormal meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<TurnCost>2</TurnCost>
+						</AttackNormal>
+						<AttackSpecial meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<TurnCost>2</TurnCost>
+						</AttackSpecial>
+						<Defense meta:X="1163.2365155989578" meta:Y="129.0470678008229" GUID="1c1ac7d5-9566-4aef-828b-4cc5f490d975" meta:RefKey="ComboNode">
+							<Desc>Backstep</Desc>
+						</Defense>
+						<Direction meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<TurnCost>2</TurnCost>
+						</Direction>
+					</Keybinding>
+				</AttackNormal>
+				<AttackSpecial meta:X="704.51036713071232" meta:Y="-167.21581146664985" GUID="761bb4fa-dc5e-4f4e-acb3-df0cd4f38e5f" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<TurnCost>2</TurnCost>
+					<Keybinding>
+						<AttackNormal meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<TurnCost>2</TurnCost>
+						</AttackNormal>
+						<AttackSpecial meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<TurnCost>2</TurnCost>
+						</AttackSpecial>
+						<Defense meta:X="1163.2365155989578" meta:Y="129.0470678008229" GUID="1c1ac7d5-9566-4aef-828b-4cc5f490d975" meta:RefKey="ComboNode">
+							<Desc>Backstep</Desc>
+						</Defense>
+						<Direction meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<TurnCost>2</TurnCost>
+						</Direction>
+					</Keybinding>
+				</AttackSpecial>
+				<Defense meta:X="1163.2365155989578" meta:Y="129.0470678008229" GUID="1c1ac7d5-9566-4aef-828b-4cc5f490d975" meta:RefKey="ComboNode">
+					<Desc>Backstep</Desc>
+				</Defense>
+				<Direction meta:X="704.51036713071232" meta:Y="-167.21581146664985" GUID="761bb4fa-dc5e-4f4e-acb3-df0cd4f38e5f" meta:RefKey="ComboNode">
+					<Desc>SlashRight</Desc>
+					<TurnCost>2</TurnCost>
+					<Keybinding>
+						<AttackNormal meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<TurnCost>2</TurnCost>
+						</AttackNormal>
+						<AttackSpecial meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<TurnCost>2</TurnCost>
+						</AttackSpecial>
+						<Defense meta:X="1163.2365155989578" meta:Y="129.0470678008229" GUID="1c1ac7d5-9566-4aef-828b-4cc5f490d975" meta:RefKey="ComboNode">
+							<Desc>Backstep</Desc>
+						</Defense>
+						<Direction meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<TurnCost>2</TurnCost>
+						</Direction>
+					</Keybinding>
+				</Direction>
+			</Keybinding>
+		</AttackNormal>
+		<AttackSpecial meta:X="462.43385597511576" meta:Y="264.3804694281684" meta:RefKey="ComboNode">
+			<Desc>Spin</Desc>
+			<Cost>8</Cost>
+			<Keybinding>
+				<AttackNormal meta:X="810.66198504412614" meta:Y="326.58316788850004" GUID="7b5df984-323c-4f57-a567-2adc69728da9" meta:RefKey="ComboNode">
+					<Desc>Spin</Desc>
+					<Cost>4</Cost>
+					<Keybinding>
+						<AttackNormal meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</AttackNormal>
+						<AttackSpecial meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</AttackSpecial>
+						<Defense meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</Defense>
+						<Direction meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</Direction>
+					</Keybinding>
+				</AttackNormal>
+				<AttackSpecial meta:X="810.66198504412614" meta:Y="326.58316788850004" GUID="7b5df984-323c-4f57-a567-2adc69728da9" meta:RefKey="ComboNode">
+					<Desc>Spin</Desc>
+					<Cost>4</Cost>
+					<Keybinding>
+						<AttackNormal meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</AttackNormal>
+						<AttackSpecial meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</AttackSpecial>
+						<Defense meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</Defense>
+						<Direction meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</Direction>
+					</Keybinding>
+				</AttackSpecial>
+				<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+					<Desc>Backstep</Desc>
+					<TurnCost>2</TurnCost>
+				</Defense>
+				<Direction meta:X="810.66198504412614" meta:Y="326.58316788850004" GUID="7b5df984-323c-4f57-a567-2adc69728da9" meta:RefKey="ComboNode">
+					<Desc>Spin</Desc>
+					<Cost>4</Cost>
+					<Keybinding>
+						<AttackNormal meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</AttackNormal>
+						<AttackSpecial meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</AttackSpecial>
+						<Defense meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</Defense>
+						<Direction meta:X="1124.5137758608219" meta:Y="396.95353825887042" GUID="fbbe7d94-ba0f-4fa8-9622-050cef86d6c8" meta:RefKey="ComboNode">
+							<Desc>Spin</Desc>
+							<Cost>2</Cost>
+							<Keybinding>
+								<AttackNormal meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackNormal>
+								<AttackSpecial meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</AttackSpecial>
+								<Defense meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Defense>
+								<Direction meta:X="1471.9292883612329" meta:Y="436.88351673129819" GUID="8929c0ce-a673-4468-b975-d7d8ed6360de" meta:RefKey="ComboNode">
+									<Desc>Spin</Desc>
+									<Keybinding>
+										<AttackNormal meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackNormal>
+										<AttackSpecial meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</AttackSpecial>
+										<Defense meta:X="1582.5685779939568" meta:Y="947.19181728282024" GUID="59f178e5-b099-464a-9fd9-f49dddb27f2c" meta:RefKey="ComboNode">
+											<Desc>Backstep</Desc>
+											<TurnCost>2</TurnCost>
+										</Defense>
+										<Direction meta:X="1790.2534870220206" meta:Y="459.65063191013388" GUID="a288e775-0864-465c-865b-b4c15b50fe24" meta:RefKey="ComboNode">
+											<Desc>Wave</Desc>
+											<Cost>3</Cost>
+											<TurnCost>3</TurnCost>
+										</Direction>
+									</Keybinding>
+								</Direction>
+							</Keybinding>
+						</Direction>
+					</Keybinding>
+				</Direction>
+			</Keybinding>
+		</AttackSpecial>
+		<Defense meta:X="439.51851851851853" meta:Y="626.33333333333326" meta:RefKey="ComboNode">
+			<Desc>Roll</Desc>
+			<Cost>4</Cost>
+			<Keybinding>
+				<Defense meta:X="715.51851851851848" meta:Y="826.33333333333326" GUID="149a18b5-33a9-4904-a155-51edb0def900" meta:RefKey="ComboNode">
+					<Desc>Roll</Desc>
+				</Defense>
+				<Direction meta:X="715.51851851851848" meta:Y="826.33333333333326" GUID="149a18b5-33a9-4904-a155-51edb0def900" meta:RefKey="ComboNode">
+					<Desc>Roll</Desc>
+				</Direction>
+			</Keybinding>
+		</Defense>
+	</Keybinding>
+</Weapon>

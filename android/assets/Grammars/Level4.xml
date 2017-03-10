@@ -271,6 +271,11 @@
 					</Rule>
 				</Rules>
 			</Rule>
+			<Rule meta:RefKey="Filter">
+				<Mode>Character</Mode>
+				<Character>.</Character>
+				<Remainder meta:RefKey="Node">dce4a004-c47c-4a2f-92d5-6c6f69e5a370</Remainder>
+			</Rule>
 		</Node>
 		<Node meta:X="810.9478759765625" meta:Y="651.82086181640625" GUID="b789eb28-d094-4cf5-8be7-b7b1104d18c2">
 			<Rule meta:RefKey="Repeat">
@@ -552,6 +557,31 @@
 					<Line>,s</Line>
 					<Line>,,</Line>
 				</Prefab>
+			</Rule>
+		</Node>
+		<Node meta:X="536.35471253826074" meta:Y="1801.7643895531287" GUID="dce4a004-c47c-4a2f-92d5-6c6f69e5a370">
+			<!--Spear-->
+			<Rule meta:RefKey="Take">
+				<Count>1</Count>
+				<Rule meta:RefKey="Node">c4d43a62-2bbe-4ea2-b538-fda2dfd46428</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="778.35471253826074" meta:Y="1801.7643895531287" GUID="c4d43a62-2bbe-4ea2-b538-fda2dfd46428">
+			<Rule meta:RefKey="Symbol">
+				<Character>S</Character>
+				<Entity>
+					<Components>
+						<Renderable>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/Custom/terrain/cocoon</Name>
+								<DrawActualSize>true</DrawActualSize>
+							</Renderable>
+						</Renderable>
+						<Interaction>
+							<Interaction>SpearDrop</Interaction>
+						</Interaction>
+					</Components>
+				</Entity>
 			</Rule>
 		</Node>
 	</Rules>

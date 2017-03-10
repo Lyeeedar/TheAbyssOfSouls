@@ -11,6 +11,7 @@ import com.lyeeedar.ElementType
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap
+import com.lyeeedar.Util.children
 import com.lyeeedar.Util.ciel
 import ktx.collections.toGdxArray
 
@@ -26,7 +27,7 @@ class StatisticsComponent: AbstractComponent()
 		{
 			var v = Math.min(value, maxHP)
 
-			val diff = v - hp
+			var diff = v - hp
 			if (diff < 0)
 			{
 				if (unblockableDam)
@@ -52,15 +53,19 @@ class StatisticsComponent: AbstractComponent()
 					else
 					{
 						blockedDamage = true
+						return
 					}
 				}
 			}
+
+			diff = v - hp
 
 			if (canRegenerate)
 			{
 				if (v < field)
 				{
 					tookDamage = true
+					regenerationTimer = 0
 
 					regeneratingHP = Math.max(-diff, regeneratingHP)
 				}
@@ -69,12 +74,20 @@ class StatisticsComponent: AbstractComponent()
 					regeneratingHP = Math.max(0f, regeneratingHP - diff)
 				}
 			}
+			else
+			{
+				if (v < field)
+				{
+					tookDamage = true
+				}
+			}
 
 			field = v
 			if (godMode && field < 1) field = 1f
 		}
 
 	var regeneratingHP: Float = 0f
+	var regenerationTimer: Int = 0
 
 	var canRegenerate = false
 
@@ -134,6 +147,18 @@ class StatisticsComponent: AbstractComponent()
 
 		val deathEl = xml.getChildByName("Death")
 		if (deathEl != null) deathEffect = AssetManager.loadParticleEffect(deathEl)
+
+		val resistancesEl = xml.getChildByName("Resistances")
+		if (resistancesEl != null)
+		{
+			for (el in resistancesEl.children())
+			{
+				val element = ElementType.valueOf(el.name.toUpperCase())
+				val value = el.text.toInt()
+
+				resistances[element] = value
+			}
+		}
 	}
 
 	fun dealDamage(amount: Float, element: ElementType, elementalConversion: Float, blockable: Boolean)
@@ -146,7 +171,7 @@ class StatisticsComponent: AbstractComponent()
 		hp -= baseDam
 
 		val resistance = resistances[element] ?: 0
-		elementalDam += (elementalDam.toFloat() * 0.25f * resistance.toFloat()).ciel()
+		elementalDam = Math.max(0, elementalDam-resistance)
 
 		unblockableDam = !blockable
 

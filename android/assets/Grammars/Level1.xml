@@ -590,7 +590,7 @@
 				<Rule meta:RefKey="Node">27f26371-1763-4171-a1f8-6c9224094edf</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="2142.763916015625" meta:Y="413.45620727539062" GUID="f2ef7556-9bfd-45c5-8f52-beccdd3acee0">
+		<Node meta:X="2294.3825249345095" meta:Y="410.48329337502037" GUID="f2ef7556-9bfd-45c5-8f52-beccdd3acee0">
 			<Rule meta:RefKey="Symbol">
 				<Character>,</Character>
 				<Floor>
@@ -630,10 +630,9 @@
 			<Rule meta:RefKey="Take">
 				<Count>ReedWeight%</Count>
 				<Rule meta:RefKey="Node">db663d40-b83d-41cb-a907-010681a442f0</Rule>
-				<Remainder meta:RefKey="Node">d5cc35ce-33ef-4d74-bf68-926a89314f1f</Remainder>
 			</Rule>
 		</Node>
-		<Node meta:X="2344.38134765625" meta:Y="645.9769287109375" GUID="db663d40-b83d-41cb-a907-010681a442f0">
+		<Node meta:X="2556.9446915327253" meta:Y="637.05818700982672" GUID="db663d40-b83d-41cb-a907-010681a442f0">
 			<Rule meta:RefKey="Fill">
 				<Character>#</Character>
 			</Rule>
@@ -648,13 +647,13 @@
 				<Rule meta:RefKey="Node">84f5bbb7-1109-43ac-b3fa-6086bd38fe50</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="2344.38134765625" meta:Y="517.3770751953125" GUID="c1f12e9e-0f52-44f7-b919-8bd10ffa7a8a">
+		<Node meta:X="2556.9446915327253" meta:Y="508.45833349420167" GUID="c1f12e9e-0f52-44f7-b919-8bd10ffa7a8a">
 			<Rule meta:RefKey="Fill">
 				<Character>.</Character>
 				<Overwrite>true</Overwrite>
 			</Rule>
 		</Node>
-		<Node meta:X="2344.38134765625" meta:Y="580.9769287109375" GUID="7a6f64e3-506b-49af-8909-141ffaa0f3ba">
+		<Node meta:X="2556.9446915327253" meta:Y="572.05818700982672" GUID="7a6f64e3-506b-49af-8909-141ffaa0f3ba">
 			<Rule meta:RefKey="Fill">
 				<Character>,</Character>
 				<Overwrite>true</Overwrite>
@@ -706,7 +705,7 @@
 				<Rule meta:RefKey="Node">f2ef7556-9bfd-45c5-8f52-beccdd3acee0</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1878.26318359375" meta:Y="420.088623046875" GUID="adee5fa7-435d-4367-88b2-928479b83992">
+		<Node meta:X="1878.26318359375" meta:Y="423.06153694724532" GUID="adee5fa7-435d-4367-88b2-928479b83992">
 			<Rule meta:RefKey="Define">
 				<Key>GroundBlendAlpha</Key>
 				<Value>10</Value>
@@ -718,8 +717,11 @@
 			<Rule meta:RefKey="Rule">
 				<Rule meta:RefKey="Node">f2ef7556-9bfd-45c5-8f52-beccdd3acee0</Rule>
 			</Rule>
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">d5cc35ce-33ef-4d74-bf68-926a89314f1f</Rule>
+			</Rule>
 		</Node>
-		<Node meta:X="1878.26318359375" meta:Y="575.969970703125" GUID="385061a7-6239-4751-91be-2c46f43f31f0">
+		<Node meta:X="1879.7496405439351" meta:Y="641.37407651127114" GUID="385061a7-6239-4751-91be-2c46f43f31f0">
 			<Rule meta:RefKey="Define">
 				<Key>GroundBlendAlpha</Key>
 				<Value>50</Value>
@@ -732,7 +734,7 @@
 				<Rule meta:RefKey="Node">f2ef7556-9bfd-45c5-8f52-beccdd3acee0</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1877.5770263671875" meta:Y="739.59014892578125" GUID="e043d939-8c9e-4fa2-8b95-4dbd7d2a6d5f">
+		<Node meta:X="1879.0634833173726" meta:Y="804.99425473392739" GUID="e043d939-8c9e-4fa2-8b95-4dbd7d2a6d5f">
 			<Rule meta:RefKey="Define">
 				<Key>GroundBlendAlpha</Key>
 				<Value>80</Value>
@@ -1176,13 +1178,13 @@
 				</Prefab>
 			</Rule>
 		</Node>
-		<Node meta:X="2803.8802101268366" meta:Y="1104.4422300844919" GUID="1eb361d8-0bcc-452c-b09a-aa7c162f7898">
+		<Node meta:X="2803.880126953125" meta:Y="1104.4422607421875" GUID="1eb361d8-0bcc-452c-b09a-aa7c162f7898">
 			<Rule meta:RefKey="Take">
 				<Count>4</Count>
 				<Rule meta:RefKey="Node">63c297af-fb2f-4b46-88e7-8bcf800a7413</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="3045.8802101268366" meta:Y="1104.4422300844919" GUID="63c297af-fb2f-4b46-88e7-8bcf800a7413">
+		<Node meta:X="3045.880126953125" meta:Y="1104.4422607421875" GUID="63c297af-fb2f-4b46-88e7-8bcf800a7413">
 			<Rule meta:RefKey="Symbol">
 				<Character>T</Character>
 				<Entity>

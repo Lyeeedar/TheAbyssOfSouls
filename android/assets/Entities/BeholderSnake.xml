@@ -57,6 +57,9 @@
 				<Name>Death</Name>
 				<Colour>173,241,255,255</Colour>
 			</Death>
+			<Resistances>
+				<Corrosion>9999999</Corrosion>
+			</Resistances>
 		</Statistics>
 		<Combo>
 			<ComboTree>Entities/BeholderCombo</ComboTree>

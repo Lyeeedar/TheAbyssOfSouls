@@ -31,6 +31,9 @@ class InteractionActionLine : AbstractInteractionAction()
 
 			Global.controls.onInput += fun (key): Boolean
 			{
+				val controlKey = Global.controls.getKey(key.source, key.code)
+				if (controlKey != null) Global.controls.consumeKeyPress(controlKey)
+
 				if (dialogue.displayedText != dialogue.text)
 				{
 					dialogue.displayedText = dialogue.text

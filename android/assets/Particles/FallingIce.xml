@@ -9,7 +9,7 @@
 				<Keyframe>0|0,3</Keyframe>
 			</Offset>
 			<Direction>Down</Direction>
-			<ParticleSpeed>0,9</ParticleSpeed>
+			<ParticleSpeed>9,9</ParticleSpeed>
 			<ParticleRotation>0,0</ParticleRotation>
 			<RateKeyframes>
 				<Keyframe>0|1</Keyframe>

@@ -101,7 +101,7 @@
 									</Renderable>
 								</Renderable>
 								<Interaction>
-									<Interaction>MistressHouseStairsUp</Interaction>
+									<Interaction>MistressHouseStairsDown</Interaction>
 								</Interaction>
 							</Components>
 						</Entity>

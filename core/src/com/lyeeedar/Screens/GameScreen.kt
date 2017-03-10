@@ -82,7 +82,11 @@ class GameScreen : AbstractScreen()
 			{
 				// only copy sins, inventory
 				player.add(lastPlayer.sin())
+				player.add(lastPlayer.combo())
 				player.add(lastPlayer.inventory())
+
+				player.stats().hp = player.stats().maxHP / 2
+				player.stats().regeneratingHP = 0f
 			}
 			else
 			{

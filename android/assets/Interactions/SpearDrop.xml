@@ -1,0 +1,18 @@
+<Interaction meta:X="0" meta:Y="0" GUID="07e2899d-9571-4c41-ba47-20f6a607c67a" xmlns:meta="Editor">
+	<Branch meta:RefKey="Branch">
+		<Branch>
+			<Condition>1</Condition>
+			<Node meta:RefKey="Node">980d9e3b-9f71-40ad-a187-77c2064d51ed</Node>
+		</Branch>
+	</Branch>
+	<Nodes>
+		<Node meta:X="247" meta:Y="0" GUID="980d9e3b-9f71-40ad-a187-77c2064d51ed">
+			<Action meta:RefKey="Drop">
+				<Drop meta:RefKey="Equipment">
+					<Weapon>Spear</Weapon>
+				</Drop>
+			</Action>
+			<Action meta:RefKey="Kill" />
+		</Node>
+	</Nodes>
+</Interaction>

@@ -30,8 +30,13 @@ class StatisticsSystem : AbstractSystem(Family.one(StatisticsComponent::class.ja
 		{
 			if (e.stats().regeneratingHP > 0f)
 			{
-				val toregen = Math.min(0.2f, e.stats().regeneratingHP)
-				e.stats().hp += toregen
+				e.stats().regenerationTimer++
+
+				if (e.stats().regenerationTimer > 5)
+				{
+					val toregen = Math.min(0.2f, e.stats().regeneratingHP)
+					e.stats().hp += toregen
+				}
 			}
 		}
 

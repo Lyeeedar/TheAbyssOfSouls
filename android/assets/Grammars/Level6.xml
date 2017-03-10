@@ -249,6 +249,8 @@
 									<Damage>
 										<Time>0.452586859</Time>
 										<Amount>4</Amount>
+										<Element>Corrosion</Element>
+										<ElementalConversion>1</ElementalConversion>
 									</Damage>
 									<Knockback>
 										<Time>0.473021537</Time>
@@ -387,7 +389,7 @@
 				</Prefab>
 			</Rule>
 		</Node>
-		<Node meta:X="1104.5692918146915" meta:Y="436.30993199438637" GUID="24297d93-2c47-4414-8a9d-67b520bc5a69">
+		<Node meta:X="1104.5693359375" meta:Y="436.3099365234375" GUID="24297d93-2c47-4414-8a9d-67b520bc5a69">
 			<Rule meta:RefKey="Symbol">
 				<Character>T</Character>
 				<Entity>

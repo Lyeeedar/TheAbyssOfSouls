@@ -490,7 +490,7 @@
 				</Division>
 			</Rule>
 		</Node>
-		<Node meta:X="1380.5487520976687" meta:Y="1087.177734375" GUID="3b90d7a6-4eb5-4837-ac07-fcf75cb60a2f">
+		<Node meta:X="1380.5487060546875" meta:Y="1087.177734375" GUID="3b90d7a6-4eb5-4837-ac07-fcf75cb60a2f">
 			<Rule meta:RefKey="NamedArea">
 				<Key>building</Key>
 				<Rules>
@@ -501,6 +501,14 @@
 					<Rule>
 						<Count>remainder</Count>
 						<Rule meta:RefKey="Node">c6d131d4-6ad8-4dce-8a02-2be2f2a99f34</Rule>
+					</Rule>
+				</Rules>
+			</Rule>
+			<Rule meta:RefKey="NamedArea">
+				<Key>building</Key>
+				<Rules>
+					<Rule>
+						<Rule meta:RefKey="Node">8d773c4c-2a8f-4f68-8693-0af4aca1ee61</Rule>
 					</Rule>
 				</Rules>
 			</Rule>
@@ -725,6 +733,45 @@
 			</Rule>
 			<Rule meta:RefKey="Fill">
 				<Character>m</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="1675.2633460040424" meta:Y="1479.2224025096466" GUID="8d773c4c-2a8f-4f68-8693-0af4aca1ee61">
+			<!--Greatsword-->
+			<Rule meta:RefKey="Filter">
+				<Mode>Character</Mode>
+				<Character>.</Character>
+				<Rule meta:RefKey="Node">7668e9c8-9627-45d0-899f-5427f370ecad</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="1909.2633460040424" meta:Y="1479.2224025096466" GUID="7668e9c8-9627-45d0-899f-5427f370ecad">
+			<Rule meta:RefKey="Take">
+				<Mode>Edge</Mode>
+				<Count>1</Count>
+				<Rule meta:RefKey="Node">512b95a0-7326-409a-afed-da4c8bc80e9f</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="2151.2633460040424" meta:Y="1479.2224025096466" GUID="512b95a0-7326-409a-afed-da4c8bc80e9f">
+			<Rule meta:RefKey="Symbol">
+				<Character>G</Character>
+				<Entity>
+					<Components>
+						<Renderable>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/uf_split/uf_items/weapon_lance</Name>
+								<DrawActualSize>true</DrawActualSize>
+							</Renderable>
+						</Renderable>
+						<Interaction>
+							<Interaction>GreatswordDrop</Interaction>
+						</Interaction>
+						<Position>
+							<Moveable>false</Moveable>
+						</Position>
+					</Components>
+				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>G</Character>
 			</Rule>
 		</Node>
 	</Rules>

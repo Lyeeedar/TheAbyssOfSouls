@@ -27,7 +27,7 @@ fun showFullscreenText(text: String, minDuration: Float, exitAction: ()->Unit)
 		val outsequence = Actions.fadeOut(0.2f) then Actions.removeActor()
 
 		Future.call({
-			Global.controls.onInput += fun (key: Int): Boolean {
+			Global.controls.onInput += fun (key): Boolean {
 				fadeTable + outsequence
 				exitAction.invoke()
 				return true

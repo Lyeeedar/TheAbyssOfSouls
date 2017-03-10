@@ -1,10 +1,10 @@
 package com.lyeeedar.Combo
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
+import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
@@ -185,7 +185,7 @@ class Weapon : Item()
 		val table = table {
 			defaults().pad(20f).center()
 
-			this.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24)).tint(Color(1f, 1f, 1f, 0.7f))
+			this.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24))
 
 			table {
 				cell -> cell.growX()
@@ -198,13 +198,15 @@ class Weapon : Item()
 			row()
 
 			label(description, "default", Global.skin) {
-				cell -> cell.growX()
+				cell -> cell.growX().center()
 				setWrap(true)
+				setAlignment(Align.center)
 			}
 			row()
 
 			label(combosHint, "default", Global.skin) {
-				cell -> cell.growX()
+				cell -> cell.growX().center()
+				setAlignment(Align.center)
 			}
 			row()
 
@@ -256,7 +258,7 @@ class Weapon : Item()
 			}
 		}
 
-		background.add(table).grow().pad(20f)
+		background.add(table).grow().pad(75f)
 
 		background.setFillParent(true)
 		Global.stage.addActor(background)

@@ -5,12 +5,10 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.*
 import com.lyeeedar.Direction
-import com.lyeeedar.Renderables.Animation.ExpandAnimation
-import com.lyeeedar.Renderables.Animation.LeapAnimation
-import com.lyeeedar.Renderables.Animation.MoveAnimation
-import com.lyeeedar.Renderables.Animation.SpinAnimation
+import com.lyeeedar.Renderables.Animation.*
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.Point
 
 class DefenseComboStep : ComboStep()
@@ -44,6 +42,8 @@ class DefenseComboStep : ComboStep()
 
 		if (mode == DefenseMode.BLOCK)
 		{
+			entity.renderable().renderable.animation = BlinkAnimation.obtain().set(Colour.LIGHT_GRAY, Colour.WHITE, 0.2f)
+
 			entity.stats().blocking = true
 
 			entity.event().onTurn += fun(): Boolean {

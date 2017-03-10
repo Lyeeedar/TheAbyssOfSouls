@@ -59,7 +59,8 @@ class ComboTree
 
 	lateinit var comboStep: ComboStep
 	val random = Array<ComboTree>()
-	var cost = 0
+	var staminaCost = 0
+	var turnCost = 1
 	var cooldown = 0
 	var weight = 1
 	var attackPower = 100
@@ -104,7 +105,8 @@ class ComboTree
 					current.comboStep = desc
 				}
 
-				current.cost = el.getInt("Cost", 0)
+				current.turnCost = el.getInt("TurnCost", 1)
+				current.staminaCost = el.getInt("Cost", 0)
 				current.weight = el.getInt("Weight", 1)
 				current.cooldown = el.getInt("Cooldown", 0)
 				current.attackPower = attackPower

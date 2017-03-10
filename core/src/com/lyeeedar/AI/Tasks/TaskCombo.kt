@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.lyeeedar.Combo.ComboTree
 import com.lyeeedar.Components.directionalSprite
 import com.lyeeedar.Components.stats
+import com.lyeeedar.Components.task
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Systems.task
@@ -13,7 +14,15 @@ class TaskCombo(val combo: ComboTree, val direction: Direction, val target: Poin
 {
 	override fun execute(e: Entity)
 	{
-		e.stats().stamina -= combo.cost
+		e.stats().stamina -= combo.staminaCost
+
+		if (combo.turnCost > 1)
+		{
+			for (i in 1..combo.turnCost - 1)
+			{
+				e.task().tasks.add(TaskWait(false))
+			}
+		}
 
 		// do combo attack
 		e.directionalSprite()?.currentAnim = combo.comboStep.anim

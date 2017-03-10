@@ -159,6 +159,7 @@ class TileSystem : AbstractSystem()
 	{
 		val entity = tile.contents[SpaceSlot.ENTITY] ?: return
 		val pos = entity.pos() ?: return
+		if (!pos.moveable) return
 		entity.renderable() ?: return
 
 		if (entity.renderable().renderable.animation != null && !isDeferred)
