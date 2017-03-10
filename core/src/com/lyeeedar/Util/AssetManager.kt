@@ -288,6 +288,12 @@ class AssetManager
 			sprite.repeatDelay = xml.getFloat("RepeatDelay", 0f)
 			sprite.frameBlend = xml.getBoolean("Blend", false)
 
+			if (xml.getBoolean("RandomStart", false))
+			{
+				sprite.animationState.texIndex = Random.random(sprite.textures.size)
+				sprite.animationAccumulator = Random.random(sprite.animationDelay)
+			}
+
 			val animationElement = xml.getChildByName("Animation")
 			if (animationElement != null)
 			{

@@ -46,6 +46,7 @@ fun Entity.metaregion() = Mappers.metaregion.get(this)
 fun Entity.loaddata() = Mappers.loaddata.get(this)
 fun Entity.drop() = Mappers.drop.get(this)
 fun Entity.sin() = Mappers.sin.get(this)
+fun Entity.inventory() = Mappers.inventory.get(this)
 
 fun <T: AbstractComponent> Entity.hasComponent(c: Class<T>) = this.getComponent(c) != null
 
@@ -76,6 +77,7 @@ class Mappers
 		val loaddata: ComponentMapper<LoadDataComponent> = ComponentMapper.getFor(LoadDataComponent::class.java)
 		val drop: ComponentMapper<DropComponent> = ComponentMapper.getFor(DropComponent::class.java)
 		val sin: ComponentMapper<SinComponent> = ComponentMapper.getFor(SinComponent::class.java)
+		val inventory: ComponentMapper<InventoryComponent> = ComponentMapper.getFor(InventoryComponent::class.java)
 	}
 }
 
@@ -135,6 +137,7 @@ class EntityLoader()
 					"DIRECTIONALSPRITE" -> DirectionalSpriteComponent()
 					"DROP" -> DropComponent()
 					"INTERACTION" -> InteractionComponent()
+					"INVENTORY" -> InventoryComponent()
 					"LIGHT" -> LightComponent()
 					"METAREGION" -> MetaRegionComponent()
 					"NAME" -> NameComponent()

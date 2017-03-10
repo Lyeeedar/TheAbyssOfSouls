@@ -5,7 +5,7 @@
 	<!--Node-->
 	<Definition Name="Node" meta:RefKey="GraphCollectionDef">
 		<Data Name="Node" Keys="Node" meta:RefKey="GraphReference" />
-		<Data Name="Action" Keys="Branch,Choice,Define,Line,Drop,ChangeLevel,CompleteGame,ChangeSprite" meta:RefKey="Reference" />
+		<Data Name="Action" Keys="Branch,Choice,Define,Line,Drop,ChangeLevel,CompleteGame,ChangeSprite,Kill,Scene,RemoveItem" meta:RefKey="Reference" />
 	</Definition>
 	<!--Actions-->
 	<Definition Name="Line" meta:RefKey="StructDef">
@@ -32,7 +32,7 @@
 		<Data Name="Global" meta:RefKey="Boolean" />
 	</Definition>
 	<Definition Name="Drop" meta:RefKey="StructDef">
-		<Data Name="Drop" Keys="AtonementSpirit,SellableItem,Equipment" meta:RefKey="Reference" />
+		<Data Name="Drop" Keys="AtonementSpirit,Item,Equipment,Money" meta:RefKey="Reference" />
 	</Definition>
 	<Definition Name="ChangeLevel" meta:RefKey="StructDef">
 		<Data Name="Level" meta:RefKey="String" />
@@ -40,5 +40,15 @@
 	<Definition Name="CompleteGame" SkipIfDefault="False" meta:RefKey="StructDef" />
 	<Definition Name="ChangeSprite" meta:RefKey="StructDef">
 		<Data Name="Sprite" Keys="Sprite" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="Kill" SkipIfDefault="False" meta:RefKey="StructDef" />
+	<Definition Name="Scene" meta:RefKey="StructDef">
+		<Data Name="Loop" meta:RefKey="Boolean" />
+		<Data Name="HitPoints" Default="#" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
+		<Data Name="SceneTimeline" Keys="SceneTimeline" meta:RefKey="Reference" />
+	</Definition>
+	<Definition Name="RemoveItem" meta:RefKey="StructDef">
+		<Data Name="Name" meta:RefKey="String" />
+		<Data Name="Count" meta:RefKey="String" />
 	</Definition>
 </Definitions>

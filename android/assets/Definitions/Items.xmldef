@@ -2,13 +2,16 @@
 	<Definition Name="AtonementSpirit" IsGlobal="True" meta:RefKey="StructDef">
 		<Data Name="Sin" EnumValues="Anger,Sloth,Envy,Lust,Greed,Pride" SkipIfDefault="False" meta:RefKey="Enum" />
 	</Definition>
-	<Definition Name="SellableItem" IsGlobal="True" meta:RefKey="StructDef">
+	<Definition Name="Item" IsGlobal="True" meta:RefKey="StructDef">
 		<Data Name="Name" meta:RefKey="String" />
 		<Data Name="Description" meta:RefKey="MultilineString" />
 		<Data Name="Icon" Keys="Sprite" meta:RefKey="Reference" />
-		<Data Name="Value" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+		<Data Name="Count" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
 	</Definition>
 	<Definition Name="Equipment" IsGlobal="True" meta:RefKey="StructDef">
 		<Data Name="Weapon" BasePath="Items" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
+	</Definition>
+	<Definition Name="Money" IsGlobal="True" meta:RefKey="StructDef">
+		<Data Name="Value" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
 	</Definition>
 </Definitions>

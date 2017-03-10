@@ -124,8 +124,6 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 
 	fun setTileSizeAnimated(targetSize: Float, duration: Float)
 	{
-		if (tileSize == targetSize) return
-
 		startTileSize = tileSize
 		targetTileSize = targetSize
 		tileSizeProgress = 0f

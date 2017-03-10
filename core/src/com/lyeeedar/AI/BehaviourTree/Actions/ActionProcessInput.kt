@@ -33,7 +33,7 @@ class ActionProcessInput(): AbstractAction()
 		{
 			setData( "clickpos", null )
 		}
-		else if ( Gdx.input.isTouched( 0 ) )
+		else if ( Gdx.input.isTouched( 0 ) && !Global.release )
 		{
 			val touchX = Gdx.input.x
 			val touchY = Gdx.input.y

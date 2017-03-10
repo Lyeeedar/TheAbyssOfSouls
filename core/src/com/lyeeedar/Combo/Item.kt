@@ -15,8 +15,11 @@ import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.ButtonKeyboardHelper
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.UI.addClickListener
+import com.lyeeedar.UI.showFullscreenText
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.getXml
+import ktx.collections.set
 import ktx.scene2d.label
 import ktx.scene2d.table
 import ktx.scene2d.textButton
@@ -28,6 +31,8 @@ abstract class Item
 	lateinit var icon: Sprite
 	lateinit var name: String
 	lateinit var description: String
+
+	var count: Int = 1
 
 	abstract fun steppedOn(entity: Entity, floorEntity: Entity)
 	abstract fun parse(xml: XmlReader.Element)
@@ -58,10 +63,18 @@ abstract class Item
 					item = AtonementSpirit()
 					item.parse(xml)
 				}
-				else if (type == "SELLABLEITEM")
+				else if (type == "ITEM")
 				{
-					item = SellableItem()
+					item = BasicItem()
 					item.parse(xml)
+				}
+				else if (type == "MONEY")
+				{
+					item = BasicItem()
+					item.name = "Money"
+					item.description = "Its money"
+					item.icon = AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_silver")
+					item.count = xml.getInt("Value", 1)
 				}
 				else throw Exception("Unknown item type '$type'")
 			}
@@ -72,16 +85,31 @@ abstract class Item
 	}
 }
 
-class SellableItem : Item()
+class BasicItem : Item()
 {
-	var value: Int = 0
-
 	override fun steppedOn(entity: Entity, floorEntity: Entity)
 	{
-		val tile = floorEntity.tile()!!
-		tile.contents[SpaceSlot.BELOWENTITY] = null
+		val inventory = entity.inventory()
 
-		Global.engine.removeEntity(floorEntity)
+		if (inventory != null)
+		{
+			val key = name.replace(" ", "").toLowerCase()
+
+			val existing = inventory.items[key]
+			if (existing != null)
+			{
+				existing.count += count
+			}
+			else
+			{
+				inventory.items[key] = this
+			}
+
+			val tile = floorEntity.tile()!!
+			tile.contents[SpaceSlot.BELOWENTITY] = null
+
+			Global.engine.removeEntity(floorEntity)
+		}
 	}
 
 	override fun parse(xml: XmlReader.Element)
@@ -90,19 +118,41 @@ class SellableItem : Item()
 		name = xml.get("Name")
 		description = xml.get("Description")
 
-		value = xml.getInt("Value", 1)
+		count = xml.getInt("Count", 1)
 	}
 
 }
 
-class AtonementSpirit : Item()
+class AtonementSpirit() : Item()
 {
 	lateinit var sin: Sin
+
+	constructor(sin: Sin) : this()
+	{
+		this.sin = sin
+
+		icon = AssetManager.loadSprite("Oryx/Custom/items/orb")
+		icon.drawActualSize = true
+		icon.colour = sin.colour
+	}
 
 	override fun steppedOn(entity: Entity, floorEntity: Entity)
 	{
 		val sin = entity.sin() ?: return
+
+		val sinned = sin.sins[this.sin] > 0
 		sin.sins[this.sin] = Math.max(0, (sin.sins[this.sin] ?: 0)-1)
+		sin.restored[this.sin] = true
+
+		if (sinned && sin.sins[this.sin] == 0)
+		{
+			Future.call(
+			{
+				Global.pause = true
+
+				showFullscreenText("Your sin of [" + this.sin.toString() + "]" + this.sin.toString().toLowerCase().capitalize() + "[] is cleansed.", 0.25f, {Global.pause = false})
+			}, 0.5f)
+		}
 
 		val tile = floorEntity.tile()!!
 		tile.contents[SpaceSlot.BELOWENTITY] = null
@@ -115,7 +165,7 @@ class AtonementSpirit : Item()
 		name = xml.get("Sin")
 		sin = Sin.valueOf(name.toUpperCase())
 
-		icon = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_cloud")
+		icon = AssetManager.loadSprite("Oryx/Custom/items/orb")
 		icon.drawActualSize = true
 		icon.colour = sin.colour
 	}

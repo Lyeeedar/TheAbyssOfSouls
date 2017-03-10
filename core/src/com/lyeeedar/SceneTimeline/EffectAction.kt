@@ -19,6 +19,7 @@ class DamageAction() : AbstractTimelineAction()
 	var amount: Int = 1
 	lateinit var element: ElementType
 	var elementalConversion: Float = 0.0f
+	var blockable = true
 
 	var attackPower = 100
 
@@ -29,7 +30,7 @@ class DamageAction() : AbstractTimelineAction()
 			for (entity in tile.contents)
 			{
 				val stats = entity.stats() ?: continue
-				stats.dealDamage((amount * attackPower) / 100.0f, element, elementalConversion)
+				stats.dealDamage((amount * attackPower) / 100.0f, element, elementalConversion, blockable)
 			}
 		}
 	}
@@ -51,6 +52,7 @@ class DamageAction() : AbstractTimelineAction()
 		action.element = element
 		action.elementalConversion = elementalConversion
 		action.attackPower = attackPower
+		action.blockable = blockable
 
 		return action
 	}
@@ -60,6 +62,7 @@ class DamageAction() : AbstractTimelineAction()
 		amount = xml.getInt("Amount", 1)
 		element = ElementType.valueOf(xml.get("Element", "None").toUpperCase())
 		elementalConversion = xml.getFloat("ElementalConversion", 0.0f)
+		blockable = xml.getBoolean("Blockable", true)
 	}
 }
 

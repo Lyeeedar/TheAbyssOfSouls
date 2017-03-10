@@ -276,7 +276,11 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		if (debugDraw && inDebugFrame) return
 
-		if (effect.facing.x != 0)
+		if (effect.lockPosition)
+		{
+
+		}
+		else if (effect.facing.x != 0)
 		{
 			effect.setPosition(ix + effect.size[1].toFloat() * 0.5f, iy + effect.size[0].toFloat() * 0.5f)
 		}

@@ -5,6 +5,7 @@
 		<Data Name="UpdateRate" Min="0" Default="0.5" meta:RefKey="Number" />
 		<Data Name="Colour" HasAlpha="True" meta:RefKey="Colour" />
 		<Data Name="Blend" meta:RefKey="Boolean" />
+		<Data Name="RandomStart" meta:RefKey="Boolean" />
 	</Definition>
 	<Definition Name="TilingSprite" IsGlobal="True" meta:RefKey="StructDef">
 		<Data Name="Name" SkipIfDefault="False" meta:RefKey="String" />

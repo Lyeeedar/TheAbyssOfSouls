@@ -1,0 +1,47 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<DirectionalSprite>
+			<Animations>
+				<Animation>
+					<Name>idle</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/succubus</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/succubus</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+			</Animations>
+		</DirectionalSprite>
+		<Statistics>
+			<Faction>mistress</Faction>
+			<HP>20</HP>
+			<Stamina>10</Stamina>
+			<Sight>15</Sight>
+			<Death meta:RefKey="ParticleEffect">
+				<Name>Death</Name>
+			</Death>
+		</Statistics>
+		<Position />
+		<AI>
+			<AI>BasicMonster</AI>
+		</AI>
+		<Drop>
+			<Drop>
+				<Drop meta:RefKey="Item">
+					<Name>Soul Key</Name>
+					<Description>This key is warm to the touch, and glows with some internal light.</Description>
+					<Icon meta:RefKey="Sprite">
+						<Name>Oryx/uf_split/uf_items/key_blue</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Icon>
+				</Drop>
+			</Drop>
+		</Drop>
+		<Combo>
+			<ComboTree>Entities/MistressCombo</ComboTree>
+		</Combo>
+	</Components>
+</Entity>

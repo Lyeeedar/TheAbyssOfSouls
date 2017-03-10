@@ -1,0 +1,81 @@
+<Interaction meta:X="0" meta:Y="0" GUID="04a1b4f5-33a8-4551-9ade-18879f11c835" xmlns:meta="Editor">
+	<Branch meta:RefKey="Branch">
+		<Branch>
+			<Condition>1</Condition>
+			<Node meta:RefKey="Node">1f5bde03-4475-4118-89a8-edf8c41cb63b</Node>
+		</Branch>
+	</Branch>
+	<Nodes>
+		<Node meta:X="241" meta:Y="0" GUID="1f5bde03-4475-4118-89a8-edf8c41cb63b">
+			<Action meta:RefKey="Line">
+				<Text>A large altar stands here, faintly glowing with some internal light.</Text>
+			</Action>
+			<Action meta:RefKey="Choice">
+				<Text>What would you like to do?</Text>
+				<Choices>
+					<Choice>
+						<Text>Place your hands on the altar</Text>
+						<Node meta:RefKey="Node">e8476b8f-99b8-4251-9b9d-a89601aeca97</Node>
+					</Choice>
+					<Choice>
+						<Text>Step away</Text>
+					</Choice>
+				</Choices>
+			</Action>
+		</Node>
+		<Node meta:X="541" meta:Y="-2" GUID="e8476b8f-99b8-4251-9b9d-a89601aeca97">
+			<Action meta:RefKey="Branch">
+				<Branch>
+					<Condition>greed==0 &amp;&amp; lust==0</Condition>
+					<Node meta:RefKey="Node">79490b32-51eb-420d-af53-e908e2c5db31</Node>
+				</Branch>
+				<Branch>
+					<Condition>greed!=0 || lust!=0</Condition>
+					<Node meta:RefKey="Node">a0646e38-fbee-442f-b1d8-09e77c9ba026</Node>
+				</Branch>
+			</Action>
+		</Node>
+		<Node meta:X="808" meta:Y="160" GUID="a0646e38-fbee-442f-b1d8-09e77c9ba026">
+			<Action meta:RefKey="Line">
+				<Text>As you place your hands on the altar a searing flash of light blasts out.</Text>
+			</Action>
+			<Action meta:RefKey="Branch">
+				<Branch>
+					<Condition>greed!=0 &amp;&amp; lust!=0</Condition>
+					<Node meta:RefKey="Node">71723ca4-f6bd-456d-99c0-a2c47dd545ea</Node>
+				</Branch>
+				<Branch>
+					<Condition>lust!=0</Condition>
+					<Node meta:RefKey="Node">ff4e0fec-35aa-4dd3-b8d7-04fdcc6e918c</Node>
+				</Branch>
+				<Branch>
+					<Condition>greed!=0</Condition>
+					<Node meta:RefKey="Node">d8bf93f3-aa42-4a97-88de-fbb08ac1ce54</Node>
+				</Branch>
+			</Action>
+		</Node>
+		<Node meta:X="809" meta:Y="1" GUID="79490b32-51eb-420d-af53-e908e2c5db31">
+			<Action meta:RefKey="Line">
+				<Text>Soothing light builds around you.</Text>
+			</Action>
+			<Action meta:RefKey="ChangeLevel">
+				<Level>ascend</Level>
+			</Action>
+		</Node>
+		<Node meta:X="1104.8020270040472" meta:Y="197.41114852225962" GUID="71723ca4-f6bd-456d-99c0-a2c47dd545ea">
+			<Action meta:RefKey="Line">
+				<Text>Your sins of [GREED]greed[] and [LUST]lust[] have not yet been atoned for.</Text>
+			</Action>
+		</Node>
+		<Node meta:X="1104.8020270040472" meta:Y="277" GUID="ff4e0fec-35aa-4dd3-b8d7-04fdcc6e918c">
+			<Action meta:RefKey="Line">
+				<Text>Your sins of [LUST]lust[] have not yet been atoned for.</Text>
+			</Action>
+		</Node>
+		<Node meta:X="1104.8020270040472" meta:Y="356.62865583675261" GUID="d8bf93f3-aa42-4a97-88de-fbb08ac1ce54">
+			<Action meta:RefKey="Line">
+				<Text>Your sins of [GREED]greed[] have not yet been atoned for.</Text>
+			</Action>
+		</Node>
+	</Nodes>
+</Interaction>

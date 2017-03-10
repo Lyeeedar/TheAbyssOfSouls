@@ -1,0 +1,15 @@
+<Interaction meta:X="0" meta:Y="0" GUID="a15486c3-7aaa-44a2-9c9d-0b4640133fc2" xmlns:meta="Editor">
+	<Branch meta:RefKey="Branch">
+		<Branch>
+			<Condition>1</Condition>
+			<Node meta:RefKey="Node">d65373b4-e431-40f1-8511-69b0f222e86d</Node>
+		</Branch>
+	</Branch>
+	<Nodes>
+		<Node meta:X="249" meta:Y="-1" GUID="d65373b4-e431-40f1-8511-69b0f222e86d">
+			<Action meta:RefKey="Line">
+				<Text>Go bother someone else</Text>
+			</Action>
+		</Node>
+	</Nodes>
+</Interaction>

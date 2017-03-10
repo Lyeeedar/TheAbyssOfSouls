@@ -28,11 +28,16 @@
 			<Data Name="Drop" meta:RefKey="Collection">
 				<Data Name="Drop" meta:RefKey="Struct">
 					<Data Name="Chance" Min="0" Max="1" Default="1" meta:RefKey="Number" />
-					<Data Name="Drop" Keys="AtonementSpirit,SellableItem,Equipment" meta:RefKey="Reference" />
+					<Data Name="Drop" Keys="AtonementSpirit,Item,Equipment,Money" meta:RefKey="Reference" />
 				</Data>
 			</Data>
 			<Data Name="Interaction" meta:RefKey="Struct">
 				<Data Name="Interaction" BasePath="Interactions" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
+			</Data>
+			<Data Name="Inventory" SkipIfDefault="False" meta:RefKey="Struct">
+				<Data Name="Items" meta:RefKey="Collection">
+					<Data Name="Item" meta:RefKey="Reference" />
+				</Data>
 			</Data>
 			<Data Name="Light" meta:RefKey="Struct">
 				<Data Name="Colour" meta:RefKey="Colour" />

@@ -29,7 +29,7 @@
 				</Prefab>
 			</Rule>
 		</Node>
-		<Node meta:X="491.98071523415877" meta:Y="2.01928476584124" GUID="aa9a0280-0506-477e-b3da-bcd8f4924d01">
+		<Node meta:X="491.980712890625" meta:Y="2.019284725189209" GUID="aa9a0280-0506-477e-b3da-bcd8f4924d01">
 			<!--Base symbols-->
 			<Rule meta:RefKey="Symbol">
 				<Character>.</Character>
@@ -55,6 +55,7 @@
 									<Damage>
 										<Time>2.56794357</Time>
 										<Amount>1000000</Amount>
+										<Blockable>false</Blockable>
 									</Damage>
 									<Blocker>
 										<Time>2.698558</Time>
@@ -62,6 +63,7 @@
 									</Blocker>
 									<Damage>
 										<Time>2.82732463</Time>
+										<Blockable>false</Blockable>
 									</Damage>
 									<Blocker>
 										<Time>2.96682215</Time>
@@ -69,6 +71,7 @@
 									<Damage>
 										<Time>3.11705017</Time>
 										<Amount>1000000</Amount>
+										<Blockable>false</Blockable>
 									</Damage>
 								</Timeline>
 							</SceneTimeline>
@@ -114,42 +117,52 @@
 										<Count>15+rnd(5)</Count>
 									</Blocker>
 									<SourceRenderable>
-										<Duration LockDuration="False">0.1</Duration>
 										<Time>0.1</Time>
+										<Duration LockDuration="False">0.1</Duration>
 										<Renderable meta:RefKey="Sprite">
 											<Name>Oryx/Custom/heroes/eye_1</Name>
 										</Renderable>
 										<RestoreOriginal>false</RestoreOriginal>
 									</SourceRenderable>
 									<SourceRenderable>
-										<Duration LockDuration="False">0.100000009</Duration>
 										<Time>0.2</Time>
+										<Duration LockDuration="False">0.100000009</Duration>
 										<Renderable meta:RefKey="Sprite">
 											<Name>Oryx/Custom/heroes/eye_2</Name>
 										</Renderable>
 										<RestoreOriginal>false</RestoreOriginal>
 									</SourceRenderable>
 									<SourceRenderable>
-										<Duration LockDuration="False">0.099999994</Duration>
 										<Time>0.3</Time>
+										<Duration LockDuration="False">0.099999994</Duration>
 										<Renderable meta:RefKey="Sprite">
 											<Name>Oryx/Custom/heroes/eye_3</Name>
 										</Renderable>
 										<RestoreOriginal>false</RestoreOriginal>
 									</SourceRenderable>
 									<SourceRenderable>
-										<Duration LockDuration="False">0.0873765945</Duration>
 										<Time>0.4</Time>
+										<Duration LockDuration="False">0.03170234</Duration>
 										<Renderable meta:RefKey="Sprite">
 											<Name>Oryx/Custom/heroes/eye_4</Name>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+									<SourceRenderable>
+										<Time>0.431702346</Time>
+										<Duration LockDuration="False">0.0529634058</Duration>
+										<Renderable meta:RefKey="Sprite">
+											<Name>Oryx/Custom/heroes/eye_move</Name>
+											<UpdateRate>2.5</UpdateRate>
+											<RandomStart>true</RandomStart>
 										</Renderable>
 										<RestoreOriginal>false</RestoreOriginal>
 									</SourceRenderable>
 								</Timeline>
 								<Timeline>
 									<SourceAnimation>
-										<Duration LockDuration="False">0.0490000024</Duration>
 										<Time>0.101</Time>
+										<Duration LockDuration="False">0.0490000024</Duration>
 										<Animation>Fade</Animation>
 										<FadeStart>0</FadeStart>
 									</SourceAnimation>
@@ -175,13 +188,43 @@
 										<Count>22</Count>
 									</Blocker>
 									<SourceRenderable>
-										<Duration LockDuration="False">3</Duration>
 										<Time>0.0233242121</Time>
+										<Duration LockDuration="False">3</Duration>
 										<Renderable meta:RefKey="ParticleEffect">
 											<Name>MassiveJaws</Name>
 										</Renderable>
 										<RestoreOriginal>false</RestoreOriginal>
 									</SourceRenderable>
+								</Timeline>
+								<Timeline>
+									<Screenshake>
+										<Duration LockDuration="False">0.607735932</Duration>
+										<Time>0.141376615</Time>
+										<Strength>4</Strength>
+									</Screenshake>
+									<Screenshake>
+										<Duration LockDuration="False">0.506705463</Duration>
+										<Time>0.749112546</Time>
+										<Strength>8</Strength>
+									</Screenshake>
+									<Screenshake>
+										<Duration LockDuration="False">0.6261697</Duration>
+										<Time>1.255818</Time>
+										<Strength>10</Strength>
+										<Speed>12</Speed>
+									</Screenshake>
+									<Screenshake>
+										<Duration LockDuration="False">0.5496379</Duration>
+										<Time>1.88198769</Time>
+										<Strength>12</Strength>
+										<Speed>14</Speed>
+									</Screenshake>
+									<Screenshake>
+										<Duration LockDuration="False">0.591698647</Duration>
+										<Time>2.4316256</Time>
+										<Strength>15</Strength>
+										<Speed>15</Speed>
+									</Screenshake>
 								</Timeline>
 							</SceneTimeline>
 						</SceneTimeline>
@@ -191,13 +234,13 @@
 			<Rule meta:RefKey="Symbol">
 				<Character>s</Character>
 				<Extends>.</Extends>
-				<FloorDetail>
+				<BelowEntity>
 					<Components>
 						<MetaRegion>
 							<Key>spawndeath,spawndescend</Key>
 						</MetaRegion>
 					</Components>
-				</FloorDetail>
+				</BelowEntity>
 			</Rule>
 		</Node>
 	</Rules>

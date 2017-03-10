@@ -2,29 +2,32 @@
 	<Loop>false</Loop>
 	<Emitters>
 		<Emitter>
+			<Name>Shard</Name>
 			<Width>0</Width>
 			<Height>0</Height>
 			<Offset>
-				<Keyframe>0|0,0</Keyframe>
+				<Keyframe>0|0,3</Keyframe>
 			</Offset>
-			<ParticleSpeed>0,1</ParticleSpeed>
-			<ParticleRotation>0,360</ParticleRotation>
+			<Direction>Down</Direction>
+			<ParticleSpeed>0,9</ParticleSpeed>
+			<ParticleRotation>0,0</ParticleRotation>
 			<RateKeyframes>
 				<Keyframe>0|1</Keyframe>
 			</RateKeyframes>
 			<SingleBurst>true</SingleBurst>
 			<Particles>
 				<Particle>
-					<Lifetime>1,1</Lifetime>
+					<Lifetime>0.3,0.3</Lifetime>
 					<BlendMode>Additive</BlendMode>
 					<TextureKeyframes>
 						<Stream>
-							<Keyframe>0|Particle/glow</Keyframe>
+							<Keyframe>0|EffectSprites/IceShard/IceShard_0</Keyframe>
 						</Stream>
 					</TextureKeyframes>
 					<SizeKeyframes>
 						<Stream>
-							<Keyframe>0|1|1</Keyframe>
+							<Keyframe>0|3|3</Keyframe>
+							<Keyframe>1|1|1</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<ColourKeyframes>
@@ -35,6 +38,91 @@
 					<AlphaKeyframes>
 						<Stream>
 							<Keyframe>0|1</Keyframe>
+						</Stream>
+					</AlphaKeyframes>
+				</Particle>
+			</Particles>
+		</Emitter>
+		<Emitter>
+			<Name>shockwave</Name>
+			<Width>0</Width>
+			<Height>0</Height>
+			<ParticleSpeed>0,0</ParticleSpeed>
+			<ParticleRotation>0,0</ParticleRotation>
+			<RateKeyframes>
+				<Keyframe>0.2652733|1</Keyframe>
+			</RateKeyframes>
+			<SingleBurst>true</SingleBurst>
+			<Particles>
+				<Particle>
+					<Lifetime>0.2,0.2</Lifetime>
+					<BlendMode>Additive</BlendMode>
+					<TextureKeyframes>
+						<Stream>
+							<Keyframe>0|Particle/shockwave</Keyframe>
+						</Stream>
+					</TextureKeyframes>
+					<SizeKeyframes>
+						<Stream>
+							<Keyframe>0|0|0</Keyframe>
+							<Keyframe>1|1.5|1.5</Keyframe>
+						</Stream>
+					</SizeKeyframes>
+					<ColourKeyframes>
+						<Stream>
+							<Keyframe>0|101,236,255,255</Keyframe>
+						</Stream>
+					</ColourKeyframes>
+					<AlphaKeyframes>
+						<Stream>
+							<Keyframe>0|1</Keyframe>
+							<Keyframe>0.756029|1</Keyframe>
+							<Keyframe>1|0</Keyframe>
+						</Stream>
+					</AlphaKeyframes>
+				</Particle>
+			</Particles>
+		</Emitter>
+		<Emitter>
+			<Name>debris</Name>
+			<Shape>Cone</Shape>
+			<Width>90</Width>
+			<ParticleSpeed>2,3</ParticleSpeed>
+			<ParticleRotation>0,0</ParticleRotation>
+			<Gravity>-10</Gravity>
+			<RateKeyframes>
+				<Keyframe>0.2840376|10</Keyframe>
+			</RateKeyframes>
+			<SingleBurst>true</SingleBurst>
+			<Particles>
+				<Particle>
+					<Lifetime>0.4,0.6</Lifetime>
+					<BlendMode>Additive</BlendMode>
+					<VelocityAligned>true</VelocityAligned>
+					<AllowResize>false</AllowResize>
+					<TextureKeyframes>
+						<Stream>
+							<Keyframe>0|Particle/spark</Keyframe>
+						</Stream>
+					</TextureKeyframes>
+					<SizeKeyframes>
+						<Stream>
+							<Keyframe>0|0.1|0.1</Keyframe>
+							<Keyframe>0.5844855|0.3|0.4</Keyframe>
+							<Keyframe>0.9947749|0.2|0.3</Keyframe>
+						</Stream>
+					</SizeKeyframes>
+					<ColourKeyframes>
+						<Stream>
+							<Keyframe>0|102,244,255,255</Keyframe>
+						</Stream>
+					</ColourKeyframes>
+					<AlphaKeyframes>
+						<Stream>
+							<Keyframe>0|0</Keyframe>
+							<Keyframe>0.02741157|0.6</Keyframe>
+							<Keyframe>0.7613344|0.6</Keyframe>
+							<Keyframe>1|0</Keyframe>
 						</Stream>
 					</AlphaKeyframes>
 				</Particle>

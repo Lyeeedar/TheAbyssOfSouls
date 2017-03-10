@@ -18,10 +18,13 @@ class Future
 
 		fun update(delta: Float)
 		{
-			if (processing)
-				throw Exception("Nested update call!")
+			synchronized(processing)
+			{
+				if (processing)
+					throw Exception("Nested update call!")
 
-			processing = true
+				processing = true
+			}
 
 			val itr = pendingCalls.iterator()
 			while (itr.hasNext())
@@ -36,52 +39,61 @@ class Future
 				}
 			}
 
-			processing = false
-
-			for (queued in queuedActions)
+			synchronized(processing)
 			{
-				queued.invoke()
+				processing = false
+
+				for (queued in queuedActions)
+				{
+					queued.invoke()
+				}
+				queuedActions.clear()
 			}
-			queuedActions.clear()
 		}
 
 		fun call(function: () -> Unit, delay: Float, token: Any? = null)
 		{
-			if (processing)
+			synchronized(processing)
 			{
-				queuedActions.add {
-					call(function, delay, token)
-				}
-			}
-			else
-			{
-				if (token != null)
+				if (processing)
 				{
-					cancel(token)
+					queuedActions.add {
+						call(function, delay, token)
+					}
 				}
+				else
+				{
+					if (token != null)
+					{
+						cancel(token)
+					}
 
-				pendingCalls.add(CallData(function, delay, token))
+					pendingCalls.add(CallData(function, delay, token))
+				}
 			}
 		}
 
 		fun cancel(token: Any)
 		{
-			if (processing)
+			synchronized(processing)
 			{
-				queuedActions.add {
-					cancel(token)
-				}
-			}
-			else
-			{
-				val itr = pendingCalls.iterator()
-				while (itr.hasNext())
+				if (processing)
 				{
-					val item = itr.next()
-
-					if (item.token == token)
+					queuedActions.add {
+						cancel(token)
+					}
+				}
+				else
+				{
+					val itr = pendingCalls.iterator()
+					while (itr.hasNext())
 					{
-						itr.remove()
+						val item = itr.next()
+
+						if (item.token == token)
+						{
+							itr.remove()
+						}
 					}
 				}
 			}

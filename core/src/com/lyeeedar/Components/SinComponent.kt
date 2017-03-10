@@ -13,6 +13,8 @@ class SinComponent : AbstractComponent()
 {
 	var sins = FastEnumMap<Sin, Int>(Sin::class.java)
 
+	val restored = FastEnumMap<Sin, Boolean>(Sin::class.java)
+
 	init
 	{
 		for (sin in Sin.Values)

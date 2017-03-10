@@ -2,6 +2,9 @@ package com.lyeeedar.SceneTimeline
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Interpolation
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
+import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.*
@@ -13,8 +16,13 @@ import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Systems.render
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.UnsmoothedPath
 import com.lyeeedar.Util.getRotation
+import ktx.actors.alpha
+import ktx.actors.plus
+import ktx.actors.then
+import ktx.scene2d.table
 
 class SourceRenderableAction() : AbstractTimelineAction()
 {
@@ -155,7 +163,6 @@ class SourceAnimationAction() : AbstractTimelineAction()
 	}
 
 }
-
 
 class DestinationRenderableAction() : AbstractTimelineAction()
 {
@@ -369,6 +376,60 @@ class ScreenShakeAction() : AbstractTimelineAction()
 	override fun parse(xml: XmlReader.Element)
 	{
 		this.speed = 1f / xml.getFloat("Speed", 10f)
-		this.amount = xml.getFloat("Strength")
+		this.amount = xml.getFloat("Strength", 5f)
 	}
+}
+
+class ScreenFadeAction: AbstractTimelineAction()
+{
+	var speed: Float = 1f
+	lateinit var colour: Colour
+
+	var table: Table? = null
+
+	override fun enter()
+	{
+		table = table {
+			background = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/white.png")).tint(colour.color())
+		}
+		table!!.alpha = 0f
+
+		val sequence = alpha(0f) then fadeIn(speed)
+
+		table!! + sequence
+
+		Global.stage.addActor(table!!)
+		table!!.setFillParent(true)
+	}
+
+	override fun exit()
+	{
+		if (table != null)
+		{
+			val sequence = fadeOut(speed) then removeActor()
+			table!! + sequence
+			table = null
+		}
+	}
+
+	override fun copy(parent: SceneTimeline): AbstractTimelineAction
+	{
+		val action = ScreenFadeAction()
+		action.parent = parent
+
+		action.startTime = startTime
+		action.duration = duration
+
+		action.speed = speed
+		action.colour = colour
+
+		return action
+	}
+
+	override fun parse(xml: XmlReader.Element)
+	{
+		speed = xml.getFloat("Speed", 1f)
+		colour = AssetManager.loadColour(xml.getChildByName("Colour"))
+	}
+
 }

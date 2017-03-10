@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Components.inventory
 import com.lyeeedar.Components.sin
 import com.lyeeedar.Global
 import com.lyeeedar.Level.World
@@ -82,6 +83,12 @@ class Interaction
 			{
 				variableMap.put("sinful", 1f)
 			}
+		}
+
+		val inventory = player.inventory()!!
+		for (entry in inventory.items)
+		{
+			variableMap.put(entry.key, entry.value.count.toFloat())
 		}
 
 		for (entry in World.world.globalVariables)

@@ -114,7 +114,7 @@ class ChargeComboStep : ComboStep()
 
 						if (damage > 0)
 						{
-							e.stats().dealDamage((damage * tree.attackPower) / 100f, ElementType.NONE, 0f)
+							e.stats().dealDamage((damage * tree.attackPower) / 100f, ElementType.NONE, 0f, true)
 
 							val sprite = entity.renderable()?.renderable as? Sprite ?: continue
 							sprite.colourAnimation = BlinkAnimation.obtain().set(Colour(1f, 0.5f, 0.5f, 1f), sprite.colour, 0.15f, true)

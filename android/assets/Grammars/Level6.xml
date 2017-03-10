@@ -4,7 +4,7 @@
 	<Ambient>20,20,20,255</Ambient>
 	<Root meta:RefKey="Node">ac6cd840-a704-440d-9ab4-cd2d2dc59bec</Root>
 	<Rules>
-		<Node meta:X="340.90123456790121" meta:Y="-130.07407407407408" GUID="ac6cd840-a704-440d-9ab4-cd2d2dc59bec">
+		<Node meta:X="340.9012451171875" meta:Y="-130.07408142089844" GUID="ac6cd840-a704-440d-9ab4-cd2d2dc59bec">
 			<Rule meta:RefKey="Rule">
 				<Rule meta:RefKey="Node">a63abc5f-0649-4624-918f-e88101d0cbc5</Rule>
 			</Rule>
@@ -21,7 +21,7 @@
 				<Rule meta:RefKey="Node">26dce8c8-4666-4ac2-aae4-b9021dae47af</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="602.98765432098753" meta:Y="-290.5679012345679" GUID="a63abc5f-0649-4624-918f-e88101d0cbc5">
+		<Node meta:X="602.9876708984375" meta:Y="-290.56790161132812" GUID="a63abc5f-0649-4624-918f-e88101d0cbc5">
 			<!--Basic Symbols-->
 			<Rule meta:RefKey="Symbol">
 				<Character>.</Character>
@@ -80,12 +80,12 @@
 				</Wall>
 			</Rule>
 		</Node>
-		<Node meta:X="653.30864197530855" meta:Y="-100.44444444444446" GUID="c08bcad8-82a9-4eb5-a241-822eaeb16cd2">
+		<Node meta:X="653.30865478515625" meta:Y="-100.44444274902344" GUID="c08bcad8-82a9-4eb5-a241-822eaeb16cd2">
 			<Rule meta:RefKey="Fill">
 				<Character>#</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="706.39506172839492" meta:Y="73.629629629629619" GUID="26dce8c8-4666-4ac2-aae4-b9021dae47af">
+		<Node meta:X="706.39508056640625" meta:Y="73.629631042480469" GUID="26dce8c8-4666-4ac2-aae4-b9021dae47af">
 			<Rule meta:RefKey="Take">
 				<Count>1</Count>
 				<Rule meta:RefKey="Node">6915feca-2b42-4cf2-ab5a-1ebdb98a0986</Rule>
@@ -98,8 +98,20 @@
 				<Count>5%</Count>
 				<Rule meta:RefKey="Node">3845a2aa-9f6d-4ad2-b143-57439157da61</Rule>
 			</Rule>
+			<Rule meta:RefKey="Take">
+				<Count>15</Count>
+				<Rule meta:RefKey="Node">24297d93-2c47-4414-8a9d-67b520bc5a69</Rule>
+			</Rule>
+			<Rule meta:RefKey="Take">
+				<Count>6</Count>
+				<Rule meta:RefKey="Node">8b8c21bc-6169-460b-a29e-0c786508c9b1</Rule>
+			</Rule>
+			<Rule meta:RefKey="Take">
+				<Count>1</Count>
+				<Rule meta:RefKey="Node">bb802065-6282-4697-afb7-9eb2a9768042</Rule>
+			</Rule>
 		</Node>
-		<Node meta:X="948.39506172839492" meta:Y="73.629629629629619" GUID="6915feca-2b42-4cf2-ab5a-1ebdb98a0986">
+		<Node meta:X="948.39508056640625" meta:Y="73.629631042480469" GUID="6915feca-2b42-4cf2-ab5a-1ebdb98a0986">
 			<Rule meta:RefKey="Symbol">
 				<Character>s</Character>
 				<FloorDetail>
@@ -114,7 +126,7 @@
 				<Character>s</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="948.87654320987644" meta:Y="216.83950617283949" GUID="225eedbb-cd8d-4264-8865-05ff25050afa">
+		<Node meta:X="948.87652587890625" meta:Y="216.83950805664062" GUID="225eedbb-cd8d-4264-8865-05ff25050afa">
 			<Rule meta:RefKey="Symbol">
 				<Character>B</Character>
 				<Entity>
@@ -125,13 +137,18 @@
 				<Character>B</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="945.50166009302166" meta:Y="345.3068408322157" GUID="3845a2aa-9f6d-4ad2-b143-57439157da61">
+		<Node meta:X="945.50164794921875" meta:Y="345.30685424804688" GUID="3845a2aa-9f6d-4ad2-b143-57439157da61">
 			<Rule meta:RefKey="Symbol">
 				<Character>H</Character>
 				<BelowEntity>
 					<Components>
 						<SceneTimeline>
 							<Loop>true</Loop>
+							<HitPoints>
+								<Line>###</Line>
+								<Line>###</Line>
+								<Line>###</Line>
+							</HitPoints>
 							<SceneTimeline meta:RefKey="SceneTimeline">
 								<Timeline>
 									<SourceRenderable>
@@ -171,20 +188,43 @@
 									</SourceRenderable>
 									<SourceRenderable>
 										<Time>0.163880885</Time>
-										<Duration LockDuration="False">0.03941022</Duration>
+										<Duration LockDuration="False">0.337827265</Duration>
 										<Renderable meta:RefKey="Sprite">
 											<Name>Oryx/Custom/heroes/shadow</Name>
 											<Colour>0,0,0,222</Colour>
 										</Renderable>
 										<RestoreOriginal>false</RestoreOriginal>
 									</SourceRenderable>
-									<DestinationRenderable>
-										<Time>0.2032911</Time>
-										<Duration LockDuration="False">0.0459786057</Duration>
-										<Renderable meta:RefKey="ParticleEffect">
-											<Name></Name>
-										</Renderable>
-									</DestinationRenderable>
+								</Timeline>
+								<Timeline>
+									<AddComponent>
+										<Time>0.103451855</Time>
+										<Type>Light</Type>
+										<LightData>
+											<Colour>62,250,255,30</Colour>
+											<Distance>3</Distance>
+										</LightData>
+									</AddComponent>
+									<AddComponent>
+										<Time>0.145489439</Time>
+										<Type>Light</Type>
+										<LightData>
+											<Colour>62,250,255,104</Colour>
+											<Distance>3</Distance>
+										</LightData>
+									</AddComponent>
+									<AddComponent>
+										<Time>0.181615487</Time>
+										<Type>Light</Type>
+										<LightData>
+											<Colour>62,250,255,151</Colour>
+											<Distance>3</Distance>
+										</LightData>
+									</AddComponent>
+									<RemoveComponent>
+										<Time>0.4612944</Time>
+										<Type>Light</Type>
+									</RemoveComponent>
 								</Timeline>
 								<Timeline>
 									<Blocker>
@@ -207,13 +247,26 @@
 										<Time>0.181615487</Time>
 									</Blocker>
 									<Damage>
-										<Time>0.226937249</Time>
+										<Time>0.452586859</Time>
 										<Amount>4</Amount>
 									</Damage>
 									<Knockback>
-										<Time>0.2348193</Time>
+										<Time>0.473021537</Time>
 										<MoveType>Leap</MoveType>
 									</Knockback>
+									<Blocker>
+										<Time>0.6056293</Time>
+									</Blocker>
+								</Timeline>
+								<Timeline>
+									<DestinationRenderable>
+										<Time>0.2032911</Time>
+										<Duration LockDuration="False">0.494712532</Duration>
+										<Renderable meta:RefKey="ParticleEffect">
+											<Name>FallingIce</Name>
+											<UseFacing>false</UseFacing>
+										</Renderable>
+									</DestinationRenderable>
 								</Timeline>
 							</SceneTimeline>
 						</SceneTimeline>
@@ -222,6 +275,137 @@
 			</Rule>
 			<Rule meta:RefKey="Fill">
 				<Character>H</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="947.52105712890625" meta:Y="481.52032470703125" GUID="8b8c21bc-6169-460b-a29e-0c786508c9b1">
+			<Rule meta:RefKey="Symbol">
+				<Character>C</Character>
+				<Entity>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/Custom/terrain/pridecrystal</Name>
+								<DrawActualSize>true</DrawActualSize>
+							</Renderable>
+						</Renderable>
+						<Statistics>
+							<HP>3</HP>
+							<Stamina>10</Stamina>
+							<Sight>0</Sight>
+							<DisplayHP>false</DisplayHP>
+							<Death meta:RefKey="ParticleEffect">
+								<Name>Death</Name>
+								<Colour>153,233,255,255</Colour>
+							</Death>
+						</Statistics>
+						<Drop>
+							<Drop>
+								<Drop meta:RefKey="AtonementSpirit">
+									<Sin>Pride</Sin>
+								</Drop>
+							</Drop>
+						</Drop>
+						<Light>
+							<Colour>113,255,245,109</Colour>
+							<Distance>5</Distance>
+						</Light>
+						<Position>
+							<Moveable>false</Moveable>
+						</Position>
+					</Components>
+				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>C</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="945.1728515625" meta:Y="610.66668701171875" GUID="bb802065-6282-4697-afb7-9eb2a9768042">
+			<!--Shrine-->
+			<Rule meta:RefKey="Prefab">
+				<Symbols>
+					<Symbol meta:RefKey="Symbol">
+						<Character>#</Character>
+						<Wall>
+							<Components>
+								<Renderable>
+									<IsShared>true</IsShared>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>shrinewall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_crypt_15</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_crypt_8</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_crypt_2</Name>
+										</Overhang>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Wall>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>,</Character>
+						<Floor>
+							<Components>
+								<Renderable>
+									<IsShared>true</IsShared>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/floor_extra_15</Name>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Floor>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>A</Character>
+						<Extends>,</Extends>
+						<Entity>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/Custom/terrain/altar</Name>
+										<DrawActualSize>true</DrawActualSize>
+									</Renderable>
+								</Renderable>
+								<Interaction>
+									<Interaction>Level6Altar</Interaction>
+								</Interaction>
+							</Components>
+						</Entity>
+					</Symbol>
+				</Symbols>
+				<Prefab>
+					<Line>##,##</Line>
+					<Line>#,,,#</Line>
+					<Line>,,A,,</Line>
+					<Line>#,,,#</Line>
+					<Line>##,##</Line>
+				</Prefab>
+			</Rule>
+		</Node>
+		<Node meta:X="1104.5692918146915" meta:Y="436.30993199438637" GUID="24297d93-2c47-4414-8a9d-67b520bc5a69">
+			<Rule meta:RefKey="Symbol">
+				<Character>T</Character>
+				<Entity>
+					<Components>
+						<Renderable>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/uf_split/uf_items/chest_silver</Name>
+								<DrawActualSize>true</DrawActualSize>
+							</Renderable>
+						</Renderable>
+						<Interaction>
+							<Interaction>TreasureInteraction</Interaction>
+						</Interaction>
+					</Components>
+				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>T</Character>
 			</Rule>
 		</Node>
 	</Rules>

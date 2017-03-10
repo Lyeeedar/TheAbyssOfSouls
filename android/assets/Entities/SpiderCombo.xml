@@ -1,4 +1,5 @@
-<Combo meta:X="-1.3888888888888888" meta:Y="-1.3888888888888888" xmlns:meta="Editor">
+<Combo meta:X="-1.3888888359069824" meta:Y="-1.3888888359069824" xmlns:meta="Editor">
+	<AttackPower>30</AttackPower>
 	<Combos>
 		<Combo meta:RefKey="Wait">
 			<Name>Wait</Name>

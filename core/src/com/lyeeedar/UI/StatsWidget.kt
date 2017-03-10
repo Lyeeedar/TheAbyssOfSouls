@@ -1,14 +1,18 @@
 package com.lyeeedar.UI
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Components.combo
 import com.lyeeedar.Components.sin
 import com.lyeeedar.Components.stats
 import com.lyeeedar.Global
+import com.lyeeedar.Renderables.Particle.ParticleEffect
+import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Sin
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.floor
@@ -22,6 +26,10 @@ class StatsWidget() : Widget()
 	val hp_empty = AssetManager.loadTextureRegion("Sprites/GUI/health_empty.png")!!
 
 	val barback = NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/HpBarBack.png"), 4, 4, 4, 4)
+
+	val sinEffect = AssetManager.loadParticleEffect("Charge")
+	val activeEffects = Array<ParticleEffect>()
+	val renderer: SortedRenderer by lazy{ SortedRenderer(20f, stage.width, stage.height, 1) }
 
 	val font: BitmapFont = Global.skin.getFont("default")
 	val glyphLayout = GlyphLayout()
@@ -132,7 +140,33 @@ class StatsWidget() : Widget()
 			glyphLayout.setText(font, sins.sins[sin].romanNumerals(), sin.colour.color(), 20f, Align.center, false)
 			font.draw(batch, glyphLayout, current, y+glyphLayout.height+10f)
 
+			if (sins.restored[sin] == true)
+			{
+				val effect = sinEffect.copy()
+				effect.lockPosition = true
+				effect.setPosition((current + glyphLayout.width/2) / renderer.tileSize, (y+glyphLayout.height+10f) / renderer.tileSize)
+				activeEffects.add(effect)
+
+				sins.restored[sin] = false
+			}
+
 			current += 25
 		}
+
+		renderer.begin(Gdx.graphics.deltaTime, 0f, 0f)
+
+		val itr = activeEffects.iterator()
+		while (itr.hasNext())
+		{
+			val effect = itr.next()
+			renderer.queueParticle(effect, effect.position.x, effect.position.y - 0.5f, 0, 0)
+
+			if (effect.completed && effect.complete())
+			{
+				itr.remove()
+			}
+		}
+
+		renderer.flush(batch)
 	}
 }

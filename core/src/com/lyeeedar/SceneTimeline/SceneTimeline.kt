@@ -203,6 +203,7 @@ abstract class AbstractTimelineAction()
 				"DESTINATIONRENDERABLE" -> DestinationRenderableAction()
 				"MOVEMENTRENDERABLE" -> MovementRenderableAction()
 				"SCREENSHAKE" -> ScreenShakeAction()
+				"SCREENFADE" -> ScreenFadeAction()
 
 				"MOVESOURCE" -> MoveSourceAction()
 				"PULL" -> PullAction()

@@ -1,0 +1,31 @@
+<Combo meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<Combos>
+		<Combo meta:RefKey="Scene">
+			<Name>Thrust</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.118534483</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>Thrust</Name>
+						</Renderable>
+					</DestinationRenderable>
+					<Damage>
+						<Time>0.07428161</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+		</Combo>
+	</Combos>
+	<Random>
+		<Node meta:X="256" meta:Y="0" meta:RefKey="ComboNode">
+			<Desc>Thrust</Desc>
+			<Cooldown>2</Cooldown>
+		</Node>
+	</Random>
+</Combo>

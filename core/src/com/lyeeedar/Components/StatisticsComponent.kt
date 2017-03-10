@@ -18,6 +18,8 @@ class StatisticsComponent: AbstractComponent()
 {
 	val factions: OrderedSet<String> = OrderedSet()
 
+	var unblockableDam: Boolean = false
+
 	var hp: Float = 0f
 		get() = field
 		set(value)
@@ -27,7 +29,11 @@ class StatisticsComponent: AbstractComponent()
 			val diff = v - hp
 			if (diff < 0)
 			{
-				if (invulnerable)
+				if (unblockableDam)
+				{
+					unblockableDam = false
+				}
+				else if (invulnerable)
 				{
 					blockedDamage = true
 					return
@@ -130,15 +136,19 @@ class StatisticsComponent: AbstractComponent()
 		if (deathEl != null) deathEffect = AssetManager.loadParticleEffect(deathEl)
 	}
 
-	fun dealDamage(amount: Float, element: ElementType, elementalConversion: Float)
+	fun dealDamage(amount: Float, element: ElementType, elementalConversion: Float, blockable: Boolean)
 	{
 		var elementalDam = (amount * elementalConversion).ciel()
 		val baseDam = amount - elementalDam
+
+		unblockableDam = !blockable
 
 		hp -= baseDam
 
 		val resistance = resistances[element] ?: 0
 		elementalDam += (elementalDam.toFloat() * 0.25f * resistance.toFloat()).ciel()
+
+		unblockableDam = !blockable
 
 		hp -= elementalDam
 	}

@@ -100,8 +100,12 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 			{
 				Global.pause = true
 
-				// game over man!
-				showFullscreenText("You were consumed", 0.5f, { throw Exception("Game Over") })
+				Future.call(
+				{
+					// game over man!
+					showFullscreenText("You were consumed", 0.5f, { throw Exception("Game Over") })
+				}, 0.5f)
+
 			}
 		}
 	}

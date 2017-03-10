@@ -3,6 +3,7 @@ package com.lyeeedar.Screens
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.lyeeedar.Combo.AtonementSpirit
 import com.lyeeedar.Components.*
 import com.lyeeedar.GenerationGrammar.GenerationGrammar
 import com.lyeeedar.Global
@@ -10,6 +11,7 @@ import com.lyeeedar.Level.LevelData
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Level.World
 import com.lyeeedar.Save.SaveGame
+import com.lyeeedar.Sin
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Systems.level
 import com.lyeeedar.Systems.systemList
@@ -78,14 +80,16 @@ class GameScreen : AbstractScreen()
 		{
 			if (lastPlayer.stats().hp <= 0f)
 			{
-				// only copy sins over
+				// only copy sins, inventory
 				player.add(lastPlayer.sin())
+				player.add(lastPlayer.inventory())
 			}
 			else
 			{
 				// copy sins, combos, inventory
 				player.add(lastPlayer.sin())
 				player.add(lastPlayer.combo())
+				player.add(lastPlayer.inventory())
 			}
 		}
 
@@ -188,6 +192,17 @@ class GameScreen : AbstractScreen()
 			}
 
 			return false
+		})
+
+		DebugConsole.register("Drop", "", fun (args, console): Boolean {
+			val sin = Sin.valueOf(args[0].toUpperCase())
+
+			val item = AtonementSpirit(sin)
+
+			val tile = Global.engine.level!!.player.tile()!!
+			DropComponent.dropTo(tile, tile, item)
+
+			return true
 		})
 
 		DebugConsole.register("SystemDebug", "'SystemDebug true' to enable, 'SystemDebug false' to disable", fun (args, console): Boolean {

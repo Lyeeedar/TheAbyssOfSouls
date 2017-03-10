@@ -1,0 +1,27 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<Renderable>
+			<Renderable meta:RefKey="Sprite">
+				<Name>Oryx/uf_split/uf_heroes/dknight</Name>
+				<DrawActualSize>true</DrawActualSize>
+				<RandomStart>true</RandomStart>
+			</Renderable>
+		</Renderable>
+		<Statistics>
+			<Faction>bouncer</Faction>
+			<HP>10</HP>
+			<Stamina>10</Stamina>
+			<Sight>7</Sight>
+			<Death meta:RefKey="ParticleEffect">
+				<Name>Death</Name>
+			</Death>
+		</Statistics>
+		<Position />
+		<AI>
+			<AI>BasicMonsterSentry</AI>
+		</AI>
+		<Combo>
+			<ComboTree>Entities/BouncerCombo</ComboTree>
+		</Combo>
+	</Components>
+</Entity>

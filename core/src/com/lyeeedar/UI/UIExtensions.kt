@@ -2,7 +2,6 @@ package com.lyeeedar.UI
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
-import com.badlogic.gdx.scenes.scene2d.ui.Value
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.lyeeedar.Global
 import com.lyeeedar.Util.AssetManager
@@ -17,7 +16,7 @@ fun showFullscreenText(text: String, minDuration: Float, exitAction: ()->Unit)
 {
 	val fadeTable = table {
 		label(text, "default", Global.skin) {
-			cell -> cell.top().padTop(Value.percentHeight(0.3f, this@table))
+			cell -> cell.top()
 		}
 	}
 

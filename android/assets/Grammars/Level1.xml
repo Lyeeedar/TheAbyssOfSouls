@@ -769,6 +769,7 @@
 			<Rule meta:RefKey="Take">
 				<Count>0.5%</Count>
 				<Rule meta:RefKey="Node">05202874-385a-49ef-94e7-3e87d48194c5</Rule>
+				<Remainder meta:RefKey="Node">1eb361d8-0bcc-452c-b09a-aa7c162f7898</Remainder>
 			</Rule>
 		</Node>
 		<Node meta:X="2804.923828125" meta:Y="916.48309326171875" GUID="05202874-385a-49ef-94e7-3e87d48194c5">
@@ -1173,6 +1174,33 @@
 					<Line>,s,</Line>
 					<Line>#,#</Line>
 				</Prefab>
+			</Rule>
+		</Node>
+		<Node meta:X="2803.8802101268366" meta:Y="1104.4422300844919" GUID="1eb361d8-0bcc-452c-b09a-aa7c162f7898">
+			<Rule meta:RefKey="Take">
+				<Count>4</Count>
+				<Rule meta:RefKey="Node">63c297af-fb2f-4b46-88e7-8bcf800a7413</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="3045.8802101268366" meta:Y="1104.4422300844919" GUID="63c297af-fb2f-4b46-88e7-8bcf800a7413">
+			<Rule meta:RefKey="Symbol">
+				<Character>T</Character>
+				<Entity>
+					<Components>
+						<Renderable>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/uf_split/uf_items/chest_silver</Name>
+								<DrawActualSize>true</DrawActualSize>
+							</Renderable>
+						</Renderable>
+						<Interaction>
+							<Interaction>TreasureInteraction</Interaction>
+						</Interaction>
+					</Components>
+				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>T</Character>
 			</Rule>
 		</Node>
 	</Rules>

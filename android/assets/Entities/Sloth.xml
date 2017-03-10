@@ -45,6 +45,10 @@
 					<Sin>Sloth</Sin>
 				</Drop>
 			</Drop>
+			<Drop>
+				<Chance>0.1</Chance>
+				<Drop meta:RefKey="Money" />
+			</Drop>
 		</Drop>
 		<Position>
 			<Moveable>false</Moveable>

@@ -25,6 +25,9 @@ abstract class AbstractInteractionAction
 				"CHANGELEVEL" -> InteractionActionChangeLevel()
 				"COMPLETEGAME" -> InteractionActionCompleteGame()
 				"CHANGESPRITE" -> InteractionActionChangeSprite()
+				"KILL" -> InteractionActionKill()
+				"SCENE" -> InteractionActionScene()
+				"REMOVEITEM" -> InteractionActionRemoveItem()
 
 				else -> throw Exception("Unknown action type '" + xml.getAttribute("meta:RefKey") + "'!")
 			}

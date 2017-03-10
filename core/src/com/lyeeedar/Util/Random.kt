@@ -40,6 +40,11 @@ class Random
 			return random.nextFloat()
 		}
 
+		fun random(max: Float): Float
+		{
+			return random.nextFloat() * max
+		}
+
 		fun random(min: Float, max: Float): Float
 		{
 			return random.nextFloat() * (max - min) + min

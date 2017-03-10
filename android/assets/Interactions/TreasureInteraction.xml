@@ -1,0 +1,25 @@
+<Interaction meta:X="1" meta:Y="1" GUID="b4fbccbb-1576-4ed6-a07c-d6299ad0818d" xmlns:meta="Editor">
+	<Branch meta:RefKey="Branch">
+		<Branch>
+			<Condition>opened==0</Condition>
+			<Node meta:RefKey="Node">677e0340-3959-4553-a01e-4323640d029e</Node>
+		</Branch>
+	</Branch>
+	<Nodes>
+		<Node meta:X="241" meta:Y="0" GUID="677e0340-3959-4553-a01e-4323640d029e">
+			<Action meta:RefKey="Drop">
+				<Drop meta:RefKey="Money" />
+			</Action>
+			<Action meta:RefKey="ChangeSprite">
+				<Sprite meta:RefKey="Sprite">
+					<Name>Oryx/uf_split/uf_items/chest_silver_empty</Name>
+					<DrawActualSize>true</DrawActualSize>
+				</Sprite>
+			</Action>
+			<Action meta:RefKey="Define">
+				<Key>opened</Key>
+				<Value>1</Value>
+			</Action>
+		</Node>
+	</Nodes>
+</Interaction>

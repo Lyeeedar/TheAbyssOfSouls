@@ -1,0 +1,64 @@
+<Interaction meta:X="0" meta:Y="0" GUID="fbbd3b1b-4fe8-4168-b9fd-89418cd1ad14" xmlns:meta="Editor">
+	<Branch meta:RefKey="Branch">
+		<Branch>
+			<Condition>1</Condition>
+			<Node meta:RefKey="Node">bbb0edb5-4e73-453f-b754-c3211ebd1f90</Node>
+		</Branch>
+	</Branch>
+	<Nodes>
+		<Node meta:X="247" meta:Y="0" GUID="bbb0edb5-4e73-453f-b754-c3211ebd1f90">
+			<Action meta:RefKey="Line">
+				<Text>Spare this destitute soul a coin?</Text>
+			</Action>
+			<Action meta:RefKey="Branch">
+				<Branch>
+					<Condition>money!=0</Condition>
+					<Node meta:RefKey="Node">6f17700a-fd8b-4f3f-87f5-e9d29c2c9454</Node>
+				</Branch>
+				<Branch>
+					<Condition>money==0</Condition>
+					<Node meta:RefKey="Node">9d137d2d-522a-4138-842e-da48cb8ddcec</Node>
+				</Branch>
+			</Action>
+		</Node>
+		<Node meta:X="532" meta:Y="183" GUID="9d137d2d-522a-4138-842e-da48cb8ddcec">
+			<Action meta:RefKey="Choice">
+				<Text>Any money?</Text>
+				<Choices>
+					<Choice>
+						<Text>Sorry, I'm broke too</Text>
+					</Choice>
+				</Choices>
+			</Action>
+		</Node>
+		<Node meta:X="533" meta:Y="1" GUID="6f17700a-fd8b-4f3f-87f5-e9d29c2c9454">
+			<Action meta:RefKey="Choice">
+				<Text>Any Money?</Text>
+				<Choices>
+					<Choice>
+						<Text>Here you go</Text>
+						<Node meta:RefKey="Node">b0d89a5a-1eb8-466e-9134-3a9797d64e30</Node>
+					</Choice>
+					<Choice>
+						<Text>No, this money is mine</Text>
+					</Choice>
+				</Choices>
+			</Action>
+		</Node>
+		<Node meta:X="826" meta:Y="1" GUID="b0d89a5a-1eb8-466e-9134-3a9797d64e30">
+			<Action meta:RefKey="Line">
+				<Text>Thank you so much. With this I'm finally free. Bless you</Text>
+			</Action>
+			<Action meta:RefKey="RemoveItem">
+				<Name>Money</Name>
+				<Count>1</Count>
+			</Action>
+			<Action meta:RefKey="Drop">
+				<Drop meta:RefKey="AtonementSpirit">
+					<Sin>Greed</Sin>
+				</Drop>
+			</Action>
+			<Action meta:RefKey="Kill" />
+		</Node>
+	</Nodes>
+</Interaction>

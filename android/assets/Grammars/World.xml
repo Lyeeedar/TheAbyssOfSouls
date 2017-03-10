@@ -80,9 +80,13 @@
 					<Key>descend</Key>
 					<Next meta:RefKey="Level">29078e66-a97f-4278-87a1-4ad3bd575459</Next>
 				</Level>
+				<Level>
+					<Key>mistress</Key>
+					<Next meta:RefKey="Level">35e6f85a-bf10-4d8e-97dd-d26031ce4aae</Next>
+				</Level>
 			</Connected>
 		</Level>
-		<Level meta:X="1639" meta:Y="-12.666666666666686" GUID="29078e66-a97f-4278-87a1-4ad3bd575459">
+		<Level meta:X="1639" meta:Y="-12.666666984558105" GUID="29078e66-a97f-4278-87a1-4ad3bd575459">
 			<Grammar>Level6</Grammar>
 			<Connected>
 				<Level>
@@ -99,8 +103,17 @@
 				</Level>
 			</Connected>
 		</Level>
-		<Level meta:X="1910" meta:Y="-10.666666666666686" GUID="2b176d0c-341e-427b-a8e4-a5dc241da6b7">
+		<Level meta:X="1910" meta:Y="-10.666666984558105" GUID="2b176d0c-341e-427b-a8e4-a5dc241da6b7">
 			<Grammar>Level7</Grammar>
+		</Level>
+		<Level meta:X="1601.6622977957193" meta:Y="303.88078737699522" GUID="35e6f85a-bf10-4d8e-97dd-d26031ce4aae">
+			<Grammar>MistressHouse</Grammar>
+			<Connected>
+				<Level>
+					<Key>mistress</Key>
+					<Next meta:RefKey="Level">22da06e0-6ba0-458b-9d86-ba25a16492fb</Next>
+				</Level>
+			</Connected>
 		</Level>
 	</Levels>
 </World>

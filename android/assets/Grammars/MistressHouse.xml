@@ -1,0 +1,192 @@
+<GenerationGrammar meta:X="0" meta:Y="0" GUID="5c1927a9-2431-4375-8b84-e4e74bc27b27" xmlns:meta="Editor">
+	<Width>12</Width>
+	<Height>12</Height>
+	<Ambient>252,186,224,171</Ambient>
+	<Root meta:RefKey="Node">81c4c2ac-2c73-4b75-b368-9d2d860be78b</Root>
+	<Rules>
+		<Node meta:X="283" meta:Y="0" GUID="81c4c2ac-2c73-4b75-b368-9d2d860be78b">
+			<Rule meta:RefKey="Prefab">
+				<Symbols>
+					<Symbol meta:RefKey="Symbol">
+						<Character>.</Character>
+						<Floor>
+							<Components>
+								<Renderable>
+									<IsShared>true</IsShared>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/floor_wood_1</Name>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Floor>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>c</Character>
+						<Extends>.</Extends>
+						<FloorDetail>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>carpet</Name>
+										<Mode>PremadeDirectional</Mode>
+										<Directions>
+											<Center meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_9</Name>
+											</Center>
+											<North meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_6</Name>
+											</North>
+											<South meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_7</Name>
+											</South>
+											<East meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_8</Name>
+											</East>
+											<West meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_5</Name>
+											</West>
+											<NorthEast meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_1</Name>
+											</NorthEast>
+											<NorthWest meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_10</Name>
+											</NorthWest>
+											<SouthEast meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_3</Name>
+											</SouthEast>
+											<SouthWest meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/carpet_2</Name>
+											</SouthWest>
+										</Directions>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</FloorDetail>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>#</Character>
+						<Extends>.</Extends>
+						<Wall>
+							<Components>
+								<Renderable>
+									<IsShared>true</IsShared>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>wall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/light_brick_wall</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/light_brick_wall_top</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/Custom/terrain/light_brick_wall_overhang</Name>
+										</Overhang>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Wall>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>B</Character>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>^</Character>
+						<Extends>.</Extends>
+						<Entity>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/floor_set_blue_9</Name>
+									</Renderable>
+								</Renderable>
+								<Interaction>
+									<Interaction>MistressHouseStairsUp</Interaction>
+								</Interaction>
+							</Components>
+						</Entity>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>T</Character>
+						<Extends>c</Extends>
+						<Wall>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/Custom/terrain/table</Name>
+										<DrawActualSize>true</DrawActualSize>
+									</Renderable>
+								</Renderable>
+								<Occludes>
+									<Occludes>false</Occludes>
+								</Occludes>
+							</Components>
+						</Wall>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>s</Character>
+						<Extends>c</Extends>
+						<WallDetail>
+							<Components>
+								<MetaRegion>
+									<Key>spawnmistress</Key>
+								</MetaRegion>
+							</Components>
+						</WallDetail>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>b</Character>
+						<Extends>c</Extends>
+						<Entity>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/Custom/terrain/bed</Name>
+										<DrawActualSize>true</DrawActualSize>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Entity>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>f</Character>
+						<Extends>.</Extends>
+						<Wall>
+							<Components>
+								<Occludes>
+									<Occludes>false</Occludes>
+								</Occludes>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/fountain_pool</Name>
+									</Renderable>
+								</Renderable>
+							</Components>
+						</Wall>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>M</Character>
+						<Extends>c</Extends>
+						<Entity>
+							<Extends>Mistress</Extends>
+						</Entity>
+					</Symbol>
+				</Symbols>
+				<Prefab>
+					<Line>############</Line>
+					<Line>#BBcT#cccfc#</Line>
+					<Line>#cccT#ccccc#</Line>
+					<Line>#cccT#ccccc#</Line>
+					<Line>###c##ccMcc#</Line>
+					<Line>#cccccccccc#</Line>
+					<Line>#cccccccccc#</Line>
+					<Line>#cccccccccc#</Line>
+					<Line>##s#ccccccc#</Line>
+					<Line>##^#ccccccc#</Line>
+					<Line>####ccccccc#</Line>
+					<Line>############</Line>
+				</Prefab>
+			</Rule>
+		</Node>
+	</Rules>
+</GenerationGrammar>

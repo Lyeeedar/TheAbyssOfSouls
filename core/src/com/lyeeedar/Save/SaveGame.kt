@@ -8,6 +8,7 @@ import com.esotericsoftware.kryo.Kryo
 import com.esotericsoftware.kryo.Serializer
 import com.esotericsoftware.kryo.io.Input
 import com.esotericsoftware.kryo.io.Output
+import com.lyeeedar.Combo.Item
 import com.lyeeedar.Components.*
 import com.lyeeedar.GenerationGrammar.GenerationGrammar
 import com.lyeeedar.Global
@@ -212,6 +213,25 @@ class SaveGame
 					}
 
 					return level
+				}
+			})
+
+			kryo.register(Item::class.java, object : Serializer<Item>() {
+				override fun read(kryo: Kryo, input: Input, type: Class<Item>): Item
+				{
+					val loadXml = kryo.readClassAndObject(input) as XmlReader.Element
+					val count = input.readInt()
+
+					val item = Item.load(loadXml)
+					item.count = count
+
+					return item
+				}
+
+				override fun write(kryo: Kryo, output: Output, `object`: Item)
+				{
+					kryo.writeClassAndObject(output, `object`.loadData)
+					output.writeInt(`object`.count)
 				}
 			})
 		}

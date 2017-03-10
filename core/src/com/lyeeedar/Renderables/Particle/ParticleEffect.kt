@@ -32,6 +32,7 @@ class ParticleEffect : Renderable()
 
 	// local stuff
 	val position = Vector2()
+	var lockPosition = false
 	var facing: Direction = Direction.NORTH
 	var useFacing = true
 

@@ -103,9 +103,9 @@ inline fun doDraw(batch: HDRColourSpriteBatch, region1: TextureRegion, region2: 
 {
 	val (x1, x2, x3, x4, y1, y2, y3, y4, r1u, r1u2, r1v, r1v2, r2u, r2u2, r2v, r2v2) = calculateVertexData(region1, region2, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
 
-	val r = colour.r.clamp(0f, 1f)
-	val g = colour.g.clamp(0f, 1f)
-	val b = colour.b.clamp(0f, 1f)
+	val r = colour.r//.clamp(0f, 1f)
+	val g = colour.g//.clamp(0f, 1f)
+	val b = colour.b//.clamp(0f, 1f)
 	val a = colour.a.clamp(0f, 1f)
 
 	val vertices = verticesHdrBatchBatch

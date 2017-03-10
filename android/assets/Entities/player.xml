@@ -70,5 +70,6 @@
 			<ComboTree>Entities/PlayerCombo</ComboTree>
 		</Combo>
 		<Sin />
+		<Inventory />
 	</Components>
 </Entity>

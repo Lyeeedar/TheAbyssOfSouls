@@ -6,6 +6,10 @@
 					<Sin>Anger</Sin>
 				</Drop>
 			</Drop>
+			<Drop>
+				<Chance>0.2</Chance>
+				<Drop meta:RefKey="Money" />
+			</Drop>
 		</Drop>
 		<AI>
 			<AI>BasicMonster</AI>

@@ -17,9 +17,9 @@
 		</DirectionalSprite>
 		<Statistics>
 			<Faction>spider</Faction>
-			<HP>10</HP>
+			<HP>3</HP>
 			<Stamina>10</Stamina>
-			<Sight>4</Sight>
+			<Sight>5</Sight>
 			<Death meta:RefKey="ParticleEffect">
 				<Name>Death</Name>
 			</Death>

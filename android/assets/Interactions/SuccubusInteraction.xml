@@ -1,0 +1,122 @@
+<Interaction meta:X="0" meta:Y="0" GUID="00c99725-68d6-403c-8c41-ed03e6b9add0" xmlns:meta="Editor">
+	<Branch meta:RefKey="Branch">
+		<Branch>
+			<Condition>soulkey!=0</Condition>
+			<Node meta:RefKey="Node">5c109494-9bec-4bda-b7a7-2b234a80026c</Node>
+		</Branch>
+		<Branch>
+			<Condition>soulkey==0</Condition>
+			<Node meta:RefKey="Node">ced54fc2-4a44-448b-ae18-84a215b00796</Node>
+		</Branch>
+	</Branch>
+	<Nodes>
+		<Node meta:X="393" meta:Y="-156" GUID="5c109494-9bec-4bda-b7a7-2b234a80026c">
+			<Action meta:RefKey="Line">
+				<Text>Is that the [IMPORTANT]Soul Key[]!?</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>Please, release me from this torment!</Text>
+			</Action>
+			<Action meta:RefKey="Choice">
+				<Text>Please release me</Text>
+				<Choices>
+					<Choice>
+						<Text>Release her</Text>
+						<Node meta:RefKey="Node">cd8b1cc1-62a2-4cac-ba48-529ca32b6c48</Node>
+					</Choice>
+					<Choice>
+						<Text>Leave her</Text>
+						<Node meta:RefKey="Node">b61b371c-7fd7-4a46-a6dc-964c3f51253c</Node>
+					</Choice>
+				</Choices>
+			</Action>
+		</Node>
+		<Node meta:X="667" meta:Y="47" GUID="b61b371c-7fd7-4a46-a6dc-964c3f51253c">
+			<Action meta:RefKey="Line">
+				<Text>No...</Text>
+			</Action>
+		</Node>
+		<Node meta:X="681" meta:Y="-156" GUID="cd8b1cc1-62a2-4cac-ba48-529ca32b6c48">
+			<Action meta:RefKey="Line">
+				<Text>Thank you so much. You are a kind soul.</Text>
+			</Action>
+			<Action meta:RefKey="Drop">
+				<Drop meta:RefKey="AtonementSpirit">
+					<Sin>Lust</Sin>
+				</Drop>
+			</Action>
+			<Action meta:RefKey="Kill" />
+		</Node>
+		<Node meta:X="334" meta:Y="354" GUID="ced54fc2-4a44-448b-ae18-84a215b00796">
+			<Action meta:RefKey="Line">
+				<Text>How may I [LUST]satisfy[] you lost soul?</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>I am bound to serve all who enter my chamber.</Text>
+			</Action>
+			<Action meta:RefKey="Choice">
+				<Text>What would please you?</Text>
+				<Choices>
+					<Choice>
+						<Text>Bound? What do you mean?</Text>
+						<Node meta:RefKey="Node">4fdbf4be-650d-4f09-8449-98e455df6de3</Node>
+					</Choice>
+					<Choice>
+						<Text>So, serve me you say?</Text>
+						<Node meta:RefKey="Node">a024482b-c3a7-4659-a3a5-21b1a0498807</Node>
+					</Choice>
+					<Choice>
+						<Text>Nothing for now, see you later</Text>
+					</Choice>
+				</Choices>
+			</Action>
+		</Node>
+		<Node meta:X="729" meta:Y="294" GUID="4fdbf4be-650d-4f09-8449-98e455df6de3">
+			<Action meta:RefKey="Line">
+				<Text>For my sins during life I am bound to serve at this [LUST]house of please[] for all eternity.</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>Only the one holding the [IMPORTANT]Soul Key[] may free me.</Text>
+			</Action>
+			<Action meta:RefKey="Choice">
+				<Text>What would please you?</Text>
+				<Choices>
+					<Choice>
+						<Text>[IMPORTANT]Soul Key[], what is that?</Text>
+						<Node meta:RefKey="Node">1183b0aa-c0ae-465f-a9d2-ab5ed9be0794</Node>
+					</Choice>
+					<Choice>
+						<Text>You mentioned serving me?</Text>
+						<Node meta:RefKey="Node">a024482b-c3a7-4659-a3a5-21b1a0498807</Node>
+					</Choice>
+					<Choice>
+						<Text>Nothing for now, see you later</Text>
+					</Choice>
+				</Choices>
+			</Action>
+		</Node>
+		<Node meta:X="1115.6666259765625" meta:Y="609.33331298828125" GUID="a024482b-c3a7-4659-a3a5-21b1a0498807">
+			<Action meta:RefKey="Line">
+				<Text>As you wish. Just lie back and enjoy.</Text>
+			</Action>
+			<Action meta:RefKey="Scene">
+				<SceneTimeline meta:RefKey="SceneTimeline">
+					<Timeline>
+						<ScreenFade>
+							<Duration LockDuration="False">1</Duration>
+							<Colour>61,22,52,255</Colour>
+						</ScreenFade>
+					</Timeline>
+				</SceneTimeline>
+			</Action>
+		</Node>
+		<Node meta:X="1126.3221435546875" meta:Y="282.15292358398437" GUID="1183b0aa-c0ae-465f-a9d2-ab5ed9be0794">
+			<Action meta:RefKey="Line">
+				<Text>It's an artifact that controls the chains that lock our souls to this place.</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>The mistress holds it in her house.</Text>
+			</Action>
+		</Node>
+	</Nodes>
+</Interaction>
