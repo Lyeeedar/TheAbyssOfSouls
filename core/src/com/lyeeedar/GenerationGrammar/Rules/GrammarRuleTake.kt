@@ -26,6 +26,7 @@ class GrammarRuleTake : AbstractGrammarRule()
 	lateinit var mode: Mode
 	lateinit var count: String
 	var centerDist = 2
+	var perPoint = false
 	lateinit var rule: String
 	lateinit var remainder: String
 
@@ -126,17 +127,37 @@ class GrammarRuleTake : AbstractGrammarRule()
 				finalPoints.add(valid.removeRandom(rng))
 			}
 
-			newArea = args.area.copy()
-			if (!newArea.isPoints) newArea.convertToPoints()
-			newArea.points.clear()
-			newArea.points.addAll(finalPoints)
+			if (perPoint)
+			{
+				for (point in finalPoints)
+				{
+					newArea = args.area.copy()
+					newArea.isPoints = true
+					newArea.points.clear()
+					newArea.points.add(point)
 
-			val newArgs = args.copy(false, false, false, false)
-			newArgs.area = newArea
-			newArgs.seed = rng.nextLong()
+					val newArgs = args.copy(false, false, false, false)
+					newArgs.area = newArea
+					newArgs.seed = rng.nextLong()
 
-			val rule = args.ruleTable[rule]
-			rule.execute(newArgs)
+					val rule = args.ruleTable[rule]
+					rule.execute(newArgs)
+				}
+			}
+			else
+			{
+				newArea = args.area.copy()
+				if (!newArea.isPoints) newArea.convertToPoints()
+				newArea.points.clear()
+				newArea.points.addAll(finalPoints)
+
+				val newArgs = args.copy(false, false, false, false)
+				newArgs.area = newArea
+				newArgs.seed = rng.nextLong()
+
+				val rule = args.ruleTable[rule]
+				rule.execute(newArgs)
+			}
 		}
 
 		if (!remainder.isNullOrBlank() && valid.size > 0)
@@ -164,6 +185,7 @@ class GrammarRuleTake : AbstractGrammarRule()
 		centerDist = xml.getInt("Dist", 2)
 		rule = xml.get("Rule")
 		remainder = xml.get("Remainder", "")
+		perPoint = xml.getBoolean("PerPoint", false)
 	}
 
 }

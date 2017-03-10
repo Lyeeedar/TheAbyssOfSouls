@@ -8,97 +8,80 @@ import com.lyeeedar.Util.*
 import kotlinx.coroutines.experimental.Job
 import ktx.collections.toGdxArray
 
+enum class Mode
+{
+	LARGEST,
+	SMALLEST,
+	RANDOM
+}
+
 class GrammarRuleNamedArea : AbstractGrammarRule()
 {
-	enum class Mode
-	{
-		LARGEST,
-		SMALLEST,
-		RANDOM
-	}
+	val datas = Array<Data>()
 
 	lateinit var key: String
-	lateinit var mode: Mode
-	lateinit var count: String
-	var parallel = false
 
-	lateinit var rule: String
-	lateinit var remainder: String
+	var parallel = false
 
 	suspend override fun execute(args: RuleArguments)
 	{
-		var rooms = args.namedAreas[key] ?: return
+		val rooms = args.namedAreas[key]?.toGdxArray() ?: return
 
 		if (rooms.size == 0) return
 
 		val jobs = Array<Job>(rooms.size)
-
-		rooms = when(mode)
-		{
-			Mode.RANDOM -> Array(rooms)
-			Mode.SMALLEST -> rooms.sortedBy { it.width * it.height }.asGdxArray()
-			Mode.LARGEST -> rooms.sortedByDescending { it.width * it.height }.asGdxArray()
-			else -> throw Exception("Unhandled named area mode '$mode'!")
-		}
-
-		args.area.writeVariables(args.variables)
-		args.variables.put("count", rooms.size.toFloat())
-
 		val rng = Random.obtainTS(args.seed)
 
-		val count = count.evaluate(args.variables, rng.nextLong()).round()
-
-		for (i in 0..count-1)
+		for (data in datas)
 		{
-			val area = when (mode)
+			val selectionList = when(data.mode)
 			{
-				Mode.RANDOM -> rooms.removeRandom(rng)
-				Mode.LARGEST, Mode.SMALLEST -> rooms[i]
-				else -> throw Exception("Unhandled named area mode '$mode'!")
+				Mode.RANDOM -> rooms.asGdxArray()
+				Mode.SMALLEST -> rooms.sortedBy { it.width * it.height }.asGdxArray()
+				Mode.LARGEST -> rooms.sortedByDescending { it.width * it.height }.asGdxArray()
+				else -> throw Exception("Unhandled named area mode '${data.mode}'!")
 			}
 
-			val newArgs = args.copy()
-			newArgs.area = area.copy()
-			newArgs.seed = rng.nextLong()
+			args.area.writeVariables(args.variables)
+			args.variables.put("count", rooms.size.toFloat())
 
-			val rule = args.ruleTable[rule]
+			var count = if (data.count == "remainder") selectionList.size else data.count.evaluate(args.variables, rng.nextLong()).round()
+			count = Math.min(selectionList.size, count)
 
-			if (parallel)
+			if (count > 0)
 			{
-				jobs.add(rule.executeAsync(newArgs))
-			}
-			else
-			{
-				rule.execute(newArgs)
-			}
-		}
-
-		if (!remainder.isNullOrBlank())
-		{
-			val remaining = when (mode)
-			{
-				Mode.RANDOM -> rooms
-				Mode.LARGEST, Mode.SMALLEST -> rooms.toList().slice(count..rooms.size-1).toGdxArray()
-				else -> throw Exception("Unhandled named area mode '$mode'!")
-			}
-
-			for (room in remaining)
-			{
-				val newArgs = args.copy()
-				newArgs.area = room.copy()
-				newArgs.seed = rng.nextLong()
-
-				val rule = args.ruleTable[remainder]
-
-				if (parallel)
+				for (i in 0..count - 1)
 				{
-					jobs.add(rule.executeAsync(newArgs))
-				}
-				else
-				{
-					rule.execute(newArgs)
+					val area = when (data.mode)
+					{
+						Mode.RANDOM -> selectionList.removeRandom(rng)
+						Mode.LARGEST, Mode.SMALLEST -> rooms[i]
+						else -> throw Exception("Unhandled named area mode '${data.mode}'!")
+					}
+
+					rooms.removeValue(area, true)
+
+					if (!data.rule.isNullOrBlank())
+					{
+						val newArgs = args.copy()
+						newArgs.area = area.copy()
+						newArgs.seed = rng.nextLong()
+
+						val rule = args.ruleTable[data.rule]
+
+						if (parallel)
+						{
+							jobs.add(rule.executeAsync(newArgs))
+						}
+						else
+						{
+							rule.execute(newArgs)
+						}
+					}
 				}
 			}
+
+			if (rooms.size == 0) break
 		}
 
 		rng.freeTS()
@@ -110,9 +93,17 @@ class GrammarRuleNamedArea : AbstractGrammarRule()
 	{
 		key = xml.get("Key")
 		parallel = xml.getBoolean("Parallel", false)
-		mode = Mode.valueOf(xml.get("Mode", "RANDOM").toUpperCase())
-		count = xml.get("Count", "1").toLowerCase().replace("%", "#count").unescapeCharacters()
-		rule = xml.get("Rule")
-		remainder = xml.get("Remainder", "")
+
+		val rulesEl = xml.getChildByName("Rules")
+		for (el in rulesEl.children())
+		{
+			val mode = Mode.valueOf(el.get("Mode", "RANDOM").toUpperCase())
+			val count = el.get("Count", "1").toLowerCase().replace("%", "#count").unescapeCharacters()
+			val rule = el.get("Rule")
+
+			datas.add(Data(mode, count, rule))
+		}
 	}
 }
+
+data class Data(val mode: Mode, val count: String, val rule: String)

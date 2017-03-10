@@ -18,36 +18,38 @@
 			</Keyframe>
 			<!--Renderable-->
 			<Keyframe Name="DestinationRenderable" Background="75,166,173,101" HasDuration="True" meta:RefKey="Keyframe">
-				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="RenderablePerTile" meta:RefKey="Boolean" />
 				<Data Name="KillOnEnd" meta:RefKey="Boolean" />
 			</Keyframe>
 			<Keyframe Name="MovementRenderable" Background="49,181,114,94" HasDuration="True" meta:RefKey="Keyframe">
-				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="UseLeap" meta:RefKey="Boolean" />
 			</Keyframe>
 			<Keyframe Name="SourceRenderable" Background="42,214,177,94" HasDuration="True" meta:RefKey="Keyframe">
-				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Data Name="Renderable" Keys="Sprite,ParticleEffect,TilingSprite" meta:RefKey="Reference" />
 				<Data Name="RestoreOriginal" Default="True" meta:RefKey="Boolean" />
 			</Keyframe>
 			<Keyframe Name="SourceAnimation" Background="27,181,140,146" HasDuration="True" meta:RefKey="Keyframe">
-				<Time Name="Time" Min="0" meta:RefKey="Number" />
 				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
-				<Data Name="Animation" EnumValues="Expand,Spin" meta:RefKey="Enum" />
+				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Data Name="Animation" EnumValues="Expand,Spin,Fade" meta:RefKey="Enum" />
 				<Data Name="SizeStart" Min="0" Default="1" VisibleIf="Animation==Expand" meta:RefKey="Number" />
 				<Data Name="SizeEnd" Min="0" Default="1" VisibleIf="Animation==Expand" meta:RefKey="Number" />
+				<Data Name="FadeStart" Min="0" Default="1" VisibleIf="Animation==Fade" meta:RefKey="Number" />
+				<Data Name="FadeEnd" Min="0" Default="1" VisibleIf="Animation==Fade" meta:RefKey="Number" />
 				<Data Name="OneWay" VisibleIf="Animation==Expand" meta:RefKey="Boolean" />
 				<Data Name="Angle" VisibleIf="Animation==Spin" meta:RefKey="Number" />
 			</Keyframe>
 			<Keyframe Name="Screenshake" Background="85,94,232,81" HasDuration="True" meta:RefKey="Keyframe">
-				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Data Name="Strength" meta:RefKey="Number" />
 				<Data Name="Speed" Min="1" Default="10" meta:RefKey="Number" />
 			</Keyframe>
@@ -63,8 +65,8 @@
 				<Data Name="Chance" Min="0" Max="1" Default="1" meta:RefKey="Number" />
 			</Keyframe>
 			<Keyframe Name="Spawn" Background="237,245,87,60" HasDuration="True" meta:RefKey="Keyframe">
-				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Data Name="DeleteOnExit" meta:RefKey="Boolean" />
 				<Data Name="IgnoreWall" meta:RefKey="Boolean" />
 				<Data Name="Entity" Extends="Entity" meta:RefKey="Struct" />
@@ -89,8 +91,8 @@
 			</Keyframe>
 			<!--Interaction-->
 			<Keyframe Name="Speech" Background="128,209,195,75" HasDuration="True" meta:RefKey="Keyframe">
-				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
+				<Duration Name="Duration" Min="0" meta:RefKey="Number" />
 				<Data Name="Text" meta:RefKey="MultilineString" />
 			</Keyframe>
 			<Keyframe Name="Interaction" Background="90,214,193,125" meta:RefKey="Keyframe">
@@ -100,11 +102,15 @@
 			<!--Component-->
 			<Keyframe Name="AddComponent" Background="128,207,105,120" meta:RefKey="Keyframe">
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
-				<Data Name="Type" EnumValues="Pit" meta:RefKey="Enum" />
+				<Data Name="Type" EnumValues="Pit,Light" meta:RefKey="Enum" />
+				<Data Name="LightData" VisibleIf="Type==Light" meta:RefKey="Struct">
+					<Data Name="Colour" HasAlpha="True" meta:RefKey="Colour" />
+					<Data Name="Range" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+				</Data>
 			</Keyframe>
 			<Keyframe Name="RemoveComponent" Background="97,161,78,120" meta:RefKey="Keyframe">
 				<Time Name="Time" Min="0" meta:RefKey="Number" />
-				<Data Name="Type" EnumValues="Pit" meta:RefKey="Enum" />
+				<Data Name="Type" EnumValues="Pit,Light" meta:RefKey="Enum" />
 			</Keyframe>
 		</Data>
 	</Definition>

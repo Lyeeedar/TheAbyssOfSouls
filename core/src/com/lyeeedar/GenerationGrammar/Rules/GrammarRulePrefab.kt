@@ -15,6 +15,7 @@ class GrammarRulePrefab : AbstractGrammarRule()
 	val symbols = Array<GrammarRuleSymbol>()
 	lateinit var prefab: Array2D<Char>
 
+	var usePoints = false
 	lateinit var snap: Direction
 
 	suspend override fun execute(args: RuleArguments)
@@ -31,6 +32,17 @@ class GrammarRulePrefab : AbstractGrammarRule()
 		}
 
 		val newArea = args.area.copy()
+
+		if (args.area.isPoints && !usePoints)
+		{
+			val avgX = args.area.points.sumBy(Pos::x) / args.area.points.size
+			val avgY = args.area.points.sumBy(Pos::y) / args.area.points.size
+
+			newArea.x = avgX
+			newArea.y = avgY
+			newArea.width = 1
+			newArea.height = 1
+		}
 
 		val oldWidth = newArea.width
 		val oldHeight = newArea.height
@@ -67,7 +79,7 @@ class GrammarRulePrefab : AbstractGrammarRule()
 			newArea.y = (newArea.y + oldHeight) - newArea.height
 		}
 
-		if (newArea.isPoints)
+		if (newArea.isPoints && usePoints)
 		{
 			newArea.points.clear()
 			newArea.addPointsWithin(args.area)
@@ -105,6 +117,8 @@ class GrammarRulePrefab : AbstractGrammarRule()
 
 	override fun parse(xml: XmlReader.Element)
 	{
+		usePoints = xml.getBoolean("UsePoints", false)
+
 		val symbolsEl = xml.getChildByName("Symbols")
 		if (symbolsEl != null)
 		{

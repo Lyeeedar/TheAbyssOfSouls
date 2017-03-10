@@ -1,0 +1,204 @@
+<GenerationGrammar meta:X="0" meta:Y="0" GUID="983a4abf-4fac-415c-9d3c-ce51e74b314a" xmlns:meta="Editor">
+	<Width>16</Width>
+	<Height>16</Height>
+	<Ambient>153,153,153,255</Ambient>
+	<Root meta:RefKey="Node">b8133119-6f4f-4ea5-8e14-6a1bf3262976</Root>
+	<Rules>
+		<Node meta:X="246" meta:Y="-5" GUID="b8133119-6f4f-4ea5-8e14-6a1bf3262976">
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">aa9a0280-0506-477e-b3da-bcd8f4924d01</Rule>
+			</Rule>
+			<Rule meta:RefKey="Prefab">
+				<Prefab>
+					<Line>e###e####e######</Line>
+					<Line>#######e####e###</Line>
+					<Line>#e##e######e###e</Line>
+					<Line>#############e##</Line>
+					<Line>e####.#...######</Line>
+					<Line>##e#.......###e#</Line>
+					<Line>#####......#####</Line>
+					<Line>##e##..sj.##e###</Line>
+					<Line>#####.....######</Line>
+					<Line>e###.......####e</Line>
+					<Line>####.#..#.######</Line>
+					<Line>##e#####e###e###</Line>
+					<Line>################</Line>
+					<Line>#e##e###e######e</Line>
+					<Line>################</Line>
+					<Line>###e######e##e##</Line>
+				</Prefab>
+			</Rule>
+		</Node>
+		<Node meta:X="491.98071523415877" meta:Y="2.01928476584124" GUID="aa9a0280-0506-477e-b3da-bcd8f4924d01">
+			<!--Base symbols-->
+			<Rule meta:RefKey="Symbol">
+				<Character>.</Character>
+				<Floor>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/uf_split/uf_terrain/floor_crusted_grey_1</Name>
+								<Colour>20,20,20,255</Colour>
+							</Renderable>
+						</Renderable>
+					</Components>
+				</Floor>
+				<FloorDetail>
+					<Components>
+						<SceneTimeline>
+							<SceneTimeline meta:RefKey="SceneTimeline">
+								<Timeline>
+									<Blocker>
+										<Count>22</Count>
+									</Blocker>
+									<Damage>
+										<Time>2.56794357</Time>
+										<Amount>1000000</Amount>
+									</Damage>
+									<Blocker>
+										<Time>2.698558</Time>
+										<Count>10000000</Count>
+									</Blocker>
+									<Damage>
+										<Time>2.82732463</Time>
+									</Damage>
+									<Blocker>
+										<Time>2.96682215</Time>
+									</Blocker>
+									<Damage>
+										<Time>3.11705017</Time>
+										<Amount>1000000</Amount>
+									</Damage>
+								</Timeline>
+							</SceneTimeline>
+						</SceneTimeline>
+					</Components>
+				</FloorDetail>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>#</Character>
+				<Wall>
+					<Components>
+						<Renderable>
+							<Renderable meta:RefKey="TilingSprite">
+								<Name>cliff</Name>
+								<Mode>PremadeDirectional</Mode>
+								<Directions>
+									<Center meta:RefKey="Sprite">
+										<Name>blank</Name>
+									</Center>
+									<North meta:RefKey="Sprite">
+										<Name>Oryx/Custom/terrain/cliff</Name>
+										<Colour>25,25,25,255</Colour>
+									</North>
+								</Directions>
+							</Renderable>
+						</Renderable>
+						<Occludes>
+							<Occludes>false</Occludes>
+						</Occludes>
+					</Components>
+				</Wall>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>e</Character>
+				<Extends>#</Extends>
+				<Entity>
+					<Components>
+						<Position />
+						<SceneTimeline>
+							<SceneTimeline meta:RefKey="SceneTimeline">
+								<Timeline>
+									<Blocker>
+										<Count>15+rnd(5)</Count>
+									</Blocker>
+									<SourceRenderable>
+										<Duration LockDuration="False">0.1</Duration>
+										<Time>0.1</Time>
+										<Renderable meta:RefKey="Sprite">
+											<Name>Oryx/Custom/heroes/eye_1</Name>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+									<SourceRenderable>
+										<Duration LockDuration="False">0.100000009</Duration>
+										<Time>0.2</Time>
+										<Renderable meta:RefKey="Sprite">
+											<Name>Oryx/Custom/heroes/eye_2</Name>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+									<SourceRenderable>
+										<Duration LockDuration="False">0.099999994</Duration>
+										<Time>0.3</Time>
+										<Renderable meta:RefKey="Sprite">
+											<Name>Oryx/Custom/heroes/eye_3</Name>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+									<SourceRenderable>
+										<Duration LockDuration="False">0.0873765945</Duration>
+										<Time>0.4</Time>
+										<Renderable meta:RefKey="Sprite">
+											<Name>Oryx/Custom/heroes/eye_4</Name>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+								</Timeline>
+								<Timeline>
+									<SourceAnimation>
+										<Duration LockDuration="False">0.0490000024</Duration>
+										<Time>0.101</Time>
+										<Animation>Fade</Animation>
+										<FadeStart>0</FadeStart>
+									</SourceAnimation>
+									<Blocker>
+										<Time>0.441330165</Time>
+										<Count>1000000</Count>
+									</Blocker>
+								</Timeline>
+							</SceneTimeline>
+						</SceneTimeline>
+					</Components>
+				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>j</Character>
+				<Extends>.</Extends>
+				<BelowEntity>
+					<Components>
+						<SceneTimeline>
+							<SceneTimeline meta:RefKey="SceneTimeline">
+								<Timeline>
+									<Blocker>
+										<Count>22</Count>
+									</Blocker>
+									<SourceRenderable>
+										<Duration LockDuration="False">3</Duration>
+										<Time>0.0233242121</Time>
+										<Renderable meta:RefKey="ParticleEffect">
+											<Name>MassiveJaws</Name>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+								</Timeline>
+							</SceneTimeline>
+						</SceneTimeline>
+					</Components>
+				</BelowEntity>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>s</Character>
+				<Extends>.</Extends>
+				<FloorDetail>
+					<Components>
+						<MetaRegion>
+							<Key>spawndeath,spawndescend</Key>
+						</MetaRegion>
+					</Components>
+				</FloorDetail>
+			</Rule>
+		</Node>
+	</Rules>
+</GenerationGrammar>

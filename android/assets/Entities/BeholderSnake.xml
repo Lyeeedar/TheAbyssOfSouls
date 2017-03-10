@@ -1,0 +1,66 @@
+<Entity xmlns:meta="Editor">
+	<Components>
+		<DirectionalSprite>
+			<Animations>
+				<Animation>
+					<Name>idle</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/beholder_back</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/uf_split/uf_heroes/beholder_deep</Name>
+						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+			</Animations>
+		</DirectionalSprite>
+		<Trailing>
+			<Collapses>false</Collapses>
+			<Renderables>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/Custom/heroes/beholder_body</Name>
+					<DrawActualSize>true</DrawActualSize>
+					<Blend>true</Blend>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/Custom/heroes/beholder_body</Name>
+					<DrawActualSize>true</DrawActualSize>
+					<Blend>true</Blend>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/Custom/heroes/beholder_body</Name>
+					<DrawActualSize>true</DrawActualSize>
+					<Blend>true</Blend>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/Custom/heroes/beholder_body</Name>
+					<DrawActualSize>true</DrawActualSize>
+					<Blend>true</Blend>
+				</Renderable>
+				<Renderable meta:RefKey="Sprite">
+					<Name>Oryx/Custom/heroes/beholder_body</Name>
+					<DrawActualSize>true</DrawActualSize>
+					<Blend>true</Blend>
+				</Renderable>
+			</Renderables>
+		</Trailing>
+		<AI>
+			<AI>BasicMonsterRandomWalk</AI>
+		</AI>
+		<Statistics>
+			<Faction>beholder</Faction>
+			<HP>10</HP>
+			<Stamina>10</Stamina>
+			<Sight>5</Sight>
+			<Death meta:RefKey="ParticleEffect">
+				<Name>Death</Name>
+				<Colour>173,241,255,255</Colour>
+			</Death>
+		</Statistics>
+		<Combo>
+			<ComboTree>Entities/BeholderCombo</ComboTree>
+		</Combo>
+		<Position />
+	</Components>
+</Entity>

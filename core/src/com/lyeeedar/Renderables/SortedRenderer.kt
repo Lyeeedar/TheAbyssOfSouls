@@ -366,6 +366,21 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
+	fun addToMap(tilingSprite: TilingSprite, ix: Float, iy: Float)
+	{
+		// Add to map
+		val point = Point.obtain().set(ix.toInt(), iy.toInt())
+		var keys = tilingMap[point]
+		if (keys == null)
+		{
+			keys = setPool.obtain()
+			keys.clear()
+		}
+		keys.add(tilingSprite.checkID)
+		tilingMap[point] = keys
+	}
+
+	// ----------------------------------------------------------------------
 	fun queueSprite(tilingSprite: TilingSprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, width: Float = 1f, height: Float = 1f)
 	{
 		if (!inBegin) throw Exception("Queue called before begin!")
@@ -400,16 +415,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			}
 		}
 
-		// Add to map
-		val point = Point.obtain().set(ix.toInt(), iy.toInt())
-		var keys = tilingMap[point]
-		if (keys == null)
-		{
-			keys = setPool.obtain()
-			keys.clear()
-		}
-		keys.add(tilingSprite.checkID)
-		tilingMap[point] = keys
+		addToMap(tilingSprite, ix, iy)
 
 		// check if onscreen
 		if (!isSpriteOnscreen(tilingSprite, x, y, width, height)) return

@@ -118,14 +118,15 @@ class Level(val seed: Long, val grammarName: String)
 			{
 				if (entity.metaregion() != null)
 				{
-					val key = entity.metaregion()!!.key.toLowerCase()
-
-					if (!metaregions.containsKey(key))
+					for (key in entity.metaregion().keys)
 					{
-						metaregions[key] = com.badlogic.gdx.utils.Array()
-					}
+						if (!metaregions.containsKey(key))
+						{
+							metaregions[key] = com.badlogic.gdx.utils.Array()
+						}
 
-					if (!metaregions[key].contains(tile)) metaregions[key].add(tile)
+						if (!metaregions[key].contains(tile)) metaregions[key].add(tile)
+					}
 				}
 			}
 		}

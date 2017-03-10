@@ -9,7 +9,7 @@
 		<Data Name="Rule" DefKey="Rules" meta:RefKey="Reference" />
 	</Definition>
 	<!--Rule Types-->
-	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Defer,Divide,Filter,NamedArea,Repeat,Rule,Split,Take),Symbol(Fill,Prefab,Symbol),Debug(Breakpoint)" meta:RefKey="ReferenceDef" />
+	<Definition Name="Rules" Keys="Data(DataScope,Define),Area(Flip,Rotate,Scale,Translate),Chain(Condition,Defer,Divide,Filter,NamedArea,Repeat,Rule,Split,Take),Symbol(Fill,Generator,Prefab,Symbol),Debug(Breakpoint)" meta:RefKey="ReferenceDef" />
 	<!--Data Rules-->
 	<Definition Name="DataScope" meta:RefKey="StructDef">
 		<Data Name="Defines" Default="True" meta:RefKey="Boolean" />
@@ -69,18 +69,22 @@
 	</Definition>
 	<Definition Name="NamedArea" meta:RefKey="StructDef">
 		<Data Name="Key" meta:RefKey="String" />
-		<Data Name="Mode" EnumValues="Random,Largest,Smallest" meta:RefKey="Enum" />
-		<Data Name="Count" Default="1" meta:RefKey="String" />
 		<Data Name="Parallel" meta:RefKey="Boolean" />
-		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
-		<Data Name="Remainder" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
+		<Data Name="Rules" meta:RefKey="Collection">
+			<Data Name="Rule" meta:RefKey="Struct">
+				<Data Name="Mode" EnumValues="Random,Largest,Smallest" meta:RefKey="Enum" />
+				<Data Name="Count" Default="1" meta:RefKey="String" />
+				<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
+			</Data>
+		</Data>
 	</Definition>
 	<Definition Name="Repeat" Description="{Size}" meta:RefKey="StructDef">
 		<Data Name="Axis" EnumValues="X,Y" meta:RefKey="Enum" />
 		<Data Name="Parallel" meta:RefKey="Boolean" />
 		<Data Name="Size" meta:RefKey="String" />
 		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
-		<Data Name="Remainder" Keys="Node" meta:RefKey="GraphReference" />
+		<Data Name="RemainderMode" EnumValues="Rule,Pad,Expand" meta:RefKey="Enum" />
+		<Data Name="Remainder" Keys="Node" VisibleIf="RemainderMode==Rule" meta:RefKey="GraphReference" />
 	</Definition>
 	<Definition Name="Rule" meta:RefKey="StructDef">
 		<Data Name="Rule" Keys="Node" meta:RefKey="GraphReference" />
@@ -99,6 +103,7 @@
 		<Data Name="Mode" EnumValues="Random,Edge,Corner,Center" meta:RefKey="Enum" />
 		<Data Name="Count" Default="1" SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Dist" Type="Int" Min="1" Default="2" VisibleIf="Mode==Center" meta:RefKey="Number" />
+		<Data Name="PerPoint" meta:RefKey="Boolean" />
 		<Data Name="Rule" Keys="Node" UseParentDescription="True" meta:RefKey="GraphReference" />
 		<Data Name="Remainder" Keys="Node" meta:RefKey="GraphReference" />
 	</Definition>
@@ -107,12 +112,19 @@
 		<Data Name="Character" MaxLength="1" Default="." SkipIfDefault="False" meta:RefKey="String" />
 		<Data Name="Overwrite" meta:RefKey="Boolean" />
 	</Definition>
+	<Definition Name="Generator" meta:RefKey="StructDef">
+		<Data Name="Symbols" meta:RefKey="Collection">
+			<Data Name="Symbol" Keys="Symbol" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="Type" EnumValues="CellularAutomata" meta:RefKey="Enum" />
+	</Definition>
 	<Definition Name="Prefab" meta:RefKey="StructDef">
 		<Data Name="Symbols" meta:RefKey="Collection">
 			<Data Name="Symbol" Keys="Symbol" meta:RefKey="Reference" />
 		</Data>
 		<Data Name="Prefab" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
 		<Data Name="Snap" EnumValues="Center,North,South,East,West,NorthEast,NorthWest,SouthEast,SouthWest" meta:RefKey="Enum" />
+		<Data Name="UsePoints" meta:RefKey="Boolean" />
 	</Definition>
 	<Definition Name="Symbol" Description="{Character}" meta:RefKey="StructDef">
 		<Data Name="Character" MaxLength="1" Default="." SkipIfDefault="False" meta:RefKey="String" />

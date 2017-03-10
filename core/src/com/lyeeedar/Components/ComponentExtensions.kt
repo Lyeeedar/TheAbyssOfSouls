@@ -184,7 +184,10 @@ class EntityLoader()
 			if (componentsEl != null)
 			{
 				val positionEl = componentsEl.getChildByName("Position")
-				slot = SpaceSlot.valueOf(positionEl.get("SpaceSlot", "Entity").toUpperCase())
+				if (positionEl != null)
+				{
+					slot = SpaceSlot.valueOf(positionEl.get("SpaceSlot", "Entity").toUpperCase())
+				}
 			}
 
 			return slot

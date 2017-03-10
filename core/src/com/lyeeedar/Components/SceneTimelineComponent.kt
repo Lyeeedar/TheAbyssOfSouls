@@ -38,10 +38,10 @@ class SceneTimelineComponent() : AbstractComponent(), IDebugCommandProvider
 		isShared = xml.getBoolean("IsShared", false)
 		if (isShared)
 		{
-			val key = xml.toString().hashCode()
-
 			synchronized(sharedTimelines)
 			{
+				val key = xml.toString().hashCode()
+
 				if (sharedTimelines.containsKey(key))
 				{
 					sceneTimeline = sharedTimelines[key]

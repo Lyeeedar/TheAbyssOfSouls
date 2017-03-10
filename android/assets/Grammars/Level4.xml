@@ -247,7 +247,7 @@
 			<Rule meta:RefKey="Repeat">
 				<Size>10+rnd(15)</Size>
 				<Rule meta:RefKey="Node">b789eb28-d094-4cf5-8be7-b7b1104d18c2</Rule>
-				<Remainder meta:RefKey="Node">b789eb28-d094-4cf5-8be7-b7b1104d18c2</Remainder>
+				<RemainderMode>Pad</RemainderMode>
 			</Rule>
 			<Rule meta:RefKey="Filter">
 				<Mode>Character</Mode>
@@ -256,15 +256,20 @@
 			</Rule>
 			<Rule meta:RefKey="NamedArea">
 				<Key>island</Key>
-				<Mode>Largest</Mode>
-				<Rule meta:RefKey="Node">ad75adb3-65ab-4133-8673-61c314ee71be</Rule>
-				<Remainder meta:RefKey="Node">511d2e58-6fd3-429c-adcd-9ed7a68cafca</Remainder>
-			</Rule>
-			<Rule meta:RefKey="NamedArea">
-				<Key>unusedisland</Key>
-				<Mode>Largest</Mode>
-				<Rule meta:RefKey="Node">8f1a27cb-22c5-4023-8082-3712f94e0046</Rule>
-				<Remainder meta:RefKey="Node">b264802b-cddc-43d1-a8ed-22e9f413c237</Remainder>
+				<Rules>
+					<Rule>
+						<Mode>Largest</Mode>
+						<Rule meta:RefKey="Node">ad75adb3-65ab-4133-8673-61c314ee71be</Rule>
+					</Rule>
+					<Rule>
+						<Mode>Largest</Mode>
+						<Rule meta:RefKey="Node">8f1a27cb-22c5-4023-8082-3712f94e0046</Rule>
+					</Rule>
+					<Rule>
+						<Count>remainder</Count>
+						<Rule meta:RefKey="Node">b264802b-cddc-43d1-a8ed-22e9f413c237</Rule>
+					</Rule>
+				</Rules>
 			</Rule>
 		</Node>
 		<Node meta:X="810.9478759765625" meta:Y="651.82086181640625" GUID="b789eb28-d094-4cf5-8be7-b7b1104d18c2">
@@ -272,7 +277,7 @@
 				<Axis>Y</Axis>
 				<Size>10+rnd(15)</Size>
 				<Rule meta:RefKey="Node">93ba02e0-1b57-4844-9b62-6ba48cbdb3e3</Rule>
-				<Remainder meta:RefKey="Node">93ba02e0-1b57-4844-9b62-6ba48cbdb3e3</Remainder>
+				<RemainderMode>Pad</RemainderMode>
 			</Rule>
 		</Node>
 		<Node meta:X="1116.3741455078125" meta:Y="647.2984619140625" GUID="93ba02e0-1b57-4844-9b62-6ba48cbdb3e3">
@@ -515,13 +520,7 @@
 				</Prefab>
 			</Rule>
 		</Node>
-		<Node meta:X="657.13458251953125" meta:Y="1273.6973876953125" GUID="511d2e58-6fd3-429c-adcd-9ed7a68cafca">
-			<Rule meta:RefKey="Define">
-				<Key>unusedisland</Key>
-				<NamedRegion>true</NamedRegion>
-			</Rule>
-		</Node>
-		<Node meta:X="661.13458251953125" meta:Y="1358.9322509765625" GUID="8f1a27cb-22c5-4023-8082-3712f94e0046">
+		<Node meta:X="653.345458984375" meta:Y="1264.1641845703125" GUID="8f1a27cb-22c5-4023-8082-3712f94e0046">
 			<!--Ascend-->
 			<Rule meta:RefKey="Prefab">
 				<Symbols>

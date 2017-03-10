@@ -1,6 +1,6 @@
 <Definitions xmlns:meta="Editor">
 	<Definition Name="AtonementSpirit" IsGlobal="True" meta:RefKey="StructDef">
-		<Data Name="Sin" EnumValues="Anger,Sloth,Lust,Greed,Pride" SkipIfDefault="False" meta:RefKey="Enum" />
+		<Data Name="Sin" EnumValues="Anger,Sloth,Envy,Lust,Greed,Pride" SkipIfDefault="False" meta:RefKey="Enum" />
 	</Definition>
 	<Definition Name="SellableItem" IsGlobal="True" meta:RefKey="StructDef">
 		<Data Name="Name" meta:RefKey="String" />

@@ -1,0 +1,228 @@
+<GenerationGrammar meta:X="0" meta:Y="0" GUID="9b02a736-9a0a-47b1-81c3-4aedfc1ba94c" xmlns:meta="Editor">
+	<Width>100</Width>
+	<Height>100</Height>
+	<Ambient>20,20,20,255</Ambient>
+	<Root meta:RefKey="Node">ac6cd840-a704-440d-9ab4-cd2d2dc59bec</Root>
+	<Rules>
+		<Node meta:X="340.90123456790121" meta:Y="-130.07407407407408" GUID="ac6cd840-a704-440d-9ab4-cd2d2dc59bec">
+			<Rule meta:RefKey="Rule">
+				<Rule meta:RefKey="Node">a63abc5f-0649-4624-918f-e88101d0cbc5</Rule>
+			</Rule>
+			<Rule meta:RefKey="Generator" />
+			<Rule meta:RefKey="Split">
+				<Split>
+					<Side>Edge</Side>
+					<Rule meta:RefKey="Node">c08bcad8-82a9-4eb5-a241-822eaeb16cd2</Rule>
+				</Split>
+			</Rule>
+			<Rule meta:RefKey="Filter">
+				<Mode>Character</Mode>
+				<Character>.</Character>
+				<Rule meta:RefKey="Node">26dce8c8-4666-4ac2-aae4-b9021dae47af</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="602.98765432098753" meta:Y="-290.5679012345679" GUID="a63abc5f-0649-4624-918f-e88101d0cbc5">
+			<!--Basic Symbols-->
+			<Rule meta:RefKey="Symbol">
+				<Character>.</Character>
+				<Floor>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="Sprite">
+								<Name>Oryx/uf_split/uf_terrain/floor_crusted_grey_1</Name>
+							</Renderable>
+							<Variants>
+								<Variant>
+									<Chance>chance(1,5)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/floor_crusted_grey_2</Name>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1,10)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/floor_crusted_grey_3</Name>
+									</Renderable>
+								</Variant>
+								<Variant>
+									<Chance>chance(1,5)</Chance>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/floor_crusted_grey_4</Name>
+									</Renderable>
+								</Variant>
+							</Variants>
+						</Renderable>
+					</Components>
+				</Floor>
+			</Rule>
+			<Rule meta:RefKey="Symbol">
+				<Character>#</Character>
+				<Wall>
+					<Components>
+						<Renderable>
+							<IsShared>true</IsShared>
+							<Renderable meta:RefKey="TilingSprite">
+								<Name>wall</Name>
+								<Mode>Premade</Mode>
+								<Front meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/wall_rock_front</Name>
+								</Front>
+								<Top meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/wall_rock_top</Name>
+								</Top>
+								<Overhang meta:RefKey="Sprite">
+									<Name>Oryx/Custom/terrain/wall_rock_overhang</Name>
+								</Overhang>
+							</Renderable>
+						</Renderable>
+					</Components>
+				</Wall>
+			</Rule>
+		</Node>
+		<Node meta:X="653.30864197530855" meta:Y="-100.44444444444446" GUID="c08bcad8-82a9-4eb5-a241-822eaeb16cd2">
+			<Rule meta:RefKey="Fill">
+				<Character>#</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="706.39506172839492" meta:Y="73.629629629629619" GUID="26dce8c8-4666-4ac2-aae4-b9021dae47af">
+			<Rule meta:RefKey="Take">
+				<Count>1</Count>
+				<Rule meta:RefKey="Node">6915feca-2b42-4cf2-ab5a-1ebdb98a0986</Rule>
+			</Rule>
+			<Rule meta:RefKey="Take">
+				<Count>0.1%</Count>
+				<Rule meta:RefKey="Node">225eedbb-cd8d-4264-8865-05ff25050afa</Rule>
+			</Rule>
+			<Rule meta:RefKey="Take">
+				<Count>5%</Count>
+				<Rule meta:RefKey="Node">3845a2aa-9f6d-4ad2-b143-57439157da61</Rule>
+			</Rule>
+		</Node>
+		<Node meta:X="948.39506172839492" meta:Y="73.629629629629619" GUID="6915feca-2b42-4cf2-ab5a-1ebdb98a0986">
+			<Rule meta:RefKey="Symbol">
+				<Character>s</Character>
+				<FloorDetail>
+					<Components>
+						<MetaRegion>
+							<Key>spawndeath,spawndescend</Key>
+						</MetaRegion>
+					</Components>
+				</FloorDetail>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>s</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="948.87654320987644" meta:Y="216.83950617283949" GUID="225eedbb-cd8d-4264-8865-05ff25050afa">
+			<Rule meta:RefKey="Symbol">
+				<Character>B</Character>
+				<Entity>
+					<Extends>BeholderSnake</Extends>
+				</Entity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>B</Character>
+			</Rule>
+		</Node>
+		<Node meta:X="945.50166009302166" meta:Y="345.3068408322157" GUID="3845a2aa-9f6d-4ad2-b143-57439157da61">
+			<Rule meta:RefKey="Symbol">
+				<Character>H</Character>
+				<BelowEntity>
+					<Components>
+						<SceneTimeline>
+							<Loop>true</Loop>
+							<SceneTimeline meta:RefKey="SceneTimeline">
+								<Timeline>
+									<SourceRenderable>
+										<Duration LockDuration="False">0.04016854</Duration>
+										<Renderable meta:RefKey="Sprite">
+											<Name>Oryx/Custom/heroes/shadow</Name>
+											<Colour>0,0,0,0</Colour>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+									<SourceRenderable>
+										<Time>0.04016854</Time>
+										<Duration LockDuration="False">0.0457303375</Duration>
+										<Renderable meta:RefKey="Sprite">
+											<Name>Oryx/Custom/heroes/shadow</Name>
+											<Colour>0,0,0,44</Colour>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+									<SourceRenderable>
+										<Time>0.0858988762</Time>
+										<Duration LockDuration="False">0.0398854464</Duration>
+										<Renderable meta:RefKey="Sprite">
+											<Name>Oryx/Custom/heroes/shadow</Name>
+											<Colour>0,0,0,108</Colour>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+									<SourceRenderable>
+										<Time>0.125784323</Time>
+										<Duration LockDuration="False">0.038096562</Duration>
+										<Renderable meta:RefKey="Sprite">
+											<Name>Oryx/Custom/heroes/shadow</Name>
+											<Colour>0,0,0,143</Colour>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+									<SourceRenderable>
+										<Time>0.163880885</Time>
+										<Duration LockDuration="False">0.03941022</Duration>
+										<Renderable meta:RefKey="Sprite">
+											<Name>Oryx/Custom/heroes/shadow</Name>
+											<Colour>0,0,0,222</Colour>
+										</Renderable>
+										<RestoreOriginal>false</RestoreOriginal>
+									</SourceRenderable>
+									<DestinationRenderable>
+										<Time>0.2032911</Time>
+										<Duration LockDuration="False">0.0459786057</Duration>
+										<Renderable meta:RefKey="ParticleEffect">
+											<Name></Name>
+										</Renderable>
+									</DestinationRenderable>
+								</Timeline>
+								<Timeline>
+									<Blocker>
+										<Time>0.0154494373</Time>
+										<Count>20+rnd(100)</Count>
+									</Blocker>
+									<Blocker>
+										<Time>0.06075744</Time>
+										<Count>5</Count>
+									</Blocker>
+									<Blocker>
+										<Time>0.103451855</Time>
+										<Count>5</Count>
+									</Blocker>
+									<Blocker>
+										<Time>0.145489439</Time>
+										<Count>5</Count>
+									</Blocker>
+									<Blocker>
+										<Time>0.181615487</Time>
+									</Blocker>
+									<Damage>
+										<Time>0.226937249</Time>
+										<Amount>4</Amount>
+									</Damage>
+									<Knockback>
+										<Time>0.2348193</Time>
+										<MoveType>Leap</MoveType>
+									</Knockback>
+								</Timeline>
+							</SceneTimeline>
+						</SceneTimeline>
+					</Components>
+				</BelowEntity>
+			</Rule>
+			<Rule meta:RefKey="Fill">
+				<Character>H</Character>
+			</Rule>
+		</Node>
+	</Rules>
+</GenerationGrammar>

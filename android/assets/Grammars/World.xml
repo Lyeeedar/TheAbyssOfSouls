@@ -48,14 +48,59 @@
 				</Level>
 			</Connected>
 		</Level>
-		<Level meta:X="1072.6666666666667" meta:Y="-11.666666666666686" GUID="704c527e-4756-4438-992e-2b95d5d676d3">
+		<Level meta:X="1072.6666259765625" meta:Y="-11.666666984558105" GUID="704c527e-4756-4438-992e-2b95d5d676d3">
 			<Grammar>Level4</Grammar>
 			<Connected>
 				<Level>
 					<Key>ascend</Key>
 					<Next meta:RefKey="Level">34187d6f-022e-434d-b8d1-5d18794e7506</Next>
 				</Level>
+				<Level>
+					<Key>death</Key>
+					<Next meta:RefKey="Level">22da06e0-6ba0-458b-9d86-ba25a16492fb</Next>
+				</Level>
+				<Level>
+					<Key>descend</Key>
+					<Next meta:RefKey="Level">22da06e0-6ba0-458b-9d86-ba25a16492fb</Next>
+				</Level>
 			</Connected>
+		</Level>
+		<Level meta:X="1377.6666259765625" meta:Y="-14.666666984558105" GUID="22da06e0-6ba0-458b-9d86-ba25a16492fb">
+			<Grammar>Level5</Grammar>
+			<Connected>
+				<Level>
+					<Key>ascend</Key>
+					<Next meta:RefKey="Level">704c527e-4756-4438-992e-2b95d5d676d3</Next>
+				</Level>
+				<Level>
+					<Key>death</Key>
+					<Next meta:RefKey="Level">29078e66-a97f-4278-87a1-4ad3bd575459</Next>
+				</Level>
+				<Level>
+					<Key>descend</Key>
+					<Next meta:RefKey="Level">29078e66-a97f-4278-87a1-4ad3bd575459</Next>
+				</Level>
+			</Connected>
+		</Level>
+		<Level meta:X="1639" meta:Y="-12.666666666666686" GUID="29078e66-a97f-4278-87a1-4ad3bd575459">
+			<Grammar>Level6</Grammar>
+			<Connected>
+				<Level>
+					<Key>ascend</Key>
+					<Next meta:RefKey="Level">22da06e0-6ba0-458b-9d86-ba25a16492fb</Next>
+				</Level>
+				<Level>
+					<Key>death</Key>
+					<Next meta:RefKey="Level">2b176d0c-341e-427b-a8e4-a5dc241da6b7</Next>
+				</Level>
+				<Level>
+					<Key>descend</Key>
+					<Next meta:RefKey="Level">2b176d0c-341e-427b-a8e4-a5dc241da6b7</Next>
+				</Level>
+			</Connected>
+		</Level>
+		<Level meta:X="1910" meta:Y="-10.666666666666686" GUID="2b176d0c-341e-427b-a8e4-a5dc241da6b7">
+			<Grammar>Level7</Grammar>
 		</Level>
 	</Levels>
 </World>

@@ -577,8 +577,8 @@ void main()
 
 	vec4 outCol = lerp(col1, col2, v_blendAlpha);
 
-	v_color.a = min(1, v_color.a);
-	gl_FragColor = v_color * outCol;
+	vec4 finalCol = clamp(v_color * outCol, 0.0, 1.0);
+	gl_FragColor = finalCol;
 }
 """
 

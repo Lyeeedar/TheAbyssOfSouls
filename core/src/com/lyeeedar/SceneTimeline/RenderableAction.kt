@@ -7,10 +7,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
-import com.lyeeedar.Renderables.Animation.ExpandAnimation
-import com.lyeeedar.Renderables.Animation.LeapAnimation
-import com.lyeeedar.Renderables.Animation.MoveAnimation
-import com.lyeeedar.Renderables.Animation.SpinAnimation
+import com.lyeeedar.Renderables.Animation.*
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.SpaceSlot
@@ -84,7 +81,8 @@ class SourceAnimationAction() : AbstractTimelineAction()
 	enum class Animation
 	{
 		EXPAND,
-		SPIN
+		SPIN,
+		FADE
 	}
 
 	lateinit var anim: Animation
@@ -92,6 +90,9 @@ class SourceAnimationAction() : AbstractTimelineAction()
 	var startSize = 1f
 	var endSize = 1f
 	var oneWay = true
+
+	var startFade = 1f
+	var endFade = 1f
 
 	var spinAngle = 0f
 
@@ -107,6 +108,10 @@ class SourceAnimationAction() : AbstractTimelineAction()
 		else if (anim == Animation.SPIN)
 		{
 			sourceRenderable.animation = SpinAnimation.obtain().set(duration, spinAngle)
+		}
+		else if (anim == Animation.FADE)
+		{
+			sourceRenderable.animation = AlphaAnimation.obtain().set(duration, startFade, endFade)
 		}
 		else
 		{
@@ -132,6 +137,8 @@ class SourceAnimationAction() : AbstractTimelineAction()
 		action.endSize = endSize
 		action.oneWay = oneWay
 		action.spinAngle = spinAngle
+		action.startFade = startFade
+		action.endFade = endFade
 
 		return action
 	}
@@ -143,6 +150,8 @@ class SourceAnimationAction() : AbstractTimelineAction()
 		endSize = xml.getFloat("SizeEnd", 1f)
 		oneWay = xml.getBoolean("OneWay", false)
 		spinAngle = xml.getFloat("Angle", 0f)
+		startFade = xml.getFloat("FadeStart", 1f)
+		endFade = xml.getFloat("FadeEnd", 1f)
 	}
 
 }

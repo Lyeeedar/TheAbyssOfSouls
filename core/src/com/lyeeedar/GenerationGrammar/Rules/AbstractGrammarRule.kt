@@ -20,10 +20,10 @@ abstract class AbstractGrammarRule
 	{
 		val cpy = args.copy(false, true, true, true)
 
-		cpy.area.allowedBoundsX = cpy.area.x
-		cpy.area.allowedBoundsY = cpy.area.y
-		cpy.area.allowedBoundsWidth = cpy.area.width
-		cpy.area.allowedBoundsHeight = cpy.area.height
+//		cpy.area.allowedBoundsX = cpy.area.x
+//		cpy.area.allowedBoundsY = cpy.area.y
+//		cpy.area.allowedBoundsWidth = cpy.area.width
+//		cpy.area.allowedBoundsHeight = cpy.area.height
 
 		return launch(CommonPool) {
 			execute(cpy)
@@ -45,6 +45,7 @@ abstract class AbstractGrammarRule
 				"FILL" -> GrammarRuleFill()
 				"FILTER" -> GrammarRuleFilter()
 				"FLIP" -> GrammarRuleFlip()
+				"GENERATOR" -> GrammarRuleGenerator()
 				"REPEAT" -> GrammarRuleRepeat()
 				"PREFAB" -> GrammarRulePrefab()
 				"NAMEDAREA" -> GrammarRuleNamedArea()

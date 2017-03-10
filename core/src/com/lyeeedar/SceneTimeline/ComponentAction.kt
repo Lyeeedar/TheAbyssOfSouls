@@ -1,17 +1,21 @@
 package com.lyeeedar.SceneTimeline
 
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Components.LightComponent
 import com.lyeeedar.Components.PitComponent
 import com.lyeeedar.Components.sceneTimeline
 
 enum class ComponentType
 {
-	PIT
+	PIT,
+	LIGHT
 }
 
 class AddComponentAction : AbstractTimelineAction()
 {
 	lateinit var type: ComponentType
+
+	var lightData: XmlReader.Element? = null
 
 	override fun enter()
 	{
@@ -20,6 +24,12 @@ class AddComponentAction : AbstractTimelineAction()
 		if (type == ComponentType.PIT)
 		{
 			source.add(PitComponent())
+		}
+		else if (type == ComponentType.LIGHT)
+		{
+			val light = LightComponent()
+			light.parse(lightData!!, source)
+			source.add(light)
 		}
 	}
 
@@ -36,6 +46,7 @@ class AddComponentAction : AbstractTimelineAction()
 		action.startTime = startTime
 
 		action.type = type
+		action.lightData = lightData
 
 		return action
 	}
@@ -43,6 +54,7 @@ class AddComponentAction : AbstractTimelineAction()
 	override fun parse(xml: XmlReader.Element)
 	{
 		type = ComponentType.valueOf(xml.get("Type", "Pit").toUpperCase())
+		lightData = xml.getChildByName("LightData")
 	}
 }
 
@@ -57,6 +69,10 @@ class RemoveComponentAction : AbstractTimelineAction()
 		if (type == ComponentType.PIT)
 		{
 			source.remove(PitComponent::class.java)
+		}
+		else if (type == ComponentType.LIGHT)
+		{
+			source.remove(LightComponent::class.java)
 		}
 	}
 

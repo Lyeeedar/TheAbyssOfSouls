@@ -32,6 +32,8 @@ inline fun drawBlend(batch: Batch, region1: TextureRegion, region2: TextureRegio
 				width: Float, height: Float, scaleX: Float, scaleY: Float,
 				rotation: Float, flipX: Boolean, flipY: Boolean, removeAmount: Float)
 {
+	val blendAlpha = blendAlpha.clamp(0f, 1f)
+
 	if (batch is SpriteBatch)
 	{
 		tempCol1.set(batch.color, batch.packedColor)
@@ -101,13 +103,18 @@ inline fun doDraw(batch: HDRColourSpriteBatch, region1: TextureRegion, region2: 
 {
 	val (x1, x2, x3, x4, y1, y2, y3, y4, r1u, r1u2, r1v, r1v2, r2u, r2u2, r2v, r2v2) = calculateVertexData(region1, region2, x, y, originX, originY, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
 
+	val r = colour.r.clamp(0f, 1f)
+	val g = colour.g.clamp(0f, 1f)
+	val b = colour.b.clamp(0f, 1f)
+	val a = colour.a.clamp(0f, 1f)
+
 	val vertices = verticesHdrBatchBatch
 	vertices[0] = x1
 	vertices[1] = y1
-	vertices[2] = colour.r
-	vertices[3] = colour.g
-	vertices[4] = colour.b
-	vertices[5] = colour.a
+	vertices[2] = r
+	vertices[3] = g
+	vertices[4] = b
+	vertices[5] = a
 	vertices[6] = r1u
 	vertices[7] = r1v
 	vertices[8] = r2u
@@ -116,10 +123,10 @@ inline fun doDraw(batch: HDRColourSpriteBatch, region1: TextureRegion, region2: 
 
 	vertices[11] = x2
 	vertices[12] = y2
-	vertices[13] = colour.r
-	vertices[14] = colour.g
-	vertices[15] = colour.b
-	vertices[16] = colour.a
+	vertices[13] = r
+	vertices[14] = g
+	vertices[15] = b
+	vertices[16] = a
 	vertices[17] = r1u
 	vertices[18] = r1v2
 	vertices[19] = r2u
@@ -128,10 +135,10 @@ inline fun doDraw(batch: HDRColourSpriteBatch, region1: TextureRegion, region2: 
 
 	vertices[22] = x3
 	vertices[23] = y3
-	vertices[24] = colour.r
-	vertices[25] = colour.g
-	vertices[26] = colour.b
-	vertices[27] = colour.a
+	vertices[24] = r
+	vertices[25] = g
+	vertices[26] = b
+	vertices[27] = a
 	vertices[28] = r1u2
 	vertices[29] = r1v2
 	vertices[30] = r2u2
@@ -140,10 +147,10 @@ inline fun doDraw(batch: HDRColourSpriteBatch, region1: TextureRegion, region2: 
 
 	vertices[33] = x4
 	vertices[34] = y4
-	vertices[35] = colour.r
-	vertices[36] = colour.g
-	vertices[37] = colour.b
-	vertices[38] = colour.a
+	vertices[35] = r
+	vertices[36] = g
+	vertices[37] = b
+	vertices[38] = a
 	vertices[39] = r1u2
 	vertices[40] = r1v
 	vertices[41] = r2u2

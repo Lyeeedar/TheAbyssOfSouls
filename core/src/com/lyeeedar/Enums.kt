@@ -22,9 +22,10 @@ enum class Sin constructor(val colour: Colour)
 {
 	ANGER(Colour(0.78f, 0.46f, 0.46f, 1f)),
 	SLOTH(Colour(0.8f, 0.69f, 0.52f, 1f)),
+	ENVY(Colour(0.1f, 0.93f, 1f, 1f)),
 	LUST(Colour(0.78f, 0.31f, 0.7f, 1f)),
 	GREED(Colour(0.25f, 0.61f, 0.29f, 1f)),
-	PRIDE(Colour(0.43f, 0.68f, 0.85f, 1f));
+	PRIDE(Colour(1f, 0.91f, 0f, 1f));
 
 	companion object
 	{

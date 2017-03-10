@@ -1,20 +1,21 @@
 <AI meta:X="0" meta:Y="0" xmlns:meta="Editor">
-	<Root meta:X="132.07903970331552" meta:Y="-6.0401614258781677" meta:RefKey="Any">
-		<Node meta:X="414.10091787985596" meta:Y="-182.06723975083293" meta:RefKey="Sequence">
+	<Root meta:X="132.07904052734375" meta:Y="-6.0401616096496582" meta:RefKey="Any">
+		<Node meta:X="414.10092163085937" meta:Y="-182.06724548339844" meta:RefKey="Sequence">
 			<Action Condition="StartTile==0" meta:RefKey="Conditional" />
 			<Action Key="StartTile" Value="entityPos" meta:RefKey="SetValue" />
 		</Node>
-		<Node meta:X="324.19461443431453" meta:Y="90.49081701038736" meta:RefKey="Priority">
-			<Node meta:X="580.66417478949052" meta:Y="-4.147397142814139" meta:RefKey="Sequence">
+		<Node meta:X="324.19461059570312" meta:Y="90.490814208984375" meta:RefKey="Priority">
+			<Node meta:X="580.6641845703125" meta:Y="-4.1473970413208008" meta:RefKey="Sequence">
 				<!--Stay close to spawn-->
 				<Action Condition="dist entityPos startTile &gt;6" meta:RefKey="Conditional" />
 				<Action Key="startTile" Distance="4" meta:RefKey="MoveTo" />
 			</Node>
-			<Node meta:X="531.76992812088508" meta:Y="171.54451759874291" meta:RefKey="Random">
-				<Node meta:X="710.05675672411667" meta:Y="202.73313722913971" meta:RefKey="Sequence">
+			<Node meta:X="531.76995849609375" meta:Y="171.54452514648437" meta:RefKey="Random">
+				<Node meta:X="710.0567626953125" meta:Y="202.73313903808594" meta:RefKey="Sequence">
 					<Action Key="pos" Value="move entityPos random 1" meta:RefKey="SetValue" />
 					<Action Key="pos" meta:RefKey="MoveTo" />
 				</Node>
+				<Action meta:RefKey="Wait" />
 				<Action meta:RefKey="Wait" />
 				<Action meta:RefKey="Wait" />
 				<Action meta:RefKey="Wait" />

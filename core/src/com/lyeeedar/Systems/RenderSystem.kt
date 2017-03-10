@@ -10,6 +10,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.Util.AssetManager
@@ -181,6 +182,9 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 			val pos = entity.pos() ?: continue
 			val tile = entity.tile()
 
+			val px = pos.position.x.toFloat()
+			val py = pos.position.y.toFloat()
+
 			if (pos.position.taxiDist(level!!.player.tile()!!) > 50)
 			{
 				renderable.animation = null
@@ -213,6 +217,11 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 				if (!tile.isSeen)
 				{
 					renderable.animation = null
+
+					if (renderable is TilingSprite)
+					{
+						renderer.addToMap(renderable, px, py)
+					}
 					continue
 				}
 
@@ -240,9 +249,6 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 					if (tile.isValidHitPoint) tileCol.mul(1.2f, 0.7f, 0.7f, 1.0f)
 				}
 			}
-
-			val px = pos.position.x.toFloat()
-			val py = pos.position.y.toFloat()
 
 			renderer.queue(renderable, px, py, pos.slot.ordinal, 0, tileCol)
 
@@ -320,7 +326,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 					else if(i < hp) pip = hp_full
 					else pip = hp_empty
 
-					renderer.queueTexture(pip, ax+i*spacePerPip, ay+overhead, pos.slot.ordinal, 1, width = solid, height = 0.1f, sortX = ax, sortY = ay)
+					renderer.queueTexture(pip, ax+i*spacePerPip, ay+overhead, pos.slot.ordinal, 1, colour = tileCol, width = solid, height = 0.1f, sortX = ax, sortY = ay)
 				}
 
 				if (entity == player)
@@ -343,7 +349,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 							pip = if(i < entity.stats().insufficientStaminaAmount) hp_full_red else hp_empty
 						}
 
-						renderer.queueTexture(pip, ax+i*spacePerPip, ay+0.1f, pos.slot.ordinal, 1, width = solid, height = 0.1f)
+						renderer.queueTexture(pip, ax+i*spacePerPip, ay+0.1f, pos.slot.ordinal, 1, colour = tileCol, width = solid, height = 0.1f)
 					}
 				}
 			}

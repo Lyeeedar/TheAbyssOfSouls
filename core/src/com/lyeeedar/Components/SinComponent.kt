@@ -17,7 +17,7 @@ class SinComponent : AbstractComponent()
 	{
 		for (sin in Sin.Values)
 		{
-			sins[sin] = 1+Random.random(4)
+			sins[sin] = 1+Random.random(2)
 		}
 	}
 

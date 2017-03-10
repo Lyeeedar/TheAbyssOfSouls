@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
 import com.lyeeedar.Level.World
+import com.lyeeedar.UI.showFullscreenText
 import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Random
 
@@ -87,10 +88,21 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 			val travel = if (died) "death" else "descend"
 
 			Global.pause = true
-			Future.call(
+
+			if (World.world.currentLevel.connections.containsKey(travel))
 			{
-				World.world.changeLevel(travel, travel, level!!.player)
-			}, 0.5f)
+				Future.call(
+						{
+							World.world.changeLevel(travel, travel, level!!.player)
+						}, 0.5f)
+			}
+			else if (died)
+			{
+				Global.pause = true
+
+				// game over man!
+				showFullscreenText("You were consumed", 0.5f, { throw Exception("Game Over") })
+			}
 		}
 	}
 }

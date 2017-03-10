@@ -9,7 +9,10 @@ import com.esotericsoftware.kryo.io.Output
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Tile
 import com.lyeeedar.Renderables.Animation.MoveAnimation
-import com.lyeeedar.Util.*
+import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Future
+import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.children
 
 class TrailingEntityComponent : AbstractComponent()
 {
@@ -32,10 +35,14 @@ class TrailingEntityComponent : AbstractComponent()
 			trailEntity.add(RenderableComponent(renderable))
 			trailEntity.add(this)
 			trailEntity.add(PositionComponent())
-			trailEntity.pos().slot = entity.pos().slot
+			trailEntity.pos().moveable = false
 
-			if (entity.stats() != null) trailEntity.add(entity.stats())
-			if (entity.water() != null) trailEntity.add(entity.water())
+			Future.call(
+					{
+						trailEntity.pos().slot = entity.pos().slot
+						if (entity.stats() != null) trailEntity.add(entity.stats())
+						if (entity.water() != null) trailEntity.add(entity.water())
+					}, 0f)
 
 			entities.add(trailEntity)
 		}
@@ -67,7 +74,7 @@ class TrailingEntityComponent : AbstractComponent()
 
 				if (prevTile != target)
 				{
-					entity.renderable().renderable.rotation = getRotation(prevTile, target)
+					//entity.renderable().renderable.rotation = getRotation(prevTile, target)
 					entity.renderable().renderable.animation = MoveAnimation.obtain().set(target, prevTile, 0.15f)
 				}
 				else

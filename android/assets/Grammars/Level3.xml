@@ -490,11 +490,19 @@
 				</Division>
 			</Rule>
 		</Node>
-		<Node meta:X="1421.0462646484375" meta:Y="1087.177734375" GUID="3b90d7a6-4eb5-4837-ac07-fcf75cb60a2f">
+		<Node meta:X="1380.5487520976687" meta:Y="1087.177734375" GUID="3b90d7a6-4eb5-4837-ac07-fcf75cb60a2f">
 			<Rule meta:RefKey="NamedArea">
 				<Key>building</Key>
-				<Rule meta:RefKey="Node">6b76c8ef-762a-42cb-83d8-f5e69f0cd892</Rule>
-				<Remainder meta:RefKey="Node">c6d131d4-6ad8-4dce-8a02-2be2f2a99f34</Remainder>
+				<Rules>
+					<Rule>
+						<Mode>Smallest</Mode>
+						<Rule meta:RefKey="Node">6b76c8ef-762a-42cb-83d8-f5e69f0cd892</Rule>
+					</Rule>
+					<Rule>
+						<Count>remainder</Count>
+						<Rule meta:RefKey="Node">c6d131d4-6ad8-4dce-8a02-2be2f2a99f34</Rule>
+					</Rule>
+				</Rules>
 			</Rule>
 		</Node>
 		<Node meta:X="2024.4771728515625" meta:Y="1094.716796875" GUID="dad23297-abea-41ae-9f72-de63ff115bab">
@@ -581,7 +589,7 @@
 				<Character>s</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="1807.3105717961535" meta:Y="924.90178324074441" GUID="9836b7d1-5d7f-43a7-9395-190dad2691cd">
+		<Node meta:X="1807.310546875" meta:Y="924.90179443359375" GUID="9836b7d1-5d7f-43a7-9395-190dad2691cd">
 			<Rule meta:RefKey="Define">
 				<Key>building</Key>
 				<Value>area</Value>
@@ -675,7 +683,7 @@
 				<Rule meta:RefKey="Node">374c70ff-974d-43a1-876e-cfa794292b22</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1669.4283540232298" meta:Y="1272.2480198301496" GUID="c6d131d4-6ad8-4dce-8a02-2be2f2a99f34">
+		<Node meta:X="1669.4283447265625" meta:Y="1272.248046875" GUID="c6d131d4-6ad8-4dce-8a02-2be2f2a99f34">
 			<!--Sloth monster-->
 			<Rule meta:RefKey="Take">
 				<Mode>Corner</Mode>
@@ -683,7 +691,7 @@
 				<Rule meta:RefKey="Node">bb0989a2-91f8-44f8-a953-09367529f142</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="1917.4283540232298" meta:Y="1272.2480198301496" GUID="bb0989a2-91f8-44f8-a953-09367529f142">
+		<Node meta:X="1917.4283447265625" meta:Y="1272.248046875" GUID="bb0989a2-91f8-44f8-a953-09367529f142">
 			<Rule meta:RefKey="Symbol">
 				<Character>M</Character>
 				<Entity>
@@ -694,7 +702,7 @@
 				<Character>M</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="2072.7806396484375" meta:Y="931.8419189453125" GUID="0df2d5ed-065f-4708-aafc-39bf787614af">
+		<Node meta:X="2072.78076171875" meta:Y="931.8419189453125" GUID="0df2d5ed-065f-4708-aafc-39bf787614af">
 			<Rule meta:RefKey="Symbol">
 				<Character>m</Character>
 				<AboveEntity>

@@ -216,7 +216,10 @@ class TaskProcessorSystem(): AbstractSystem(Family.all(TaskComponent::class.java
 			e.pos().turnsOnTile++
 			e.pos().moveLocked = false
 
-			e.trailing()?.updatePos(e.tile()!!)
+			if (t is TaskMove)
+			{
+				e.trailing()?.updatePos(e.tile()!!)
+			}
 
 			if (e == level!!.player && t is TaskMove)
 			{
