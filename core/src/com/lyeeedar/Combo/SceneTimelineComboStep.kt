@@ -164,6 +164,11 @@ class SceneTimelineComboStep : ComboStep()
 				}
 
 				doMove(entity, entity, direction)
+
+				if (entity.trailing() != null)
+				{
+					entity.trailing().updatePos(entity.tile()!!)
+				}
 			}
 		}
 

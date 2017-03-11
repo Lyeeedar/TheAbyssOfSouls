@@ -1,5 +1,7 @@
 package com.lyeeedar.SceneTimeline
 
+import com.badlogic.gdx.math.Matrix3
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
@@ -17,12 +19,22 @@ class PermuteAction : AbstractTimelineAction()
 		val current = parent.destinationTiles.toGdxArray()
 		parent.destinationTiles.clear()
 
+		val mat = Matrix3()
+		mat.setToRotation(parent.facing.angle)
+		val vec = Vector3()
+
 		val addedset = ObjectSet<Tile>()
 		for (tile in current)
 		{
 			for (point in hitPoints)
 			{
-				val ntile = tile.level.getTile(tile, point) ?: continue
+				vec.set(point.x.toFloat(), point.y.toFloat(), 0f)
+				vec.mul(mat)
+
+				val dx = Math.round(vec.x)
+				val dy = Math.round(vec.y)
+
+				val ntile = tile.level.getTile(tile, dx, dy) ?: continue
 				if (!addedset.contains(ntile))
 				{
 					parent.destinationTiles.add(ntile)

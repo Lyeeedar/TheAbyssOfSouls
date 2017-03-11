@@ -125,7 +125,7 @@ class TrailingEntityComponent : AbstractComponent()
 
 		Future.call({
 			val head = entities[0]
-			if (head.pos().position != points[0]) throw Exception("Trail head isnt in the same place as it was saved!")
+			if (head.pos().position != points[0]) System.err.println("Trail head isnt in the same place as it was saved!")
 
 			for (i in 0..points.size-1)
 			{

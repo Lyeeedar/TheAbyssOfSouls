@@ -106,9 +106,10 @@
 			</SceneTimeline>
 			<HitPattern>
 				<Line>#####</Line>
-				<Line>.###.</Line>
-				<Line>..#..</Line>
-				<Line>..@..</Line>
+				<Line>#####</Line>
+				<Line>##@##</Line>
+				<Line>#####</Line>
+				<Line>#####</Line>
 			</HitPattern>
 			<HitType>Random</HitType>
 			<Count>2</Count>
@@ -259,8 +260,17 @@
 		</Node>
 		<Node meta:X="445.47323608398437" meta:Y="484.61251831054687" meta:RefKey="ComboNode">
 			<Desc>DelayedBomb</Desc>
-			<TurnCost>3</TurnCost>
 			<Cooldown>15</Cooldown>
+			<Random>
+				<Node meta:X="700.47323608398437" meta:Y="484.61251831054687" meta:RefKey="ComboNode">
+					<Desc>DelayedBomb</Desc>
+					<Random>
+						<Node meta:X="955.47323608398437" meta:Y="484.61251831054687" meta:RefKey="ComboNode">
+							<Desc>DelayedBomb</Desc>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
 		</Node>
 	</Random>
 </Combo>

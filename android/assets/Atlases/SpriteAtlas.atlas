@@ -109,6 +109,55 @@ EffectSprites/Hit/Hit_4
   orig: 48, 48
   offset: 0, 0
   index: -1
+EffectSprites/IceBurst/IceBurst_0
+  rotate: false
+  xy: 706, 150
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/IceBurst/IceBurst_1
+  rotate: false
+  xy: 742, 150
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/IceBurst/IceBurst_2
+  rotate: false
+  xy: 778, 150
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/IceBurst/IceBurst_3
+  rotate: false
+  xy: 814, 166
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/IceBurst/IceBurst_4
+  rotate: false
+  xy: 850, 166
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/IceBurst/IceBurst_5
+  rotate: false
+  xy: 886, 166
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+EffectSprites/IceBurst/IceBurst_6
+  rotate: false
+  xy: 922, 166
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 EffectSprites/IceShard/IceShard_0
   rotate: false
   xy: 154, 142
@@ -160,35 +209,35 @@ EffectSprites/Jaws/Jaws_6
   index: -1
 EffectSprites/Strike/Strike_0
   rotate: false
-  xy: 850, 166
+  xy: 1102, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Strike/Strike_1
   rotate: false
-  xy: 886, 166
+  xy: 1138, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Strike/Strike_2
   rotate: false
-  xy: 922, 166
+  xy: 1174, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Strike/Strike_3
   rotate: false
-  xy: 958, 166
+  xy: 1210, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Thrust/Thrust_3
   rotate: false
-  xy: 994, 166
+  xy: 1246, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -216,7 +265,7 @@ GUI/HpBarBack
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 1282, 174
+  xy: 1534, 174
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -251,7 +300,7 @@ GUI/SpeechBubbleArrow
   index: -1
 GUI/TextField
   rotate: false
-  xy: 1102, 166
+  xy: 1354, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -279,28 +328,28 @@ GUI/background
   index: -1
 GUI/health_empty
   rotate: false
-  xy: 1246, 166
+  xy: 1498, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/health_full
   rotate: false
-  xy: 1174, 166
+  xy: 1426, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/health_full_blue
   rotate: false
-  xy: 1210, 166
+  xy: 1462, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/health_full_green
   rotate: false
-  xy: 1138, 166
+  xy: 1390, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -1336,7 +1385,7 @@ Oryx/uf_split/uf_heroes/wisp_3
   index: -1
 Oryx/uf_split/uf_interface/uf_interface_681
   rotate: false
-  xy: 994, 146
+  xy: 1234, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -1973,7 +2022,7 @@ Oryx/uf_split/uf_terrain/water_teal_4
   index: -1
 Particle/SpinSlash
   rotate: false
-  xy: 778, 150
+  xy: 1030, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -1987,7 +2036,7 @@ Particle/blurrylines
   index: -1
 Particle/boot-stomp
   rotate: false
-  xy: 814, 166
+  xy: 1066, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -2022,14 +2071,14 @@ Particle/debris4
   index: -1
 Particle/droplet
   rotate: false
-  xy: 974, 146
+  xy: 1214, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/ember_2
   rotate: false
-  xy: 914, 146
+  xy: 1154, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -2043,56 +2092,56 @@ Particle/fist
   index: -1
 Particle/foot
   rotate: false
-  xy: 706, 150
+  xy: 958, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Particle/glow
   rotate: false
-  xy: 934, 146
+  xy: 1174, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/line
   rotate: false
-  xy: 834, 146
+  xy: 1074, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/oval
   rotate: false
-  xy: 1066, 166
+  xy: 1318, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Particle/plasma_1
   rotate: false
-  xy: 854, 146
+  xy: 1094, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_2
   rotate: false
-  xy: 874, 146
+  xy: 1114, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/plasma_3
   rotate: false
-  xy: 894, 146
+  xy: 1134, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/ring
   rotate: false
-  xy: 742, 150
+  xy: 994, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -2106,28 +2155,28 @@ Particle/shockwave
   index: -1
 Particle/slash
   rotate: false
-  xy: 954, 146
+  xy: 1194, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/spark
   rotate: false
-  xy: 1862, 198
+  xy: 1034, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/star
   rotate: false
-  xy: 814, 146
+  xy: 1054, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/tongue
   rotate: false
-  xy: 1030, 166
+  xy: 1282, 166
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -2162,329 +2211,329 @@ white_Masks/web_false
   index: -1
 white_Masks/fence_C_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNE_DNW_DSE_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNE_DNW_DSE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNE_DNW_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNE_DNW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNE_DSE_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNE_DSE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNE_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNW_DSE_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNW_DSE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNW_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DNW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DSE_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DSE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_E_DNW_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_E_DNW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_E_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_E_W_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_E_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_NE_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_NW_DSE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_N_DSE_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_N_DSE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_N_DSW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_SE_DNW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_SW_DNE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_S_DNE_DNW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_S_DNE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_S_DNW_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_W_DNE_DSE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_W_DNE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_W_DSE_false
   rotate: false
-  xy: 352, 14
+  xy: 954, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_NE_NW_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_NE_NW_SE_SW_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_NE_SE_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_NE_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_NW_SW_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_NW_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_N_S_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_N_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_SE_SW_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_SE_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_S_false
   rotate: false
-  xy: 378, 30
+  xy: 974, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_SW_false
   rotate: false
-  xy: 398, 30
+  xy: 994, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/fence_W_false
   rotate: false
-  xy: 1842, 198
+  xy: 1014, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -2526,294 +2575,294 @@ white_Masks/web_DSW_false
   index: -1
 white_Masks/web_DNE_DNW_DSE_DSW_false
   rotate: false
-  xy: 332, 14
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-white_Masks/web_DNE_DNW_DSE_false
-  rotate: false
-  xy: 1810, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-white_Masks/web_DNE_DNW_DSW_false
-  rotate: false
-  xy: 1810, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-white_Masks/web_DNE_DSE_DSW_false
-  rotate: false
-  xy: 1810, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-white_Masks/web_DNW_DSE_DSW_false
-  rotate: false
-  xy: 1810, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-white_Masks/web_DNW_DSW_false
-  rotate: false
-  xy: 1710, 182
+  xy: 934, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_DNE_DNW_false
   rotate: false
-  xy: 1710, 182
+  xy: 1642, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_DNE_DSE_false
   rotate: false
-  xy: 1710, 182
+  xy: 1642, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_DNE_DSW_false
   rotate: false
-  xy: 1710, 182
+  xy: 1642, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_DNW_DSE_false
   rotate: false
-  xy: 1710, 182
+  xy: 1642, 182
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+white_Masks/web_DNW_DSW_false
+  rotate: false
+  xy: 1642, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_DSE_DSW_false
   rotate: false
-  xy: 1710, 182
+  xy: 1642, 182
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+white_Masks/web_DNW_DSE_DSW_false
+  rotate: false
+  xy: 814, 146
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+white_Masks/web_DNE_DNW_DSE_false
+  rotate: false
+  xy: 814, 146
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+white_Masks/web_DNE_DNW_DSW_false
+  rotate: false
+  xy: 814, 146
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+white_Masks/web_DNE_DSE_DSW_false
+  rotate: false
+  xy: 814, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_E_DNW_DSW_false
   rotate: false
-  xy: 1590, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-white_Masks/web_E_DNW_false
-  rotate: false
-  xy: 1330, 182
+  xy: 1862, 198
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_E_DSW_false
   rotate: false
-  xy: 1330, 182
+  xy: 1702, 182
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+white_Masks/web_E_DNW_false
+  rotate: false
+  xy: 1702, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_E_W_false
   rotate: false
-  xy: 198, 2
+  xy: 1722, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_E_false
   rotate: false
-  xy: 1530, 182
+  xy: 854, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_NE_DSW_false
   rotate: false
-  xy: 1610, 182
+  xy: 1682, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_NE_NW_SE_SW_false
   rotate: false
-  xy: 1410, 182
+  xy: 1622, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_NE_NW_false
   rotate: false
-  xy: 218, 2
+  xy: 198, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_NE_SE_false
   rotate: false
-  xy: 1390, 182
+  xy: 332, 14
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_NE_false
   rotate: false
-  xy: 1350, 182
+  xy: 1742, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_NW_DSE_false
   rotate: false
-  xy: 1750, 182
+  xy: 1662, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_NW_SW_false
   rotate: false
-  xy: 1570, 182
+  xy: 1842, 198
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_NW_false
   rotate: false
-  xy: 1650, 182
+  xy: 874, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_N_DSE_DSW_false
   rotate: false
-  xy: 1690, 182
+  xy: 1822, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_N_DSW_false
   rotate: false
-  xy: 1370, 182
+  xy: 1562, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_N_DSE_false
   rotate: false
-  xy: 1370, 182
+  xy: 1562, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_N_S_false
   rotate: false
-  xy: 1450, 182
+  xy: 218, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_N_false
   rotate: false
-  xy: 1670, 182
+  xy: 378, 30
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_SE_DNW_false
   rotate: false
-  xy: 1490, 182
+  xy: 352, 14
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_SE_SW_false
   rotate: false
-  xy: 1310, 182
+  xy: 250, 86
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_SE_false
   rotate: false
-  xy: 1470, 182
+  xy: 1782, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_SW_DNE_false
   rotate: false
-  xy: 1630, 182
+  xy: 1582, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_SW_false
   rotate: false
-  xy: 250, 86
+  xy: 1802, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_S_DNE_DNW_false
   rotate: false
-  xy: 1770, 182
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-white_Masks/web_S_DNW_false
-  rotate: false
-  xy: 1730, 182
+  xy: 1762, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_S_DNE_false
   rotate: false
-  xy: 1730, 182
+  xy: 914, 146
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+white_Masks/web_S_DNW_false
+  rotate: false
+  xy: 914, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_S_false
   rotate: false
-  xy: 1430, 182
+  xy: 398, 30
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_W_DNE_DSE_false
   rotate: false
-  xy: 1550, 182
+  xy: 834, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_W_DSE_false
   rotate: false
-  xy: 1510, 182
+  xy: 1602, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_W_DNE_false
   rotate: false
-  xy: 1510, 182
+  xy: 1602, 182
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 white_Masks/web_W_false
   rotate: false
-  xy: 1790, 182
+  xy: 894, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

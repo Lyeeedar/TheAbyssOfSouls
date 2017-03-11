@@ -1,6 +1,7 @@
 package com.lyeeedar.Screens
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.lyeeedar.Combo.AtonementSpirit
@@ -404,6 +405,7 @@ class GameScreen : AbstractScreen()
 
 	fun newGame()
 	{
+		Gdx.files.local("save.dat")?.delete()
 		loadLevel(World.world.root, "start", null)
 	}
 

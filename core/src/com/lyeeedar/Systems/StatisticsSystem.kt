@@ -32,9 +32,9 @@ class StatisticsSystem : AbstractSystem(Family.one(StatisticsComponent::class.ja
 			{
 				e.stats().regenerationTimer++
 
-				if (e.stats().regenerationTimer > 5)
+				if (e.stats().regenerationTimer > 4)
 				{
-					val toregen = Math.min(0.2f, e.stats().regeneratingHP)
+					val toregen = Math.min(1f, e.stats().regeneratingHP)
 					e.stats().hp += toregen
 				}
 			}

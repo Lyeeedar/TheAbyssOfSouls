@@ -20,12 +20,111 @@
 				<Line>#</Line>
 				<Line>@</Line>
 			</HitPattern>
+			<StepForward>true</StepForward>
+		</Combo>
+		<Combo meta:RefKey="Scene">
+			<Name>Breath</Name>
+			<Animation>attack</Animation>
+			<SceneTimeline meta:RefKey="SceneTimeline">
+				<Timeline>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.3</Duration>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>IceBurst</Name>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+					</DestinationRenderable>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.280654848</Duration>
+						<Time>0.2680373</Time>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>IceBurst</Name>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+					</DestinationRenderable>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.293481052</Duration>
+						<Time>0.503843367</Time>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>IceBurst</Name>
+						</Renderable>
+						<RenderablePerTile>true</RenderablePerTile>
+					</DestinationRenderable>
+				</Timeline>
+				<Timeline>
+					<Damage>
+						<Time>0.151332647</Time>
+					</Damage>
+					<Permute>
+						<Time>0.234064341</Time>
+						<HitPoints>
+							<Line>###</Line>
+							<Line>.@.</Line>
+						</HitPoints>
+					</Permute>
+					<Damage>
+						<Time>0.3889136</Time>
+					</Damage>
+					<Permute>
+						<Time>0.423803061</Time>
+						<HitPoints>
+							<Line>###</Line>
+							<Line>.@.</Line>
+						</HitPoints>
+					</Permute>
+					<Damage>
+						<Time>0.655714631</Time>
+					</Damage>
+				</Timeline>
+			</SceneTimeline>
+			<HitPattern>
+				<Line>#</Line>
+				<Line>@</Line>
+			</HitPattern>
+		</Combo>
+		<Combo meta:RefKey="Wait">
+			<Name>Wait</Name>
+			<Animation>attack</Animation>
+			<Particle>
+				<Name>Shout</Name>
+				<Colour>90,174,191,255</Colour>
+			</Particle>
 		</Combo>
 	</Combos>
 	<Random>
 		<Node meta:X="256" meta:Y="0" meta:RefKey="ComboNode">
 			<Desc>Thrust</Desc>
-			<Cooldown>2</Cooldown>
+			<Random>
+				<Node meta:X="487" meta:Y="1" meta:RefKey="ComboNode">
+					<Desc>Thrust</Desc>
+					<Random>
+						<Node meta:X="718" meta:Y="1" meta:RefKey="ComboNode">
+							<Desc>Thrust</Desc>
+							<TurnCost>3</TurnCost>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
+		</Node>
+		<Node meta:X="261" meta:Y="230" meta:RefKey="ComboNode">
+			<Desc>Wait</Desc>
+			<Cooldown>8</Cooldown>
+			<Random>
+				<Node meta:X="477" meta:Y="233" meta:RefKey="ComboNode">
+					<Desc>Wait</Desc>
+					<Random>
+						<Node meta:X="708" meta:Y="233" meta:RefKey="ComboNode">
+							<Desc>Breath</Desc>
+							<Random>
+								<Node meta:X="939" meta:Y="233" meta:RefKey="ComboNode">
+									<Desc>Breath</Desc>
+									<TurnCost>3</TurnCost>
+								</Node>
+							</Random>
+						</Node>
+					</Random>
+				</Node>
+			</Random>
 		</Node>
 	</Random>
 </Combo>

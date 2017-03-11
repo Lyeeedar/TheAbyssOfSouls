@@ -103,7 +103,7 @@
 				<Rule meta:RefKey="Node">24297d93-2c47-4414-8a9d-67b520bc5a69</Rule>
 			</Rule>
 			<Rule meta:RefKey="Take">
-				<Count>15</Count>
+				<Count>6</Count>
 				<Rule meta:RefKey="Node">8b8c21bc-6169-460b-a29e-0c786508c9b1</Rule>
 			</Rule>
 			<Rule meta:RefKey="Take">
@@ -301,7 +301,7 @@
 								<Colour>153,233,255,255</Colour>
 							</Death>
 							<Resistances>
-								<Corrosion>1E+08</Corrosion>
+								<Corrosion>999999</Corrosion>
 							</Resistances>
 						</Statistics>
 						<Drop>

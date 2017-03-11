@@ -1,6 +1,7 @@
 package com.lyeeedar.Interaction
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.removeActor
@@ -9,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Global
-import com.lyeeedar.Screens.GameScreen
 import com.lyeeedar.UI.lamda
 import com.lyeeedar.UI.showFullscreenText
 import com.lyeeedar.Util.AssetManager
@@ -30,9 +30,12 @@ class InteractionActionCompleteGame : AbstractInteractionAction()
 
 		val sequence = Actions.alpha(0f) then Actions.fadeIn(2f) then lamda {
 
+			Gdx.files.local("save.dat")?.delete()
 			Global.pause = false
+
 			Future.call({
-							showFullscreenText("You ascended to heaven.\n\nFor the rest of eternity you lived in peace.\n\nWell done, your journey is over.", 1f, { GameScreen.instance.newGame() })
+
+							showFullscreenText("You ascended to heaven.\n\nFor the rest of eternity you lived in peace.\n\nWell done, your journey is over.", 1f, { Gdx.app.exit() })
 						}, 1.5f)
 
 		} then fadeOut(1f) then removeActor()

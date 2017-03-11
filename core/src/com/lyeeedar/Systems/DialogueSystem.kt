@@ -111,6 +111,8 @@ class DialogueSystem : AbstractSystem(Family.all(DialogueComponent::class.java).
 				}
 			}
 
+			if (!entity.tile()!!.isVisible) continue
+
 			tempCol.set(1f, 1f, 1f, dialogue.alpha)
 
 			var x = offsetx + entity.pos().x * tileSize

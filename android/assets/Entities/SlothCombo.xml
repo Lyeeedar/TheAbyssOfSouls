@@ -1,5 +1,4 @@
 <Combo meta:X="0" meta:Y="0" xmlns:meta="Editor">
-	<AttackPower>50</AttackPower>
 	<Combos>
 		<Combo meta:RefKey="Wait">
 			<Name>Wait</Name>
@@ -83,7 +82,7 @@
 			<SceneTimeline meta:RefKey="SceneTimeline">
 				<Timeline>
 					<DestinationRenderable>
-						<Duration LockDuration="False">0.386882126</Duration>
+						<Duration LockDuration="False">1</Duration>
 						<Renderable meta:RefKey="ParticleEffect">
 							<Name>GroundEruption</Name>
 						</Renderable>
@@ -116,7 +115,7 @@
 			<SceneTimeline meta:RefKey="SceneTimeline">
 				<Timeline>
 					<DestinationRenderable>
-						<Duration LockDuration="False">0.386882126</Duration>
+						<Duration LockDuration="False">1</Duration>
 						<Renderable meta:RefKey="ParticleEffect">
 							<Name>GroundEruption</Name>
 						</Renderable>
@@ -151,7 +150,7 @@
 			<SceneTimeline meta:RefKey="SceneTimeline">
 				<Timeline>
 					<DestinationRenderable>
-						<Duration LockDuration="False">0.386882126</Duration>
+						<Duration LockDuration="False">1</Duration>
 						<Renderable meta:RefKey="ParticleEffect">
 							<Name>GroundEruption</Name>
 						</Renderable>
@@ -188,7 +187,7 @@
 			<SceneTimeline meta:RefKey="SceneTimeline">
 				<Timeline>
 					<DestinationRenderable>
-						<Duration LockDuration="False">0.386882126</Duration>
+						<Duration LockDuration="False">1</Duration>
 						<Renderable meta:RefKey="ParticleEffect">
 							<Name>GroundEruption</Name>
 						</Renderable>
@@ -227,7 +226,7 @@
 			<SceneTimeline meta:RefKey="SceneTimeline">
 				<Timeline>
 					<DestinationRenderable>
-						<Duration LockDuration="False">0.386882126</Duration>
+						<Duration LockDuration="False">1</Duration>
 						<Renderable meta:RefKey="ParticleEffect">
 							<Name>GroundEruption</Name>
 						</Renderable>
