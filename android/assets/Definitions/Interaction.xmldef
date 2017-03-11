@@ -36,6 +36,7 @@
 	</Definition>
 	<Definition Name="ChangeLevel" meta:RefKey="StructDef">
 		<Data Name="Level" meta:RefKey="String" />
+		<Data Name="FadeColour" HasAlpha="False" Default="0,0,0,255" meta:RefKey="Colour" />
 	</Definition>
 	<Definition Name="CompleteGame" SkipIfDefault="False" meta:RefKey="StructDef" />
 	<Definition Name="ChangeSprite" meta:RefKey="StructDef">

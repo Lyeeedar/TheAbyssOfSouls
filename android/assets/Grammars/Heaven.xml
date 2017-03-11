@@ -1,0 +1,146 @@
+<GenerationGrammar meta:X="-162" meta:Y="-73" GUID="f75e241d-4de3-416b-a9b7-d8880d0345da" xmlns:meta="Editor">
+	<Width>12</Width>
+	<Height>10</Height>
+	<Ambient>226,255,180,182</Ambient>
+	<Root meta:RefKey="Node">f333f4d7-2fee-41d8-aff6-f1f114952727</Root>
+	<Rules>
+		<Node meta:X="128" meta:Y="-73" GUID="f333f4d7-2fee-41d8-aff6-f1f114952727">
+			<Rule meta:RefKey="Prefab">
+				<Symbols>
+					<Symbol meta:RefKey="Symbol">
+						<Character>.</Character>
+						<Floor>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/uf_split/uf_terrain/ground_grass_1</Name>
+									</Renderable>
+									<Variants>
+										<Variant>
+											<Chance>chance(1,3)</Chance>
+											<Renderable meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/ground_grass_3</Name>
+											</Renderable>
+										</Variant>
+										<Variant>
+											<Chance>chance(1,3)</Chance>
+											<Renderable meta:RefKey="Sprite">
+												<Name>Oryx/uf_split/uf_terrain/ground_grass_4</Name>
+											</Renderable>
+										</Variant>
+									</Variants>
+								</Renderable>
+							</Components>
+						</Floor>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>#</Character>
+						<Wall>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="TilingSprite">
+										<Name>wall</Name>
+										<Mode>Premade</Mode>
+										<Front meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_hedge_15</Name>
+										</Front>
+										<Top meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_hedge_8</Name>
+										</Top>
+										<Overhang meta:RefKey="Sprite">
+											<Name>Oryx/uf_split/uf_terrain/wall_hedge_1</Name>
+										</Overhang>
+									</Renderable>
+									<Variants>
+										<Variant>
+											<Chance>chance(1, 3)</Chance>
+											<Renderable meta:RefKey="TilingSprite">
+												<Name>wall</Name>
+												<Mode>Premade</Mode>
+												<Front meta:RefKey="Sprite">
+													<Name>Oryx/uf_split/uf_terrain/wall_hedge_16</Name>
+												</Front>
+												<Top meta:RefKey="Sprite">
+													<Name>Oryx/uf_split/uf_terrain/wall_hedge_9</Name>
+												</Top>
+												<Overhang meta:RefKey="Sprite">
+													<Name>Oryx/uf_split/uf_terrain/wall_hedge_2</Name>
+												</Overhang>
+											</Renderable>
+										</Variant>
+										<Variant>
+											<Chance>chance(1, 3)</Chance>
+											<Renderable meta:RefKey="TilingSprite">
+												<Name>wall</Name>
+												<Mode>Premade</Mode>
+												<Front meta:RefKey="Sprite">
+													<Name>Oryx/uf_split/uf_terrain/wall_hedge_17</Name>
+												</Front>
+												<Top meta:RefKey="Sprite">
+													<Name>Oryx/uf_split/uf_terrain/wall_hedge_10</Name>
+												</Top>
+												<Overhang meta:RefKey="Sprite">
+													<Name>Oryx/uf_split/uf_terrain/wall_hedge_3</Name>
+												</Overhang>
+											</Renderable>
+										</Variant>
+									</Variants>
+								</Renderable>
+							</Components>
+						</Wall>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>a</Character>
+						<Extends>.</Extends>
+						<Entity>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/Custom/heroes/holy_valkyrie</Name>
+										<DrawActualSize>true</DrawActualSize>
+									</Renderable>
+								</Renderable>
+								<AI>
+									<AI>RandomWander</AI>
+								</AI>
+							</Components>
+						</Entity>
+					</Symbol>
+					<Symbol meta:RefKey="Symbol">
+						<Character>s</Character>
+						<Extends>.</Extends>
+						<Entity>
+							<IsPlayer>true</IsPlayer>
+							<Components>
+								<Renderable>
+									<Renderable meta:RefKey="Sprite">
+										<Name>Oryx/Custom/heroes/wraith_w</Name>
+										<DrawActualSize>true</DrawActualSize>
+									</Renderable>
+								</Renderable>
+								<AI>
+									<AI>RandomWander</AI>
+								</AI>
+								<MetaRegion>
+									<Key>spawnascend</Key>
+								</MetaRegion>
+							</Components>
+						</Entity>
+					</Symbol>
+				</Symbols>
+				<Prefab>
+					<Line>.########...</Line>
+					<Line>##.#..a.####</Line>
+					<Line>##.........#</Line>
+					<Line>.##......a.#</Line>
+					<Line>.##........#</Line>
+					<Line>##...s.....#</Line>
+					<Line>#..........#</Line>
+					<Line>####.......#</Line>
+					<Line>.#####.a####</Line>
+					<Line>.....####...</Line>
+				</Prefab>
+			</Rule>
+		</Node>
+	</Rules>
+</GenerationGrammar>

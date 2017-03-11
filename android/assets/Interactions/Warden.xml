@@ -31,6 +31,12 @@
 			<Action meta:RefKey="Line">
 				<Text>Greetings [IMPORTANT]calmed soul[]. You may use the altar behind me to ascend.</Text>
 			</Action>
+			<Action meta:RefKey="Branch">
+				<Branch>
+					<Condition>sin!=0</Condition>
+					<Node meta:RefKey="Node">68628c3f-6769-475b-91e8-1df7bb9134c4</Node>
+				</Branch>
+			</Action>
 		</Node>
 		<Node meta:X="613" meta:Y="158" GUID="aef7e7bc-07c5-49b8-be21-8255a206f4f1">
 			<Action meta:RefKey="Line">
@@ -44,6 +50,14 @@
 			<Action meta:RefKey="Define">
 				<Key>dropped</Key>
 				<Value>1</Value>
+			</Action>
+		</Node>
+		<Node meta:X="615" meta:Y="-1" GUID="68628c3f-6769-475b-91e8-1df7bb9134c4">
+			<Action meta:RefKey="Line">
+				<Text>Though to ascend to heaven you must cleanse all your sins, not just those of [ANGER]anger[].</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>Step off the edge of this plateau. Take a leap of faith into the unknown. Only by doing that may you atone for the rest of your sins.</Text>
 			</Action>
 		</Node>
 	</Nodes>

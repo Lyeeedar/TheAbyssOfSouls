@@ -6,7 +6,7 @@
 		</AI>
 		<Statistics>
 			<Faction>toad</Faction>
-			<HP>10</HP>
+			<HP>5</HP>
 			<Stamina>10</Stamina>
 			<Sight>6</Sight>
 			<Death meta:RefKey="ParticleEffect">

@@ -6,7 +6,9 @@ import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Components.*
 import com.lyeeedar.Global
 import com.lyeeedar.Level.World
+import com.lyeeedar.Screens.GameScreen
 import com.lyeeedar.UI.showFullscreenText
+import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Random
 
@@ -93,7 +95,7 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 			{
 				Future.call(
 						{
-							World.world.changeLevel(travel, travel, level!!.player)
+							World.world.changeLevel(travel, travel, level!!.player, Colour.BLACK)
 						}, 0.5f)
 			}
 			else if (died)
@@ -103,7 +105,7 @@ class DeletionSystem : AbstractSystem(Family.all(MarkedForDeletionComponent::cla
 				Future.call(
 				{
 					// game over man!
-					showFullscreenText("You were consumed", 0.5f, { throw Exception("Game Over") })
+					showFullscreenText("You were consumed", 1.5f, { GameScreen.instance.newGame(); Global.pause = false })
 				}, 0.5f)
 
 			}

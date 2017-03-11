@@ -148,18 +148,20 @@ S-D</ComboHint>
 	<Keybinding>
 		<AttackNormal meta:X="391.029052734375" meta:Y="-165.7344970703125" meta:RefKey="ComboNode">
 			<Desc>SlashLeft</Desc>
-			<TurnCost>2</TurnCost>
+			<Cost>4</Cost>
 			<Keybinding>
 				<AttackNormal meta:X="704.5103759765625" meta:Y="-167.21580505371094" GUID="761bb4fa-dc5e-4f4e-acb3-df0cd4f38e5f" meta:RefKey="ComboNode">
 					<Desc>SlashRight</Desc>
-					<TurnCost>2</TurnCost>
+					<Cost>3</Cost>
 					<Keybinding>
 						<AttackNormal meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
+							<Cost>2</Cost>
 							<TurnCost>2</TurnCost>
 						</AttackNormal>
 						<AttackSpecial meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
+							<Cost>2</Cost>
 							<TurnCost>2</TurnCost>
 						</AttackSpecial>
 						<Defense meta:X="1163.236572265625" meta:Y="129.04707336425781" GUID="1c1ac7d5-9566-4aef-828b-4cc5f490d975" meta:RefKey="ComboNode">
@@ -167,20 +169,23 @@ S-D</ComboHint>
 						</Defense>
 						<Direction meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
+							<Cost>2</Cost>
 							<TurnCost>2</TurnCost>
 						</Direction>
 					</Keybinding>
 				</AttackNormal>
 				<AttackSpecial meta:X="704.5103759765625" meta:Y="-167.21580505371094" GUID="761bb4fa-dc5e-4f4e-acb3-df0cd4f38e5f" meta:RefKey="ComboNode">
 					<Desc>SlashRight</Desc>
-					<TurnCost>2</TurnCost>
+					<Cost>3</Cost>
 					<Keybinding>
 						<AttackNormal meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
+							<Cost>2</Cost>
 							<TurnCost>2</TurnCost>
 						</AttackNormal>
 						<AttackSpecial meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
+							<Cost>2</Cost>
 							<TurnCost>2</TurnCost>
 						</AttackSpecial>
 						<Defense meta:X="1163.236572265625" meta:Y="129.04707336425781" GUID="1c1ac7d5-9566-4aef-828b-4cc5f490d975" meta:RefKey="ComboNode">
@@ -188,6 +193,7 @@ S-D</ComboHint>
 						</Defense>
 						<Direction meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
+							<Cost>2</Cost>
 							<TurnCost>2</TurnCost>
 						</Direction>
 					</Keybinding>
@@ -197,14 +203,16 @@ S-D</ComboHint>
 				</Defense>
 				<Direction meta:X="704.5103759765625" meta:Y="-167.21580505371094" GUID="761bb4fa-dc5e-4f4e-acb3-df0cd4f38e5f" meta:RefKey="ComboNode">
 					<Desc>SlashRight</Desc>
-					<TurnCost>2</TurnCost>
+					<Cost>3</Cost>
 					<Keybinding>
 						<AttackNormal meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
+							<Cost>2</Cost>
 							<TurnCost>2</TurnCost>
 						</AttackNormal>
 						<AttackSpecial meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
+							<Cost>2</Cost>
 							<TurnCost>2</TurnCost>
 						</AttackSpecial>
 						<Defense meta:X="1163.236572265625" meta:Y="129.04707336425781" GUID="1c1ac7d5-9566-4aef-828b-4cc5f490d975" meta:RefKey="ComboNode">
@@ -212,6 +220,7 @@ S-D</ComboHint>
 						</Defense>
 						<Direction meta:X="1015.029052734375" meta:Y="-165.7344970703125" GUID="82155847-1896-4954-80ff-61f7440b7587" meta:RefKey="ComboNode">
 							<Desc>SlashLeft</Desc>
+							<Cost>2</Cost>
 							<TurnCost>2</TurnCost>
 						</Direction>
 					</Keybinding>
@@ -1472,7 +1481,7 @@ S-D</ComboHint>
 		</AttackSpecial>
 		<Defense meta:X="439.51852416992187" meta:Y="626.33331298828125" meta:RefKey="ComboNode">
 			<Desc>Roll</Desc>
-			<Cost>4</Cost>
+			<Cost>3</Cost>
 			<Keybinding>
 				<Defense meta:X="715.51849365234375" meta:Y="826.33331298828125" GUID="149a18b5-33a9-4904-a155-51edb0def900" meta:RefKey="ComboNode">
 					<Desc>Roll</Desc>

@@ -47,6 +47,10 @@
 			<Action meta:RefKey="Line">
 				<Text>Soothing light builds around you, filling you with a sense of peace and harmony.</Text>
 			</Action>
+			<Action meta:RefKey="ChangeLevel">
+				<Level>ascend</Level>
+				<FadeColour>255,255,255,255</FadeColour>
+			</Action>
 			<Action meta:RefKey="CompleteGame" />
 		</Node>
 	</Nodes>

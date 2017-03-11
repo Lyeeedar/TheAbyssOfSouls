@@ -19,7 +19,7 @@
 			<Faction>spider</Faction>
 			<HP>3</HP>
 			<Stamina>10</Stamina>
-			<Sight>5</Sight>
+			<Sight>6</Sight>
 			<Death meta:RefKey="ParticleEffect">
 				<Name>Death</Name>
 			</Death>

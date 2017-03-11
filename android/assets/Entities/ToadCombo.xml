@@ -1,4 +1,5 @@
 <Combo meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<AttackPower>60</AttackPower>
 	<Combos>
 		<Combo meta:RefKey="Wait">
 			<Name>Wait</Name>
@@ -91,15 +92,16 @@
 		</Combo>
 	</Combos>
 	<Random>
-		<Node meta:X="301" meta:Y="0" meta:RefKey="ComboNode">
+		<Node meta:X="292" meta:Y="-84" meta:RefKey="ComboNode">
 			<Desc>Wait</Desc>
 			<Cooldown>6</Cooldown>
 			<Random>
-				<Node meta:X="532" meta:Y="-1.5241578817367554" meta:RefKey="ComboNode">
+				<Node meta:X="518" meta:Y="-85.524157881736755" meta:RefKey="ComboNode">
 					<Desc>Grab</Desc>
 					<Random>
-						<Node meta:X="750.8067626953125" meta:Y="1.5241578817367554" meta:RefKey="ComboNode">
-							<Desc>Wait</Desc>
+						<Node meta:X="749" meta:Y="-85.524157881736755" meta:RefKey="ComboNode">
+							<Desc>SlashLeft</Desc>
+							<TurnCost>3</TurnCost>
 						</Node>
 					</Random>
 				</Node>
@@ -120,6 +122,7 @@
 									<Random>
 										<Node meta:X="1208.6617431640625" meta:Y="179.85063171386719" meta:RefKey="ComboNode">
 											<Desc>Wait</Desc>
+											<TurnCost>2</TurnCost>
 										</Node>
 									</Random>
 								</Node>

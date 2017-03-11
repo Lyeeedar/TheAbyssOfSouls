@@ -184,6 +184,12 @@ class SceneTimelineComboStep : ComboStep()
 		for (tile in hitTiles)
 		{
 			tile.timelines.add(timeline)
+
+			val hitentity = tile.contents[SpaceSlot.ENTITY]
+			if (entity == tile.level.player)
+			{
+				hitentity?.pos()?.moveLocked = true
+			}
 		}
 
 		for (t in timeline.timelines)

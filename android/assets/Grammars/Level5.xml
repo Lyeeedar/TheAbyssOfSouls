@@ -1,7 +1,7 @@
 <GenerationGrammar meta:X="1.3050706386566162" meta:Y="1.3050706386566162" GUID="8eeab69a-bd59-4ae9-8529-1c56a6355e61" xmlns:meta="Editor">
 	<Width>70</Width>
 	<Height>70</Height>
-	<Ambient>211,247,186,96</Ambient>
+	<Ambient>211,247,186,55</Ambient>
 	<Root meta:RefKey="Node">7682d949-8746-495e-947a-2376229560c3</Root>
 	<Rules>
 		<Node meta:X="339.22293090820312" meta:Y="-18.996978759765625" GUID="7682d949-8746-495e-947a-2376229560c3">
@@ -567,7 +567,7 @@
 							<Components>
 								<Renderable>
 									<Renderable meta:RefKey="Sprite">
-										<Name>Oryx/Custom/heroes/peasant_f</Name>
+										<Name>Oryx/Custom/heroes/slave_spirit_f</Name>
 										<DrawActualSize>true</DrawActualSize>
 									</Renderable>
 								</Renderable>
@@ -630,7 +630,7 @@
 			<!--Random houses-->
 			<Rule meta:RefKey="Condition">
 				<Condition>
-					<Condition>chance(1, 9)</Condition>
+					<Condition>chance(1, 15)</Condition>
 					<Rule meta:RefKey="Node">6a14cacf-61ff-43cb-851b-e19373e98fa5</Rule>
 				</Condition>
 				<Condition>
@@ -779,7 +779,6 @@
 														<Renderable>
 															<Renderable meta:RefKey="Sprite">
 																<Name>Oryx/uf_split/uf_heroes/spirit</Name>
-																<DrawActualSize>true</DrawActualSize>
 															</Renderable>
 														</Renderable>
 														<SceneTimeline>
@@ -1014,6 +1013,7 @@
 								<Drop meta:RefKey="Money" />
 							</Drop>
 						</Drop>
+						<Position />
 					</Components>
 				</Entity>
 			</Rule>
@@ -1060,6 +1060,9 @@
 								<Drop meta:RefKey="Money" />
 							</Drop>
 						</Drop>
+						<Position>
+							<Moveable>false</Moveable>
+						</Position>
 					</Components>
 				</Entity>
 			</Rule>
@@ -1076,10 +1079,6 @@
 			<Rule meta:RefKey="Fill">
 				<Character>.</Character>
 				<Overwrite>true</Overwrite>
-			</Rule>
-			<Rule meta:RefKey="Take">
-				<Count>1</Count>
-				<Rule meta:RefKey="Node">f221eea9-7eb7-4922-b22e-ec3d200da2b3</Rule>
 			</Rule>
 		</Node>
 		<Node meta:X="2385.89404296875" meta:Y="1594.2286376953125" GUID="8a413033-1b73-4f8f-bbba-bc2f46c617c6">
@@ -1100,11 +1099,6 @@
 			</Rule>
 		</Node>
 		<Node meta:X="2453.393310546875" meta:Y="2055.093994140625" GUID="fc390b6d-a368-4f28-a617-c01baacc1ee6">
-			<Rule meta:RefKey="Fill">
-				<Character>D</Character>
-			</Rule>
-		</Node>
-		<Node meta:X="1763.09423828125" meta:Y="2043.5401611328125" GUID="f221eea9-7eb7-4922-b22e-ec3d200da2b3">
 			<Rule meta:RefKey="Fill">
 				<Character>D</Character>
 			</Rule>

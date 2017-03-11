@@ -217,7 +217,7 @@ class TileSystem : AbstractSystem()
 						entity.pos().doMove(next2, entity)
 
 						entity.renderable().renderable.animation = MoveAnimation.obtain().set(next2, prev, 0.15f)
-						entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.15f, 360f)
+						entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.15f, 180f)
 						(entity.renderable().renderable as? Sprite)?.removeAmount = 0f
 
 						entity.task()?.tasks?.add(TaskInterrupt())
@@ -249,7 +249,7 @@ class TileSystem : AbstractSystem()
 
 					if (water.flowForce == 2)
 					{
-						entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.15f, 360f)
+						entity.renderable().renderable.animation = SpinAnimation.obtain().set(0.15f, 180f)
 						(entity.renderable().renderable as? Sprite)?.removeAmount = 0f
 					}
 

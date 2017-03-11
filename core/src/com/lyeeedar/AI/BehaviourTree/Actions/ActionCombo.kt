@@ -82,7 +82,7 @@ class ActionCombo : AbstractAction()
 			val validCombos = Array<Pair>()
 			for (c in combo.combos.random)
 			{
-				if (c.cooldownTimer == 0 && c.comboStep.isValid(entity, pos.facing, target, c))
+				if (c.cooldownTimer <= 0 && c.comboStep.isValid(entity, pos.facing, target, c))
 				{
 					validCombos.add(Pair(c, pos.facing))
 				}
@@ -95,7 +95,7 @@ class ActionCombo : AbstractAction()
 					for (dir in Direction.CardinalValues)
 					{
 						if (dir == pos.facing) continue // we already checked these
-						if (c.cooldownTimer == 0 && c.comboStep.isValid(entity, dir, target, c))
+						if (c.cooldownTimer <= 0 && c.comboStep.isValid(entity, dir, target, c))
 						{
 							validCombos.add(Pair(c, dir))
 							if (dir.cardinalClockwise == pos.facing || dir.cardinalAnticlockwise == pos.facing) validCombos.add(Pair(c, dir))

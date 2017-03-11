@@ -9,6 +9,7 @@ import com.lyeeedar.Components.MetaRegionComponent
 import com.lyeeedar.Components.metaregion
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Colour
@@ -83,6 +84,9 @@ class Level(val seed: Long, val grammarName: String)
 
 	// ----------------------------------------------------------------------
 	var destroyingLevel = false
+
+	// ----------------------------------------------------------------------
+	val screenSpaceEffects = com.badlogic.gdx.utils.Array<ParticleEffect>()
 
 	// ----------------------------------------------------------------------
 	init

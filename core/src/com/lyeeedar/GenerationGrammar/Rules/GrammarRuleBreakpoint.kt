@@ -1,6 +1,7 @@
 package com.lyeeedar.GenerationGrammar.Rules
 
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Global
 
 class GrammarRuleBreakpoint : AbstractGrammarRule()
 {
@@ -8,7 +9,7 @@ class GrammarRuleBreakpoint : AbstractGrammarRule()
 
 	suspend override fun execute(args: RuleArguments)
 	{
-		println("Breakpoint '$name' hit")
+		if (!Global.release) println("Breakpoint '$name' hit")
 	}
 
 	override fun parse(xml: XmlReader.Element)

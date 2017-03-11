@@ -17,6 +17,7 @@ import com.lyeeedar.GenerationGrammar.Rules.RuleArguments
 import com.lyeeedar.Global
 import com.lyeeedar.Level.Level
 import com.lyeeedar.Level.Tile
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.*
 import kotlinx.coroutines.experimental.CommonPool
@@ -33,6 +34,7 @@ class GenerationGrammar
 	lateinit var height: String
 	lateinit var rootRule: String
 	lateinit var ambient: Colour
+	val screenSpaceEffects = Array<ParticleEffect>()
 
 	fun generate(seed: Long, engine: Engine, createEntities: Boolean): Level
 	{
@@ -147,6 +149,7 @@ class GenerationGrammar
 		}
 
 		level.ambient.set(ambient)
+		level.screenSpaceEffects.addAll(screenSpaceEffects)
 
 		return level
 	}
@@ -171,6 +174,16 @@ class GenerationGrammar
 			grammar.ambient = AssetManager.loadColour(xml.getChildByName("Ambient"))
 			grammar.ambient.times(grammar.ambient.a)
 			grammar.ambient.a = 1f
+
+			val screenEffectsEl = xml.getChildByName("ScreenspaceEffects")
+			if (screenEffectsEl != null)
+			{
+				for (el in screenEffectsEl.children())
+				{
+					val particle = AssetManager.loadParticleEffect(el)
+					grammar.screenSpaceEffects.add(particle)
+				}
+			}
 
 			return grammar
 		}

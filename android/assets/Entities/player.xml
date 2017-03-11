@@ -58,7 +58,7 @@
 		</Light>
 		<Statistics>
 			<Faction>player</Faction>
-			<HP>10</HP>
+			<HP>15</HP>
 			<Stamina>10</Stamina>
 			<Sight>12</Sight>
 			<CanRegenerate>true</CanRegenerate>

@@ -3,6 +3,7 @@ package com.lyeeedar.Save
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.XmlReader
 import com.esotericsoftware.kryo.Kryo
 import com.esotericsoftware.kryo.Serializer
@@ -14,7 +15,9 @@ import com.lyeeedar.GenerationGrammar.GenerationGrammar
 import com.lyeeedar.Global
 import com.lyeeedar.Global.Companion.engine
 import com.lyeeedar.Level.Level
+import com.lyeeedar.Level.World
 import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.registerGdxSerialisers
 import com.lyeeedar.Util.registerLyeeedarSerialisers
 import java.util.zip.GZIPInputStream
@@ -58,6 +61,7 @@ class SaveGame
 			}
 
 			kryo.writeObject(output, level)
+			kryo.writeObject(output, World.world)
 
 			output.close()
 		}
@@ -73,6 +77,7 @@ class SaveGame
 			{
 				input = com.esotericsoftware.kryo.io.Input(GZIPInputStream(Gdx.files.local("save.dat").read()))
 				level = kryo.readObject(input, Level::class.java)
+				kryo.readObject(input, World::class.java)
 			}
 			catch (e: Exception)
 			{
@@ -94,6 +99,47 @@ class SaveGame
 
 		fun registerSerialisers(kryo: Kryo)
 		{
+			kryo.register(World::class.java, object : Serializer<World>()
+			{
+				override fun read(kryo: Kryo, input: Input, type: Class<World>): World
+				{
+					val levelCount = input.readInt()
+					for (i in 0..levelCount-1)
+					{
+						val key = input.readString()
+						val seed = input.readLong()
+						val seenGrid = kryo.readClassAndObject(input) as Array2D<Boolean>
+
+						World.world.levels[key].seed = seed
+						World.world.levels[key].seenGrid = seenGrid
+					}
+
+					val variables = kryo.readClassAndObject(input) as ObjectFloatMap<String>
+					val current = input.readString()
+
+					World.world.globalVariables.clear()
+					World.world.globalVariables.putAll(variables)
+
+					World.world.currentLevel = World.world.levels[current]
+
+					return World.world
+				}
+
+				override fun write(kryo: Kryo, output: Output, `object`: World)
+				{
+					output.writeInt(`object`.levels.size)
+					for (entry in `object`.levels)
+					{
+						output.writeString(entry.key)
+						output.writeLong(entry.value.seed)
+						kryo.writeClassAndObject(output, entry.value.seenGrid)
+					}
+
+					kryo.writeClassAndObject(output, `object`.globalVariables)
+					output.writeString(`object`.levels.findKey(`object`.currentLevel, true))
+				}
+			})
+
 			kryo.register(Entity::class.java, object : Serializer<Entity>()
 			{
 				override fun read(kryo: Kryo, input: Input, type: Class<Entity>): Entity

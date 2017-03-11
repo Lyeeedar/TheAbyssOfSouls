@@ -16,12 +16,11 @@ import com.lyeeedar.Sin
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Systems.level
 import com.lyeeedar.Systems.systemList
+import com.lyeeedar.Systems.task
 import com.lyeeedar.UI.DebugConsole
 import com.lyeeedar.UI.IDebugCommandProvider
 import com.lyeeedar.UI.StatsWidget
-import com.lyeeedar.Util.Future
-import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.getXml
+import com.lyeeedar.Util.*
 
 class GameScreen : AbstractScreen()
 {
@@ -49,28 +48,62 @@ class GameScreen : AbstractScreen()
 
 	override fun create()
 	{
-		loadLevel(World.world.root, "start", null)
+		load()
+
+		if (Global.engine.level == null)
+		{
+			newGame()
+		}
 
 		font = Global.skin.getFont("default")
 		batch = SpriteBatch()
 
 		stage.addActor(statsWidget)
 		statsWidget.setPosition(5f, stage.height-statsWidget.height-5f)
-	}
 
-	fun loadLevel(level: LevelData, travelType: String, lastPlayer: Entity?)
+		Global.engine.task().onTurnEvent += fun(): Boolean {
+			saveCounter++
+			if (saveCounter == 50)
+			{
+				save()
+				saveCounter = 0
+			}
+
+			return false
+		}
+	}
+	var saveCounter = 0
+
+	fun loadLevel(levelData: LevelData, travelType: String, lastPlayer: Entity?)
 	{
+		save()
+
 		Global.engine.level?.destroyingLevel = true
 
 		Global.engine.removeAllEntities()
 
-		val grammar = GenerationGrammar.load(level.grammar)
+		val grammar = GenerationGrammar.load(levelData.grammar)
 
 		val start = System.nanoTime()
-		val level = grammar.generate(level.seed, Global.engine, true)
+		val level = grammar.generate(levelData.seed, Global.engine, true)
 		val end = System.nanoTime()
 
 		level.updateMetaRegions()
+
+		if (levelData.seenGrid.width == level.width && levelData.seenGrid.height == level.height)
+		{
+			for (x in 0..level.width-1)
+			{
+				for (y in 0..level.height-1)
+				{
+					level.grid[x, y].isSeen = levelData.seenGrid[x, y]
+				}
+			}
+		}
+		else
+		{
+			levelData.seenGrid = Array2D(level.width, level.height) { x, y -> false }
+		}
 
 		val player = EntityLoader.load("player")
 		Global.engine.addEntity(player)
@@ -240,7 +273,7 @@ class GameScreen : AbstractScreen()
 		})
 
 		DebugConsole.register("ChangeLevel", "", fun (args, console): Boolean {
-			World.world.changeLevel(args[0], args[0], Global.engine.level!!.player)
+			World.world.changeLevel(args[0], args[0], Global.engine.level!!.player, Colour.BLACK)
 
 			return true
 		})
@@ -311,18 +344,16 @@ class GameScreen : AbstractScreen()
 		})
 
 		DebugConsole.register("Save", "", fun (args, console): Boolean {
-			SaveGame.save(Global.engine.level!!)
+			save()
 
 			return true
 		})
 
 		DebugConsole.register("Load", "", fun (args, console): Boolean {
 
-			Future.call({
-				Global.engine.level?.destroyingLevel = true
-				Global.engine.removeAllEntities()
-				val level = SaveGame.load()
-				Global.engine.level = level
+			Future.call(
+			{
+				load()
 			}, 0f)
 
 			return true
@@ -337,7 +368,43 @@ class GameScreen : AbstractScreen()
 		DebugConsole.unregister("ShowFPS")
 		DebugConsole.unregister("SystemDebug")
 
+		save()
+
 		super.hide()
+	}
+
+	override fun pause()
+	{
+		save()
+
+		super.pause()
+	}
+
+	fun save()
+	{
+		if (Global.engine.level != null)
+		{
+			SaveGame.save(Global.engine.level!!)
+		}
+	}
+
+	fun load()
+	{
+		Global.engine.level?.destroyingLevel = true
+		Global.engine.removeAllEntities()
+		val level = SaveGame.load()
+
+		if (level != null)
+		{
+			Global.engine.level = level
+
+			statsWidget.entity = level.player
+		}
+	}
+
+	fun newGame()
+	{
+		loadLevel(World.world.root, "start", null)
 	}
 
 	// ----------------------------------------------------------------------

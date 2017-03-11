@@ -247,6 +247,7 @@ class Colour()
 
 	companion object
 	{
+		val BLACK = Colour(Color.BLACK)
 		val WHITE = Colour(Color.WHITE)
 		val LIGHT_GRAY = Colour(Color.LIGHT_GRAY)
 		val DARK_GRAY = Colour(Color.DARK_GRAY)

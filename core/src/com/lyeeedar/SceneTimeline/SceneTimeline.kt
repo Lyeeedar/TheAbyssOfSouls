@@ -219,6 +219,8 @@ abstract class AbstractTimelineAction()
 				"ADDCOMPONENT" -> AddComponentAction()
 				"REMOVECOMPONENT" -> RemoveComponentAction()
 
+				"PERMUTE" -> PermuteAction()
+
 				// ARGH everything broke
 				else -> throw RuntimeException("Invalid scene timeline action type: $name")
 			}

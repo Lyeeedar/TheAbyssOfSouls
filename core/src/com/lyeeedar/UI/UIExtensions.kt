@@ -20,7 +20,7 @@ fun showFullscreenText(text: String, minDuration: Float, exitAction: ()->Unit)
 		}
 	}
 
-	fadeTable.background = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/white.png")).tint(Color.BLACK)
+	fadeTable.background = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/white.png")).tint(Color(0f, 0f, 0f, 0.7f))
 	fadeTable.alpha = 0f
 
 	val sequence = Actions.alpha(0f) then Actions.fadeIn(0.2f) then lamda {

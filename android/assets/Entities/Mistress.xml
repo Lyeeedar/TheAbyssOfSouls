@@ -5,12 +5,27 @@
 				<Animation>
 					<Name>idle</Name>
 					<Up meta:RefKey="Sprite">
-						<Name>Oryx/Custom/heroes/succubus</Name>
+						<Name>Oryx/Custom/heroes/mistress</Name>
 						<DrawActualSize>true</DrawActualSize>
 					</Up>
 					<Down meta:RefKey="Sprite">
-						<Name>Oryx/Custom/heroes/succubus</Name>
+						<Name>Oryx/Custom/heroes/mistress</Name>
 						<DrawActualSize>true</DrawActualSize>
+					</Down>
+				</Animation>
+				<Animation>
+					<Name>attack</Name>
+					<Up meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/mistress</Name>
+						<DrawActualSize>true</DrawActualSize>
+						<UpdateRate>0.3</UpdateRate>
+						<Colour>255,176,176,255</Colour>
+					</Up>
+					<Down meta:RefKey="Sprite">
+						<Name>Oryx/Custom/heroes/mistress</Name>
+						<DrawActualSize>true</DrawActualSize>
+						<UpdateRate>0.3</UpdateRate>
+						<Colour>255,176,176,255</Colour>
 					</Down>
 				</Animation>
 			</Animations>
@@ -23,6 +38,9 @@
 			<Death meta:RefKey="ParticleEffect">
 				<Name>Death</Name>
 			</Death>
+			<Resistances>
+				<Corrosion>999999</Corrosion>
+			</Resistances>
 		</Statistics>
 		<Position />
 		<AI>

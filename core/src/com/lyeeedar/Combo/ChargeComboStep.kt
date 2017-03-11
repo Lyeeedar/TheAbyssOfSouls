@@ -39,8 +39,8 @@ class ChargeComboStep : ComboStep()
 		{
 			val etile = e.tile()!!
 
-			e.task().tasks.clear()
-			e.task().tasks.add(TaskInterrupt())
+			e.task()?.tasks?.clear()
+			e.task()?.tasks?.add(TaskInterrupt())
 
 			fun isValid(tile: Tile): Boolean
 			{

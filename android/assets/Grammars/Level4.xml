@@ -1,7 +1,12 @@
-<GenerationGrammar meta:X="0" meta:Y="0" GUID="acb290fa-6665-41de-bb27-66f926580a5a" xmlns:meta="Editor">
+<GenerationGrammar meta:X="-1" meta:Y="1" GUID="acb290fa-6665-41de-bb27-66f926580a5a" xmlns:meta="Editor">
 	<Width>60</Width>
 	<Height>60</Height>
 	<Ambient>115,212,247,98</Ambient>
+	<ScreenspaceEffects>
+		<Particle meta:RefKey="ParticleEffect">
+			<Name>Rain</Name>
+		</Particle>
+	</ScreenspaceEffects>
 	<Root meta:RefKey="Node">b3f322f0-99d1-465e-a4b6-425a738d726f</Root>
 	<Rules>
 		<Node meta:X="283.246826171875" meta:Y="44.035865783691406" GUID="b3f322f0-99d1-465e-a4b6-425a738d726f">
@@ -559,14 +564,14 @@
 				</Prefab>
 			</Rule>
 		</Node>
-		<Node meta:X="536.35471253826074" meta:Y="1801.7643895531287" GUID="dce4a004-c47c-4a2f-92d5-6c6f69e5a370">
+		<Node meta:X="536.354736328125" meta:Y="1801.764404296875" GUID="dce4a004-c47c-4a2f-92d5-6c6f69e5a370">
 			<!--Spear-->
 			<Rule meta:RefKey="Take">
 				<Count>1</Count>
 				<Rule meta:RefKey="Node">c4d43a62-2bbe-4ea2-b538-fda2dfd46428</Rule>
 			</Rule>
 		</Node>
-		<Node meta:X="778.35471253826074" meta:Y="1801.7643895531287" GUID="c4d43a62-2bbe-4ea2-b538-fda2dfd46428">
+		<Node meta:X="778.354736328125" meta:Y="1801.764404296875" GUID="c4d43a62-2bbe-4ea2-b538-fda2dfd46428">
 			<Rule meta:RefKey="Symbol">
 				<Character>S</Character>
 				<Entity>

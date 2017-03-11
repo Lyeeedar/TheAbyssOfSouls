@@ -5,24 +5,24 @@
 				<Animation>
 					<Name>idle</Name>
 					<Up meta:RefKey="Sprite">
-						<Name>Oryx/Custom/heroes/sloth_demon_idle</Name>
+						<Name>Oryx/Custom/heroes/sloth_demon_spirit_idle</Name>
 						<DrawActualSize>true</DrawActualSize>
 					</Up>
 					<Down meta:RefKey="Sprite">
-						<Name>Oryx/Custom/heroes/sloth_demon_idle</Name>
+						<Name>Oryx/Custom/heroes/sloth_demon_spirit_idle</Name>
 						<DrawActualSize>true</DrawActualSize>
 					</Down>
 				</Animation>
 				<Animation>
 					<Name>attack</Name>
 					<Up meta:RefKey="Sprite">
-						<Name>Oryx/Custom/heroes/sloth_demon_attack</Name>
+						<Name>Oryx/Custom/heroes/sloth_demon_spirit_attack</Name>
 						<DrawActualSize>true</DrawActualSize>
 						<UpdateRate>0.2</UpdateRate>
 						<Blend>true</Blend>
 					</Up>
 					<Down meta:RefKey="Sprite">
-						<Name>Oryx/Custom/heroes/sloth_demon_attack</Name>
+						<Name>Oryx/Custom/heroes/sloth_demon_spirit_attack</Name>
 						<DrawActualSize>true</DrawActualSize>
 						<UpdateRate>0.2</UpdateRate>
 						<Blend>true</Blend>

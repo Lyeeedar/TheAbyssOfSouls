@@ -34,6 +34,7 @@
 				<Timeline>
 					<DestinationRenderable>
 						<Duration LockDuration="False">0.1</Duration>
+						<Time>0.4</Time>
 						<Renderable meta:RefKey="Sprite">
 							<Name>Oryx/uf_split/uf_items/heart_empty</Name>
 						</Renderable>
@@ -41,8 +42,8 @@
 						<KillOnEnd>true</KillOnEnd>
 					</DestinationRenderable>
 					<DestinationRenderable>
-						<Time>0.1</Time>
 						<Duration LockDuration="False">0.1</Duration>
+						<Time>0.5</Time>
 						<Renderable meta:RefKey="Sprite">
 							<Name>Oryx/uf_split/uf_items/heart_red_half</Name>
 						</Renderable>
@@ -50,8 +51,8 @@
 						<KillOnEnd>true</KillOnEnd>
 					</DestinationRenderable>
 					<DestinationRenderable>
-						<Time>0.2</Time>
 						<Duration LockDuration="False">0.100000009</Duration>
+						<Time>0.6</Time>
 						<Renderable meta:RefKey="Sprite">
 							<Name>Oryx/uf_split/uf_items/heart_red_full</Name>
 							<DrawActualSize>true</DrawActualSize>
@@ -59,60 +60,45 @@
 						<RenderablePerTile>true</RenderablePerTile>
 						<KillOnEnd>true</KillOnEnd>
 					</DestinationRenderable>
-					<Spawn>
-						<Duration LockDuration="False">0.5</Duration>
-						<Time>0.3</Time>
-						<DeleteOnExit>true</DeleteOnExit>
-						<Entity>
-							<Components>
-								<SceneTimeline>
-									<HitPoints>
-										<Line>###</Line>
-										<Line>###</Line>
-										<Line>###</Line>
-									</HitPoints>
-									<SceneTimeline meta:RefKey="SceneTimeline">
-										<Timeline>
-											<DestinationRenderable>
-												<Duration LockDuration="False">0.5</Duration>
-												<Renderable meta:RefKey="ParticleEffect">
-													<Name>SpecialExplosion</Name>
-													<Colour>253,0,255,255</Colour>
-												</Renderable>
-											</DestinationRenderable>
-										</Timeline>
-										<Timeline>
-											<Damage>
-												<Time>0.307788461</Time>
-												<Amount>4</Amount>
-											</Damage>
-										</Timeline>
-									</SceneTimeline>
-								</SceneTimeline>
-								<Position>
-									<SpaceSlot>AboveEntity</SpaceSlot>
-								</Position>
-							</Components>
-						</Entity>
-					</Spawn>
+					<Permute>
+						<Time>0.700000048</Time>
+						<HitPoints>
+							<Line>###</Line>
+							<Line>###</Line>
+							<Line>###</Line>
+						</HitPoints>
+					</Permute>
+					<DestinationRenderable>
+						<Duration LockDuration="False">0.4660939</Duration>
+						<Time>0.728982151</Time>
+						<Renderable meta:RefKey="ParticleEffect">
+							<Name>SpecialExplosion</Name>
+							<Colour>255,56,161,255</Colour>
+						</Renderable>
+					</DestinationRenderable>
 				</Timeline>
 				<Timeline>
 					<Blocker>
-						<Time>0.08218707</Time>
+						<Time>0.440352738</Time>
 					</Blocker>
 					<Blocker>
-						<Time>0.144413412</Time>
+						<Time>0.5504409</Time>
 					</Blocker>
 					<Blocker>
-						<Time>0.242737412</Time>
+						<Time>0.6395391</Time>
 					</Blocker>
+					<Damage>
+						<Time>1.00767612</Time>
+						<Amount>4</Amount>
+						<Element>Corrosion</Element>
+						<ElementalConversion>0.9</ElementalConversion>
+					</Damage>
 				</Timeline>
 				<Timeline>
 					<MovementRenderable>
-						<Duration LockDuration="False">0.08218707</Duration>
+						<Duration LockDuration="False">0.4</Duration>
 						<Renderable meta:RefKey="Sprite">
 							<Name>Oryx/uf_split/uf_items/gem_ruby</Name>
-							<DrawActualSize>true</DrawActualSize>
 						</Renderable>
 						<UseLeap>true</UseLeap>
 					</MovementRenderable>

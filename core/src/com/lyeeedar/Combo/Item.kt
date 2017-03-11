@@ -110,6 +110,72 @@ class BasicItem : Item()
 
 			Global.engine.removeEntity(floorEntity)
 		}
+
+		if (name != "Money")
+		{
+			Global.pause = true
+
+			val keyboardHelper = ButtonKeyboardHelper()
+
+			val background = Table()
+
+			val table = table {
+				defaults().pad(20f).center()
+
+				this.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24))
+
+				add(infoTable()).grow()
+				row()
+
+				textButton("Okay", "default", Global.skin) {
+					addClickListener {
+
+						(Global.game.screen as AbstractScreen).keyboardHelper = null
+						background.remove()
+
+						Global.pause = false
+					}
+
+					keyboardHelper.add(this, 0, 0)
+				}
+			}
+
+			background.add(table).grow().pad(75f)
+
+			background.setFillParent(true)
+			Global.stage.addActor(background)
+
+			(Global.game.screen as AbstractScreen).keyboardHelper = keyboardHelper
+
+			Global.pause = true
+		}
+	}
+
+	fun infoTable(): Table
+	{
+		return table {
+			defaults().pad(10f)
+
+			table {
+				cell ->
+				cell.growX()
+
+				val icon = SpriteWidget(icon, 32f, 32f, false)
+				add(icon).left().padRight(10f)
+
+				label(this@BasicItem.name, "title", Global.skin)
+			}
+			row()
+
+			label(description, "default", Global.skin) {
+				cell ->
+				cell.growX().center()
+				setWrap(true)
+				setAlignment(Align.center)
+			}
+			row()
+
+		}
 	}
 
 	override fun parse(xml: XmlReader.Element)
@@ -179,6 +245,8 @@ class Weapon : Item()
 	fun weaponTable(): Table
 	{
 		return table {
+			defaults().pad(10f)
+
 			table {
 				cell ->
 				cell.growX()

@@ -1,7 +1,6 @@
 package com.lyeeedar.Level
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
@@ -11,10 +10,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Global
 import com.lyeeedar.Screens.GameScreen
 import com.lyeeedar.UI.lamda
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.Random
-import com.lyeeedar.Util.children
-import com.lyeeedar.Util.getXml
+import com.lyeeedar.Util.*
 import ktx.actors.alpha
 import ktx.actors.plus
 import ktx.actors.then
@@ -29,8 +25,11 @@ class World
 
 	val globalVariables = ObjectFloatMap<String>()
 
-	init
+	fun reload()
 	{
+		levels.clear()
+		globalVariables.clear()
+
 		val xml = getXml("Grammars/World")
 
 		val levelsEl = xml.getChildByName("Levels")
@@ -46,14 +45,19 @@ class World
 		currentLevel = root
 	}
 
-	fun changeLevel(key: String, type: String, lastPlayer: Entity)
+	init
+	{
+		reload()
+	}
+
+	fun changeLevel(key: String, type: String, lastPlayer: Entity, fadeColour: Colour)
 	{
 		val level = levels[currentLevel.connections[key]]
 
 		Global.pause = true
 
 		val fadeTable = Table()
-		fadeTable.background = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/white.png")).tint(Color.BLACK)
+		fadeTable.background = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/white.png")).tint(fadeColour.color())
 		fadeTable.alpha = 0f
 
 		val sequence = Actions.alpha(0f) then Actions.fadeIn(1f) then lamda {
@@ -82,6 +86,7 @@ class LevelData
 	lateinit var grammar: String
 	var seed: Long = 0
 	val connections = ObjectMap<String, String>()
+	var seenGrid: Array2D<Boolean> = Array2D(0, 0) { x, y -> false }
 
 	companion object
 	{

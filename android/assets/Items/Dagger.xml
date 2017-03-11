@@ -10,6 +10,7 @@ N-D-N
 N-S
 S-S
 D-D</ComboHint>
+	<AttackPower>120</AttackPower>
 	<NextMode>Keybinding</NextMode>
 	<Combos>
 		<Combo meta:RefKey="Wait">
@@ -26,7 +27,6 @@ D-D</ComboHint>
 						<Renderable meta:RefKey="ParticleEffect">
 							<Name>slash</Name>
 						</Renderable>
-						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
 				</Timeline>
 				<Timeline>
@@ -52,7 +52,6 @@ D-D</ComboHint>
 							<Name>slash</Name>
 							<FlipX>true</FlipX>
 						</Renderable>
-						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
 				</Timeline>
 				<Timeline>
@@ -91,7 +90,6 @@ D-D</ComboHint>
 						<Renderable meta:RefKey="ParticleEffect">
 							<Name>Thrust</Name>
 						</Renderable>
-						<KillOnEnd>false</KillOnEnd>
 					</DestinationRenderable>
 					<Damage>
 						<Time>0.167073175</Time>

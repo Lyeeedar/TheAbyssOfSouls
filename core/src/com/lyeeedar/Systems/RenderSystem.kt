@@ -50,6 +50,7 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 	val hp_empty = AssetManager.loadTextureRegion("Sprites/GUI/health_empty.png")!!
 
 	lateinit var renderer: SortedRenderer
+	val screenSpaceRenderer = SortedRenderer(Global.resolution[1].toFloat(), 1f, 1f, 1)
 
 	init
 	{
@@ -354,7 +355,26 @@ class RenderSystem(): AbstractSystem(Family.all(PositionComponent::class.java).o
 		}
 
 		batchHDRColour.begin()
+
 		renderer.flush(batchHDRColour)
+
+		screenSpaceRenderer.begin(deltaTime, 0f, 0f)
+
+		val screenspaceItr = level!!.screenSpaceEffects.iterator()
+		while (screenspaceItr.hasNext())
+		{
+			val effect = screenspaceItr.next()
+
+			screenSpaceRenderer.queueParticle(effect, 0f, 0f, 0, 0)
+
+			if (!effect.loop && effect.complete() && effect.completed)
+			{
+				screenspaceItr.remove()
+			}
+		}
+
+		screenSpaceRenderer.flush(batchHDRColour)
+
 		batchHDRColour.end()
 
 		if (drawParticleDebug)

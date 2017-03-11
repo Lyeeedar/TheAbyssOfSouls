@@ -10,6 +10,7 @@ N*-S
 S
 N*-D
 D</ComboHint>
+	<AttackPower>150</AttackPower>
 	<NextMode>Keybinding</NextMode>
 	<Combos>
 		<Combo meta:RefKey="Wait">
@@ -124,10 +125,10 @@ D</ComboHint>
 												<Defense meta:X="1865.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 													<Desc>Block</Desc>
 													<Keybinding>
-														<Defense meta:X="2177.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+														<Defense meta:X="2177.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 															<Desc>Block</Desc>
 															<Keybinding>
-																<Defense meta:X="2489.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+																<Defense meta:X="2489.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 																	<Desc>Block</Desc>
 																</Defense>
 															</Keybinding>
@@ -157,10 +158,10 @@ D</ComboHint>
 										<Defense meta:X="1865.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 											<Desc>Block</Desc>
 											<Keybinding>
-												<Defense meta:X="2177.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+												<Defense meta:X="2177.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 													<Desc>Block</Desc>
 													<Keybinding>
-														<Defense meta:X="2489.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+														<Defense meta:X="2489.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 															<Desc>Block</Desc>
 														</Defense>
 													</Keybinding>
@@ -192,10 +193,10 @@ D</ComboHint>
 												<Defense meta:X="1865.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 													<Desc>Block</Desc>
 													<Keybinding>
-														<Defense meta:X="2177.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+														<Defense meta:X="2177.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 															<Desc>Block</Desc>
 															<Keybinding>
-																<Defense meta:X="2489.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+																<Defense meta:X="2489.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 																	<Desc>Block</Desc>
 																</Defense>
 															</Keybinding>
@@ -227,10 +228,10 @@ D</ComboHint>
 								<Defense meta:X="1865.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 									<Desc>Block</Desc>
 									<Keybinding>
-										<Defense meta:X="2177.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+										<Defense meta:X="2177.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 											<Desc>Block</Desc>
 											<Keybinding>
-												<Defense meta:X="2489.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+												<Defense meta:X="2489.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 													<Desc>Block</Desc>
 												</Defense>
 											</Keybinding>
@@ -266,10 +267,10 @@ D</ComboHint>
 												<Defense meta:X="1865.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 													<Desc>Block</Desc>
 													<Keybinding>
-														<Defense meta:X="2177.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+														<Defense meta:X="2177.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 															<Desc>Block</Desc>
 															<Keybinding>
-																<Defense meta:X="2489.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+																<Defense meta:X="2489.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 																	<Desc>Block</Desc>
 																</Defense>
 															</Keybinding>
@@ -299,10 +300,10 @@ D</ComboHint>
 										<Defense meta:X="1865.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 											<Desc>Block</Desc>
 											<Keybinding>
-												<Defense meta:X="2177.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+												<Defense meta:X="2177.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 													<Desc>Block</Desc>
 													<Keybinding>
-														<Defense meta:X="2489.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+														<Defense meta:X="2489.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 															<Desc>Block</Desc>
 														</Defense>
 													</Keybinding>
@@ -334,10 +335,10 @@ D</ComboHint>
 												<Defense meta:X="1865.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 													<Desc>Block</Desc>
 													<Keybinding>
-														<Defense meta:X="2177.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+														<Defense meta:X="2177.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 															<Desc>Block</Desc>
 															<Keybinding>
-																<Defense meta:X="2489.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+																<Defense meta:X="2489.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 																	<Desc>Block</Desc>
 																</Defense>
 															</Keybinding>
@@ -371,10 +372,10 @@ D</ComboHint>
 						<Defense meta:X="1865.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 							<Desc>Block</Desc>
 							<Keybinding>
-								<Defense meta:X="2177.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+								<Defense meta:X="2177.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 									<Desc>Block</Desc>
 									<Keybinding>
-										<Defense meta:X="2489.8765869140625" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
+										<Defense meta:X="2489.87646484375" meta:Y="674.03704833984375" meta:RefKey="ComboNode">
 											<Desc>Block</Desc>
 										</Defense>
 									</Keybinding>

@@ -2,6 +2,7 @@ package com.lyeeedar.Systems
 
 import com.badlogic.ashley.core.Family
 import com.lyeeedar.Components.*
+import com.lyeeedar.Level.World
 import com.lyeeedar.Util.Colour
 
 class LightingSystem(): AbstractSystem(Family.all(PositionComponent::class.java, LightComponent::class.java).get())
@@ -34,6 +35,8 @@ class LightingSystem(): AbstractSystem(Family.all(PositionComponent::class.java,
 			val tile = level!!.getTile(point) ?: continue
 			tile.isVisible = true
 			tile.isSeen = true
+
+			World.world.currentLevel.seenGrid[point] = true
 		}
 
 		for (entity in entities)

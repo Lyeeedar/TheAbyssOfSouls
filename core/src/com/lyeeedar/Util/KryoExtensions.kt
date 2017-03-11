@@ -86,6 +86,43 @@ fun Kryo.registerLyeeedarSerialisers()
 			output.writeFloat(colour.a)
 		}
 	})
+
+	kryo.register(Array2D::class.java, object : Serializer<Array2D<*>>()
+	{
+		override fun write(kryo: Kryo, output: Output, `object`: Array2D<*>)
+		{
+			output.writeInt(`object`.width)
+			output.writeInt(`object`.height)
+			for (x in 0..`object`.width-1)
+			{
+				for (y in 0..`object`.height-1)
+				{
+					kryo.writeClassAndObject(output, `object`[x, y])
+				}
+			}
+		}
+
+		override fun read(kryo: Kryo, input: Input, type: Class<Array2D<*>>): Array2D<*>
+		{
+			val width = input.readInt()
+			val height = input.readInt()
+
+			val grid = Array2D<Any>(width, height)
+			kryo.reference(grid)
+
+			for (x in 0..width-1)
+			{
+				for (y in 0..height-1)
+				{
+					val obj = kryo.readClassAndObject(input)
+					grid[x, y] = obj
+				}
+			}
+
+			return grid
+		}
+
+	})
 }
 
 fun Kryo.registerGdxSerialisers()

@@ -23,7 +23,9 @@
 				</Drop>
 			</Drop>
 		</Drop>
-		<Position />
+		<Position>
+			<Moveable>false</Moveable>
+		</Position>
 		<Light>
 			<Colour>130,240,255,163</Colour>
 			<Distance>4</Distance>

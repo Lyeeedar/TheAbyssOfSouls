@@ -32,7 +32,7 @@
 				<Data Name="Gravity" meta:RefKey="Number" />
 				<Data Name="RateKeyframes" MinCount="1" meta:RefKey="Timeline">
 					<Keyframe Name="Keyframe" Collapse="True" Seperator="|" meta:RefKey="Keyframe">
-						<Time Name="Time" Min="0" Max="1" SkipIfDefault="False" meta:RefKey="Number" />
+						<Time Name="Time" Min="0" SkipIfDefault="False" meta:RefKey="Number" />
 						<Data Name="Rate" Min="0" Default="1" SkipIfDefault="False" meta:RefKey="Number" />
 					</Keyframe>
 				</Data>
