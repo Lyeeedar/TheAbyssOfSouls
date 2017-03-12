@@ -92,13 +92,16 @@ class EntityLoader()
 		private fun loadFiles(): ObjectMap<String, FileHandle>
 		{
 			val rootPath = "Entities"
-			var root = Gdx.files.internal(rootPath)
-			if (!root.exists()) root = Gdx.files.absolute(rootPath)
+			val root = Gdx.files.internal(rootPath)
+			//if (!root.exists()) root = Gdx.files.absolute(rootPath)
+
+			println("Loading files from " + root.path())
 
 			val out = ObjectMap<String, FileHandle>()
 
 			for (f in root.list())
 			{
+				println(f.path())
 				out[f.nameWithoutExtension().toUpperCase()] = f
 			}
 
@@ -107,7 +110,7 @@ class EntityLoader()
 
 		@JvmStatic fun load(path: String): Entity
 		{
-			val xml = XmlReader().parse(files[path.toUpperCase()])
+			val xml = XmlReader().parse(Gdx.files.internal("Entities/$path.xml"))
 			val entity = load(xml)
 
 			if (entity.name() == null)

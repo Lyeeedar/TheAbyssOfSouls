@@ -1,13 +1,8 @@
 package com.lyeeedar.desktop
 
-import java.util.ArrayList
-import java.util.Collections
-import java.util.Comparator
-
 import com.badlogic.gdx.Application
 import com.badlogic.gdx.Files.FileType
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Graphics.DisplayMode
 import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
@@ -15,6 +10,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglPreferences
 import com.lyeeedar.AbstractApplicationChanger
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
+import java.util.*
 
 class LwjglApplicationChanger : AbstractApplicationChanger(LwjglPreferences("game-settings", "settings"))
 {
@@ -26,7 +22,7 @@ class LwjglApplicationChanger : AbstractApplicationChanger(LwjglPreferences("gam
 
 		val cfg = LwjglApplicationConfiguration()
 
-		cfg.title = "A Skin of Others"
+		cfg.title = "The Abyss Of Souls"
 		cfg.width = 800
 		cfg.height = 600
 		cfg.fullscreen = pref.getBoolean("fullscreen")
