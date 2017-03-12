@@ -1,4 +1,5 @@
 <Combo meta:X="0" meta:Y="0" xmlns:meta="Editor">
+	<AttackPower>130</AttackPower>
 	<Combos>
 		<Combo meta:RefKey="Scene">
 			<Name>Thrust</Name>

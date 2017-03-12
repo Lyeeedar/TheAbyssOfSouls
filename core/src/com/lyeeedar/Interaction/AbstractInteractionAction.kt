@@ -28,6 +28,7 @@ abstract class AbstractInteractionAction
 				"KILL" -> InteractionActionKill()
 				"SCENE" -> InteractionActionScene()
 				"REMOVEITEM" -> InteractionActionRemoveItem()
+				"IMAGE" -> InteractionActionImage()
 
 				else -> throw Exception("Unknown action type '" + xml.getAttribute("meta:RefKey") + "'!")
 			}

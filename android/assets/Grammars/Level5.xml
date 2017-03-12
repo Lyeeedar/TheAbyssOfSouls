@@ -580,8 +580,8 @@
 												<Name>player</Name>
 											</Proximity>
 											<Speech>
-												<Duration LockDuration="False">0.07943869</Duration>
 												<Time>0.0242624246</Time>
+												<Duration LockDuration="False">0.07943869</Duration>
 												<Text>How can I... [LUST}satisfy[] you lost soul?</Text>
 											</Speech>
 											<Blocker>
@@ -638,20 +638,16 @@
 					<Rule meta:RefKey="Node">272e025c-dc19-42ed-a5c5-462e8540585e</Rule>
 				</Condition>
 				<Condition>
-					<Condition>chance(1, 3)</Condition>
+					<Condition>chance(1, 7)</Condition>
 					<Rule meta:RefKey="Node">1f4d012a-1e28-4869-ac2a-bd12f563c508</Rule>
 				</Condition>
 				<Condition>
-					<Condition>chance(1, 3)</Condition>
+					<Condition>chance(1, 5)</Condition>
 					<Rule meta:RefKey="Node">9c334dd7-959d-47bf-be7e-a410c8af5b65</Rule>
 				</Condition>
 				<Condition>
-					<Condition>chance(1, 2)</Condition>
-					<Rule meta:RefKey="Node">03ffcff0-3f10-4ccc-b17b-1bb4c6d32a79</Rule>
-				</Condition>
-				<Condition>
 					<Condition>else</Condition>
-					<Rule meta:RefKey="Node">ca0f9aeb-d028-4484-aabe-f8a17e6ef497</Rule>
+					<Rule meta:RefKey="Node">03ffcff0-3f10-4ccc-b17b-1bb4c6d32a79</Rule>
 				</Condition>
 			</Rule>
 		</Node>
@@ -721,17 +717,6 @@
 				<Character>#</Character>
 			</Rule>
 		</Node>
-		<Node meta:X="1397.4022216796875" meta:Y="2287.64599609375" GUID="ca0f9aeb-d028-4484-aabe-f8a17e6ef497">
-			<!--Fill back in-->
-			<Rule meta:RefKey="Scale">
-				<X>2</X>
-				<Y>2</Y>
-			</Rule>
-			<Rule meta:RefKey="Fill">
-				<Character>#</Character>
-				<Overwrite>true</Overwrite>
-			</Rule>
-		</Node>
 		<Node meta:X="2779.44482421875" meta:Y="2003.8160400390625" GUID="862a7e23-1fbc-43ef-ad13-54caa4c60b26">
 			<Rule meta:RefKey="Translate">
 				<X>-1</X>
@@ -791,8 +776,8 @@
 																		<Name>player</Name>
 																	</Proximity>
 																	<Speech>
-																		<Duration LockDuration="False">0.221662462</Duration>
 																		<Time>0.0595717877</Time>
+																		<Duration LockDuration="False">0.221662462</Duration>
 																		<Text>No, please don't. Leave me alone!</Text>
 																	</Speech>
 																</Timeline>
@@ -1261,8 +1246,8 @@
 										<Name>player</Name>
 									</Proximity>
 									<Speech>
-										<Duration LockDuration="False">0.333078861</Duration>
 										<Time>0.0629771</Time>
+										<Duration LockDuration="False">0.333078861</Duration>
 										<Text>Spare a beggar a coin?</Text>
 									</Speech>
 									<Blocker>
@@ -1378,12 +1363,12 @@
 				</Symbols>
 				<Prefab>
 					<Line>#########</Line>
-					<Line>#TTccccb#</Line>
-					<Line>#ccccccp#</Line>
-					<Line>#ccccccb#</Line>
-					<Line>#cc###cc#</Line>
-					<Line>#cccc#cs#</Line>
-					<Line>#cc#c##^#</Line>
+					<Line>#TTccccc#</Line>
+					<Line>#ccccccc#</Line>
+					<Line>#ccccccc#</Line>
+					<Line>#cc###cs#</Line>
+					<Line>#cccc#c^#</Line>
+					<Line>#cc#c##c#</Line>
 					<Line>#pp#c####</Line>
 					<Line>####.####</Line>
 				</Prefab>

@@ -5,7 +5,7 @@
 	<!--Node-->
 	<Definition Name="Node" meta:RefKey="GraphCollectionDef">
 		<Data Name="Node" Keys="Node" meta:RefKey="GraphReference" />
-		<Data Name="Action" Keys="Branch,Choice,Define,Line,Drop,ChangeLevel,CompleteGame,ChangeSprite,Kill,Scene,RemoveItem" meta:RefKey="Reference" />
+		<Data Name="Action" Keys="Branch,Choice,Define,Line,Drop,ChangeLevel,CompleteGame,ChangeSprite,Kill,Scene,RemoveItem,Image" meta:RefKey="Reference" />
 	</Definition>
 	<!--Actions-->
 	<Definition Name="Line" meta:RefKey="StructDef">
@@ -51,5 +51,8 @@
 	<Definition Name="RemoveItem" meta:RefKey="StructDef">
 		<Data Name="Name" meta:RefKey="String" />
 		<Data Name="Count" meta:RefKey="String" />
+	</Definition>
+	<Definition Name="Image" meta:RefKey="StructDef">
+		<Data Name="Path" AllowedFileTypes="png" meta:RefKey="File" />
 	</Definition>
 </Definitions>

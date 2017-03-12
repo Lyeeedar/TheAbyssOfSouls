@@ -41,7 +41,7 @@ class Global
 		lateinit var skin: Skin
 		var fps = 60
 		val android = false
-		val release = false
+		val release = true
 		lateinit var game: MainGame
 		lateinit var applicationChanger: AbstractApplicationChanger
 		val settings: Settings by lazy { Settings() }

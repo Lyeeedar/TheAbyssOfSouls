@@ -28,7 +28,7 @@
 					</Blocker>
 					<Proximity>
 						<Time>0.4859067</Time>
-						<Range>2</Range>
+						<Range>3</Range>
 						<Type>Named</Type>
 						<Name>Spider</Name>
 					</Proximity>
@@ -47,8 +47,8 @@
 						</Renderable>
 					</SourceRenderable>
 					<SourceRenderable>
-						<Time>0.107190862</Time>
 						<Duration LockDuration="False">0.08575268</Duration>
+						<Time>0.107190862</Time>
 						<Renderable meta:RefKey="TilingSprite">
 							<Name>web</Name>
 							<Mode>Masked</Mode>
@@ -60,8 +60,8 @@
 						</Renderable>
 					</SourceRenderable>
 					<SourceRenderable>
-						<Time>0.192943543</Time>
 						<Duration LockDuration="False">0.156103373</Duration>
+						<Time>0.192943543</Time>
 						<Renderable meta:RefKey="TilingSprite">
 							<Name>web</Name>
 							<Mode>Masked</Mode>
@@ -73,15 +73,15 @@
 						</Renderable>
 					</SourceRenderable>
 					<SourceRenderable>
-						<Time>0.349046916</Time>
 						<Duration LockDuration="False">0.138321221</Duration>
+						<Time>0.349046916</Time>
 						<Renderable meta:RefKey="Sprite">
 							<Name>blank</Name>
 						</Renderable>
 					</SourceRenderable>
 					<SourceRenderable>
-						<Time>0.487368137</Time>
 						<Duration LockDuration="False">0.08986047</Duration>
+						<Time>0.487368137</Time>
 						<Renderable meta:RefKey="TilingSprite">
 							<Name>web</Name>
 							<Mode>Masked</Mode>
@@ -95,14 +95,14 @@
 				</Timeline>
 				<Timeline>
 					<SourceAnimation>
-						<Time>0.280343771</Time>
 						<Duration LockDuration="False">0.0687031448</Duration>
+						<Time>0.280343771</Time>
 						<SizeEnd>0</SizeEnd>
 						<OneWay>true</OneWay>
 					</SourceAnimation>
 					<SourceAnimation>
-						<Time>0.487368137</Time>
 						<Duration LockDuration="False">0.06864342</Duration>
+						<Time>0.487368137</Time>
 						<SizeStart>0</SizeStart>
 						<OneWay>true</OneWay>
 					</SourceAnimation>

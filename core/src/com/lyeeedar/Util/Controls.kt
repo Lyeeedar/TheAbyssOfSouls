@@ -118,7 +118,7 @@ class Controls
 		addKeyMapping(Keys.CANCEL, KeySource.KEYBOARD, Input.Keys.PERIOD)
 		addKeyMapping(Keys.ACCEPT, KeySource.KEYBOARD, Input.Keys.ENTER)
 		addKeyMapping(Keys.WAIT, KeySource.KEYBOARD, Input.Keys.NUMPAD_5)
-		addKeyMapping(Keys.DEFENSE, KeySource.KEYBOARD, Input.Keys.NUMPAD_0)
+		addKeyMapping(Keys.DEFENSE, KeySource.KEYBOARD, Input.Keys.NUMPAD_1)
 		addKeyMapping(Keys.ATTACKNORMAL, KeySource.KEYBOARD, Input.Keys.NUMPAD_7)
 		addKeyMapping(Keys.ATTACKSPECIAL, KeySource.KEYBOARD, Input.Keys.NUMPAD_9)
 		addKeyMapping(Keys.MENU, KeySource.KEYBOARD, Input.Keys.ESCAPE)

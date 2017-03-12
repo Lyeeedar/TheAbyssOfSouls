@@ -60,23 +60,36 @@
 				</Choices>
 			</Action>
 		</Node>
-		<Node meta:X="1106.3758544921875" meta:Y="274.12222290039062" GUID="9680d950-c607-4236-89e1-00ccf0688217">
+		<Node meta:X="1106.3758544921875" meta:Y="272.75048078790775" GUID="9680d950-c607-4236-89e1-00ccf0688217">
 			<Action meta:RefKey="Line">
 				<Text>Combat consists of performing 'combos'. Each weapon has its own unique set of combos.</Text>
 			</Action>
 			<Action meta:RefKey="Line">
-				<Text>Combos are constructed of 3 different move types. [YELLOW]Normal[] attacks, [YELLOW]Special[] attacks and [YELLOW]Defensive[] moves. 
-Each of these is assigned a key (by default [YELLOW]Normal[] attack is [GREEN]Right-Ctrl[], [YELLOW]Special[] is [GREEN]Insert[] and [YELLOW]Defense[] is [GREEN]Right-Shift[].
-These keys are rebindable in the options menu.</Text>
+				<Text>Combos are constructed of 3 different move types. [YELLOW]Normal[] attacks, [ORANGE]Special[] attacks and [CYAN]Defensive[] moves.
+
+Default keybindings have been created for 'wasd', 'arrow key', 'numpad' and 'controller' setups. The bindings are shown in the following image. 
+</Text>
+			</Action>
+			<Action meta:RefKey="Image">
+				<Path>Sprites/Unpacked/Controls.png</Path>
 			</Action>
 			<Action meta:RefKey="Line">
-				<Text>To start a combo hold one of the [YELLOW]Normal[], [YELLOW]Special[] or [YELLOW]Defense[] keys, then press a direction.
+				<Text>You can see this controls screen again by pressing 'ESC' or 'Start'.</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>To start a combo hold one of the [YELLOW]Normal[], [ORANGE]Special[] or [CYAN]Defense[] keys, then press a direction.
 You can then continue a combo by pressing one of those keys, or a directional one.</Text>
 			</Action>
 			<Action meta:RefKey="Line">
+				<Text>Each combo attack costs stamina (the [CYAN]blue bar[] below your character). If you don't have enough stamina you will not be able to start a combo. The required stamina will flash red in this case.</Text>
+			</Action>
+			<Action meta:RefKey="Line">
 				<Text>The available combos are displayed on each weapon in the form 'N-N-S'.
-N stands for [YELLOW]Normal[], S for [YELLOW]Special[] and D for [YELLOW]Defense[].
-So in that example an available combo would be [YELLOW]Normal Normal Special[].</Text>
+N stands for [YELLOW]Normal[], S for [ORANGE]Special[] and D for [CYAN]Defense[].
+So in that example an available combo would be [YELLOW]Normal Normal[] [ORANGE]Special[].</Text>
+			</Action>
+			<Action meta:RefKey="Line">
+				<Text>Press '?' or 'Menu' to see the combos for your current weapon.</Text>
 			</Action>
 		</Node>
 	</Nodes>

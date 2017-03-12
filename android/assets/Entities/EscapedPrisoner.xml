@@ -19,9 +19,9 @@
 		</Position>
 		<Statistics>
 			<Faction>prisoner</Faction>
-			<HP>10</HP>
+			<HP>14</HP>
 			<Stamina>10</Stamina>
-			<Sight>15</Sight>
+			<Sight>8</Sight>
 			<Death meta:RefKey="ParticleEffect">
 				<Name>Death</Name>
 			</Death>

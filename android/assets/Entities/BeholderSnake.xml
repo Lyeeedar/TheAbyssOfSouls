@@ -50,9 +50,9 @@
 		</AI>
 		<Statistics>
 			<Faction>beholder</Faction>
-			<HP>10</HP>
+			<HP>15</HP>
 			<Stamina>10</Stamina>
-			<Sight>5</Sight>
+			<Sight>6</Sight>
 			<Death meta:RefKey="ParticleEffect">
 				<Name>Death</Name>
 				<Colour>173,241,255,255</Colour>

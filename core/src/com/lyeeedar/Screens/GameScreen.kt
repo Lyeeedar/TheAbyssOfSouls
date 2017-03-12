@@ -29,7 +29,7 @@ class GameScreen : AbstractScreen()
 	lateinit var batch: SpriteBatch
 
 	var timeMultiplier = 1f
-	var showFPS = true
+	var showFPS = !Global.release
 
 	data class SystemData(val name: String, var time: Float, var entities: String)
 	val systemTimes: Array<SystemData> by lazy { Array<SystemData>(systemList.size) { i -> SystemData(systemList[i].java.simpleName.replace("System", ""), 0f, "--") } }
@@ -119,6 +119,15 @@ class GameScreen : AbstractScreen()
 				player.stats().hp = player.stats().maxHP / 2
 				player.stats().regeneratingHP = 0f
 			}
+			else
+			{
+				player.add(lastPlayer.stats())
+			}
+
+			if (travelType == "ascend")
+			{
+				player.stats().hp = player.stats().maxHP
+			}
 
 			player.add(lastPlayer.sin())
 			player.add(lastPlayer.combo())
@@ -140,24 +149,27 @@ class GameScreen : AbstractScreen()
 	{
 		Global.engine.update(delta * timeMultiplier)
 
-		systemUpdateAccumulator += delta
-		if (systemUpdateAccumulator > 0.5f)
+		if (!Global.release)
 		{
-			systemUpdateAccumulator = 0f
-			var totalTime = 0f
-
-			for (i in 0..systemTimes.size-1)
+			systemUpdateAccumulator += delta
+			if (systemUpdateAccumulator > 0.5f)
 			{
-				val system = Global.engine.getSystem(systemList[i].java)
-				val time = system.processDuration
-				val perc = (time / frameDuration) * 100f
-				systemTimes[i].time = perc
-				systemTimes[i].entities = if (system.family != null) system.entities.size().toString() else "-"
+				systemUpdateAccumulator = 0f
+				var totalTime = 0f
 
-				totalTime += perc
+				for (i in 0..systemTimes.size - 1)
+				{
+					val system = Global.engine.getSystem(systemList[i].java)
+					val time = system.processDuration
+					val perc = (time / frameDuration) * 100f
+					systemTimes[i].time = perc
+					systemTimes[i].entities = if (system.family != null) system.entities.size().toString() else "-"
+
+					totalTime += perc
+				}
+
+				totalSystemTime = totalTime
 			}
-
-			totalSystemTime = totalTime
 		}
 
 		batch.begin()
